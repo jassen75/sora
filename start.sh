@@ -2,4 +2,4 @@
 
 set -e -x
 
-docker-compose -f docker-compose.yml up 
+docker run -p 8013:8013 --name sora --link mysql:mysql -d jassen75/sora:1.0
