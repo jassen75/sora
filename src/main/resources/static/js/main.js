@@ -60,6 +60,9 @@ function buildRecordList(data) {
 	
 	list.children("div").remove();
 	
+	var currentTime;
+	var lc = 1;
+	var region;
 	for (var j = 0; j < data.length; j++) {
 		var score;
 		if(data[j]['score1']==-1 || data[j]['score2']==-1)
@@ -69,8 +72,19 @@ function buildRecordList(data) {
 		{
 			score=data[j]['score1']+" : "+data[j]['score2'];
 		}
-		var div = $('<div class="panel">'+data[j]['player1']['name']+' vs '+data[j]['player2']['name']+'   '+score+'</div>');
-		div.appendTo(list);
+		
+		if(currentTime != data[j]['matchTime'])
+		{
+			currentTime=data[j]['matchTime'];
+			region= $('<br><br><div class="region">第'+lc+'轮</div>');
+			lc++;
+			region.appendTo(list);
+		}
+		var div = $('<div class="panel">'+data[j]['player1']['name']+' vs '+data[j]['player2']['name']+'                  '+score+'</div>');
+		div.appendTo(region);
+		
+		
+		
 	}
 	
 }
