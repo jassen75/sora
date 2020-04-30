@@ -41,10 +41,10 @@ function buildScoreTable(data)
 	var list = $("#score-board");
 	
 	list.children("table").remove();
-	var childdiv = $('<table><tr><th>选手</th><th>胜</th><th>平</th><th>负</th><th>分数</th></tr></table>');
+	var childdiv = $('<table><tr><th class="nm">选手</th><th class="sf">胜</th><th class="sf">平</th><th class="sf">负</th><th class="sc">分数</th></tr></table>');
 	
 	for (var j = 0; j < data.length; j++) {
-		var tr = $('<tr><td>'+data[j]['name']+'</td><td>'+data[j]['win']+'</td><td>'+data[j]['draw']+'</td><td>'+data[j]['lose']+'</td><td>'+data[j]['score']+'</td></tr>');
+		var tr = $('<tr><td>'+data[j]['name']+'</td><td>'+data[j]['win']+'</td><td>'+data[j]['draw']+'</td><td>'+data[j]['lose']+'</td><td class="sc">'+data[j]['score']+'</td></tr>');
 		tr.appendTo(childdiv);
 	}
 	
@@ -76,11 +76,12 @@ function buildRecordList(data) {
 		if(currentTime != data[j]['matchTime'])
 		{
 			currentTime=data[j]['matchTime'];
-			region= $('<br><br><div class="region">第'+lc+'轮</div>');
+			region= $('<div class="region">第'+lc+'轮</div>');
 			lc++;
 			region.appendTo(list);
+			$('<bar><br>').appendTo(list);
 		}
-		var div = $('<div class="panel">'+data[j]['player1']['name']+' vs '+data[j]['player2']['name']+'                  '+score+'</div>');
+		var div = $('<div class="panel"><div class="label">'+data[j]['player1']['name']+' vs '+data[j]['player2']['name']+'</div><div class="score">'+score+'</div></div>');
 		div.appendTo(region);
 		
 		

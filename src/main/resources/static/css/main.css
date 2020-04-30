@@ -55,20 +55,44 @@ body {
 	left: 10px;
 	top: 10px;
 	width:500px;
-	
+	color:#33CCFF;
 }
 
 #score-board {
+	padding-top: 25px;
+	padding-left: 10%;
+	padding-right: 10%;
+	text-align:center;
 	position: absolute;
-	left: 810px;
+	left: 610px;
 	top: 10px;
 	width:700px;
-	height:100px;
+	height:500px;
+	background-image: url('../image/sky.jpg');
+	background-repeat:no-repeat;
 }
+
+#score-board tr{
+	text-align:left;
+}
+
+#score-board .nm{
+	width:150px;
+}
+
+#score-board .sf{
+	width:40px;
+}
+
+#score-board .sc{
+	width:100px;
+	text-align:right;
+}
+
 
 #desc {
 	position: absolute;
-	left: 810px;
+	left: 610px;
 	top: 810px;
 	width:500px;
 }
@@ -81,4 +105,26 @@ body {
 	width:225px;
 	height: 300px;
 	background-image: url('../image/peo.png');
+}
+
+.panel {
+	position: relative;
+	width: 600px;
+	height: 25px;
+	border-width : 1px;
+	color:#33FF99;
+}
+
+.label {
+	position: absolute;
+	left: 0px;
+	top:0px;
+	width:225px;
+	
+}
+.score {
+	position: absolute;
+	top: 0px;
+	left: 310px;
+	
 }
