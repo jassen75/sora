@@ -7,7 +7,7 @@ $(document).ready(function() {
 		dataType : "json",
 		success : function(data) {
 			buildScoreTable(data);
-
+			loadRecordList();
 		},
 		error : function(jqXHR) {
 			// alert("Error: "+jqXHR.status);
@@ -15,6 +15,13 @@ $(document).ready(function() {
 	});
 
 	
+
+
+
+});
+
+function loadRecordList()
+{
 	$.ajax({
 		type : "GET",
 		url : "/record/1",
@@ -27,11 +34,7 @@ $(document).ready(function() {
 			// alert("Error: "+jqXHR.status);
 		}
 	});
-
-
-});
-
-
+}
 
 function buildScoreTable(data)
 {

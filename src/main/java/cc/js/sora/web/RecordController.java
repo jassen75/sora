@@ -48,6 +48,11 @@ public class RecordController {
 	private static class Pair {
 		int i;
 		int j;
+		
+		public String toString()
+		{
+			return "("+i+","+j+")";
+		}
 	}
 
 	@GetMapping(path = "/{season}/score-board", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -127,6 +132,7 @@ public class RecordController {
 
 		log.info("all. size==" + all.size());
 		Date current = new Date();
+		int failedTime = 0;
 		while (all.size() > 0) {
 			Set p = new HashSet();
 			List<Pair> weekRecords = new ArrayList();
@@ -135,7 +141,14 @@ public class RecordController {
 			while (p.size() < number) {
 				if (!all.stream().anyMatch(e -> !p.contains(e.i) && !p.contains(e.j))) {
 					failed = true;
+					failedTime++;
 					break;
+				}
+				
+				if(failedTime > 30) 
+				{
+					log.info("**********  failed too much ,rebuild****************");
+					return rebuildRecord(season);
 				}
 
 				int index = random.nextInt(all.size());
@@ -171,7 +184,7 @@ public class RecordController {
 				log.info(
 						"=================================================================================================");
 			} else {
-				log.info("**********  failed ****************");
+				log.info("**********  failed ****************all size:"+all.size());
 			}
 		}
 		log.info("recordLise .size:" + recordList.size());
