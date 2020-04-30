@@ -72,6 +72,10 @@ body {
 	background-repeat:no-repeat;
 }
 
+#score-board th {
+	color: #A8A8A8;
+}
+
 #score-board tr{
 	text-align:left;
 }
@@ -95,13 +99,14 @@ body {
 	left: 610px;
 	top: 810px;
 	width:500px;
+	color: #A8A8A8;
 }
 
 
 #pict {
 	position: absolute;
-	left: 810px;
-	top: 410px;
+	left: 1010px;
+	top: 350px;
 	width:225px;
 	height: 300px;
 	background-image: url('../image/peo.png');
