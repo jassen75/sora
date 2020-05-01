@@ -11,4 +11,8 @@ public class HomeController {
 		return "forward:index.html";
 	}
 
+    @RequestMapping(value= { "/admin"})
+	public String admin() {
+		return "forward:/admin.html";
+	}
 }

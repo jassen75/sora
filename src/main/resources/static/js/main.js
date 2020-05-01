@@ -59,6 +59,7 @@ function buildRecordList(data) {
 	var list = $("#this-week");
 	
 	list.children("div").remove();
+	list.children("br").remove();
 	
 	var currentTime;
 	var lc = 1;
@@ -79,7 +80,7 @@ function buildRecordList(data) {
 			region= $('<div class="region">第'+lc+'轮</div>');
 			lc++;
 			region.appendTo(list);
-			$('<bar><br>').appendTo(list);
+			$('<br><br>').appendTo(list);
 		}
 		var div = $('<div class="panel"><div class="label">'+data[j]['player1']['name']+' vs '+data[j]['player2']['name']+'</div><div class="score">'+score+'</div></div>');
 		div.appendTo(region);

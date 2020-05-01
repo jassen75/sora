@@ -21,6 +21,11 @@ CREATE TABLE IF NOT EXISTS record (
 	match_time timestamp not null
 );
 
+CREATE TABLE IF NOT EXISTS season (
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+	number integer,
+	start_time timestamp
+);
 
 INSERT INTO player(name, server) VALUES
 ('朱老板','羁绊之地'),
