@@ -20,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import cc.js.sora.Player;
 import cc.js.sora.Record;
+import cc.js.sora.Season;
 import cc.js.sora.db.PlayerRepository;
 import cc.js.sora.db.RecordRepository;
+import cc.js.sora.db.SeasonRepository;
 
 @RestController
 @RequestMapping("/record")
@@ -35,12 +37,24 @@ public class RecordController {
 	@Autowired
 	PlayerRepository playerRepository;
 
+	@Autowired
+	SeasonRepository seasonRepository;
+	
+	@Autowired
+	AdminController admin;
+
 	@GetMapping(path = "/{season}", produces = MediaType.APPLICATION_JSON_VALUE)
 	List<Record> list(@PathVariable(name = "season") Integer season) {
 		List<Record> currentRecord = recordRepository.findRecordBySeason(season);
 		if (currentRecord == null || currentRecord.size() == 0) {
-			return rebuildRecord(season);
-			// return recordRepository.findRecordBySeason(season);
+			currentRecord = rebuildRecord(season);
+			
+			// only save when running 
+			if(seasonRepository.getSeason(season).getStatus() == 1)
+			{
+				recordRepository.saveAll(currentRecord);
+				recordRepository.flush();
+			}
 		}
 		return currentRecord;
 	}
@@ -59,7 +73,7 @@ public class RecordController {
 	List<Map<String, Object>> scoreBoard(@PathVariable(name = "season") Integer season) {
 		Map<String, Map<String, Integer>> result = new HashMap();
 
-		List<Player> playerList = playerRepository.findAll();
+		List<Player> playerList = admin.getCurrentSeason().getPlayers();
 		for (int i = 0; i < playerList.size(); i++) {
 			Map r = new HashMap();
 			r.put("name", playerList.get(i).getName());
@@ -84,32 +98,32 @@ public class RecordController {
 			}
 
 			if (r.getScore1() < r.getScore2()) {
-				result.get(r.getPlayer2().getName()).put("win", result.get(r.getPlayer1().getName()).get("win") + 1);
+				result.get(r.getPlayer2().getName()).put("win", result.get(r.getPlayer2().getName()).get("win") + 1);
 				result.get(r.getPlayer2().getName()).put("score",
-						result.get(r.getPlayer1().getName()).get("score") + 3);
+						result.get(r.getPlayer2().getName()).get("score") + 3);
 				result.get(r.getPlayer1().getName()).put("lose", result.get(r.getPlayer1().getName()).get("lose") + 1);
 			}
 
 			if (r.getScore1() == r.getScore2()) {
 				result.get(r.getPlayer1().getName()).put("draw", result.get(r.getPlayer1().getName()).get("draw") + 1);
-				result.get(r.getPlayer2().getName()).put("draw", result.get(r.getPlayer1().getName()).get("draw") + 1);
+				result.get(r.getPlayer2().getName()).put("draw", result.get(r.getPlayer2().getName()).get("draw") + 1);
 				result.get(r.getPlayer1().getName()).put("score",
 						result.get(r.getPlayer1().getName()).get("score") + 1);
 				result.get(r.getPlayer2().getName()).put("score",
-						result.get(r.getPlayer1().getName()).get("score") + 1);
+						result.get(r.getPlayer2().getName()).get("score") + 1);
 			}
 		}
 		
 		List<Map<String,Object>> list = new ArrayList(result.values());
-		list.sort((e, f) -> (Integer)e.get("score") - (Integer)f.get("score"));
+		list.sort((e, f) -> (Integer)f.get("score") - (Integer)e.get("score") );
 		return list;
 
 	}
 
 	List rebuildRecord(int season) {
 		Random random = new Random();
-
-		List<Player> playerList = playerRepository.findAll();
+		
+		List<Player> playerList = this.admin.getCurrentSeason().getPlayers();
 		int number = playerList.size();
 
 		List<Record> recordList = new ArrayList<Record>();
@@ -138,7 +152,7 @@ public class RecordController {
 			List<Pair> weekRecords = new ArrayList();
 
 			boolean failed = false;
-			while (p.size() < number) {
+			while (p.size() < number-1) {
 				if (!all.stream().anyMatch(e -> !p.contains(e.i) && !p.contains(e.j))) {
 					failed = true;
 					failedTime++;
@@ -170,7 +184,7 @@ public class RecordController {
 					newRecord.setPlayer1(playerList.get(weekRecords.get(k).i));
 					newRecord.setPlayer2(playerList.get(weekRecords.get(k).j));
 					newRecord.setMatchTime(current);
-					newRecord.setSeanson(season);
+					newRecord.setSeason(season);
 					newRecord.setScore1(-1);
 					newRecord.setScore2(-1);
 					recordList.add(newRecord);

@@ -25,5 +25,5 @@ public class PlayerController {
 		List<Player> currentRecord = playerRepository.findAll();
 		return currentRecord;
 	}
-
+	
 }

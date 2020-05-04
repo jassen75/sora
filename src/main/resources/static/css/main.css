@@ -135,36 +135,44 @@ body {
 }
 
 #season-panel {
-	position: absolute;
-	left: 10px;
-	top: 10px;
+
 }
 
 #player-panel {
-	position: absolute;
-	left: 10px;
-	top: 100px;
+	margin-top:80px;
+	margin-bottom:80px;
+
 }
 
 #score-panel {
-	position: absolute;
-	left: 10px;
-	top: 600px;
 }
+
 #admin-panel {
-	position: absolute;
-	left: 10px;
-	top: 800px;
+	margin-top:80px;
+	margin-bottom:80px;
 }
 
 #score-panel div {
 	float:left;
 }
 
-#score-input input {
+#score-input{
 	width:100px;
 }
 
-#player-list div {
+#player-list {
+	color: #ADD8E6;
+	margin-bottom:70px;
+}
+
+#unplayer-list {
+
 	color: #A8A8A8;
+}
+
+.destory {
+	width:22px;
+	height:22px;
+	background-image: url('../image/destory.png');
+	margin-left:40px;
 }

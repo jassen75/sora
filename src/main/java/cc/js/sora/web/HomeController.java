@@ -15,4 +15,9 @@ public class HomeController {
 	public String admin() {
 		return "forward:/admin.html";
 	}
+    
+    @RequestMapping(value= { "/score"})
+	public String score() {
+		return "forward:/score.html";
+	}
 }

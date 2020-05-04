@@ -24,7 +24,14 @@ CREATE TABLE IF NOT EXISTS record (
 CREATE TABLE IF NOT EXISTS season (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
 	number integer,
+	status integer, 
 	start_time timestamp
+);
+
+CREATE TABLE IF NOT EXISTS season_players (
+	season_id bigint not null,
+	players_id bigint not null,
+	primary key(season_id, players_id)
 );
 
 INSERT INTO player(name, server) VALUES
