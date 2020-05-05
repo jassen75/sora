@@ -120,10 +120,17 @@ public class RecordController {
 
 	}
 
-	List rebuildRecord(int season) {
+	public List rebuildRecord(int season) {
 		Random random = new Random();
 		
-		List<Player> playerList = this.admin.getCurrentSeason().getPlayers();
+		Season currentSeason = this.admin.getCurrentSeason();
+		Date startTime = currentSeason.getMatchTime();
+		if(startTime == null) 
+		{
+			startTime = new Date();
+		}
+		
+		List<Player> playerList = currentSeason.getPlayers();
 		int number = playerList.size();
 
 		List<Record> recordList = new ArrayList<Record>();
@@ -145,7 +152,7 @@ public class RecordController {
 		}
 
 		log.info("all. size==" + all.size());
-		Date current = new Date();
+		Date current = startTime;
 		int failedTime = 0;
 		while (all.size() > 0) {
 			Set p = new HashSet();
@@ -187,6 +194,7 @@ public class RecordController {
 					newRecord.setSeason(season);
 					newRecord.setScore1(-1);
 					newRecord.setScore2(-1);
+					newRecord.setMap(random.nextInt(7)+1);
 					recordList.add(newRecord);
 					log.info("add record:" + newRecord);
 

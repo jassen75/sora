@@ -16,6 +16,8 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -50,8 +52,12 @@ public class Record {
 	@Column(name="season")
 	int season;
 	
+	@Column(name="map")
+	int map;
+	
 	@Column(name="match_time")
     @Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(timezone = "GMT+8", pattern="yyyy-MM-dd")
 	Date matchTime;
 	
 	

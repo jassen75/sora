@@ -55,7 +55,6 @@ body {
 	left: 10px;
 	top: 10px;
 	width:500px;
-	color:#33CCFF;
 }
 
 #score-board {
@@ -127,11 +126,37 @@ body {
 	width:225px;
 	
 }
+
+.label_lc {
+	position: absolute;
+	left: 0px;
+	top:0px;
+	width:225px;
+	color:#33CCFF;
+}
+
+
 .score {
 	position: absolute;
 	top: 0px;
-	left: 310px;
+	left: 360px;
 	
+}
+
+.map {
+	position: absolute;
+	top: 0px;
+	left: 210px;
+	color:#33CCFF;
+	font-size:10px;	
+}
+
+.time_label {
+	position: absolute;
+	top: 0px;
+	left: 210px;
+	font-size:10px;	
+	color:#33CCFF;
 }
 
 #season-panel {

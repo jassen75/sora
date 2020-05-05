@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS record (
 	score1 integer,
 	score2 integer,
 	season integer,
+	map integer,
 	match_time timestamp not null
 );
 
