@@ -59,6 +59,7 @@ function buildRecordList(data) {
 	var list = $("#this-week");
 	
 	list.children("div").remove();
+	list.children("br").remove();
 	
 	var currentTime;
 	var lc = 1;
@@ -76,16 +77,40 @@ function buildRecordList(data) {
 		if(currentTime != data[j]['matchTime'])
 		{
 			currentTime=data[j]['matchTime'];
-			region= $('<div class="region">第'+lc+'轮</div>');
+			region= $('<div class="region"><div class="panel"><div class="label_lc">第'+lc+'轮</div><div class="time_label">'+currentTime+' 10:00PM</div></div></div>');
 			lc++;
 			region.appendTo(list);
-			$('<bar><br>').appendTo(list);
+			$('<br><br>').appendTo(list);
 		}
-		var div = $('<div class="panel"><div class="label">'+data[j]['player1']['name']+' vs '+data[j]['player2']['name']+'</div><div class="score">'+score+'</div></div>');
+		var div = $('<div class="panel"><div class="label">'+data[j]['player1']['name']+' vs '+data[j]['player2']['name']+'</div><div class="map">'+getMap(data[j]['map'])+'</div><div class="score">'+score+'</div></div>');
 		div.appendTo(region);
 		
 		
 		
+	}
+
+	
+}
+
+
+function getMap(map) 
+{
+	switch(map)
+	{
+	case 1:
+		return '纷争平原(1)';
+	case 2:
+		return '西风哨岗(2)';
+	case 3:
+		return '海角之泪(3)';
+	case 4:
+		return '沙漠之眼(4)';
+	case 5:
+		return '空中庭院(5)';
+	case 6:
+		return '双桥逆波(6)';
+	case 7:
+		return '凛冬栖地(7)';	
 	}
 	
 }

@@ -2,16 +2,21 @@ package cc.js.sora;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,10 +35,12 @@ public class Record {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long id;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
+	@JoinColumn(name="player1")
 	Player player1;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER, cascade=CascadeType.MERGE)
+	@JoinColumn(name="player2")
 	Player player2;
 	
 	@Column(name="score1")
@@ -43,10 +50,14 @@ public class Record {
 	int score2;
 	
 	@Column(name="season")
-	int seanson;
+	int season;
+	
+	@Column(name="map")
+	int map;
 	
 	@Column(name="match_time")
     @Temporal(TemporalType.TIMESTAMP)
+	@JsonFormat(timezone = "GMT+8", pattern="yyyy-MM-dd")
 	Date matchTime;
 	
 	

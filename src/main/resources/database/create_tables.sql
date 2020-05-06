@@ -18,9 +18,22 @@ CREATE TABLE IF NOT EXISTS record (
 	score1 integer,
 	score2 integer,
 	season integer,
+	map integer,
 	match_time timestamp not null
 );
 
+CREATE TABLE IF NOT EXISTS season (
+	id BIGINT AUTO_INCREMENT PRIMARY KEY,
+	number integer,
+	status integer, 
+	start_time timestamp
+);
+
+CREATE TABLE IF NOT EXISTS season_players (
+	season_id bigint not null,
+	players_id bigint not null,
+	primary key(season_id, players_id)
+);
 
 INSERT INTO player(name, server) VALUES
 ('朱老板','羁绊之地'),
