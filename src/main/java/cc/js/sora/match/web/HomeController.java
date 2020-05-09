@@ -8,7 +8,7 @@ public class HomeController {
 	
     @RequestMapping(value= {"/index", "/"})
 	public String index() {
-		return "forward:index.html";
+		return "forward:match.html";
 	}
 
     @RequestMapping(value= { "/admin"})
@@ -19,5 +19,10 @@ public class HomeController {
     @RequestMapping(value= { "/score"})
 	public String score() {
 		return "forward:/score.html";
+	}
+    
+    @RequestMapping(value= { "/space"})
+	public String space() {
+		return "forward:/index.html";
 	}
 }
