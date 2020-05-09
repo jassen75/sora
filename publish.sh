@@ -11,6 +11,6 @@ source "${THIS_DIR}/env.sh"
 
 PUBLISHTAG=${TAG:-$SORA_VERSION}
 
-docker tag sora:latest jassen75/sora:$PUBLISHTAG
+docker tag jassen75/sora:latest jassen75/sora:$PUBLISHTAG
 docker login -u jassen75 --password=$DOCKHUB_PASSWORD 
 docker push jassen75/sora:$PUBLISHTAG

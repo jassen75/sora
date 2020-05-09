@@ -1,3 +1,3 @@
 #!/bin/bash
 
-java -Dmysql-host=mysql -jar /opt/sora/lib/*.jar
+java -Dmysql-host=sora_mysql_db -jar /opt/sora/lib/*.jar

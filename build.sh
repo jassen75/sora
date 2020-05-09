@@ -2,7 +2,7 @@
 
 set -e -x
 
-docker build --force-rm -t sora:latest --file docker/Dockerfile .
+docker build --force-rm -t jassen75/sora:latest --file docker/Dockerfile .
 
 
 

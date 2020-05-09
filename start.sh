@@ -11,4 +11,4 @@ TAG=$1
 
 RUNTAG=${TAG:-$SORA_VERSION}
 
-docker run -p 80:8013 --name sora --link mysql:mysql -d jassen75/sora:$RUNTAG
+docker run -p 80:8013 --name sora --link sora_mysql_db:sora_mysql_db -d jassen75/sora:$RUNTAG
