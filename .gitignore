@@ -2,5 +2,5 @@
 /.gradle/
 /build/
 /.gradle/
-/sora.log
+/sora.log*
 /env.sh
