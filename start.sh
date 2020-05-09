@@ -5,7 +5,7 @@ set -e -x
 
 THIS_FILE=$(readlink -f "${BASH_SOURCE[0]}")
 THIS_DIR=$(dirname "${THIS_FILE}")
-source "${THIS_DIR}/env.sh"
+source "${THIS_DIR}/version.sh"
 
 TAG=$1
 

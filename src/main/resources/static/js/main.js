@@ -13,12 +13,28 @@ $(document).ready(function() {
 			// alert("Error: "+jqXHR.status);
 		}
 	});
-
 	
+
+	$.ajax({
+		type : "GET",
+		url : "/systemInfo",
+		dataType : "json",
+		success : function(data) {
+			buildFooter(data);
+		},
+		error : function(jqXHR) {
+			// alert("Error: "+jqXHR.status);
+		}
+	});
 
 
 
 });
+
+function buildFooter(data)
+{
+	$("#footer").html('黑豆的个人空间 版本:'+data['version']+' <br>苏ICP备20025024号');
+}
 
 function loadRecordList()
 {
@@ -28,7 +44,6 @@ function loadRecordList()
 		dataType : "json",
 		success : function(data) {
 			buildRecordList(data);
-
 		},
 		error : function(jqXHR) {
 			// alert("Error: "+jqXHR.status);
