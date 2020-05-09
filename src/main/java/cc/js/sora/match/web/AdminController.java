@@ -1,4 +1,4 @@
-package cc.js.sora.web;
+package cc.js.sora.match.web;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -16,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import cc.js.sora.Player;
-import cc.js.sora.Record;
-import cc.js.sora.Season;
-import cc.js.sora.db.PlayerRepository;
-import cc.js.sora.db.RecordRepository;
-import cc.js.sora.db.SeasonRepository;
+import cc.js.sora.match.db.PlayerRepository;
+import cc.js.sora.match.db.RecordRepository;
+import cc.js.sora.match.db.SeasonRepository;
+import cc.js.sora.match.Player;
+import cc.js.sora.match.Record;
+import cc.js.sora.match.Season;
 
 @RestController
 @RequestMapping("/admin")

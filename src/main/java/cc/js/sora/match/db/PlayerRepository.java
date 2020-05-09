@@ -1,9 +1,9 @@
-package cc.js.sora.db;
+package cc.js.sora.match.db;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import cc.js.sora.Player;
+import cc.js.sora.match.Player;
 
 public interface PlayerRepository  extends JpaRepository<Player, Long>{
 	

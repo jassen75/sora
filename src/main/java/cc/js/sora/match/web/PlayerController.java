@@ -1,4 +1,4 @@
-package cc.js.sora.web;
+package cc.js.sora.match.web;
 
 import java.util.List;
 
@@ -9,9 +9,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cc.js.sora.Player;
-import cc.js.sora.Record;
-import cc.js.sora.db.PlayerRepository;
+import cc.js.sora.match.db.PlayerRepository;
+import cc.js.sora.match.Player;
+import cc.js.sora.match.Record;
 
 @RestController
 @RequestMapping("/player")

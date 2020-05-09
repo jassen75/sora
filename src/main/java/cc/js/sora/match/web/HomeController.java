@@ -1,4 +1,4 @@
-package cc.js.sora.web;
+package cc.js.sora.match.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;

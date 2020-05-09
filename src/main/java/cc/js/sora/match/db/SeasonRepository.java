@@ -1,11 +1,11 @@
-package cc.js.sora.db;
+package cc.js.sora.match.db;
 
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import cc.js.sora.Season;
+import cc.js.sora.match.Season;
 
 public interface SeasonRepository extends JpaRepository<Season, Long> {
 	

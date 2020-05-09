@@ -1,4 +1,4 @@
-package cc.js.sora;
+package cc.js.sora.match;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
