@@ -23,6 +23,6 @@ public class HomeController {
     
     @RequestMapping(value= { "/space"})
 	public String space() {
-		return "forward:/index.html";
+		return "forward:/match/index.html";
 	}
 }

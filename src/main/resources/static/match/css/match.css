@@ -1,0 +1,41 @@
+#header {
+	background-color: rgb(212, 218, 218);
+	font: bold 40px/100% "微软雅黑", "Lucida Grande", "Lucida Sans", Helvetica, Arial, Sans;
+	color:rgb(47, 112, 136);
+	height:143px;
+
+	height: 143px;
+	border:0px;
+	margin:0px;
+}
+
+#head-images {
+	min-width:900px;
+}
+
+#nav {
+	height: 45px;
+}
+
+#nav a {
+	color:#FFFFFF;
+}
+
+#logo {
+	width:100px;
+	height:100px;
+}
+
+body {
+	padding-top:0px;
+}
+
+#footer {
+	text-align: center;
+}
+
+#pict {
+	width:225px;
+	height: 300px;
+	background-image: url('../image/peo.png');
+}
