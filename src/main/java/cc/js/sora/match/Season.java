@@ -9,6 +9,8 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -45,7 +47,8 @@ public class Season {
 	
 	// -1 unknown 0 planning 1 running 2 complete
 	@Column(name="status")
-	int status;
+	@Enumerated(EnumType.ORDINAL)  
+	SeasonStatus status;
 	
 	@Column(name="start_time")
     @Temporal(TemporalType.TIMESTAMP)

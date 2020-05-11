@@ -13,9 +13,10 @@ $(document).ready(function() {
 function loadSeasonData() {
 	$.ajax({
 		type : "GET",
-		url : "/admin/planning",
+		url : "/admin/currentSeason",
 		dataType : "json",
 		success : function(season) {
+			toggleAll(season['status']=='PLANNING');
 			$("#start-time").val(season['matchTime']);
 			$.ajax({
 				type : "GET",
@@ -23,6 +24,7 @@ function loadSeasonData() {
 				dataType : "json",
 				success : function(player) {
 					buildPlayerList(season, player);
+					
 				},
 				error : function(jqXHR) {
 					// alert("Error: "+jqXHR.status);
@@ -35,6 +37,22 @@ function loadSeasonData() {
 			// alert("Error: "+jqXHR.status);
 		}
 	});
+}
+
+function toggleAll(isPlanning) {
+	if(isPlanning) 
+	{
+		alert('is planning!');
+		$('#set-start-time').attr("disabled",false);
+		$('#add-player').attr("disabled",false);
+
+	}else
+	{
+		alert('not planning!');
+		$('#set-start-time').attr("disabled",true);
+		$('#add-player').attr("disabled",true);
+	}
+
 }
 
 function buildPlayerList(season, player) {
@@ -168,5 +186,21 @@ function startSeason() {
 			alert('启动新赛季失败');
 		}
 	});
+}
+
+function cancelSeason() {
 	
+	$.ajax({
+		type : "POST",
+		url : "/admin/cancelSeason",
+		dataType : "text",
+
+		success : function(data) {	
+			alert('中止当前赛季成功');
+
+		},
+		error : function(jqXHR) {
+			alert('中止当前赛季失败');
+		}
+	});
 }

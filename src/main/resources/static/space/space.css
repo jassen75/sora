@@ -4,5 +4,9 @@
 
 #photo {
 	margin-right: 5px;
-	margin-top:20px;
+	margin-top:5px;
+}
+
+#header {
+    padding-top: 15px;
 }

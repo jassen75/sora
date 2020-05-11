@@ -24,6 +24,7 @@ import cc.js.sora.match.db.SeasonRepository;
 import cc.js.sora.match.Player;
 import cc.js.sora.match.Record;
 import cc.js.sora.match.Season;
+import cc.js.sora.match.SeasonStatus;
 
 @RestController
 @RequestMapping("/record")
@@ -50,7 +51,7 @@ public class RecordController {
 			currentRecord = rebuildRecord(season);
 			
 			// only save when running 
-			if(seasonRepository.getSeason(season).getStatus() == 1)
+			if(seasonRepository.getSeason(season).getStatus() == SeasonStatus.RUNNING)
 			{
 				recordRepository.saveAll(currentRecord);
 				recordRepository.flush();
