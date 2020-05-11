@@ -1,3 +1,47 @@
+
 body {
-	
+	padding-top:0px;
+}
+
+
+#content {
+	min-height:800px;
+}
+
+
+[v-cloak] {
+    display: none;
+}
+
+#nav {
+	height: 45px;
+}
+
+#nav a {
+	color:#FFFFFF;
+}
+
+#logo {
+	width:100px;
+	height:100px;
+}
+
+#header {
+	background-color: rgb(212, 218, 218);
+	font: bold 40px/100% "微软雅黑", "Lucida Grande", "Lucida Sans", Helvetica, Arial, Sans;
+	color:rgb(47, 112, 136);
+	height:143px;
+
+	height: 143px;
+	border:0px;
+	margin:0px;
+}
+
+#head-images {
+	min-width:900px;
+}
+
+
+#footer {
+	text-align: center;
 }

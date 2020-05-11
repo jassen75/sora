@@ -6,28 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 	
-    @RequestMapping(value= {"/index", "/"})
+    @RequestMapping(value= {"/", "/match"})
 	public String index() {
-		return "forward:/match/index.html";
+		return "forward:/match/match.html";
 	}
 
-    @RequestMapping(value= { "/admin"})
-	public String admin() {
-		return "forward:/match/admin.html";
-	}
     
-    @RequestMapping(value= { "/score"})
-	public String score() {
-		return "forward:/match/score.html";
-	}
-    
-    @RequestMapping(value= { "/space"})
+    @RequestMapping(value= {"/index", "/space"})
 	public String space() {
-		return "forward:/match/index.html";
-	}
-    
-    @RequestMapping(value= { "/dashboard"})
-	public String dashboard() {
-		return "forward:/match/dashboard.html";
+		return "forward:/space/index.html";
 	}
 }
