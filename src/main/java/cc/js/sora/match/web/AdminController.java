@@ -61,6 +61,12 @@ public class AdminController {
 
 		return planningSeason;
 	}
+	
+	@GetMapping(path = "/seasons", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Season> getSeasons() {
+		
+		return seasonRepository.findAll();
+	}
 
 	@GetMapping(path = "/currentSeason", produces = MediaType.APPLICATION_JSON_VALUE)
 	public Season getCurrentSeason() {

@@ -13,12 +13,12 @@ add env.sh
 add ICP information at bottom
 beautify page with bootstrap/vue
 add personal space page
-
 cancle season
 database data backup
+error handler
 
 1.05
-support wx login
+support login
 support user enroll by self
 user profile page
 

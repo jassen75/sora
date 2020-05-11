@@ -8,6 +8,8 @@ $(document).ready(function() {
 	$("#add-player").click(addPlayer);
 	
 	$("#start-season").click(startSeason);
+	
+	$("#cancle-season").click(cancelSeason);
 });
 
 function loadSeasonData() {
@@ -16,7 +18,7 @@ function loadSeasonData() {
 		url : "/admin/currentSeason",
 		dataType : "json",
 		success : function(season) {
-			toggleAll(season['status']=='PLANNING');
+
 			$("#start-time").val(season['matchTime']);
 			$.ajax({
 				type : "GET",
@@ -24,7 +26,7 @@ function loadSeasonData() {
 				dataType : "json",
 				success : function(player) {
 					buildPlayerList(season, player);
-					
+					toggleAll(season['status']=='PLANNING');
 				},
 				error : function(jqXHR) {
 					// alert("Error: "+jqXHR.status);
@@ -42,15 +44,15 @@ function loadSeasonData() {
 function toggleAll(isPlanning) {
 	if(isPlanning) 
 	{
-		alert('is planning!');
 		$('#set-start-time').attr("disabled",false);
 		$('#add-player').attr("disabled",false);
+		$('.destory').attr("disabled",false);
 
 	}else
 	{
-		alert('not planning!');
 		$('#set-start-time').attr("disabled",true);
 		$('#add-player').attr("disabled",true);
+		$('.destory').attr("disabled",true);
 	}
 
 }
@@ -62,7 +64,7 @@ function buildPlayerList(season, player) {
 	
 	var data = season['players'];
 	var number = season['number'];
-	var table = $('<table"></table>');
+	var table = $('<table></table>');
 	for (var j = 0; j < data.length; j++) {
 		var tr = $('<tr></tr>');
 		var name = data[j]['name'];
@@ -179,7 +181,7 @@ function startSeason() {
 		dataType : "text",
 
 		success : function(data) {	
-			window.location.href = '/index.html';
+			window.location.href = '/';
 
 		},
 		error : function(jqXHR) {
@@ -197,6 +199,7 @@ function cancelSeason() {
 
 		success : function(data) {	
 			alert('中止当前赛季成功');
+			loadSeasonData();
 
 		},
 		error : function(jqXHR) {
