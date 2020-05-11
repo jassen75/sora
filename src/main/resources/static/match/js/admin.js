@@ -86,7 +86,7 @@ function buildPlayerList(season, player) {
 		
 				},
 				error : function(jqXHR) {
-					alert('删除失败');
+					hintError('删除失败');
 				}
 			});
 		});
@@ -134,7 +134,7 @@ function setTime(){
 			},
 	
 			success : function(data) {
-				alert('新赛季起始时间设定成功');
+				hintSuccess('新赛季起始时间设定成功');
 	
 			},
 			error : function(jqXHR) {
@@ -186,8 +186,7 @@ function startSeason() {
 
 		},
 		error : function(jqXHR) {
-			$("#error-dialog div").html("启动新赛季失败");
-			$("#error-dialog").modal('show');
+			hintError("启动新赛季失败");
 		}
 	});
 }
