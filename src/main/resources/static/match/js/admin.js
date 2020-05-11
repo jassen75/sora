@@ -138,7 +138,8 @@ function setTime(){
 	
 			},
 			error : function(jqXHR) {
-				alert('新赛季起始时间设定失败');
+				//$("#error-dialog div").html("新赛季起始时间设定失败");
+				//$("#error-dialog").model();
 			}
 		});
 		
@@ -185,7 +186,8 @@ function startSeason() {
 
 		},
 		error : function(jqXHR) {
-			alert('启动新赛季失败');
+			$("#error-dialog div").html("启动新赛季失败");
+			$("#error-dialog").modal('show');
 		}
 	});
 }

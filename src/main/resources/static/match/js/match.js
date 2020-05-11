@@ -27,6 +27,8 @@ $(document).ready(function() {
 	$("#season-control").click(switchToAdmin);
 	$("#home").click(switchToDashboard);
 	$("#save-score").click(switchToScore);
+	$("#hint-dialog").modal('hide');
+	$("#error-dialog").modal('hide');
 });
 
 function buildFooter(data) {
