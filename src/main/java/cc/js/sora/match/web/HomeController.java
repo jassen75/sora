@@ -8,21 +8,26 @@ public class HomeController {
 	
     @RequestMapping(value= {"/index", "/"})
 	public String index() {
-		return "forward:match.html";
+		return "forward:/match/index.html";
 	}
 
     @RequestMapping(value= { "/admin"})
 	public String admin() {
-		return "forward:/admin.html";
+		return "forward:/match/admin.html";
 	}
     
     @RequestMapping(value= { "/score"})
 	public String score() {
-		return "forward:/score.html";
+		return "forward:/match/score.html";
 	}
     
     @RequestMapping(value= { "/space"})
 	public String space() {
 		return "forward:/match/index.html";
+	}
+    
+    @RequestMapping(value= { "/dashboard"})
+	public String dashboard() {
+		return "forward:/match/dashboard.html";
 	}
 }

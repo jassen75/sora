@@ -44,7 +44,7 @@ function buildPlayerList(season, player) {
 	
 	var data = season['players'];
 	var number = season['number'];
-	var table = $('<table></table>');
+	var table = $('<table"></table>');
 	for (var j = 0; j < data.length; j++) {
 		var tr = $('<tr></tr>');
 		var name = data[j]['name'];

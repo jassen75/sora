@@ -34,8 +34,39 @@ body {
 	text-align: center;
 }
 
+#content {
+	min-height:800px;
+}
+
 #pict {
+	position: relative;
+	left: 210px;
 	width:225px;
 	height: 300px;
-	background-image: url('../image/peo.png');
+	background-image: url('/match/image/peo.png');
 }
+
+#score-panel .panel-body div {
+	float:left;
+}
+
+.destory {
+	width:22px;
+	height:22px;
+	background-image: url('/match/image/destory.png');
+	margin-left:40px;
+}
+
+#player-list {
+	margin-bottom:70px;
+}
+
+#unplayer-list {
+
+	color: #A8A8A8;
+}
+
+[v-cloak] {
+    display: none;
+}
+

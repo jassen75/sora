@@ -23,11 +23,52 @@ $(document).ready(function() {
 			// alert("Error: "+jqXHR.status);
 		}
 	});
-
+	
+	$("#season-control").click(switchToAdmin);
+	$("#home").click(switchToDashboard);
+	$("#save-score").click(switchToScore);
 });
 
 function buildFooter(data) {
 	$("#footer").html('黑豆的个人空间 版本:' + data['version'] + ' <br>苏ICP备20025024号');
+}
+
+function switchToDashboard() {
+	window.location.href = '/';
+}
+
+function switchToScore() {
+	$.ajax({
+		type : "GET",
+		url : "/match/score.html",
+		dataType : "text",
+		success : function(data) {
+			$("#content").children("div").remove();
+			$("#content").html(data);
+			$.getScript("/match/js/score.js", function(){
+			});
+		},
+		error : function(jqXHR) {
+			// alert("Error: "+jqXHR.status);
+		}
+	});
+}
+
+function switchToAdmin() {
+	$.ajax({
+		type : "GET",
+		url : "/match/admin.html",
+		dataType : "text",
+		success : function(data) {
+			$("#content").children("div").remove();
+			$("#content").html(data);
+			$.getScript("/match/js/admin.js", function(){
+			});
+		},
+		error : function(jqXHR) {
+			// alert("Error: "+jqXHR.status);
+		}
+	});
 }
 
 function loadRecordList() {

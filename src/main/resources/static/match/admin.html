@@ -1,0 +1,41 @@
+<div class="container">
+	<div id="season-panel" class="panel panel-info">
+		<div class="panel-heading">
+			<h3>设置赛季开始时间</h3>
+		</div>
+		<div class="panel-body">
+			<input id="start-time" type="date" />
+			<button id="set-start-time" type="button">设置</button>
+		</div>
+	</div>
+
+	<div id="player-panel" class="panel panel-info">
+		<div class="panel-heading">
+			<h3>当前赛季参赛人员管理</h3>
+		</div>
+		<div class="panel-body">
+			<h4>参赛队员列表：</h4>
+			<div id="player-list"></div>
+			<h4>未参赛队员列表：</h4>
+			<div id="unplayer-list"></div>
+			<br> <br> <br> <br>
+			<div>增加新队员:</div>
+			<input id="new-player" type="text"> <select
+				id="new-player-server">
+				<option>卡尔萨斯</option>
+				<option>米拉港</option>
+				<option>羁绊之地</option>
+			</select>
+			<button id="add-player" type="button">增加</button>
+		</div>
+	</div>
+	<div id="admin-panel" class="panel panel-danger">
+		<div class="panel-heading">
+			<h3>赛季管理</h3>
+		</div>
+		<div class="panel-body">
+			<button id="start-season" type="button">开始新赛季</button>
+			<button id="cancle-season" type="button">撤销当前赛季</button>
+		</div>
+	</div>
+</div>
