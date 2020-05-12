@@ -18,13 +18,16 @@ CREATE TABLE IF NOT EXISTS record (
 	score1 integer,
 	score2 integer,
 	season integer,
+	match_type integer,
 	map integer,
-	match_time timestamp not null
+	match_time timestamp not null,
+	video_id bigint not null
 );
 
 CREATE TABLE IF NOT EXISTS season (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
 	number integer,
+	match_type integer,
 	status integer, 
 	start_time timestamp
 );
@@ -33,6 +36,12 @@ CREATE TABLE IF NOT EXISTS season_players (
 	season_id bigint not null,
 	players_id bigint not null,
 	primary key(season_id, players_id)
+);
+
+CREATE TABLE IF NOT EXISTS video (
+	id bigint AUTO_INCREMENT PRIMARY KEY,
+	video_type integer,
+	info VARCHAR(512)
 );
 
 INSERT INTO player(name, server) VALUES

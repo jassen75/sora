@@ -16,4 +16,9 @@ public class HomeController {
 	public String space() {
 		return "forward:/space/index.html";
 	}
+    
+    @RequestMapping(value= {"/lyb"})
+	public String lyb() {
+		return "forward:/match/kkb.html";
+	}
 }

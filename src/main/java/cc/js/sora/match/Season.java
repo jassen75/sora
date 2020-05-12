@@ -50,6 +50,10 @@ public class Season {
 	@Enumerated(EnumType.ORDINAL)  
 	SeasonStatus status;
 	
+	@Column(name="match_type")
+	@Enumerated(EnumType.ORDINAL)  
+	MatchType matchType;
+	
 	@Column(name="start_time")
     @Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
