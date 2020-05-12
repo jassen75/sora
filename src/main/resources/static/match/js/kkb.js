@@ -32,6 +32,8 @@ $(document).ready(function() {
 	$("#save-score").click(switchToScore);
 });
 
+var matchType = 'kkb';
+
 function switchToScore() {
 	$.ajax({
 		type : "GET",
@@ -49,14 +51,20 @@ function switchToScore() {
 	});
 }
 
+function switchToDashboard() {
+	window.location.href = '/lyb';
+}
+
 function switchToAdmin() {
 	$.ajax({
 		type : "GET",
-		url : "/match/kkb_admin.html",
+		url : "/match/admin.html",
 		dataType : "text",
 		success : function(data) {
 			$("#content").children("div").remove();
 			$("#content").html(data);
+			$.getScript("/match/js/admin.js", function(){
+			});
 		},
 		error : function(jqXHR) {
 			// alert("Error: "+jqXHR.status);

@@ -44,6 +44,13 @@ CREATE TABLE IF NOT EXISTS video (
 	info VARCHAR(512)
 );
 
+CREATE TABLE IF NOT EXISTS role (
+	id bigint AUTO_INCREMENT PRIMARY KEY,
+	season bigint not null,
+	player bigint not null,
+	name VARCHAR(255)
+);
+
 INSERT INTO player(name, server) VALUES
 ('朱老板','羁绊之地'),
 ('黑豆','羁绊之地'),

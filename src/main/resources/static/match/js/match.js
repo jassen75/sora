@@ -46,6 +46,7 @@ $(document).ready(function() {
 	$("#save-score").click(switchToScore);
 });
 
+var matchType = 'jbb';
 function loadSeasonData(season) {
 	var hint;
 	if(season['status']=='PLANNING') 
@@ -87,7 +88,7 @@ function buildFooter(data) {
 }
 
 function switchToDashboard() {
-	window.location.href = '/';
+	window.location.href = '/match';
 }
 
 function switchToScore() {
