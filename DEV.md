@@ -9,21 +9,30 @@ season operations.
 
 1.04
 
-upgrade springboot to latest
-support wx login
-support user enroll by self
-add ICP information at bottom
-user profile page
-database data backup
-cancle season
 add env.sh
+add ICP information at bottom
+beautify page with bootstrap/vue
+add personal space page
+cancle season
+error handler
 
 1.05
 
-support add match replay
-beautify match schedule
-add match's card chosen
+history records
+not show fake records
+server dropdown improve(default value, 8 servers)
+support login(wx login not supported now)
+database data backup
+support user enroll by self
+user profile page
+diary module
+
 
 1.06
+support ssh
+support add match replay
+add match's card chosen
 
+1.07
 add news module
+gitlab ci/cd

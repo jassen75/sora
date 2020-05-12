@@ -2,6 +2,6 @@
 
 set -e -x
 
-docker stop mysql
+docker stop sora_mysql_db
 
-docker rm mysql
+docker rm sora_mysql_db
