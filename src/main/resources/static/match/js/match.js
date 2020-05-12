@@ -5,14 +5,16 @@ $(document).ready(function() {
 		url : "/admin/currentSeason",
 		dataType : "json",
 		success : function(season) {
-			
+
+			loadSeasonData(season) ;
+
 			$.ajax({
 				type : "GET",
 				url : "/record/"+season['number']+"/score-board",
 				dataType : "json",
 				success : function(data) {
 					buildScoreTable2(data);
-					loadRecordList();
+					loadRecordList(season['number']);
 				},
 				error : function(jqXHR) {
 					hintError('获取排行榜数据失败');
@@ -43,6 +45,21 @@ $(document).ready(function() {
 	$("#home").click(switchToDashboard);
 	$("#save-score").click(switchToScore);
 });
+
+function loadSeasonData(season) {
+	var hint;
+	if(season['status']=='PLANNING') 
+	{
+		hint='第'+season['number']+'届比赛正在筹备中';
+	} else if(season['status']=='RUNNING') 
+	{
+		hint='第'+season['number']+'届比赛火热进行中';
+	} else	
+	{
+		hint='unknown status for season '+season['number'];
+	}
+	$("#season-hint").html(hint);
+}
 
 function hintInfo(message) 
 {
@@ -107,10 +124,10 @@ function switchToAdmin() {
 	});
 }
 
-function loadRecordList() {
+function loadRecordList(season) {
 	$.ajax({
 		type : "GET",
-		url : "/record/1",
+		url : "/record/"+season,
 		dataType : "json",
 		success : function(data) {
 			buildRecordList2(data);

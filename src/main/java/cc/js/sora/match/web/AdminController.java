@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cc.js.sora.match.db.PlayerRepository;
 import cc.js.sora.match.db.RecordRepository;
 import cc.js.sora.match.db.SeasonRepository;
+import lombok.extern.slf4j.Slf4j;
 import cc.js.sora.ErrorMessage;
 import cc.js.sora.ResponseMessage;
 import cc.js.sora.match.PlanningSeasonFailed;
@@ -29,6 +30,7 @@ import cc.js.sora.match.SeasonStatus;
 
 @RestController
 @RequestMapping("/admin")
+@Slf4j
 public class AdminController {
 
 	@Autowired
@@ -44,6 +46,9 @@ public class AdminController {
 		int planningNumber = getMaxCompleteSeasonNumber() + 1;
 		Season planningSeason = seasonRepository.getSeason(planningNumber);
 		if (planningSeason == null) {
+			log.info("*********************************************************************");
+			log.info("planning new season, season "+planningNumber);
+			log.info("*********************************************************************");
 			planningSeason = new Season();
 			planningSeason.setNumber(planningNumber);
 			planningSeason.setStatus(SeasonStatus.PLANNING);
@@ -163,7 +168,7 @@ public class AdminController {
 		Season s = getRunningSeason();
 
 		if (s == null) {
-			throw new RuntimeException("season have not started!");
+			throw new ErrorMessage(10005, "season have not started!");
 		}
 		List<Record> records = recordRepository.findRecordBySeason(s.getNumber());
 
@@ -191,30 +196,43 @@ public class AdminController {
 		} else {
 			throw new ErrorMessage(99999, "some trouble happened!");
 		}
+		log.info("save match score:"+record);
 		recordRepository.saveAndFlush(record);
+		
+		checkComplete();
 		return ResponseMessage.successMessage();
 	}
 
 	@RequestMapping(path = "/startSeason", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseMessage startSeason() {
 		
-		checkRunning();
-		
+		Season running = this.getRunningSeason();
+		if (running != null) {
+			throw new ErrorMessage(10004, "比赛还没结束");
+		}
 		Season s = getPlanningSeason();
 		if (s.getMatchTime() != null && s.getMatchTime().getTime() > new Date().getTime()) {
 			s.setStatus(SeasonStatus.RUNNING);
 			seasonRepository.saveAndFlush(s);
+			
+			// clear records if exist!
+			log.warn(">>>>>  change season "+s.getNumber() + " from planning to running, clear records if exist!<<<<<");
+			List<Record> records = recordRepository.findRecordBySeason(s.getNumber());
+			recordRepository.deleteAll(records);
+			recordRepository.flush();
 			return ResponseMessage.successMessage();
 		} else {
 			throw new ErrorMessage(10003, "比赛时间已过");
 		}
 
 	}
-
+	
 	@RequestMapping(path = "/cancelSeason", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseMessage cancelSeason() {
 		Season s = this.getRunningSeason();
 		if (s != null) {
+			log.info("Season "+s.getNumber()+" is canceled by admin!");
+			log.info(">>>>>  change season "+s.getNumber() + " from running to planning   <<<<<");
 			s.setStatus(SeasonStatus.PLANNING);
 			List<Record> records = recordRepository.findRecordBySeason(s.getNumber());
 			recordRepository.deleteAll(records);
@@ -236,17 +254,29 @@ public class AdminController {
 		}
 		return s.getPlayers();
 	}
-
-	private void checkRunning() {
+	
+	private void checkComplete() {
 		Season running = this.getRunningSeason();
 		if (running != null) {
 			List<Record> recordList = recordRepository.findRecordBySeason(running.getNumber());
 			if (recordList.stream().anyMatch(record -> record.getScore1() == -1 || record.getScore2() == -1)) {
-				throw new ErrorMessage(10004, "比赛还没结束");
+				return;
+			} else
+			{
+				seasonComplete(running);
+				getPlanningSeason(); 
 			}
-			running.setStatus(SeasonStatus.COMPLETE);
-			seasonRepository.saveAndFlush(running);
-		}
+		} 
+	}
+	
+	private void seasonComplete(Season running) {
+		log.info("*********************************************************************");
+		log.info("all matchs of season "+running.getNumber()+" completedm stop season");
+		log.info(">>>>>  change season "+running.getNumber() + " from running to complete   <<<<<");
+		log.info("*********************************************************************");
+
+		running.setStatus(SeasonStatus.COMPLETE);
+		seasonRepository.saveAndFlush(running);
 	}
 
 }

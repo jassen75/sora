@@ -52,7 +52,6 @@ function toggleAll(season) {
 		$('#season-panel').removeClass('panel-default');
 		$('#player-panel').addClass('panel-info');
 		$('#season-panel').addClass('panel-info');
-
 	}else
 	{
 		hintInfo('第'+season['number']+'届比赛正在进行中，无法更改赛季设定');
@@ -64,7 +63,6 @@ function toggleAll(season) {
 		$('#season-panel').removeClass('panel-info');
 		$('#player-panel').addClass('panel-default');
 		$('#season-panel').addClass('panel-default');
-
 	}
 
 }
@@ -229,6 +227,26 @@ function startSeason() {
 		},
 		error : function(jqXHR) {
 			hintError("开始赛季失败了");
+		}
+	});
+}
+
+function stopSeason() {
+	
+	$.ajax({
+		type : "POST",
+		url : "/admin/stopSeason",
+		dataType : "json",
+
+		success : function(data) {	
+			if(data['success']) {
+				hintSuccess('当前赛季顺利结束');
+			} else {
+				hintError(data['message']);
+			}
+		},
+		error : function(jqXHR) {
+			hintError("结束赛季失败了");
 		}
 	});
 }

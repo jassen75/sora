@@ -17,6 +17,10 @@ cancle season
 error handler
 
 1.05
+
+history records
+not show fake records
+server dropdown improve(default value, 8 servers)
 support login(wx login not supported now)
 database data backup
 support user enroll by self

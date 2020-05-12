@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cc.js.sora.match.db.PlayerRepository;
 import cc.js.sora.match.db.RecordRepository;
 import cc.js.sora.match.db.SeasonRepository;
+import lombok.extern.slf4j.Slf4j;
 import cc.js.sora.match.Player;
 import cc.js.sora.match.Record;
 import cc.js.sora.match.Season;
@@ -28,6 +29,7 @@ import cc.js.sora.match.SeasonStatus;
 
 @RestController
 @RequestMapping("/record")
+@Slf4j
 public class RecordController {
 
 	private static final Logger log = LoggerFactory.getLogger(RecordController.class);
@@ -53,6 +55,7 @@ public class RecordController {
 			// only save when running 
 			if(seasonRepository.getSeason(season).getStatus() == SeasonStatus.RUNNING)
 			{
+				log.info("save match schedule for season "+season);
 				recordRepository.saveAll(currentRecord);
 				recordRepository.flush();
 			}
@@ -74,7 +77,9 @@ public class RecordController {
 	List<Map<String, Object>> scoreBoard(@PathVariable(name = "season") Integer season) {
 		Map<String, Map<String, Integer>> result = new HashMap();
 
-		List<Player> playerList = admin.getCurrentSeason().getPlayers();
+		Season s = seasonRepository.getSeason(season);
+		
+		List<Player> playerList = s.getPlayers();
 		for (int i = 0; i < playerList.size(); i++) {
 			Map r = new HashMap();
 			r.put("name", playerList.get(i).getName());
@@ -85,7 +90,7 @@ public class RecordController {
 			result.put(playerList.get(i).getName(), r);
 		}
 
-		List<Record> recordList = recordRepository.findAll();
+		List<Record> recordList = recordRepository.findRecordBySeason(season);
 		for (int i = 0; i < recordList.size(); i++) {
 			Record r = recordList.get(i);
 			if (r.getScore1() == -1 || r.getScore2() == -1) {
@@ -124,7 +129,7 @@ public class RecordController {
 	public List rebuildRecord(int season) {
 		Random random = new Random();
 		
-		Season currentSeason = this.admin.getCurrentSeason();
+		Season currentSeason = seasonRepository.getSeason(season);
 		Date startTime = currentSeason.getMatchTime();
 		if(startTime == null) 
 		{
