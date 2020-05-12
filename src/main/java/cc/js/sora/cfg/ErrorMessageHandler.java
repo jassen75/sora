@@ -13,14 +13,14 @@ public class ErrorMessageHandler {
 
 	@ExceptionHandler(ErrorMessage.class)
 	public ResponseMessage apiExceptionHandler(ErrorMessage ex) {
-		log.error("Error meesage:", ex.getMessage());
+		log.error("Error meesage:"+ex.getMessage());
 		return ResponseMessage.errorMessage(ex);
 	}
 
 	
 	@ExceptionHandler(Exception.class)
 	public ResponseMessage apiExceptionHandler(Exception ex) {
-		log.error("Error meesage:", ex);
+		log.error("Error meesage:"+ex, ex);
 		return new ResponseMessage(99999, "Internal server error", false);
 	}
 }
