@@ -13,7 +13,7 @@ public class ErrorMessageHandler {
 
 	@ExceptionHandler(ErrorMessage.class)
 	public ResponseMessage apiExceptionHandler(ErrorMessage ex) {
-		log.error("Error meesage:"+ex.getMessage());
+		log.error("Error meesage["+ex.getCode()+"]:"+ex.getMessage());
 		return ResponseMessage.errorMessage(ex);
 	}
 

@@ -92,7 +92,7 @@ function buildPlayerList(season, player) {
 			$.ajax({
 				type : "POST",
 				url : "/admin/removePlayer",
-				dataType : "text",
+				dataType : "json",
 				data: {
 					name:e.data['name'],
 					server:e.data['server']
@@ -101,12 +101,10 @@ function buildPlayerList(season, player) {
 				success : function(data) {
 					if(data['success']) {
 						hintSuccess('该队员将不参加本赛季比赛');
-					} else {
 						loadSeasonData();
+					} else {
 						hintError(data['message']);
 					}
-					
-		
 				},
 				error : function(jqXHR) {
 					hintError('删除失败');
