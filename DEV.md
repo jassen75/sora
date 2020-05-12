@@ -14,11 +14,11 @@ add ICP information at bottom
 beautify page with bootstrap/vue
 add personal space page
 cancle season
-database data backup
 error handler
 
 1.05
 support login(wx login not supported now)
+database data backup
 support user enroll by self
 user profile page
 diary module

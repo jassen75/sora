@@ -58,9 +58,12 @@ public class AdminController {
 			}
 
 			seasonRepository.saveAndFlush(planningSeason);
-		} else if (planningSeason.getStatus() != SeasonStatus.PLANNING) {
+		} else if (planningSeason.getStatus() == SeasonStatus.RUNNING) {
 			throw new PlanningSeasonFailed(planningSeason.getStatus());
-		}
+		} else if (planningSeason.getStatus() == SeasonStatus.UNKNOWN) {
+			planningSeason.setStatus(SeasonStatus.PLANNING);
+			seasonRepository.saveAndFlush(planningSeason);
+		} 
 
 		return planningSeason;
 	}
