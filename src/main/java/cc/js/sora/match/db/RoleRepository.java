@@ -10,7 +10,7 @@ import cc.js.sora.match.Role;
 public interface RoleRepository extends JpaRepository<Role, Long> {
 	
 	
-    @Query("from Role where season=?1")
-    public List<Role> findRoleBySeason(int season);
+//    @Query("from Role where season=?1")
+//    public List<Role> findRoleBySeason(int season);
 
 }

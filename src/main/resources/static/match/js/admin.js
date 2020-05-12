@@ -13,6 +13,7 @@ $(document).ready(function() {
 
 });
 
+
 alert('match type=='+matchType);
 
 function loadSeasonData() {
@@ -50,7 +51,7 @@ function loadSeasonData() {
 	});
 }
 
-function loadRoleList() {
+function loadRoleList(season) {
 	$.ajax({
 		type : "GET",
 		url : "/admin/challengers",
@@ -66,6 +67,7 @@ function loadRoleList() {
 		}
 	});
 }
+
 function toggleAll(season) {
 	if(season['status']=='PLANNING') 
 	{
@@ -91,7 +93,7 @@ function toggleAll(season) {
 	}
 
 }
-function buildRoleList(season, challengers)
+function buildRoleList(season, challengers) {
 	var list = $("#role-list");
 	
 	list.children("table").remove();

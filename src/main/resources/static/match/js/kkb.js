@@ -1,5 +1,5 @@
 $(document).ready(function() {
-	
+	matchType = 'kkb';
 	$.ajax({
 		type : "GET",
 		url : "/admin/currentSeason",
@@ -32,7 +32,7 @@ $(document).ready(function() {
 	$("#save-score").click(switchToScore);
 });
 
-var matchType = 'kkb';
+
 
 function switchToScore() {
 	$.ajax({

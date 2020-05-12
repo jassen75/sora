@@ -146,12 +146,13 @@ public class AdminController {
 	@RequestMapping(path = "/removeChallenger", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseMessage removeChallenger(@RequestParam String name, @RequestParam String server) {
 		Season s = getPlanningSeason();
-		List<Role> roles = roleRepository.findRoleBySeason(s.getNumber());
-		roles.forEach(
-				role->{
-					if(role.getPlayer().getName().equals(name) && role.getPlayer().getServer().equals(server))
-						roleRepository.delete(role);
-					});
+		List<Role> roles = roleRepository.findAll();
+		roles.forEach(role -> {
+			if (role.getPlayer().getName().equals(name) && role.getPlayer().getServer().equals(server)
+					&& role.getSeason().getNumber() == s.getNumber()
+					&& role.getSeason().getMatchType() == s.getMatchType())
+				roleRepository.delete(role);
+		});
 		return ResponseMessage.successMessage();
 	}
 
@@ -183,7 +184,10 @@ public class AdminController {
 	public List<Player> challengers() {
 		Season s = getPlanningSeason();
 		List<Player> result = new ArrayList<Player>();
-		roleRepository.findRoleBySeason(s.getNumber()).stream().forEach(role -> result.add(role.getPlayer()));
+		roleRepository.findAll().stream().forEach(role -> {
+			if (role.getSeason().getNumber() == s.getNumber() && role.getSeason().getMatchType() == s.getMatchType())
+				result.add(role.getPlayer());
+		});
 		return result;
 	}
 
