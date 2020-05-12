@@ -26,33 +26,45 @@ function loadSeasonData() {
 				dataType : "json",
 				success : function(player) {
 					buildPlayerList(season, player);
-					toggleAll(season['status']=='PLANNING');
+					toggleAll(season);
 				},
 				error : function(jqXHR) {
-					// alert("Error: "+jqXHR.status);
+					hintError('导入队员列表失败');
 				}
 			});
 			
 
 		},
 		error : function(jqXHR) {
-			// alert("Error: "+jqXHR.status);
+			hintError('导入赛季数据失败');
 		}
 	});
 }
 
-function toggleAll(isPlanning) {
-	if(isPlanning) 
+function toggleAll(season) {
+	if(season['status']=='PLANNING') 
 	{
 		$('#set-start-time').attr("disabled",false);
 		$('#add-player').attr("disabled",false);
 		$('.destory').attr("disabled",false);
+		
+		$('#player-panel').removeClass('panel-default');
+		$('#season-panel').removeClass('panel-default');
+		$('#player-panel').addClass('panel-info');
+		$('#season-panel').addClass('panel-info');
 
 	}else
 	{
+		hintInfo('第'+season['number']+'届比赛正在进行中，无法更改赛季设定');
 		$('#set-start-time').attr("disabled",true);
 		$('#add-player').attr("disabled",true);
 		$('.destory').attr("disabled",true);
+		
+		$('#player-panel').removeClass('panel-info');
+		$('#season-panel').removeClass('panel-info');
+		$('#player-panel').addClass('panel-default');
+		$('#season-panel').addClass('panel-default');
+
 	}
 
 }
@@ -72,6 +84,11 @@ function buildPlayerList(season, player) {
 		var td2=$('<td></td>');
 		var destory = $('<div class="destory" value="'+name+'"></div>');
 		destory.click(data[j], function(e){
+			if($(this).attr("disabled"))
+			{
+				hintInfo("赛季进行时无法调整队员名单");
+				return;
+			}
 			$.ajax({
 				type : "POST",
 				url : "/admin/removePlayer",
@@ -82,7 +99,13 @@ function buildPlayerList(season, player) {
 				},
 		
 				success : function(data) {
-					loadSeasonData();
+					if(data['success']) {
+						hintSuccess('该队员将不参加本赛季比赛');
+					} else {
+						loadSeasonData();
+						hintError(data['message']);
+					}
+					
 		
 				},
 				error : function(jqXHR) {
@@ -128,13 +151,18 @@ function setTime(){
 		$.ajax({
 			type : "POST",
 			url : "/admin/setPlanningTime",
-			dataType : "text",
+			dataType : "json",
 			data: {
 				date: date,
 			},
 	
 			success : function(data) {
-				hintSuccess('新赛季起始时间设定成功');
+				if(data['success']) {
+					hintSuccess('新赛季起始时间设定成功');
+				} else {
+					hintError(data['message']);
+				}
+				
 	
 			},
 			error : function(jqXHR) {
@@ -153,10 +181,16 @@ function setTime(){
 function addPlayer() {
 	var name = $("#new-player").val();
 	var server = $("#new-player-server").val();
+	if(!name) {
+		hintError('队员名还没填');
+	}
+	if(!server) {
+		hintError('请选择服务器');
+	}
 	$.ajax({
 		type : "POST",
 		url : "/admin/addPlayer",
-		dataType : "text",
+		dataType : "json",
 		data: {
 			name: name,
 			server: server
@@ -164,7 +198,13 @@ function addPlayer() {
 		},
 
 		success : function(data) {
-			loadSeasonData();
+			if(data['success']) {
+				hintSuccess('添加成员成功');
+				loadSeasonData();
+			} else {
+				hintError(data['message']);		
+			}
+
 
 		},
 		error : function(jqXHR) {
@@ -179,14 +219,18 @@ function startSeason() {
 	$.ajax({
 		type : "POST",
 		url : "/admin/startSeason",
-		dataType : "text",
+		dataType : "json",
 
 		success : function(data) {	
-			window.location.href = '/';
-
+			if(data['success']) {
+				hintSuccess('新赛季成功开启');
+				window.location.href = '/';
+			} else {
+				hintError(data['message']);
+			}
 		},
 		error : function(jqXHR) {
-			hintError("启动新赛季失败");
+			hintError("开始赛季失败了");
 		}
 	});
 }
@@ -196,15 +240,19 @@ function cancelSeason() {
 	$.ajax({
 		type : "POST",
 		url : "/admin/cancelSeason",
-		dataType : "text",
+		dataType : "json",
 
 		success : function(data) {	
-			alert('中止当前赛季成功');
-			loadSeasonData();
+			if(data['success']) {
+				hintSuccess('中止当前赛季成功');
+				loadSeasonData();
 
+			} else {
+				hintError(data['message']);
+			}
 		},
 		error : function(jqXHR) {
-			alert('中止当前赛季失败');
+			hintError('中止当前赛季失败');
 		}
 	});
 }

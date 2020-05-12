@@ -18,11 +18,14 @@ database data backup
 error handler
 
 1.05
-support login
+support login(wx login not supported now)
 support user enroll by self
 user profile page
+diary module
+
 
 1.06
+support ssh
 support add match replay
 add match's card chosen
 

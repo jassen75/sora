@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RestController;
 import cc.js.sora.match.db.PlayerRepository;
 import cc.js.sora.match.db.RecordRepository;
 import cc.js.sora.match.db.SeasonRepository;
+import cc.js.sora.ErrorMessage;
+import cc.js.sora.ResponseMessage;
+import cc.js.sora.match.PlanningSeasonFailed;
 import cc.js.sora.match.Player;
 import cc.js.sora.match.Record;
 import cc.js.sora.match.Season;
@@ -56,7 +59,7 @@ public class AdminController {
 
 			seasonRepository.saveAndFlush(planningSeason);
 		} else if (planningSeason.getStatus() != SeasonStatus.PLANNING) {
-			throw new RuntimeException("Not a Planning season!!");
+			throw new PlanningSeasonFailed(planningSeason.getStatus());
 		}
 
 		return planningSeason;
@@ -100,8 +103,8 @@ public class AdminController {
 
 	}
 
-	@RequestMapping(path = "/setPlanningTime", method = RequestMethod.POST)
-	public void setPlanningTime(@RequestParam String date) {
+	@RequestMapping(path = "/setPlanningTime", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseMessage setPlanningTime(@RequestParam String date) {
 
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date d;
@@ -113,21 +116,28 @@ public class AdminController {
 			// season.getPlayers().forEach(player -> players.add(player));
 			// season.setPlayers(players);
 			seasonRepository.saveAndFlush(season);
+			return ResponseMessage.successMessage();
 		} catch (ParseException e) {
-			throw new RuntimeException("couldn't parse date" + date);
+			throw new ErrorMessage(99998, "couldn't parse date" + date);
 		}
 
 	}
 
-	@RequestMapping(path = "/removePlayer", method = RequestMethod.POST)
-	public void removePlayer(@RequestParam String name, @RequestParam String server) {
+	@RequestMapping(path = "/removePlayer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseMessage removePlayer(@RequestParam String name, @RequestParam String server) {
 		Season s = getPlanningSeason();
 		s.getPlayers().removeIf(player -> player.getName().equals(name) && player.getServer().equals(server));
 		seasonRepository.saveAndFlush(s);
+		return ResponseMessage.successMessage();
 	}
 
-	@RequestMapping(path = "/addPlayer", method = RequestMethod.POST)
-	public void addPlayer(@RequestParam String name, @RequestParam String server) {
+	@RequestMapping(path = "/addPlayer", method = RequestMethod.POST,  produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseMessage addPlayer(@RequestParam String name, @RequestParam String server) {
+		
+		if(name == null || "".equals(name)) {
+			throw new ErrorMessage(40000, "空的队员名字");
+		}
+		
 		Player player = playerRepository.findPlayer(name, server);
 		if (player == null) {
 			player = new Player();
@@ -140,11 +150,13 @@ public class AdminController {
 			s.getPlayers().add(player);
 			seasonRepository.saveAndFlush(s);
 		}
+		
+		return ResponseMessage.successMessage();
 
 	}
 
-	@RequestMapping(path = "/setScore", method = RequestMethod.POST)
-	public void setScore(@RequestParam String player1, @RequestParam String player2, @RequestParam String score) {
+	@RequestMapping(path = "/setScore", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseMessage setScore(@RequestParam String player1, @RequestParam String player2, @RequestParam String score) {
 		Season s = getRunningSeason();
 
 		if (s == null) {
@@ -174,26 +186,30 @@ public class AdminController {
 			record.setScore1(score2);
 			record.setScore2(score1);
 		} else {
-			throw new RuntimeException("some trouble happened!");
+			throw new ErrorMessage(99999, "some trouble happened!");
 		}
 		recordRepository.saveAndFlush(record);
+		return ResponseMessage.successMessage();
 	}
 
-	@RequestMapping(path = "/startSeason", method = RequestMethod.POST)
-	public void startSeason() {
+	@RequestMapping(path = "/startSeason", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseMessage startSeason() {
+		
+		checkRunning();
+		
 		Season s = getPlanningSeason();
 		if (s.getMatchTime() != null && s.getMatchTime().getTime() > new Date().getTime()) {
-			checkRunning();
 			s.setStatus(SeasonStatus.RUNNING);
 			seasonRepository.saveAndFlush(s);
+			return ResponseMessage.successMessage();
 		} else {
-			throw new RuntimeException("比赛时间已过");
+			throw new ErrorMessage(10003, "比赛时间已过");
 		}
 
 	}
 
-	@RequestMapping(path = "/cancelSeason", method = RequestMethod.POST)
-	public void cancelSeason() {
+	@RequestMapping(path = "/cancelSeason", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseMessage cancelSeason() {
 		Season s = this.getRunningSeason();
 		if (s != null) {
 			s.setStatus(SeasonStatus.PLANNING);
@@ -202,8 +218,9 @@ public class AdminController {
 
 			seasonRepository.saveAndFlush(s);
 			recordRepository.flush();
+			return ResponseMessage.successMessage();
 		} else {
-			throw new RuntimeException("赛季还没开始");
+			throw new ErrorMessage(10002, "赛季还没开始");
 		}
 
 	}
@@ -222,7 +239,7 @@ public class AdminController {
 		if (running != null) {
 			List<Record> recordList = recordRepository.findRecordBySeason(running.getNumber());
 			if (recordList.stream().anyMatch(record -> record.getScore1() == -1 || record.getScore2() == -1)) {
-				throw new RuntimeException("比赛还没结束");
+				throw new ErrorMessage(10004, "比赛还没结束");
 			}
 			running.setStatus(SeasonStatus.COMPLETE);
 			seasonRepository.saveAndFlush(running);

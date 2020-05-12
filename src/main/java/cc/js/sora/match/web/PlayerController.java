@@ -5,13 +5,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import cc.js.sora.match.db.PlayerRepository;
 import cc.js.sora.match.Player;
-import cc.js.sora.match.Record;
+import cc.js.sora.match.db.PlayerRepository;
 
 @RestController
 @RequestMapping("/player")

@@ -61,14 +61,14 @@ function changeScore()
 			score = score.replace("：", ":");
 		} else
 		{
-			alert("不合法的比分")
+			hintError("不合法的比分")
 			return;
 		}
 	}
 	$.ajax({
 		type : "POST",
 		url : "/admin/setScore",
-		dataType : "text",
+		dataType : "json",
 		data: {
 			player1:player1,
 			player2:player2,
@@ -76,11 +76,15 @@ function changeScore()
 		},
 
 		success : function(data) {
-			alert('修改比分成功');
+			if(data['code'] != 0) {
+				hintError(data['message']);
+			} else {
+				hintSuccess('修改比分成功');
+			}
 
 		},
 		error : function(jqXHR) {
-			alert('修改比分失败');
+			hintError('修改比分失败');
 		}
 	});
 	
