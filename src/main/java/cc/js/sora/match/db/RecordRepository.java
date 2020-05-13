@@ -9,7 +9,7 @@ import cc.js.sora.match.Record;
 
 public interface RecordRepository extends JpaRepository<Record, Long> {
 	
-    @Query("from Record where season=?1 order by matchTime asc")
+    @Query("from Record r where r.season.number=?1 order by group asc")
     public List<Record> findRecordBySeason(int season);  
 
 }

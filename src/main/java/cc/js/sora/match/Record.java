@@ -55,7 +55,7 @@ public class Record {
 	@JoinColumn(name = "season_id")
 	Season season;
 
-	@Column(name = "group")
+	@Column(name = "record_group")
 	int group;
 
 	@Column(name = "map")

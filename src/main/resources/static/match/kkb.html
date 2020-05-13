@@ -48,6 +48,32 @@
 	</div>
 	<div id="content">
 		<div class="container">
+		
+			<p>标签式的导航菜单</p>
+			<ul class="nav nav-tabs">
+			  <li class="active"><a href="#">第一轮</a></li>
+			  <li><a href="#">第二轮</a></li>
+			</ul>
+			<div id="schedule-list">
+				<div class="panel-group" v-cloak>
+					<div v-for="(value, index) in records" class="panel panel-default">
+						<div class="panel-heading">
+							<h3 class="panel-title">第{{index+1}}轮
+								{{value[0]['matchTime']}}</h3>
+						</div>
+						<div class="panel-body">
+							<table class="table table-striped">
+								<tr v-for="record in value">
+									<td>{{record['player1']['name']}} vs
+										{{record['player2']['name']}}</td>
+									<td>{{getMap(record['map'])}}</td>
+									<td>{{record['score']}}</td>
+								</tr>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
 			<div id="pict"></div>
 			<div id="desc">
 				<pre>

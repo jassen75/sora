@@ -44,6 +44,7 @@ public class ChallengerModeService {
 		List<Record> result = new ArrayList<Record>();
 		List<Player> players = Role.toPlayerList(roleRepository.findRoleBySeason(season, Role.ROLE_PLAYER));
 		List<Player> challengers =   Role.toPlayerList(roleRepository.findRoleBySeason(season, Role.ROLE_CHALLENGER));
+		int group=0;
 		while(challengers.size()>0) {
 			int ci = random.nextInt(challengers.size());
 			Player challenger = challengers.get(ci);
@@ -58,11 +59,13 @@ public class ChallengerModeService {
 				newRecord.setPlayer2(challenger);
 				newRecord.setScore1(-1);
 				newRecord.setScore2(-1);
+				newRecord.setGroup(group);
 				newRecord.setMap(random.nextInt(7)+1);
 				result.add(newRecord);
 				
 				players.remove(index);
 			}
+			group++;
 			challengers.remove(ci);
 		}
 		return result;

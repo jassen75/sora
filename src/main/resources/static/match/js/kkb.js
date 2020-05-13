@@ -6,6 +6,7 @@ $(document).ready(function() {
 		dataType : "json",
 		success : function(season) {
 			loadSeasonData(season) ;
+			loadRecordList(season) ;
 
 		},
 		error : function(jqXHR) {
@@ -71,3 +72,56 @@ function switchToAdmin() {
 		}
 	});
 }
+
+function loadRecordList(season) {
+	$.ajax({
+		type : "GET",
+		url : "/record/kkb/"+season,
+		dataType : "json",
+		success : function(data) {
+			buildRecordList2(data);
+		},
+		error : function(jqXHR) {
+			// alert("Error: "+jqXHR.status);
+		}
+	});
+}
+
+function buildRecordList2(data) {
+	var result = new Array();
+	var currentTime;
+	var list;
+	for (var j = 0; j < data.length; j++) {
+		var score;
+		if (data[j]['score1'] == -1 || data[j]['score2'] == -1) {
+			score = "- : -";
+		} else {
+			score = data[j]['score1'] + " : " + data[j]['score2'];
+		}
+
+		if (currentTime != data[j]['group']) {
+			currentTime = data[j]['group'];
+			list = new Array();
+			result.push(list);
+		}
+		
+		data[j]['score']=score;
+
+		list.push(data[j]);
+
+	}
+
+	new Vue({
+		el : '#schedule-list',
+		data : {
+			records : result
+		},
+		methods: {
+			getMap: function (map) {
+				return mapName(map);
+			}
+		}
+	})
+
+}
+
