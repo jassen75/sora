@@ -8,8 +8,10 @@ import org.springframework.stereotype.Component;
 import cc.js.sora.ErrorMessage;
 import cc.js.sora.match.service.ChallengerModeService;
 import cc.js.sora.match.service.KnockoutModeService;
+import lombok.extern.slf4j.Slf4j;
 
 @Component
+@Slf4j
 public class KKBMatchDef implements MatchDef
 {
 	@Autowired
@@ -33,6 +35,7 @@ public class KKBMatchDef implements MatchDef
 	public List<Record> planRecords(Season season, int stage) {
 		if(stage==1) 
 		{
+			log.info("challengerModeService:"+challengerModeService);
 			return challengerModeService.scheduleRecords(season, 2);
 		} else if (stage == 2) 
 		{

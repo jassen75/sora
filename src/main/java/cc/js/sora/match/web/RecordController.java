@@ -51,9 +51,9 @@ public class RecordController {
 	AdminController admin;
 	
 	
-	@GetMapping(path = "/{match_type}/{season}", produces = MediaType.APPLICATION_JSON_VALUE)
-	List<Record> getRecords(@PathVariable(name = "season") Integer season) {
-		List<Record> currentRecord = recordRepository.findRecordBySeason(season);
+	@GetMapping(path = "/{matchType}/{season}", produces = MediaType.APPLICATION_JSON_VALUE)
+	List<Record> getRecords(@PathVariable String matchType, @PathVariable(name = "season") Integer season) {
+		List<Record> currentRecord = recordRepository.findRecordBySeason(matchType, season);
 		return currentRecord;
 	}
 	
@@ -86,7 +86,7 @@ public class RecordController {
 			result.put(playerList.get(i).getName(), r);
 		}
 
-		List<Record> recordList = recordRepository.findRecordBySeason(season);
+		List<Record> recordList = recordRepository.findRecordBySeason(matchType, season);
 		for (int i = 0; i < recordList.size(); i++) {
 			Record r = recordList.get(i);
 			if (r.getScore1() == -1 || r.getScore2() == -1) {

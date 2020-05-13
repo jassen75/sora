@@ -42,8 +42,8 @@ public class ChallengerModeService {
 		Random random = new Random();
 		
 		List<Record> result = new ArrayList<Record>();
-		List<Player> players = Role.toPlayerList(roleRepository.findRoleBySeason(currentSeason.getNumber(), Role.ROLE_PLAYER));
-		List<Player> challengers =   Role.toPlayerList(roleRepository.findRoleBySeason(currentSeason.getNumber(), Role.ROLE_CHALLENGER));
+		List<Player> players = Role.toPlayerList(roleRepository.findRoleBySeason(currentSeason.getMatchType(), currentSeason.getNumber(), Role.ROLE_PLAYER));
+		List<Player> challengers =   Role.toPlayerList(roleRepository.findRoleBySeason(currentSeason.getMatchType(), currentSeason.getNumber(), Role.ROLE_CHALLENGER));
 		int group=0;
 		Date current = currentSeason.getMatchTime();
 		while(challengers.size()>0) {

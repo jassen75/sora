@@ -20,6 +20,7 @@ CREATE TABLE IF NOT EXISTS record (
 	score2 integer,
 	season_id bigint not null,
 	record_group integer,
+	stage integer,
 	map integer,
 	match_time timestamp not null,
 	video_id bigint

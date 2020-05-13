@@ -55,7 +55,6 @@ public class Season {
 	SeasonStatus status;
 	
 	@Column(name="match_type")
-	@Enumerated(EnumType.ORDINAL)  
 	String matchType;
 	
 	@Column(name="start_time")
