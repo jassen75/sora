@@ -22,13 +22,13 @@ CREATE TABLE IF NOT EXISTS record (
 	record_group integer,
 	map integer,
 	match_time timestamp not null,
-	video_id bigint not null
+	video_id bigint
 );
 
 CREATE TABLE IF NOT EXISTS season (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
 	number integer,
-	match_type integer,
+	match_type VARCHAR(64),
 	status integer, 
 	start_time timestamp
 );

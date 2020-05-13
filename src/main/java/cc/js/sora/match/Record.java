@@ -19,6 +19,7 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,7 +31,6 @@ import lombok.ToString;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Record {
 
 	@Id
@@ -53,10 +53,14 @@ public class Record {
 
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
 	@JoinColumn(name = "season_id")
+	@JsonIgnore
 	Season season;
 
 	@Column(name = "record_group")
 	int group;
+
+	@Column(name = "stage")
+	int stage;
 
 	@Column(name = "map")
 	int map;
@@ -70,4 +74,10 @@ public class Record {
 	@JoinColumn(name = "video_id")
 	VideoInfo video;
 
+	public String toString() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("id:").append(id).append(" ").append(player1).append(" vs ").append(player2).append(score1)
+				.append(":").append(score2);
+		return sb.toString();
+	}
 }

@@ -18,7 +18,7 @@ $(document).ready(function() {
 function loadSeasonData() {
 	$.ajax({
 		type : "GET",
-		url : "/admin/currentSeason",
+		url : "/admin/"+matchType+"/currentSeason",
 		dataType : "json",
 		success : function(season) {
 
@@ -53,7 +53,7 @@ function loadSeasonData() {
 function loadRoleList(season) {
 	$.ajax({
 		type : "GET",
-		url : "/admin/challengers",
+		url : "/admin/"+matchType+"/challengers",
 		dataType : "json",
 		success : function(challengers) {
 
@@ -114,7 +114,7 @@ function buildRoleList(season, challengers) {
 			}
 			$.ajax({
 				type : "POST",
-				url : "/admin/removeChallenger",
+				url : "/admin/"+matchType+"/removeChallenger",
 				dataType : "json",
 				data: {
 					name:e.data['name'],
@@ -163,7 +163,7 @@ function buildPlayerList(season, player) {
 			}
 			$.ajax({
 				type : "POST",
-				url : "/admin/removePlayer",
+				url : "/admin/"+matchType+"/removePlayer",
 				dataType : "json",
 				data: {
 					name:e.data['name'],
@@ -220,7 +220,7 @@ function setTime(){
 	{	
 		$.ajax({
 			type : "POST",
-			url : "/admin/setPlanningTime",
+			url : "/admin/"+matchType+"/setPlanningTime",
 			dataType : "json",
 			data: {
 				date: date,
@@ -259,7 +259,7 @@ function addChallenger() {
 	}
 	$.ajax({
 		type : "POST",
-		url : "/admin/addChallenger",
+		url : "/admin/"+matchType+"/addChallenger",
 		dataType : "json",
 		data: {
 			name: name,
@@ -294,7 +294,7 @@ function addPlayer() {
 	}
 	$.ajax({
 		type : "POST",
-		url : "/admin/addPlayer",
+		url : "/admin/"+matchType+"/addPlayer",
 		dataType : "json",
 		data: {
 			name: name,
@@ -323,7 +323,7 @@ function startSeason() {
 	
 	$.ajax({
 		type : "POST",
-		url : "/admin/startSeason",
+		url : "/admin/"+matchType+"/startSeason",
 		dataType : "json",
 
 		success : function(data) {	
@@ -344,7 +344,7 @@ function stopSeason() {
 	
 	$.ajax({
 		type : "POST",
-		url : "/admin/stopSeason",
+		url : "/admin/"+matchType+"/stopSeason",
 		dataType : "json",
 
 		success : function(data) {	
@@ -364,7 +364,7 @@ function cancelSeason() {
 	
 	$.ajax({
 		type : "POST",
-		url : "/admin/cancelSeason",
+		url : "/admin/"+matchType+"/cancelSeason",
 		dataType : "json",
 
 		success : function(data) {	

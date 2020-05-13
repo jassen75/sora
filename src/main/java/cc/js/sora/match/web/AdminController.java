@@ -10,10 +10,13 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.google.common.collect.Lists;
 
 import cc.js.sora.ErrorMessage;
 import cc.js.sora.ResponseMessage;
@@ -27,6 +30,8 @@ import cc.js.sora.match.db.PlayerRepository;
 import cc.js.sora.match.db.RecordRepository;
 import cc.js.sora.match.db.RoleRepository;
 import cc.js.sora.match.db.SeasonRepository;
+import cc.js.sora.match.service.ChallengerModeService;
+import cc.js.sora.match.service.MatchDefService;
 import lombok.extern.slf4j.Slf4j;
 
 @RestController
@@ -45,10 +50,13 @@ public class AdminController {
 
 	@Autowired
 	RoleRepository roleRepository;
+	
+	@Autowired
+	MatchDefService matchDefService;
 
-	public Season getPlanningSeason() {
-		int planningNumber = getMaxCompleteSeasonNumber() + 1;
-		Season planningSeason = seasonRepository.getSeason(planningNumber);
+	public Season getPlanningSeason (String matchType) {
+		int planningNumber = getMaxCompleteSeasonNumber(matchType) + 1;
+		Season planningSeason = seasonRepository.getSeason(matchType, planningNumber);
 		if (planningSeason == null) {
 			log.info("*********************************************************************");
 			log.info("planning new season, season " + planningNumber);
@@ -56,11 +64,11 @@ public class AdminController {
 			planningSeason = new Season();
 			planningSeason.setNumber(planningNumber);
 			planningSeason.setStatus(SeasonStatus.PLANNING);
-
+			planningSeason.setMatchType(matchType);
 			if (planningNumber == 1) {
 				planningSeason.setPlayers(playerRepository.findAll());
 			} else {
-				Season lastSeason = seasonRepository.getSeason(planningNumber - 1);
+				Season lastSeason = seasonRepository.getSeason(matchType, planningNumber - 1);
 				List<Player> players = new ArrayList();
 				lastSeason.getPlayers().forEach(player -> players.add(player));
 				planningSeason.setPlayers(players);
@@ -77,36 +85,36 @@ public class AdminController {
 		return planningSeason;
 	}
 
-	@GetMapping(path = "/seasons", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Season> getSeasons() {
+	@GetMapping(path = "/{matchType}/seasons", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Season> getSeasons(String matchType) {
 
-		return seasonRepository.findAll();
+		return seasonRepository.findSeasons(matchType);
 	}
 
-	@GetMapping(path = "/currentSeason", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Season getCurrentSeason() {
-		Season season = this.getRunningSeason();
+	@GetMapping(path = "/{matchType}/currentSeason", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Season getCurrentSeason(@PathVariable String matchType) {
+		Season season = this.getRunningSeason(matchType);
 		if (season == null) {
-			return this.getPlanningSeason();
+			return this.getPlanningSeason(matchType);
 		}
 		return season;
 	}
 
-	@GetMapping(path = "/runningSeason", produces = MediaType.APPLICATION_JSON_VALUE)
-	public Season getRunningSeason() {
-		Season runningSeason = seasonRepository.getRunningSeason();
+	@GetMapping(path = "/{matchType}/runningSeason", produces = MediaType.APPLICATION_JSON_VALUE)
+	public Season getRunningSeason(@PathVariable String matchType) {
+		Season runningSeason = seasonRepository.getRunningSeason(matchType);
 
 		return runningSeason;
 	}
 
-	public int getRunningSeasonNumber() {
-		Season runningSeason = seasonRepository.getRunningSeason();
+	public int getRunningSeasonNumber(String matchType) {
+		Season runningSeason = seasonRepository.getRunningSeason(matchType);
 
 		return runningSeason != null ? runningSeason.getNumber() : 0;
 	}
 
-	public int getMaxCompleteSeasonNumber() {
-		List<Season> seasons = seasonRepository.getCompleteSeasons();
+	public int getMaxCompleteSeasonNumber(String matchType) {
+		List<Season> seasons = seasonRepository.getCompleteSeasons(matchType);
 		if (seasons.size() > 0) {
 			return seasons.get(seasons.size() - 1).getNumber();
 		} else {
@@ -115,14 +123,14 @@ public class AdminController {
 
 	}
 
-	@RequestMapping(path = "/setPlanningTime", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseMessage setPlanningTime(@RequestParam String date) {
+	@RequestMapping(path = "/{matchType}/setPlanningTime", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseMessage setPlanningTime(@PathVariable String matchType, @RequestParam String date) {
 
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		Date d;
 		try {
 			d = dateFormat.parse(date);
-			Season season = getPlanningSeason();
+			Season season = getPlanningSeason(matchType);
 			season.setMatchTime(d);
 			// List<Player> players= new ArrayList();
 			// season.getPlayers().forEach(player -> players.add(player));
@@ -135,17 +143,17 @@ public class AdminController {
 
 	}
 
-	@RequestMapping(path = "/removePlayer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseMessage removePlayer(@RequestParam String name, @RequestParam String server) {
-		Season s = getPlanningSeason();
+	@RequestMapping(path = "/{matchType}/removePlayer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseMessage removePlayer(@PathVariable String matchType, @RequestParam String name, @RequestParam String server) {
+		Season s = getPlanningSeason(matchType);
 		s.getPlayers().removeIf(player -> player.getName().equals(name) && player.getServer().equals(server));
 		seasonRepository.saveAndFlush(s);
 		return ResponseMessage.successMessage();
 	}
 
 	@RequestMapping(path = "/removeChallenger", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseMessage removeChallenger(@RequestParam String name, @RequestParam String server) {
-		Season s = getPlanningSeason();
+	public ResponseMessage removeChallenger(@PathVariable String matchType, @RequestParam String name, @RequestParam String server) {
+		Season s = getPlanningSeason(matchType);
 		List<Role> roles = roleRepository.findAll();
 		roles.forEach(role -> {
 			if (role.getPlayer().getName().equals(name) && role.getPlayer().getServer().equals(server)
@@ -157,8 +165,8 @@ public class AdminController {
 		return ResponseMessage.successMessage();
 	}
 
-	@RequestMapping(path = "/addPlayer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseMessage addPlayer(@RequestParam String name, @RequestParam String server) {
+	@RequestMapping(path = "/{matchType}/addPlayer", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseMessage addPlayer(@PathVariable String matchType, @RequestParam String name, @RequestParam String server) {
 
 		if (name == null || "".equals(name)) {
 			throw new ErrorMessage(40000, "空的队员名字");
@@ -171,7 +179,7 @@ public class AdminController {
 			player.setServer(server);
 			playerRepository.save(player);
 		}
-		Season s = getPlanningSeason();
+		Season s = getPlanningSeason(matchType);
 		Role role = roleRepository.findRole(s.getNumber(), player.getName(), player.getServer());
 		if (role == null) {
 			role = new Role();
@@ -185,23 +193,23 @@ public class AdminController {
 
 	}
 
-	@GetMapping(path = "/challengers", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Player> challengers() {
-		Season s = getPlanningSeason();
+	@GetMapping(path = "/{matchType}/challengers", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Player> challengers(@PathVariable String matchType) {
+		Season s = getPlanningSeason(matchType);
 		List<Role> roles = roleRepository.findRoleBySeason(s.getNumber(), Role.ROLE_CHALLENGER);
 		List<Player> players = new ArrayList();
 		roles.forEach(role -> players.add(role.getPlayer()));
 		return players;
 	}
 
-	@RequestMapping(path = "/addChallenger", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseMessage addChallenger(@RequestParam String name, @RequestParam String server) {
+	@RequestMapping(path = "/{matchType}/addChallenger", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseMessage addChallenger(@PathVariable String matchType, @RequestParam String name, @RequestParam String server) {
 
 		if (name == null || "".equals(name)) {
 			throw new ErrorMessage(40000, "空的队员名字");
 		}
 
-		Season s = getPlanningSeason();
+		Season s = getPlanningSeason(matchType);
 		Player player = playerRepository.findPlayer(name, server);
 		if (player == null) {
 			throw new ErrorMessage(40000, "没有找到该队员");
@@ -219,21 +227,27 @@ public class AdminController {
 
 	}
 
-	@RequestMapping(path = "/setScore", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseMessage setScore(@RequestParam String player1, @RequestParam String player2,
+	@RequestMapping(path = "/{matchType}/setScore", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseMessage setScore(@PathVariable String matchType, @RequestParam String player1, @RequestParam String player2,
 			@RequestParam String score) {
-		Season s = getRunningSeason();
+		Season s = getRunningSeason(matchType);
 
 		if (s == null) {
 			throw new ErrorMessage(10005, "season have not started!");
 		}
-		List<Record> records = recordRepository.findRecordBySeason(s.getNumber());
+		
+		Record record = recordRepository.findRecord(s.getNumber(), player1, player2);
+//		List<Record> records = recordRepository.findRecordBySeason(s.getNumber());
+//
+//		Record record = records.stream()
+//				.filter(r -> (r.getPlayer1().getName().equals(player1) && r.getPlayer2().getName().equals(player2))
+//						|| (r.getPlayer1().getName().equals(player2) && r.getPlayer2().getName().equals(player1)))
+//				.findFirst().get();
 
-		Record record = records.stream()
-				.filter(r -> (r.getPlayer1().getName().equals(player1) && r.getPlayer2().getName().equals(player2))
-						|| (r.getPlayer1().getName().equals(player2) && r.getPlayer2().getName().equals(player1)))
-				.findFirst().get();
-
+		if(record==null)
+		{
+			throw new ErrorMessage(10008, player1+ " vs " + player2 + "的比赛没有找到");
+		}
 		String[] p2 = score.trim().split(":");
 
 		if (p2.length != 2) {
@@ -256,28 +270,39 @@ public class AdminController {
 		log.info("save match score:" + record);
 		recordRepository.saveAndFlush(record);
 
-		checkComplete();
+		checkComplete(matchType);
 		return ResponseMessage.successMessage();
 	}
 
-	@RequestMapping(path = "/startSeason", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseMessage startSeason() {
+	@RequestMapping(path = "/{matchType}/startSeason", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseMessage startSeason(@PathVariable String matchType) {
 
-		Season running = this.getRunningSeason();
+		Season running = this.getRunningSeason(matchType);
 		if (running != null) {
 			throw new ErrorMessage(10004, "比赛还没结束");
 		}
-		Season s = getPlanningSeason();
+		Season s = getPlanningSeason(matchType);
 		if (s.getMatchTime() != null && s.getMatchTime().getTime() > new Date().getTime()) {
-			s.setStatus(SeasonStatus.RUNNING);
-			seasonRepository.saveAndFlush(s);
-
+			
 			// clear records if exist!
 			log.warn(">>>>>  change season " + s.getNumber()
 					+ " from planning to running, clear records if exist!<<<<<");
 			List<Record> records = recordRepository.findRecordBySeason(s.getNumber());
 			recordRepository.deleteAll(records);
 			recordRepository.flush();
+			
+			records = matchDefService.planRecords(s, 1);
+			
+			
+			// only save when running 
+			log.info("schedule records for season "+s.getNumber());
+			recordRepository.saveAll(records);
+			recordRepository.flush();
+			
+			s.setStatus(SeasonStatus.RUNNING);
+			seasonRepository.saveAndFlush(s);
+
+
 			return ResponseMessage.successMessage();
 		} else {
 			throw new ErrorMessage(10003, "比赛时间已过");
@@ -285,9 +310,9 @@ public class AdminController {
 
 	}
 
-	@RequestMapping(path = "/cancelSeason", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseMessage cancelSeason() {
-		Season s = this.getRunningSeason();
+	@RequestMapping(path = "/{matchType}/cancelSeason", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseMessage cancelSeason(@PathVariable String matchType) {
+		Season s = this.getRunningSeason(matchType);
 		if (s != null) {
 			log.info("Season " + s.getNumber() + " is canceled by admin!");
 			log.info(">>>>>  change season " + s.getNumber() + " from running to planning   <<<<<");
@@ -304,24 +329,38 @@ public class AdminController {
 
 	}
 
-	@GetMapping(path = "/players", produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Player> list() {
-		Season s = this.getRunningSeason();
+	@GetMapping(path = "/{matchType}/players", produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Player> list(@PathVariable String matchType) {
+		Season s = this.getRunningSeason(matchType);
 		if (s == null) {
 			return new ArrayList();
 		}
 		return s.getPlayers();
 	}
 
-	private void checkComplete() {
-		Season running = this.getRunningSeason();
+	private void checkComplete(String matchType) {
+		Season running = this.getRunningSeason(matchType);
 		if (running != null) {
 			List<Record> recordList = recordRepository.findRecordBySeason(running.getNumber());
 			if (recordList.stream().anyMatch(record -> record.getScore1() == -1 || record.getScore2() == -1)) {
 				return;
 			} else {
-				seasonComplete(running);
-				getPlanningSeason();
+				int maxStage = recordList.stream().max((x,y)->x.getStage()-y.getStage()).get().getStage();
+				
+				log.info("stage["+maxStage+"] complete");
+				
+				if(maxStage < matchDefService.getMatchDef(running.getMatchType()).getStageNumber()) 
+				{
+					log.info("start stage "+(maxStage+1));
+					List<Record> newStageRecords = matchDefService.planRecords(running, maxStage+1);
+					
+					recordRepository.saveAll(newStageRecords);
+					recordRepository.flush();
+				} else {
+				
+					seasonComplete(running);
+					getPlanningSeason(matchType);
+				}
 			}
 		}
 	}

@@ -2,7 +2,7 @@ $(document).ready(function() {
 	
 	$.ajax({
 		type : "GET",
-		url : "/admin/currentSeason",
+		url : "/admin/jbb/currentSeason",
 		dataType : "json",
 		success : function(season) {
 
@@ -47,6 +47,7 @@ $(document).ready(function() {
 });
 
 var matchType = 'jbb';
+var currentSeason;
 
 function switchToDashboard() {
 	window.location.href = '/match';
@@ -89,7 +90,7 @@ function switchToAdmin() {
 function loadRecordList(season) {
 	$.ajax({
 		type : "GET",
-		url : "/record/"+season,
+		url : "/record/jbb/"+season,
 		dataType : "json",
 		success : function(data) {
 			buildRecordList2(data);
@@ -150,22 +151,4 @@ function buildRecordList2(data) {
 
 }
 
-function mapName(map) {
-	switch (map) {
-	case 1:
-		return '纷争平原(1)';
-	case 2:
-		return '西风哨岗(2)';
-	case 3:
-		return '海角之泪(3)';
-	case 4:
-		return '沙漠之眼(4)';
-	case 5:
-		return '空中庭院(5)';
-	case 6:
-		return '双桥逆波(6)';
-	case 7:
-		return '凛冬栖地(7)';
-	}
 
-}

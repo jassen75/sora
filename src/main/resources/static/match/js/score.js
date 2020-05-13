@@ -1,8 +1,7 @@
 $(document).ready(function() {
-
 	$.ajax({
 		type : "GET",
-		url : "/admin/players",
+		url : "/admin/"+matchType+"/players",
 		dataType : "json",
 		success : function(data) {
 			buildPlayerList(data);
@@ -67,7 +66,7 @@ function changeScore()
 	}
 	$.ajax({
 		type : "POST",
-		url : "/admin/setScore",
+		url : "/admin/"+matchType+"/setScore",
 		dataType : "json",
 		data: {
 			player1:player1,

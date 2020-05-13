@@ -2,7 +2,7 @@ $(document).ready(function() {
 	matchType = 'kkb';
 	$.ajax({
 		type : "GET",
-		url : "/admin/currentSeason",
+		url : "/admin/"+matchType+"/currentSeason",
 		dataType : "json",
 		success : function(season) {
 			loadSeasonData(season) ;
@@ -33,6 +33,8 @@ $(document).ready(function() {
 	$("#save-score").click(switchToScore);
 });
 
+var matchType = 'kkb';
+var currentSeason;
 
 
 function switchToScore() {
@@ -76,7 +78,7 @@ function switchToAdmin() {
 function loadRecordList(season) {
 	$.ajax({
 		type : "GET",
-		url : "/record/kkb/"+season,
+		url : "/record/kkb/"+season['number'],
 		dataType : "json",
 		success : function(data) {
 			buildRecordList2(data);

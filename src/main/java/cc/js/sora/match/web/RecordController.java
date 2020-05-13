@@ -49,38 +49,11 @@ public class RecordController {
 	
 	@Autowired
 	AdminController admin;
-
-	@GetMapping(path = "/{season}", produces = MediaType.APPLICATION_JSON_VALUE)
-	List<Record> list(@PathVariable(name = "season") Integer season) {
-		List<Record> currentRecord = recordRepository.findRecordBySeason(season);
-		if (currentRecord == null || currentRecord.size() == 0) {
-			currentRecord = rebuildRecord(season);
-			
-			// only save when running 
-			if(seasonRepository.getSeason(season).getStatus() == SeasonStatus.RUNNING)
-			{
-				log.info("save match schedule for season "+season);
-				recordRepository.saveAll(currentRecord);
-				recordRepository.flush();
-			}
-		}
-		return currentRecord;
-	}
+	
 	
 	@GetMapping(path = "/{match_type}/{season}", produces = MediaType.APPLICATION_JSON_VALUE)
 	List<Record> getRecords(@PathVariable(name = "season") Integer season) {
 		List<Record> currentRecord = recordRepository.findRecordBySeason(season);
-		if (currentRecord == null || currentRecord.size() == 0) {
-			currentRecord = challengerModeService.scheduleRecords(season, 2);
-			
-			// only save when running 
-			if(seasonRepository.getSeason(season).getStatus() == SeasonStatus.RUNNING)
-			{
-				log.info("save match schedule for season "+season);
-				recordRepository.saveAll(currentRecord);
-				recordRepository.flush();
-			}
-		}
 		return currentRecord;
 	}
 	
@@ -96,11 +69,11 @@ public class RecordController {
 		}
 	}
 
-	@GetMapping(path = "/{season}/score-board", produces = MediaType.APPLICATION_JSON_VALUE)
-	List<Map<String, Object>> scoreBoard(@PathVariable(name = "season") Integer season) {
+	@GetMapping(path = "/{matchType}/{season}/score-board", produces = MediaType.APPLICATION_JSON_VALUE)
+	List<Map<String, Object>> scoreBoard(@PathVariable String matchType, @PathVariable(name = "season") Integer season) {
 		Map<String, Map<String, Integer>> result = new HashMap();
 
-		Season s = seasonRepository.getSeason(season);
+		Season s = seasonRepository.getSeason(matchType, season);
 		
 		List<Player> playerList = s.getPlayers();
 		for (int i = 0; i < playerList.size(); i++) {
@@ -149,10 +122,8 @@ public class RecordController {
 
 	}
 
-	public List rebuildRecord(int season) {
+	public List rebuildRecord(Season currentSeason ) {
 		Random random = new Random();
-		
-		Season currentSeason = seasonRepository.getSeason(season);
 		Date startTime = currentSeason.getMatchTime();
 		if(startTime == null) 
 		{
@@ -198,7 +169,7 @@ public class RecordController {
 				if(failedTime > 30) 
 				{
 					log.info("**********  failed too much ,rebuild****************");
-					return rebuildRecord(season);
+					return rebuildRecord(currentSeason);
 				}
 
 				int index = random.nextInt(all.size());

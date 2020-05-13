@@ -56,7 +56,7 @@ public class Season {
 	
 	@Column(name="match_type")
 	@Enumerated(EnumType.ORDINAL)  
-	MatchType matchType;
+	String matchType;
 	
 	@Column(name="start_time")
     @Temporal(TemporalType.TIMESTAMP)
