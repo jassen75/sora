@@ -5,7 +5,7 @@ $(document).ready(function() {
 		url : "/admin/currentSeason",
 		dataType : "json",
 		success : function(season) {
-
+			loadSeasonData(season) ;
 
 		},
 		error : function(jqXHR) {

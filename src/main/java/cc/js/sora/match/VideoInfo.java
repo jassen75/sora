@@ -28,7 +28,7 @@ public class VideoInfo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long id;
 	
-	@Column(name="type")
+	@Column(name="video_type")
 	@Enumerated(EnumType.ORDINAL)  
 	VideoType type;
 	

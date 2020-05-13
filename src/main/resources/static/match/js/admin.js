@@ -7,14 +7,13 @@ $(document).ready(function() {
 	
 	$("#add-player").click(addPlayer);
 	
+	$("#add-challenger").click(addChallenger);
+	
 	$("#start-season").click(startSeason);
 	
 	$("#cancle-season").click(cancelSeason);
 
 });
-
-
-alert('match type=='+matchType);
 
 function loadSeasonData() {
 	$.ajax({
@@ -140,7 +139,7 @@ function buildRoleList(season, challengers) {
 		td2.appendTo(tr);
 		tr.appendTo(table);
 	}
-	
+	table.appendTo(list);
 }
 function buildPlayerList(season, player) {
 	var list = $("#player-list");

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import cc.js.sora.match.db.PlayerRepository;
 import cc.js.sora.match.db.RecordRepository;
 import cc.js.sora.match.db.SeasonRepository;
+import cc.js.sora.match.service.ChallengerModeService;
 import lombok.extern.slf4j.Slf4j;
 import cc.js.sora.match.Player;
 import cc.js.sora.match.Record;
@@ -44,6 +45,9 @@ public class RecordController {
 	SeasonRepository seasonRepository;
 	
 	@Autowired
+	ChallengerModeService challengerModeService;
+	
+	@Autowired
 	AdminController admin;
 
 	@GetMapping(path = "/{season}", produces = MediaType.APPLICATION_JSON_VALUE)
@@ -62,6 +66,25 @@ public class RecordController {
 		}
 		return currentRecord;
 	}
+	
+	@GetMapping(path = "/{match_type}/{season}", produces = MediaType.APPLICATION_JSON_VALUE)
+	List<Record> getRecords(@PathVariable(name = "season") Integer season) {
+		List<Record> currentRecord = recordRepository.findRecordBySeason(season);
+		if (currentRecord == null || currentRecord.size() == 0) {
+			currentRecord = challengerModeService.scheduleRecords(season, 2);
+			
+			// only save when running 
+			if(seasonRepository.getSeason(season).getStatus() == SeasonStatus.RUNNING)
+			{
+				log.info("save match schedule for season "+season);
+				recordRepository.saveAll(currentRecord);
+				recordRepository.flush();
+			}
+		}
+		return currentRecord;
+	}
+	
+	
 
 	private static class Pair {
 		int i;
@@ -197,7 +220,7 @@ public class RecordController {
 					newRecord.setPlayer1(playerList.get(weekRecords.get(k).i));
 					newRecord.setPlayer2(playerList.get(weekRecords.get(k).j));
 					newRecord.setMatchTime(current);
-					newRecord.setSeason(season);
+					newRecord.setSeason(currentSeason);
 					newRecord.setScore1(-1);
 					newRecord.setScore2(-1);
 					newRecord.setMap(random.nextInt(7)+1);

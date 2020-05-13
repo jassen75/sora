@@ -1,6 +1,6 @@
 package cc.js.sora.match;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,10 +14,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.ToString;
 
 @Entity
 @Table(name = "role")
@@ -25,20 +28,31 @@ import lombok.Setter;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class Role {
+	
+	public static final String ROLE_PLAYER = "player";
+	public static final String ROLE_CHALLENGER = "challenger";
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long id;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "playerId")
+	@JoinColumn(name = "player_id")
 	Player player;
 	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "seasonId")
+	@ManyToOne(fetch = FetchType.LAZY, cascade = CascadeType.MERGE )
+	@JoinColumn(name = "season_id")
+	@JsonIgnore
 	Season season;
 	
 	@Column(name="name")
 	String name;
 
+	public static List<Player> toPlayerList(List<Role> list) {
+		List<Player> players = new ArrayList<Player>();
+		list.forEach(role -> players.add(role.getPlayer()));
+		return players;
+		
+	}
 }

@@ -51,12 +51,12 @@ public class Record {
 	@Column(name = "score2")
 	int score2;
 
-	@Column(name = "season")
-	int season;
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinColumn(name = "season_id")
+	Season season;
 
-	@Column(name = "match_type")
-	@Enumerated(EnumType.ORDINAL)
-	MatchType matchType;
+	@Column(name = "group")
+	int group;
 
 	@Column(name = "map")
 	int map;
@@ -67,7 +67,7 @@ public class Record {
 	Date matchTime;
 
 	@OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "video")
+	@JoinColumn(name = "video_id")
 	VideoInfo video;
 
 }

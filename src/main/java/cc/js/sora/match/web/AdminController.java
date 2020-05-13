@@ -151,7 +151,8 @@ public class AdminController {
 			if (role.getPlayer().getName().equals(name) && role.getPlayer().getServer().equals(server)
 					&& role.getSeason().getNumber() == s.getNumber()
 					&& role.getSeason().getMatchType() == s.getMatchType())
-				roleRepository.delete(role);
+				role.setName(Role.ROLE_PLAYER);
+			roleRepository.saveAndFlush(role);
 		});
 		return ResponseMessage.successMessage();
 	}
@@ -171,10 +172,14 @@ public class AdminController {
 			playerRepository.save(player);
 		}
 		Season s = getPlanningSeason();
-		if (!s.getPlayers().stream().anyMatch(p -> p.getName().equals(name) && p.getServer().equals(server))) {
-			s.getPlayers().add(player);
-			seasonRepository.saveAndFlush(s);
+		Role role = roleRepository.findRole(s.getNumber(), player.getName(), player.getServer());
+		if (role == null) {
+			role = new Role();
+			role.setSeason(s);
+			role.setPlayer(player);
 		}
+		role.setName(Role.ROLE_PLAYER);
+		roleRepository.saveAndFlush(role);
 
 		return ResponseMessage.successMessage();
 
@@ -183,12 +188,10 @@ public class AdminController {
 	@GetMapping(path = "/challengers", produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Player> challengers() {
 		Season s = getPlanningSeason();
-		List<Player> result = new ArrayList<Player>();
-		roleRepository.findAll().stream().forEach(role -> {
-			if (role.getSeason().getNumber() == s.getNumber() && role.getSeason().getMatchType() == s.getMatchType())
-				result.add(role.getPlayer());
-		});
-		return result;
+		List<Role> roles = roleRepository.findRoleBySeason(s.getNumber(), Role.ROLE_CHALLENGER);
+		List<Player> players = new ArrayList();
+		roles.forEach(role -> players.add(role.getPlayer()));
+		return players;
 	}
 
 	@RequestMapping(path = "/addChallenger", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -199,17 +202,18 @@ public class AdminController {
 		}
 
 		Season s = getPlanningSeason();
-		if (!s.getPlayers().stream().anyMatch(p -> p.getName().equals(name) && p.getServer().equals(server))) {
-			throw new ErrorMessage(40000, "该队员并没有参赛");
-		}
 		Player player = playerRepository.findPlayer(name, server);
 		if (player == null) {
 			throw new ErrorMessage(40000, "没有找到该队员");
 		}
-		Role role = new Role();
-		role.setName("challenger");
-		role.setPlayer(player);
-		role.setSeason(s);
+
+		Role role = roleRepository.findRole(s.getNumber(), player.getName(), player.getServer());
+		if (role == null) {
+			role = new Role();
+			role.setSeason(s);
+			role.setPlayer(player);
+		}
+		role.setName(Role.ROLE_CHALLENGER);
 		roleRepository.saveAndFlush(role);
 		return ResponseMessage.successMessage();
 

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class HomeController {
 	
-    @RequestMapping(value= {"/", "/match"})
+    @RequestMapping(value= {"/match"})
 	public String index() {
 		return "forward:/match/match.html";
 	}
@@ -17,7 +17,7 @@ public class HomeController {
 		return "forward:/space/index.html";
 	}
     
-    @RequestMapping(value= {"/lyb"})
+    @RequestMapping(value= {"/lyb", "/"})
 	public String lyb() {
 		return "forward:/match/kkb.html";
 	}
