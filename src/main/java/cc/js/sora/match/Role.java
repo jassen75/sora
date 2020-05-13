@@ -31,11 +31,11 @@ public class Role {
 	long id;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "player")
+	@JoinColumn(name = "playerId")
 	Player player;
 	
 	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "season")
+	@JoinColumn(name = "seasonId")
 	Season season;
 	
 	@Column(name="name")

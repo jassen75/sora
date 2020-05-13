@@ -24,9 +24,7 @@ function loadSeasonData() {
 		success : function(season) {
 
 			$("#start-time").val(season['matchTime']);
-			if(matchType=='kkb') {
-				loadRoleList(season);
-			}
+
 			$.ajax({
 				type : "GET",
 				url : "/player",
@@ -35,7 +33,9 @@ function loadSeasonData() {
 					buildPlayerList(season, player);
 					toggleAll(season);
 					
-					
+					if(matchType=='kkb') {
+						loadRoleList(season);
+					}
 
 				},
 				error : function(jqXHR) {

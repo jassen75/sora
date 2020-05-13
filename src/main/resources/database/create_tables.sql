@@ -4,6 +4,7 @@ use sora;
 DROP TABLE if exists player;
 DROP TABLE if exists record;
 
+
 CREATE TABLE IF NOT EXISTS player (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
 	name VARCHAR(64),
@@ -46,8 +47,8 @@ CREATE TABLE IF NOT EXISTS video (
 
 CREATE TABLE IF NOT EXISTS role (
 	id bigint AUTO_INCREMENT PRIMARY KEY,
-	season bigint not null,
-	player bigint not null,
+	seasonId bigint not null,
+	playerId bigint not null,
 	name VARCHAR(255)
 );
 
