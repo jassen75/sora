@@ -80,4 +80,12 @@ public class Record {
 				.append(":").append(score2);
 		return sb.toString();
 	}
+	
+	public Player getWinner() {
+		if(score1 > score2)
+			return player1;
+		if(score2 > score1)
+			return player2;
+		return null;
+	}
 }

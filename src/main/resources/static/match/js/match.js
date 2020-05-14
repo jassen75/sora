@@ -10,7 +10,7 @@ $(document).ready(function() {
 
 			$.ajax({
 				type : "GET",
-				url : "/record/"+season['number']+"/score-board",
+				url : "/record/jbb/"+season['number']+"/score-board",
 				dataType : "json",
 				success : function(data) {
 					buildScoreTable2(data);
@@ -90,7 +90,7 @@ function switchToAdmin() {
 function loadRecordList(season) {
 	$.ajax({
 		type : "GET",
-		url : "/record/jbb/"+season,
+		url : "/record/jbb/"+season+"/stage/1",
 		dataType : "json",
 		success : function(data) {
 			buildRecordList2(data);

@@ -14,6 +14,7 @@ import cc.js.sora.match.JBBMatchDef;
 import cc.js.sora.match.KKBMatchDef;
 import cc.js.sora.match.MatchDef;
 import cc.js.sora.match.MatchType;
+import cc.js.sora.match.Player;
 import cc.js.sora.match.Record;
 import cc.js.sora.match.Season;
 import lombok.extern.slf4j.Slf4j;
@@ -55,6 +56,12 @@ public class MatchDefService {
 
 			@Override
 			public List<Record> planRecords(Season season, int stage) {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public List<Player> getWinner(Season season, int stage) {
 				// TODO Auto-generated method stub
 				return null;
 			}};

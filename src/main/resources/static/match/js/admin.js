@@ -329,7 +329,7 @@ function startSeason() {
 		success : function(data) {	
 			if(data['success']) {
 				hintSuccess('新赛季成功开启');
-				window.location.href = '/';
+				switchToDashboard();
 			} else {
 				hintError(data['message']);
 			}

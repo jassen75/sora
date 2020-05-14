@@ -6,8 +6,7 @@ $(document).ready(function() {
 		dataType : "json",
 		success : function(season) {
 			loadSeasonData(season) ;
-			loadRecordList(season) ;
-
+			loadRecordList(season, 1) ;
 		},
 		error : function(jqXHR) {
 			hintError('导入赛季数据失败');
@@ -35,7 +34,6 @@ $(document).ready(function() {
 
 var matchType = 'kkb';
 var currentSeason;
-
 
 function switchToScore() {
 	$.ajax({
@@ -75,13 +73,17 @@ function switchToAdmin() {
 	});
 }
 
-function loadRecordList(season) {
+function loadRecordList(season, stage) {
 	$.ajax({
 		type : "GET",
-		url : "/record/kkb/"+season['number'],
+		url : "/record/kkb/"+season['number']+"/stage/"+stage,
 		dataType : "json",
 		success : function(data) {
-			buildRecordList2(data);
+			buildRecordList2(data, stage);
+			if(stage == 1) 
+			{
+				loadRecordList(season,2);
+			}
 		},
 		error : function(jqXHR) {
 			// alert("Error: "+jqXHR.status);
@@ -89,7 +91,7 @@ function loadRecordList(season) {
 	});
 }
 
-function buildRecordList2(data) {
+function buildRecordList2(data, stage) {
 	var result = new Array();
 	var currentTime;
 	var list;
@@ -113,17 +115,34 @@ function buildRecordList2(data) {
 
 	}
 
-	new Vue({
-		el : '#schedule-list',
-		data : {
-			records : result
-		},
-		methods: {
-			getMap: function (map) {
-				return mapName(map);
+	if(stage==1) 
+	{
+		new Vue({
+			el : '#stage1',
+			data : {
+				records : result
+			},
+			methods: {
+				getMap: function (map) {
+					return mapName(map);
+				}
 			}
-		}
-	})
+		})
+	}
+	if(stage==2) 
+	{
+		new Vue({
+			el : '#stage2',
+			data : {
+				records : result
+			},
+			methods: {
+				getMap: function (map) {
+					return mapName(map);
+				}
+			}
+		})	
+	}
 
 }
 

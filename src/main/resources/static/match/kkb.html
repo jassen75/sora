@@ -44,31 +44,54 @@
 			</div>
 		</div>
 	</nav>
-	<div id="hint-dialog" class="modal fade" aria-hidden="true">
-	</div>
+	<div id="hint-dialog" class="modal fade" aria-hidden="true"></div>
 	<div id="content">
 		<div class="container">
-		
+
 			<p>擂台赛分两轮进行，率先通过挑战的4位选手将在第二轮进行淘汰赛</p>
-			<ul class="nav nav-tabs">
-			  <li class="active"><a href="#">第一轮</a></li>
-			  <li><a href="#">第二轮</a></li>
+			<ul id="tab" class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" 
+					href="#stage1">第一轮</a></li>
+				<li><a data-toggle="tab" href="#stage2">第二轮</a></li>
 			</ul>
-			<div id="schedule-list">
-				<div class="panel-group" v-cloak>
-					<div v-for="(value, index) in records" class="panel panel-default">
-						<div class="panel-heading">
-							<h3 class="panel-title">第{{index+1}}场
-								{{value[0]['matchTime']}}</h3>
+			<div id="schedule-list" class="tab-content">
+				<div class="tab-pane fade in active" id="stage1">
+					<div class="panel-group" v-cloak>
+						<div v-for="(value, index) in records" class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">第{{index+1}}场
+									{{value[0]['matchTime']}}</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table table-striped">
+									<tr v-for="record in value">
+										<td>{{record['player1']['name']}} vs
+											{{record['player2']['name']}}</td>
+										<td>{{getMap(record['map'])}}</td>
+										<td>{{record['score']}}</td>
+									</tr>
+								</table>
+							</div>
 						</div>
-						<div class="panel-body">
-							<table class="table table-striped">
-								<tr v-for="record in value">
-									<td>{{record['player1']['name']}} vs {{record['player2']['name']}}</td>
-									<td>{{getMap(record['map'])}}</td>
-									<td>{{record['score']}}</td>
-								</tr>
-							</table>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="stage2">
+					<div class="panel-group" v-cloak>
+						<div v-for="(value, index) in records" class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">第{{index+1}}场
+									{{value[0]['matchTime']}}</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table table-striped">
+									<tr v-for="record in value">
+										<td>{{record['player1']['name']}} vs
+											{{record['player2']['name']}}</td>
+										<td>{{getMap(record['map'])}}</td>
+										<td>{{record['score']}}</td>
+									</tr>
+								</table>
+							</div>
 						</div>
 					</div>
 				</div>

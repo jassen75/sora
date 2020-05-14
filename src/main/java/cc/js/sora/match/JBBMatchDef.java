@@ -2,11 +2,16 @@ package cc.js.sora.match;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import cc.js.sora.match.service.RoundModeService;
 
 @Component
 public class JBBMatchDef implements MatchDef
 {
+	@Autowired
+	RoundModeService roundModeService;
 
 	@Override
 	public int getStageNumber() {
@@ -21,6 +26,11 @@ public class JBBMatchDef implements MatchDef
 
 	@Override
 	public List<Record> planRecords(Season season, int stage) {
+		return roundModeService.scheduleRecords(season);
+	}
+
+	@Override
+	public List<Player> getWinner(Season season, int stage) {
 		// TODO Auto-generated method stub
 		return null;
 	}

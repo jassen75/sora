@@ -62,7 +62,7 @@ public class AdminController {
 		Season planningSeason = seasonRepository.getSeason(matchType, planningNumber);
 		if (planningSeason == null) {
 			log.info("*********************************************************************");
-			log.info("planning new season, season " + planningNumber);
+			log.info("planning new season for match "+matchType+", season " + planningNumber);
 			log.info("*********************************************************************");
 			planningSeason = new Season();
 			planningSeason.setNumber(planningNumber);
@@ -373,10 +373,20 @@ public class AdminController {
 				if(maxStage < matchDefService.getMatchDef(running.getMatchType()).getStageNumber()) 
 				{
 					log.info("start stage "+(maxStage+1));
-					List<Record> newStageRecords = matchDefService.planRecords(running, maxStage+1);
-					
-					recordRepository.saveAll(newStageRecords);
-					recordRepository.flush();
+					try 
+					{
+						List<Record> newStageRecords = matchDefService.planRecords(running, maxStage+1);
+						
+						recordRepository.saveAll(newStageRecords);
+						recordRepository.flush();
+					} catch (ErrorMessage e) 
+					{
+						if(e.getCode()==10009) 
+						{
+							seasonComplete(running);
+							getPlanningSeason(matchType);
+						}
+					}
 				} else {
 				
 					seasonComplete(running);

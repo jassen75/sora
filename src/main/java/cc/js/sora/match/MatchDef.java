@@ -10,5 +10,7 @@ public interface MatchDef {
 	void scheduleRecords(List<Record> record);
 	
 	List<Record> planRecords(Season season, int stage);
+	
+	List<Player> getWinner(Season season, int stage);
 
 }

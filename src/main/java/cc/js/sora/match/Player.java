@@ -28,4 +28,5 @@ public class Player {
 	@Column(name="server")
 	String server;
 
+	public static Player EMPTY_PLAYER = new Player(-1, "轮空", "");
 }
