@@ -7,19 +7,23 @@ $(document).ready(function() {
 	
 	$("#add-player").click(addPlayer);
 	
+	$("#add-challenger").click(addChallenger);
+	
 	$("#start-season").click(startSeason);
 	
 	$("#cancle-season").click(cancelSeason);
+
 });
 
 function loadSeasonData() {
 	$.ajax({
 		type : "GET",
-		url : "/admin/currentSeason",
+		url : "/admin/"+matchType+"/currentSeason",
 		dataType : "json",
 		success : function(season) {
 
 			$("#start-time").val(season['matchTime']);
+
 			$.ajax({
 				type : "GET",
 				url : "/player",
@@ -27,12 +31,34 @@ function loadSeasonData() {
 				success : function(player) {
 					buildPlayerList(season, player);
 					toggleAll(season);
+					
+					if(matchType=='kkb') {
+						loadRoleList(season);
+					}
+
 				},
 				error : function(jqXHR) {
 					hintError('导入队员列表失败');
 				}
 			});
 			
+
+		},
+		error : function(jqXHR) {
+			hintError('导入赛季数据失败');
+		}
+	});
+}
+
+function loadRoleList(season) {
+	$.ajax({
+		type : "GET",
+		url : "/admin/"+matchType+"/challengers",
+		dataType : "json",
+		success : function(challengers) {
+
+
+			buildRoleList(season, challengers);
 
 		},
 		error : function(jqXHR) {
@@ -66,7 +92,55 @@ function toggleAll(season) {
 	}
 
 }
-
+function buildRoleList(season, challengers) {
+	var list = $("#role-list");
+	
+	list.children("table").remove();
+	
+	var data = challengers;
+	var number = season['number'];
+	var table = $('<table></table>');
+	for (var j = 0; j < data.length; j++) {
+		var tr = $('<tr></tr>');
+		var name = data[j]['name'];
+		var td1= $('<td><div class="enroll"><div>'+name+'('+data[j]['server']+')</div></td>');
+		var td2=$('<td></td>');
+		var destory = $('<div class="destory" value="'+name+'"></div>');
+		destory.click(data[j], function(e){
+			if($(this).attr("disabled"))
+			{
+				hintInfo("赛季进行时无法调整队员名单");
+				return;
+			}
+			$.ajax({
+				type : "POST",
+				url : "/admin/"+matchType+"/removeChallenger",
+				dataType : "json",
+				data: {
+					name:e.data['name'],
+					server:e.data['server']
+				},
+		
+				success : function(data) {
+					if(data['success']) {
+						hintSuccess('该队员将再是擂主');
+						loadSeasonData();
+					} else {
+						hintError(data['message']);
+					}
+				},
+				error : function(jqXHR) {
+					hintError('删除失败');
+				}
+			});
+		});
+		destory.appendTo(td2);
+		td1.appendTo(tr);
+		td2.appendTo(tr);
+		tr.appendTo(table);
+	}
+	table.appendTo(list);
+}
 function buildPlayerList(season, player) {
 	var list = $("#player-list");
 	
@@ -89,7 +163,7 @@ function buildPlayerList(season, player) {
 			}
 			$.ajax({
 				type : "POST",
-				url : "/admin/removePlayer",
+				url : "/admin/"+matchType+"/removePlayer",
 				dataType : "json",
 				data: {
 					name:e.data['name'],
@@ -146,7 +220,7 @@ function setTime(){
 	{	
 		$.ajax({
 			type : "POST",
-			url : "/admin/setPlanningTime",
+			url : "/admin/"+matchType+"/setPlanningTime",
 			dataType : "json",
 			data: {
 				date: date,
@@ -174,6 +248,41 @@ function setTime(){
 	}
 }
 
+function addChallenger() {
+	var name = $("#new-challenger").val();
+	var server = $("#new-challenger-server").val();
+	if(!name) {
+		hintError('队员名还没填');
+	}
+	if(!server) {
+		hintError('请选择服务器');
+	}
+	$.ajax({
+		type : "POST",
+		url : "/admin/"+matchType+"/addChallenger",
+		dataType : "json",
+		data: {
+			name: name,
+			server: server
+			
+		},
+
+		success : function(data) {
+			if(data['success']) {
+				hintSuccess('添加成员成功');
+				loadSeasonData();
+			} else {
+				hintError(data['message']);		
+			}
+
+
+		},
+		error : function(jqXHR) {
+			alert('添加失败');
+		}
+	});
+	
+}
 function addPlayer() {
 	var name = $("#new-player").val();
 	var server = $("#new-player-server").val();
@@ -185,7 +294,7 @@ function addPlayer() {
 	}
 	$.ajax({
 		type : "POST",
-		url : "/admin/addPlayer",
+		url : "/admin/"+matchType+"/addPlayer",
 		dataType : "json",
 		data: {
 			name: name,
@@ -214,13 +323,13 @@ function startSeason() {
 	
 	$.ajax({
 		type : "POST",
-		url : "/admin/startSeason",
+		url : "/admin/"+matchType+"/startSeason",
 		dataType : "json",
 
 		success : function(data) {	
 			if(data['success']) {
 				hintSuccess('新赛季成功开启');
-				window.location.href = '/';
+				switchToDashboard();
 			} else {
 				hintError(data['message']);
 			}
@@ -235,7 +344,7 @@ function stopSeason() {
 	
 	$.ajax({
 		type : "POST",
-		url : "/admin/stopSeason",
+		url : "/admin/"+matchType+"/stopSeason",
 		dataType : "json",
 
 		success : function(data) {	
@@ -255,7 +364,7 @@ function cancelSeason() {
 	
 	$.ajax({
 		type : "POST",
-		url : "/admin/cancelSeason",
+		url : "/admin/"+matchType+"/cancelSeason",
 		dataType : "json",
 
 		success : function(data) {	

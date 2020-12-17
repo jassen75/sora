@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>梦幻模拟战比赛专区</title>
+<link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+<script src="/lib/jquery/jquery-3.3.1.min.js"></script>
+<script src="/lib/bootstrap/js/bootstrap.min.js"></script>
+<script src="/lib/vue/vue.min.js"></script>
+
+<link rel="stylesheet" href="/match/css/match.css">
+<link rel="stylesheet" href="/css/main.css">
+<script src="/js/main.js"></script>
+<script src="/match/js/match_common.js"></script>
+<script src="/match/js/kkb.js"></script>
+</head>
+<body>
+	<nav id="header" class="navbar">
+		<div class="container">
+			<h2 class="navbar-header">老硬币杯 擂台赛 比赛专区</h2>
+			<div id="head-images" class="navbar-collapse collapse">
+				<img class="navbar-left" src="/image/tanuki.png" alt="图片文本描述"
+					width="100" height="100"></img> <img class="navbar-right"
+					src="/match/image/mz.png" alt="图片文本描述" width="261" height="143"></img>
+			</div>
+		</div>
+
+	</nav>
+	<nav>
+		<div class="navbar navbar-inverse">
+			<div id="nav" class="container">
+				<div class="navbar-left">
+					<a id="season-hint" class="btn navbar-btn" href="/"></a>
+				</div>
+				<div class="navbar-right">
+					<a id="home" class="btn navbar-btn" href="#">Home</a> <a
+						id="season-control" class="btn navbar-btn" href="#">赛季管理</a> <a
+						id="save-score" class="btn navbar-btn" href="#">记录分数</a> <a
+						class="btn navbar-btn" href="#">登 录</a> <a class="btn navbar-btn"
+						href="#">profile</a>
+				</div>
+			</div>
+		</div>
+	</nav>
+	<div id="hint-dialog" class="modal fade" aria-hidden="true"></div>
+	<div id="content">
+		<div class="container">
+
+			<p>擂台赛分两轮进行，率先通过挑战的4位选手将在第二轮进行淘汰赛</p>
+			<ul id="tab" class="nav nav-tabs">
+				<li class="active"><a data-toggle="tab" 
+					href="#stage1">第一轮</a></li>
+				<li><a data-toggle="tab" href="#stage2">第二轮</a></li>
+			</ul>
+			<div id="schedule-list" class="tab-content">
+				<div class="tab-pane fade in active" id="stage1">
+					<div class="panel-group" v-cloak>
+						<div v-for="(value, index) in records" class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">第{{index+1}}场
+									{{value[0]['matchTime']}}</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table table-striped">
+									<tr v-for="record in value">
+										<td>{{record['player1']['name']}} vs
+											{{record['player2']['name']}}</td>
+										<td>{{getMap(record['map'])}}</td>
+										<td>{{record['score']}}</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="tab-pane fade" id="stage2">
+					<div class="panel-group" v-cloak>
+						<div v-for="(value, index) in records" class="panel panel-default">
+							<div class="panel-heading">
+								<h3 class="panel-title">第{{index+1}}场
+									{{value[0]['matchTime']}}</h3>
+							</div>
+							<div class="panel-body">
+								<table class="table table-striped">
+									<tr v-for="record in value">
+										<td>{{record['player1']['name']}} vs
+											{{record['player2']['name']}}</td>
+										<td>{{getMap(record['map'])}}</td>
+										<td>{{record['score']}}</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div id="pict"></div>
+			<div id="desc">
+				<pre>
+				</pre>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

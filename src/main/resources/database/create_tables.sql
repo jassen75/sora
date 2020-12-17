@@ -3,6 +3,7 @@ use sora;
 
 DROP TABLE if exists player;
 DROP TABLE if exists record;
+DROP TABLE if exists role;
 
 CREATE TABLE IF NOT EXISTS player (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -17,22 +18,33 @@ CREATE TABLE IF NOT EXISTS record (
 	player2 bigint not null,
 	score1 integer,
 	score2 integer,
-	season integer,
+	season_id bigint not null,
+	record_group integer,
+	stage integer,
 	map integer,
-	match_time timestamp not null
+	match_time timestamp not null,
+	video_id bigint
 );
 
 CREATE TABLE IF NOT EXISTS season (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
 	number integer,
+	match_type VARCHAR(64),
 	status integer, 
 	start_time timestamp
 );
 
-CREATE TABLE IF NOT EXISTS season_players (
+CREATE TABLE IF NOT EXISTS video (
+	id bigint AUTO_INCREMENT PRIMARY KEY,
+	video_type integer,
+	info VARCHAR(512)
+);
+
+CREATE TABLE IF NOT EXISTS role (
+	id bigint AUTO_INCREMENT PRIMARY KEY,
 	season_id bigint not null,
-	players_id bigint not null,
-	primary key(season_id, players_id)
+	player_id bigint not null,
+	name VARCHAR(255)
 );
 
 INSERT INTO player(name, server) VALUES
