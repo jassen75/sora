@@ -1,4 +1,4 @@
-package cc.js.sora.match;
+package cc.js.sora.match.definition;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import cc.js.sora.ErrorMessage;
+import cc.js.sora.match.MatchDef;
+import cc.js.sora.match.MatchType;
+import cc.js.sora.match.Player;
+import cc.js.sora.match.Record;
+import cc.js.sora.match.Role;
+import cc.js.sora.match.Season;
 import cc.js.sora.match.db.RecordRepository;
 import cc.js.sora.match.service.ChallengerModeService;
 import cc.js.sora.match.service.KnockoutModeService;
 import lombok.extern.slf4j.Slf4j;
 
+/**
+ * A Match orgnized by KlunKI 
+ * 
+ * @author jassen
+ *
+ */
 @Component
 @Slf4j
 public class KKBMatchDef implements MatchDef

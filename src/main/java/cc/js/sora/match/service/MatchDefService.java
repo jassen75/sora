@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Maps;
 
 import cc.js.sora.ErrorMessage;
-import cc.js.sora.match.JBBMatchDef;
-import cc.js.sora.match.KKBMatchDef;
 import cc.js.sora.match.MatchDef;
 import cc.js.sora.match.MatchType;
 import cc.js.sora.match.Player;
 import cc.js.sora.match.Record;
 import cc.js.sora.match.Season;
+import cc.js.sora.match.definition.JBBMatchDef;
+import cc.js.sora.match.definition.KKBMatchDef;
 import lombok.extern.slf4j.Slf4j;
 
 @Service

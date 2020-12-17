@@ -1,10 +1,14 @@
-package cc.js.sora.match;
+package cc.js.sora.match.definition;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import cc.js.sora.match.MatchDef;
+import cc.js.sora.match.Player;
+import cc.js.sora.match.Record;
+import cc.js.sora.match.Season;
 import cc.js.sora.match.service.RoundModeService;
 
 @Component
