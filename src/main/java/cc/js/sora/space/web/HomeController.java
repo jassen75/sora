@@ -12,12 +12,12 @@ public class HomeController {
 	}
 
     
-    @RequestMapping(value= {"/index", "/space"})
+    @RequestMapping(value= {"/index", "/space", "/"})
 	public String space() {
 		return "forward:/space/index.html";
 	}
     
-    @RequestMapping(value= {"/lyb", "/"})
+    @RequestMapping(value= {"/lyb"})
 	public String lyb() {
 		return "forward:/match/kkb.html";
 	}
