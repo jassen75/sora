@@ -20,6 +20,6 @@ error handler
 
 modeling
 KK match
-support video link 
 
 2.0
+fight model 

@@ -4,6 +4,7 @@ use sora;
 DROP TABLE if exists player;
 DROP TABLE if exists record;
 DROP TABLE if exists role;
+DROP TABLE if exists hero;
 
 CREATE TABLE IF NOT EXISTS player (
 	id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -47,6 +48,13 @@ CREATE TABLE IF NOT EXISTS role (
 	name VARCHAR(255)
 );
 
+
+
+CREATE TABLE IF NOT EXISTS hero (
+	id bigint AUTO_INCREMENT PRIMARY KEY,
+	name VARCHAR(255)
+);
+
 INSERT INTO player(name, server) VALUES
 ('朱老板','羁绊之地'),
 ('黑豆','羁绊之地'),
@@ -58,3 +66,18 @@ INSERT INTO player(name, server) VALUES
 ('特工','羁绊之地'),
 ('琳雪','羁绊之地'),
 ('不是山谷','羁绊之地');
+
+INSERT INTO hero(name) VALUES
+('帕希尔'),
+('托娃');
+
+
+
+
+
+
+
+
+
+
+
