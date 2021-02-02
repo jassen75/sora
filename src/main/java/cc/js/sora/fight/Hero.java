@@ -35,37 +35,37 @@ public class Hero {
 	@Column(name="name")
 	String name;
 	
-	@Transient
+	@Column(name="attack")
 	int attck;
 	
-	@Transient
+	@Column(name="physic_def")
 	int physicDef;
 	
-	@Transient
+	@Column(name="life")
 	int life;
 	
-	@Transient
+	@Column(name="magic_def")
 	int magicDef;
 	
-	@Transient
+	@Column(name="intel")
 	int intel;
 	
-	@Transient
+	@Column(name="tech")
 	int tech;
 	
 	@Transient
 	List<Soldier> soldiers;
 	
-	@Transient
+	@Column(name="soldier_attack_inc")
 	int soldierAttackInc;
 	
-	@Transient
+	@Column(name="soldier_physic_def_inc")
 	int soldierPhysicDefInc;
 	
-	@Transient
+	@Column(name="soldier_magic_def_inc")
 	int soldierMagicDefInc;
 	
-	@Transient
+	@Column(name="soldier_life_inc")
 	int soldierLifeInc;
 	
 	@Transient
@@ -78,7 +78,8 @@ public class Hero {
 	List<Buff> skill;
 	
 	@JsonProperty("isPhysic")
-//	@Column(name="is_physic")
-	@Transient
+	@Column(name="is_physic")
 	boolean isPhysic;
+
+	
 }

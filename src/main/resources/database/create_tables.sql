@@ -1,9 +1,9 @@
 
 use sora;
 
-DROP TABLE if exists player;
 DROP TABLE if exists record;
 DROP TABLE if exists role;
+DROP TABLE if exists player;
 DROP TABLE if exists hero;
 
 CREATE TABLE IF NOT EXISTS player (
@@ -52,7 +52,19 @@ CREATE TABLE IF NOT EXISTS role (
 
 CREATE TABLE IF NOT EXISTS hero (
 	id bigint AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(255)
+	name VARCHAR(255),
+	life integer,
+	attack integer,
+	intel integer,
+	physic_def integer,
+	magic_def integer,
+	tech integer,
+	soldier_life_inc integer,
+	soldier_attack_inc integer,
+	soldier_physic_def_inc integer,
+	soldier_magic_def_inc integer,
+	is_physic tinyint(1)
+
 );
 
 INSERT INTO player(name, server) VALUES
@@ -67,9 +79,9 @@ INSERT INTO player(name, server) VALUES
 ('琳雪','羁绊之地'),
 ('不是山谷','羁绊之地');
 
-INSERT INTO hero(name) VALUES
-('帕希尔'),
-('托娃');
+INSERT INTO hero(id, name, life, attack, intel, physic_def, magic_def, tech, soldier_life_inc, soldier_attack_inc,  soldier_physic_def_inc, soldier_magic_def_inc, is_physic) VALUES
+(1,'帕希尔',3731,290,550,273,331,111,30,35,15,20,0),
+(2,'托娃',4375,560,257,322,319,176,30,30,40,15,1);
 
 
 

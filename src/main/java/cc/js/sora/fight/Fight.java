@@ -34,7 +34,7 @@ public class Fight {
 	int defenderPhysicDef;
 	int defenderLife;
 	int defenderMagicDef;
-	int defenderOntel;
+	int defenderIntel;
 	int defenderTech;
 	
 

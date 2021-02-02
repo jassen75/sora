@@ -7,10 +7,11 @@
 <title>梦站战斗计算器</title>
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/main.css">
-<link rel="stylesheet" href="/fight/fight.css">
+<link rel="stylesheet" href="/fight/css/fight.css">
 <script src="/lib/jquery/jquery-3.3.1.min.js"></script>
 <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="/lib/vue/vue.min.js"></script>
+<script src="/fight/js/fight.js"></script>
 </head>
 <body>
 	<nav id="header" class="navbar">
@@ -34,19 +35,141 @@
 		
 			<div class="row">
 				<div class="col-md-6">
-					<div id="attackPic">
+					<div class="row">
+						<div id="attackerPic">
+						<div><img src="/fight/image/1.png" alt="" width="60" height="86"></img>未指定</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="panel panel-default">
+						  <div class="panel-heading">进攻方战斗面板</div>
+						  <div class="panel-body">
+						 	 <form>
+							      <div id="aa" class="form-group">
+								    <label for="attackerAttack">攻击</label>
+								    <input type="text" class="form-control" id="attackerAttack" placeholder="">
+								  </div>
+								  <div id="ai" class="form-group">
+								    <label for="attackerIntel">智力</label>
+								    <input type="text" class="form-control" id="attackerIntel" placeholder="">
+								  </div>
+								   <div class="form-group">
+								    <label for="attackerPhysicDef">防御</label>
+								    <input type="text" class="form-control" id=“attackerPhysicDef” placeholder="">
+								  </div>
+								  <div class="form-group">
+								    <label for="attackerMagicDef">魔防</label>
+								    <input type="text" class="form-control" id="attackerMagicDef" placeholder="">
+								  </div>
+								  <div class="form-group">
+								    <label for="attackerLife">生命</label>
+								    <input type="text" class="form-control" id="attackerLife" placeholder="">
+								  </div>
+							  </form>
+						  </div>
+						</div>			
 					</div>
 				</div>
 				<div class="col-md-6">
-					<div id="defenderPic">
+					<div class="row">
+						<div id="defenderPic">
+						<div><img src="/fight/image/2.png" alt="" width="60" height="86"></img>未指定</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="panel panel-default">
+						 
+						  <div class="panel-heading">挨揍方战斗面板</div>
+						  <div class="panel-body">
+						      <form>
+								  <div id="da" class="form-group">
+								    <label for="defendAttack">攻击</label>
+								    <input type="text" class="form-control" id="defendAttack" placeholder="">
+								  </div>
+								  <div id="di" class="form-group">
+								    <label for="defenderIntel">智力</label>
+								    <input type="text" class="form-control" id="defenderIntel" placeholder="">
+								  </div>
+								   <div class="form-group">
+								    <label for="defenderPhysicDef">防御</label>
+								    <input type="text" class="form-control" id="defenderPhysicDef" placeholder="">
+								  </div>
+								  <div class="form-group">
+								    <label for="defenderMagicDef">魔防</label>
+								    <input type="text" class="form-control" id="defenderMagicDef" placeholder="">
+								  </div>
+								  <div class="form-group">
+								    <label for="defenderLife">生命</label>
+								    <input type="text" class="form-control" id="defenderLife" placeholder="">
+								  </div>
+							  </form>
+						  </div>
+						</div>
 					</div>
 				</div>
 			</div>
 			
 			<div class="row">
+				<button type="button" class="btn btn-primary">计算</button>
+				<br>
+				<br>
+					<div class="container">
+
+						<div class="row">
+						<div class="col-md-6">
+							<div class="panel panel-info">
+								<div class="panel-heading">进攻方战斗数据</div>
+							 	 <div class="panel-body">
+									英雄伤害：
+									<div></div>
+									小兵伤害：
+									<div></div>	
+								</div>
+							</div>
+							英雄血量：
+							<div class="progress">
+  								<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+  								100%
+  								</div>
+							</div>
+							小兵血量：
+							<div class="progress">
+							  <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+							    100%
+							  </div>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="panel panel-info">
+								 <div class="panel-heading">挨揍方战斗数据</div>
+								  <div class="panel-body">
+									英雄伤害：
+									<div></div>
+									小兵伤害：
+									<div></div>
+								 </div>
+							 </div>
+							英雄血量：
+							<div class="progress">
+	  							<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+	  							100%
+	  							</div>
+							</div>
+							小兵血量：
+							<div class="progress">
+							  <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 60%;">
+							    100%
+							  </div>
+							</div>
+						</div>
+					</div>
+			</div>
+
 			</div>
 			
 		    <div class="row">
+		    	<div id="hero_pics">
+		    	</div>
 			</div>
 		
 		</div>
