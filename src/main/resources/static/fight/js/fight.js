@@ -82,6 +82,13 @@ function displayHero(id, hero, heroEquip)
 	if(isAttacker==1)
 	{
 		attacker = hero;
+		$("#attacker-buf-list").children("li").remove();
+		for(var i=0; i<attacker["buffs"].length; i++)
+		{
+			var buff = $("<li class=\"list-group-item\">"+attacker["buffs"][i]["name"]+":"+attacker["buffs"][i]["title"]+"</li>");
+			buff.appendTo($("#attacker-buf-list"))
+		}
+		
 		$("#attackerPic").children("div").remove();
 		var pic = $("<div><img src=\"/fight/image/"+id+".png\" alt=\"\" width=\"60\" height=\"86\"></img>"+hero["name"]+"</div>");
 		pic.appendTo($("#attackerPic"));

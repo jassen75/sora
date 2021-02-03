@@ -35,16 +35,22 @@
 			<div id="information" class="row">
 				<div class="col-md-6">
 					<div id="attacker-sel-soldier" class="row">
-						<div id="attackerPic">
-						<div><img src="/fight/image/1.png" alt="" width="60" height="86"></img>未指定</div>
+						<div class="col-md-6">
+							<div id="attackerPic">
+							<div><img src="/fight/image/1.png" alt="" width="60" height="86"></img>未指定</div>
+							</div>
+							<div id="attacker-sel-soldier" class="dropdown">
+							  <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							    选择兵种
+							    <span class="caret"></span>
+							  </button>
+							  <ul id="attacker-soldier-list" class="dropdown-menu" aria-labelledby="attacker-sel-soldier">
+							  </ul>
+							</div>
 						</div>
-						<div id="attacker-sel-soldier" class="dropdown">
-						  <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						    选择兵种
-						    <span class="caret"></span>
-						  </button>
-						  <ul id="attacker-soldier-list" class="dropdown-menu" aria-labelledby="attacker-sel-soldier">
-						  </ul>
+						<div class="col-md-6">
+							<ul id="attacker-buf-list" class="list-group">
+							</ul>
 						</div>
 					</div>
 					<div class="row">

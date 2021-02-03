@@ -60,7 +60,7 @@ public class Hero {
 	@Column(name="tech")
 	int tech;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	List<Soldier> soldiers;
 	
 	@Column(name="soldier_attack_inc")
