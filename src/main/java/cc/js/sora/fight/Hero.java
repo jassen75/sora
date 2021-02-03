@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
@@ -43,7 +44,7 @@ public class Hero {
 	String name;
 	
 	@Column(name="attack")
-	int attck;
+	int attack;
 	
 	@Column(name="physic_def")
 	int physicDef;
@@ -81,6 +82,9 @@ public class Hero {
 	@JsonProperty("isPhysic")
 	@Column(name="is_physic")
 	boolean isPhysic;
+	
+	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "hero")
+	HeroEquip heroEquip;
 
 	
 }

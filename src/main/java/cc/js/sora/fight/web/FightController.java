@@ -15,6 +15,7 @@ import cc.js.sora.fight.FightResult;
 import cc.js.sora.fight.Hero;
 import cc.js.sora.fight.HeroEquip;
 import cc.js.sora.fight.Soldier;
+import cc.js.sora.fight.db.HeroEquipRepository;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +31,9 @@ public class FightController {
 	
 	@Autowired
 	SoldierRepository soldierRepository;
+	
+	@Autowired
+	HeroEquipRepository heroEquipRepository;
 	
 	@RequestMapping(path = "/cal", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public FightResult calculate(@RequestBody Fight fight)
@@ -82,12 +86,7 @@ public class FightController {
 	@RequestMapping(path = "/heros/{heroId}/heroEquip", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public HeroEquip heroEquip(@PathVariable long heroId)
 	{
-		HeroEquip defaultEquip = new HeroEquip();
-		defaultEquip.setAttackInc(35);
-		defaultEquip.setEnhanceType(1);
-		defaultEquip.setLifeInc(20);
-		defaultEquip.setPhysicDefSInc(20);
-		return defaultEquip;
+		return heroEquipRepository.findHeroEquip(heroId);
 	}
 
 }

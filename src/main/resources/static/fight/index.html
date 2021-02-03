@@ -37,7 +37,7 @@
 					<div id="attacker-sel-soldier" class="row">
 						<div class="col-md-6">
 							<div id="attackerPic">
-							<div><img src="/fight/image/1.png" alt="" width="60" height="86"></img>未指定</div>
+							<div><img src="/fight/image/0.png" alt="" width="60" height="86"></img>未指定</div>
 							</div>
 							<div id="attacker-sel-soldier" class="dropdown">
 							  <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -49,10 +49,10 @@
 							</div>
 						</div>
 						<div class="col-md-6">
-							<ul id="attacker-buf-list" class="list-group">
-							</ul>
+							<div id="attacker-info"></div>
 						</div>
 					</div>
+
 					<div class="row">
 						<div class="panel panel-default">
 						  <div class="panel-heading">进攻方战斗面板</div>
@@ -83,21 +83,30 @@
 							  <p>未选择</p><p></p><p></p>
 							  </div>
 						  </div>
+						</div>
+						<div class="row">
+							<ul id="attacker-buf-list" class="list-group">
+							</ul>
 						</div>			
 					</div>
 				</div>
 				<div class="col-md-6">
 					<div class="row">
-						<div id="defenderPic">
-						<div><img src="/fight/image/2.png" alt="" width="60" height="86"></img>未指定</div>
+						<div class="col-md-6">
+							<div id="defenderPic">
+							<div><img src="/fight/image/0.png" alt="" width="60" height="86"></img>未指定</div>
+							</div>
+							<div id="defender-sel-soldier" class="dropdown">
+							  <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							    选择兵种
+							    <span class="caret"></span>
+							  </button>
+							  <ul id="defender-soldier-list" class="dropdown-menu" aria-labelledby="defender--sel-soldier">
+							  </ul>
+							</div>
 						</div>
-						<div id="defender-sel-soldier" class="dropdown">
-						  <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-						    选择兵种
-						    <span class="caret"></span>
-						  </button>
-						  <ul id="defender-soldier-list" class="dropdown-menu" aria-labelledby="defender--sel-soldier">
-						  </ul>
+						<div class="col-md-6">
+							<div id="defender-info"></div>
 						</div>
 					</div>
 					<div class="row">
@@ -134,8 +143,13 @@
 						  </div>
 						</div>
 					</div>
+					<div class="row">
+						<ul id="defender-buf-list" class="list-group">
+						</ul>
+					</div>
 				</div>
 			</div>
+			
 			
 			<div class="row">
 				<button type="button" class="btn btn-primary">计算</button>

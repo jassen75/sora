@@ -53,5 +53,23 @@
 	color:green;
 }
 
+#attacker-info {
+	color:brown;
+	font: bold;
+}
+
+#defender-info {
+	color:brown;
+	font: bold;
+}
+
+
+#attacker-buf-list {
+	height:40px;
+}
+
+#defender-buf-list {
+	height:40px;
+}
 
 

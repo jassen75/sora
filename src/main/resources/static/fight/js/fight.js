@@ -2,6 +2,8 @@ var attacker;
 var defender;
 var attackerSoldier;
 var defenderSoldier;
+var attackerEquip;
+var defenderEquip;
 var isAttacker = 1;
 
 $(document).ready(function() {
@@ -82,6 +84,8 @@ function displayHero(id, hero, heroEquip)
 	if(isAttacker==1)
 	{
 		attacker = hero;
+		attackerEquip = heroEquip;
+		attackerSoldier = undefined;
 		$("#attacker-buf-list").children("li").remove();
 		for(var i=0; i<attacker["buffs"].length; i++)
 		{
@@ -128,11 +132,13 @@ function displayHero(id, hero, heroEquip)
 				
 			})
 		}
-	
+		refreshAttacker();
 		isAttacker=0;
 	} else
 	{
 		defender = hero;
+		defenderEquip = heroEquip;
+		defenderSoldier = undefined;
 		$("#defenderPic").children("div").remove();
 		var pic = $("<div><img src=\"/fight/image/"+id+".png\" alt=\"\" width=\"60\" height=\"86\"></img>"+hero["name"]+"</div>");
 		pic.appendTo($("#defenderPic"));
@@ -171,6 +177,7 @@ function displayHero(id, hero, heroEquip)
 				})
 			})
 		}
+		refreshDefender();
 		isAttacker=1;
 	}
 	
@@ -178,6 +185,18 @@ function displayHero(id, hero, heroEquip)
 
 function refreshAttacker()
 {
+	if(attacker)
+	{
+		$("#attacker-info").html(
+		"<p>生命&nbsp;"+attacker["life"]+"+"+attackerEquip["lifeInc"]+
+		"</p><p>攻击&nbsp;"+attacker["attack"]+"+"+attackerEquip["attackInc"]+
+		"</p><p>智力&nbsp;"+attacker["intel"]+"+"+attackerEquip["intelInc"]+
+		"</p><p>防御&nbsp;"+attacker["physicDef"]+"+"+attackerEquip["physicDefInc"]+
+		"</p><p>魔防&nbsp;"+attacker["magicDef"]+"+"+attackerEquip["magicDefInc"]+
+		"</p><p>技巧"+attacker["tech"]+"</p>");
+		
+		$("#attacker-soldier-information").html("");
+	}
 	if(attackerSoldier && attacker) 
 	{
 		var attack = Math.floor(attackerSoldier["attack"]*(1+attacker["soldierAttackInc"]/100)*(1+0.2));
@@ -190,6 +209,17 @@ function refreshAttacker()
 
 function refreshDefender()
 {
+	if(defender)
+	{
+		$("#defender-info").html(
+		"<p>生命&nbsp;"+defender["life"]+"+"+defenderEquip["lifeInc"]+
+		"</p><p>攻击&nbsp;"+defender["attack"]+"+"+defenderEquip["attackInc"]+
+		"</p><p>智力&nbsp;"+defender["intel"]+"+"+defenderEquip["intelInc"]+
+		"</p><p>防御&nbsp;"+defender["physicDef"]+"+"+defenderEquip["physicDefInc"]+
+		"</p><p>魔防&nbsp;"+defender["magicDef"]+"+"+defenderEquip["magicDefInc"]+
+		"</p><p>技巧"+defender["tech"]+"</p>");
+		$("#defender-soldier-information").html("");
+	}
 	if(defenderSoldier && defender) 
 	{
 		var attack = Math.floor(defenderSoldier["attack"]*(1+defender["soldierAttackInc"]/100)*(1+0.2));
