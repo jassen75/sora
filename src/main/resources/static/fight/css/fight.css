@@ -28,4 +28,30 @@
 	 display: inline-block;
 }
 
+#information {
+	padding: 10px;
+}
+
+#attackerPic {
+	padding: 10px;
+}
+
+#defenderPic {
+	padding: 10px;
+}
+
+.dropdown {
+	padding: 10px;
+	
+}
+
+#attacker-soldier-information {
+	color:green;
+}
+
+#defender-soldier-information {
+	color:green;
+}
+
+
 

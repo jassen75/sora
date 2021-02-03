@@ -14,7 +14,9 @@ import cc.js.sora.fight.Fight;
 import cc.js.sora.fight.FightResult;
 import cc.js.sora.fight.Hero;
 import cc.js.sora.fight.HeroEquip;
+import cc.js.sora.fight.Soldier;
 import cc.js.sora.fight.db.HeroRepository;
+import cc.js.sora.fight.db.SoldierRepository;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -25,6 +27,9 @@ public class FightController {
 	
 	@Autowired
 	HeroRepository heroRepository;
+	
+	@Autowired
+	SoldierRepository soldierRepository;
 	
 	@RequestMapping(path = "/cal", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public FightResult calculate(@RequestBody Fight fight)
@@ -56,7 +61,13 @@ public class FightController {
 	public List<Hero> heros()
 	{
 		List<Hero> currentRecord = heroRepository.findAll();
-		log.info("size:"+heroRepository.count());
+		return currentRecord;
+	}
+	
+	@RequestMapping(path = "/soldiers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Soldier> soldier()
+	{
+		List<Soldier> currentRecord = soldierRepository.findAll();
 		return currentRecord;
 	}
 	

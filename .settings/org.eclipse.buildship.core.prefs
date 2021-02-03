@@ -1,2 +1,13 @@
-#Fri May 01 07:51:43 CST 2020
+arguments=
+auto.sync=false
+build.scans.enabled=false
+connection.gradle.distribution=GRADLE_DISTRIBUTION(LOCAL_INSTALLATION(/opt/sdkman/candidates/gradle/current))
 connection.project.dir=
+eclipse.preferences.version=1
+gradle.user.home=
+java.home=/opt/sdkman/candidates/java/current
+jvm.arguments=
+offline.mode=false
+override.workspace.settings=true
+show.console.view=true
+show.executions.view=true

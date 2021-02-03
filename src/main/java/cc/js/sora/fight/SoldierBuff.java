@@ -1,7 +1,5 @@
 package cc.js.sora.fight;
 
-import java.util.List;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -14,7 +12,6 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import cc.js.sora.match.Season;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,13 +19,13 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Table(name = "buff")
+@Table(name = "soldier_buff")
 @Setter
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Buff {
+public class SoldierBuff {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,6 +39,19 @@ public class Buff {
 	{
 		return Condition.getContition(condition).getTitle()+","+printBufferType()+"+"+number;				
 	}
+	
+	//1 attack 2 physicDef 3 magicDef 4 damageInc 5 damageReduce 6 Skill 7 counter 
+	int buffType;
+	
+	double number;
+	
+	//1 hero 2 soldier 3 all 4 enemy hero 5 enemy soldier 6 enemy all
+	int scope;
+	
+	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
+	@JoinColumn(name = "soldier_id")
+	@JsonIgnore
+	Soldier soldier;
 	
 	public String printBufferType()
 	{
@@ -66,17 +76,5 @@ public class Buff {
 		}
 		return "";
 	}
-	
-	//1 attack 2 physicDef 3 magicDef 4 damageInc 5 damageReduce 6 Skill 7 counter 
-	int buffType;
-	
-	double number;
-	
-	//1 hero 2 soldier 3 all 4 enemy hero 5 enemy soldier 6 enemy all
-	int scope;
-	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "hero_id")
-	@JsonIgnore
-	Hero hero;
+
 }

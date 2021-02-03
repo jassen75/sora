@@ -32,12 +32,19 @@
 	</nav>
 	<div id="content">
 		<div class="container">
-		
-			<div class="row">
+			<div id="information" class="row">
 				<div class="col-md-6">
-					<div class="row">
+					<div id="attacker-sel-soldier" class="row">
 						<div id="attackerPic">
 						<div><img src="/fight/image/1.png" alt="" width="60" height="86"></img>未指定</div>
+						</div>
+						<div id="attacker-sel-soldier" class="dropdown">
+						  <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						    选择兵种
+						    <span class="caret"></span>
+						  </button>
+						  <ul id="attacker-soldier-list" class="dropdown-menu" aria-labelledby="attacker-sel-soldier">
+						  </ul>
 						</div>
 					</div>
 					<div class="row">
@@ -53,11 +60,11 @@
 								    <label for="attackerIntel">智力</label>
 								    <input type="text" class="form-control" id="attackerIntel" placeholder="">
 								  </div>
-								   <div class="form-group">
+								   <div id="ap" class="form-group">
 								    <label for="attackerPhysicDef">防御</label>
 								    <input type="text" class="form-control" id=“attackerPhysicDef” placeholder="">
 								  </div>
-								  <div class="form-group">
+								  <div id="am" class="form-group">
 								    <label for="attackerMagicDef">魔防</label>
 								    <input type="text" class="form-control" id="attackerMagicDef" placeholder="">
 								  </div>
@@ -66,6 +73,9 @@
 								    <input type="text" class="form-control" id="attackerLife" placeholder="">
 								  </div>
 							  </form>
+							  <div id="attacker-soldier-information">
+							  <p>未选择</p><p></p><p></p>
+							  </div>
 						  </div>
 						</div>			
 					</div>
@@ -74,6 +84,14 @@
 					<div class="row">
 						<div id="defenderPic">
 						<div><img src="/fight/image/2.png" alt="" width="60" height="86"></img>未指定</div>
+						</div>
+						<div id="defender-sel-soldier" class="dropdown">
+						  <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+						    选择兵种
+						    <span class="caret"></span>
+						  </button>
+						  <ul id="defender-soldier-list" class="dropdown-menu" aria-labelledby="defender--sel-soldier">
+						  </ul>
 						</div>
 					</div>
 					<div class="row">
@@ -90,11 +108,11 @@
 								    <label for="defenderIntel">智力</label>
 								    <input type="text" class="form-control" id="defenderIntel" placeholder="">
 								  </div>
-								   <div class="form-group">
+								   <div id="dp" class="form-group">
 								    <label for="defenderPhysicDef">防御</label>
 								    <input type="text" class="form-control" id="defenderPhysicDef" placeholder="">
 								  </div>
-								  <div class="form-group">
+								  <div id="dm" class="form-group">
 								    <label for="defenderMagicDef">魔防</label>
 								    <input type="text" class="form-control" id="defenderMagicDef" placeholder="">
 								  </div>
@@ -102,7 +120,11 @@
 								    <label for="defenderLife">生命</label>
 								    <input type="text" class="form-control" id="defenderLife" placeholder="">
 								  </div>
+								  
 							  </form>
+							   <div id="defender-soldier-information">
+							   	<p>未选择</p><p></p><p></p>
+							  </div>
 						  </div>
 						</div>
 					</div>
