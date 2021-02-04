@@ -67,8 +67,9 @@ CREATE TABLE IF NOT EXISTS hero (
 	soldier_attack_inc integer,
 	soldier_physic_def_inc integer,
 	soldier_magic_def_inc integer,
-	is_physic tinyint(1)
-
+	skills VARCHAR(4096),
+	is_physic tinyint(1),
+	is_woman tinyint(1)
 );
 
 create table hero_soldiers (hero_id bigint not null, soldiers_id bigint not null);
@@ -81,29 +82,10 @@ create table soldier (
 	magic_def integer not null, 
 	physic_def integer not null, 
 	soldier_type integer not null,
+	skills VARCHAR(4096),
 	primary key (id)
 );
 
-create table buff (
-	id bigint AUTO_INCREMENT PRIMARY KEY,
-	 buff_type integer not null, 
-	 condition integer not null, 
-	 name varchar(255), 
-	 number double not null, 
-	 scope integer not null, 
-	 hero_id bigint
- );
- 
- create table soldier_buff (
-	id bigint AUTO_INCREMENT PRIMARY KEY,
-	 buff_type integer not null, 
-	 condition integer not null, 
-	 name varchar(255), 
-	 number double not null, 
-	 scope integer not null, 
-	 soldier_id bigint
- );
- 
  create table hero_equip(
 	 id bigint AUTO_INCREMENT PRIMARY KEY,
 	 attack_inc integer not null,
@@ -136,9 +118,9 @@ INSERT INTO player(name, server) VALUES
 ('琳雪','羁绊之地'),
 ('不是山谷','羁绊之地');
 
-INSERT INTO hero(id, name, life, attack, intel, physic_def, magic_def, tech, soldier_life_inc, soldier_attack_inc,  soldier_physic_def_inc, soldier_magic_def_inc, is_physic) VALUES
-(1,'帕希尔',3548,271,520,258,312,104,30,35,15,20,0),
-(2,'托娃',4168,527,240,305,302,166,30,30,40,15,1);
+INSERT INTO hero(id, name, life, attack, intel, physic_def, magic_def, tech, soldier_life_inc, soldier_attack_inc,  soldier_physic_def_inc, soldier_magic_def_inc, is_physic, is_woman, skills) VALUES
+(1,'帕希尔',3548,271,520,258,312,104,30,35,15,20,0,1,'1'),
+(2,'托娃',4168,527,240,305,302,166,30,30,40,15,1,1,'2');
 
 
 INSERT INTO soldier(id, name, life ,attack, physic_def,  magic_def, soldier_type) VALUES
@@ -146,13 +128,6 @@ INSERT INTO soldier(id, name, life ,attack, physic_def,  magic_def, soldier_type
 (2, '魔晶术士', 723, 630, 375,328, 8),
 (3, '皇家狮鹫', 677,754, 344,390, 5);
 
-
-INSERT INTO buff(name,condition,buff_type, number, scope, hero_id) VALUES
-('帕希尔天赋',-1,7,30, 3,1);
-
-INSERT INTO soldier_buff(name,condition,buff_type, number, scope, soldier_id) VALUES
-('魔女100%血',-1,1,45,2,1),
-('魔女100%血',-1,3,45,2,1);
 
 INSERT INTO hero_soldiers(hero_id, soldiers_id) VALUES
 (1, 1),(1, 2),(2, 3);

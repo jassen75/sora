@@ -1,7 +1,9 @@
 package cc.js.sora.fight;
 
-import cc.js.sora.match.Player;
-import cc.js.sora.match.Season;
+import java.util.List;
+import java.util.Map;
+
+import cc.js.sora.fight.condition.UserCondition;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,13 +17,13 @@ import lombok.ToString;
 @ToString
 public class Fight {
 	
-	Hero attacker;
+	long attackerHeroId;
 	
-	Hero defender;
+	long defenderHeroId;
+
+	long attackerSoldierId;
 	
-	Environment attackerEnv;
-	
-	Environment deffenderEnv;
+	long defenderSoldierId;
 	
 	int attackerAttck;
 	int attackerPhysicDef;
@@ -36,6 +38,18 @@ public class Fight {
 	int defenderMagicDef;
 	int defenderIntel;
 	int defenderTech;
+	
+	int attackerHeroLeftLife;
+	int attackerSoldierLeftLife;
+	int defenderHeroLeftLife;
+	int defenderSoldierLeftLife;
+	
+	Map<UserCondition, Boolean> userConditions;
+	
+	public List<Skill> getSkills(long heroId, long soldierId, boolean isAttacker)
+	{
+		return null;
+	}
 	
 
 }

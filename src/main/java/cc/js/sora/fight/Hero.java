@@ -1,6 +1,5 @@
 package cc.js.sora.fight;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -10,13 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -76,8 +71,8 @@ public class Hero {
 	@Column(name="soldier_life_inc")
 	int soldierLifeInc;
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "hero")
-	List<Buff> buffs = new ArrayList();
+	@Column(name="skills")
+	String skills;
 
 	@JsonProperty("isPhysic")
 	@Column(name="is_physic")
@@ -85,6 +80,9 @@ public class Hero {
 	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "hero")
 	HeroEquip heroEquip;
+	
+	@Column(name="is_woman")
+	boolean isWoman;
 
 	
 }

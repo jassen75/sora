@@ -1,28 +1,15 @@
 package cc.js.sora.fight;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import cc.js.sora.match.Season;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-@Entity
-@Table(name = "buff")
 @Setter
 @Getter
 @AllArgsConstructor
@@ -30,53 +17,50 @@ import lombok.ToString;
 @ToString
 public class Buff {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	long id;
+	public Buff(BuffType buffType,  double number)
+	{
+		this.buffType = buffType;
+		this.number = number;
+		this.basic = false;
+	}
 	
-	int condition;
+	//1 attack 2 physicDef 3 magicDef 4 damageInc 5 damageReduce 6 Skill 7 counter 
+	BuffType buffType;
 	
-	String name;
-
+	double number;
+	
+	boolean basic;
+	
 	public String getTitle()
 	{
-		return Condition.getContition(condition).getTitle()+","+printBufferType()+"+"+number;				
+		return printBufferType()+"+"+number;				
 	}
 	
 	public String printBufferType()
 	{
 		switch(buffType)
 		{
-		case 1:
+		case Attack:
 			return "攻击";
-		case 2:
+		case Intel:
+			return "智力";
+		case PhysicDef:
 			return "防御";
-		case 3:
+		case MagicDef:
 			return "魔防";
-		case 4:
+		case DamageInc:
 			return "增伤";
-		case 5:
+		case DamageDec:
 			return "减伤";
-		case 6:
+		case SkillDamage:
 			return "技能伤害";
-		case 7:
+		case Counter:
 			return "克制伤害";
-			
-
+		case Life:
+			return "生命";
 		}
 		return "";
 	}
+
 	
-	//1 attack 2 physicDef 3 magicDef 4 damageInc 5 damageReduce 6 Skill 7 counter 
-	int buffType;
-	
-	double number;
-	
-	//1 hero 2 soldier 3 all 4 enemy hero 5 enemy soldier 6 enemy all
-	int scope;
-	
-	@ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "hero_id")
-	@JsonIgnore
-	Hero hero;
 }

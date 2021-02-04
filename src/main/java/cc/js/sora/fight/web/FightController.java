@@ -1,6 +1,9 @@
 package cc.js.sora.fight.web;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,7 +17,10 @@ import cc.js.sora.fight.Fight;
 import cc.js.sora.fight.FightResult;
 import cc.js.sora.fight.Hero;
 import cc.js.sora.fight.HeroEquip;
+import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.Soldier;
+import cc.js.sora.fight.condition.CombinedCondition;
+import cc.js.sora.fight.condition.UserCondition;
 import cc.js.sora.fight.db.HeroEquipRepository;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
@@ -40,24 +46,24 @@ public class FightController {
 	{
 		log.info("fight:"+fight);
 		FightResult result = new FightResult(fight);
-		if(fight.getAttacker().isPhysic())
-		{
-			log.info("come here");
-			int damage = (fight.getAttackerAttck() - fight.getDefenderPhysicDef())/2;
-			int number = 20;
-			result.setAttackerHeroDamage2(damage*number);
-		} else
-		{
-			
-		}
-		
-		if(fight.getDefender().isPhysic())
-		{
-			
-		} else
-		{
-			
-		}
+//		if(fight.getAttacker().isPhysic())
+//		{
+//			log.info("come here");
+//			int damage = (fight.getAttackerAttck() - fight.getDefenderPhysicDef())/2;
+//			int number = 20;
+//			result.setAttackerHeroDamage2(damage*number);
+//		} else
+//		{
+//			
+//		}
+//		
+//		if(fight.getDefender().isPhysic())
+//		{
+//			
+//		} else
+//		{
+//			
+//		}
 		return result;
 	}
 	
@@ -87,6 +93,46 @@ public class FightController {
 	public HeroEquip heroEquip(@PathVariable long heroId)
 	{
 		return heroEquipRepository.findHeroEquip(heroId);
+	}
+	
+	@RequestMapping(path = "/buffs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map getBuffs(@RequestBody Fight fight)
+	{
+		Map result = new HashMap();
+		List<Skill> attackerSkills = fight.getSkills(fight.getAttackerHeroId(), fight.getAttackerSoldierId(), true);
+		List<Skill> defenderSkills =  fight.getSkills(fight.getDefenderHeroId(), fight.getDefenderSoldierId(), false);
+		result.put("attackerSkills", attackerSkills);
+		result.put("defenderSkills",defenderSkills);
+		result.put("attackerUserConditions", getUserConditionsFromSkill(attackerSkills));
+		result.put("defenderUserConditions", getUserConditionsFromSkill(defenderSkills));
+		return result;
+	}
+	
+	public List<UserCondition> getUserConditionsFromSkill(List<Skill> skills)
+	{
+		List<UserCondition> resultList = new ArrayList<UserCondition>();
+		skills.stream().forEach(skill->{
+			if(skill.getCondition() instanceof UserCondition)
+			{
+				resultList.add((UserCondition)skill.getCondition());
+			}
+			if(skill.getCondition() instanceof CombinedCondition)
+			{
+				((CombinedCondition)skill.getCondition()).getConditions().stream().forEach(c->{
+					if(c instanceof UserCondition)
+					{
+						resultList.add((UserCondition)c);
+					}
+				});
+			}
+		});
+		return resultList;
+	}
+	
+	@RequestMapping(path = "/skills", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public Map allSkills()
+	{
+		return Skill.getAllSkills();
 	}
 
 }
