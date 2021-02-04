@@ -36,6 +36,11 @@ public class SorceressTech1 extends Skill {
 			@Override
 			public boolean defaultValid() {
 				return true;
+			}
+
+			@Override
+			public String getName() {
+				return "hasbuff";
 			}};
 	}
 

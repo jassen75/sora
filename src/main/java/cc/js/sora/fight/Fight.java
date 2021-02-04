@@ -1,10 +1,7 @@
 package cc.js.sora.fight;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import cc.js.sora.fight.condition.UserCondition;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,7 +42,10 @@ public class Fight {
 	int defenderHeroLeftLife;
 	int defenderSoldierLeftLife;
 	
-	//Map<UserCondition, Boolean> userConditions;
-
+	int attackerSoldierLife;
+	int defenderSoldierLife;
+	
+	Map<String, Boolean> attackerUserConditionChecked;
+	Map<String, Boolean> defenderUserConditionChecked;
 
 }

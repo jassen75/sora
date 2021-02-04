@@ -13,6 +13,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
+import cc.js.sora.fight.CheckedSkill;
 import cc.js.sora.fight.Fight;
 import cc.js.sora.fight.FightResult;
 import cc.js.sora.fight.Hero;
@@ -27,28 +31,26 @@ import cc.js.sora.fight.db.SoldierRepository;
 import cc.js.sora.fight.serivce.SkillService;
 import lombok.extern.slf4j.Slf4j;
 
-
 @RestController
 @RequestMapping("/fight")
 @Slf4j
 public class FightController {
-	
+
 	@Autowired
 	HeroRepository heroRepository;
-	
+
 	@Autowired
 	SoldierRepository soldierRepository;
-	
+
 	@Autowired
 	HeroEquipRepository heroEquipRepository;
-	
+
 	@Autowired
 	SkillService skillSerivce;
-	
+
 	@RequestMapping(path = "/cal", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public FightResult calculate(@RequestBody Fight fight)
-	{
-		log.info("fight:"+fight);
+	public FightResult calculate(@RequestBody Fight fight) {
+		log.info("fight:" + fight);
 		FightResult result = new FightResult(fight);
 //		if(fight.getAttacker().isPhysic())
 //		{
@@ -70,69 +72,76 @@ public class FightController {
 //		}
 		return result;
 	}
-	
+
 	@RequestMapping(path = "/heros", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Hero> heros()
-	{
+	public List<Hero> heros() {
 		List<Hero> currentRecord = heroRepository.findAll();
 		return currentRecord;
 	}
-	
+
 	@RequestMapping(path = "/soldiers", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Soldier> soldier()
-	{
+	public List<Soldier> soldier() {
 		List<Soldier> currentRecord = soldierRepository.findAll();
 		return currentRecord;
 	}
-	
+
 	@RequestMapping(path = "/heros/{heroId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Hero hero(@PathVariable long heroId)
-	{
+	public Hero hero(@PathVariable long heroId) {
 		Hero hero = heroRepository.findById(heroId).get();
 		return hero;
 	}
 
-	
 	@RequestMapping(path = "/heros/{heroId}/heroEquip", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public HeroEquip heroEquip(@PathVariable long heroId)
-	{
+	public HeroEquip heroEquip(@PathVariable long heroId) {
 		return heroEquipRepository.findHeroEquip(heroId);
 	}
-	
+
 	@RequestMapping(path = "/buffs", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Map getBuffs(@RequestBody Fight fight)
-	{
+	public Map getBuffs(@RequestBody Fight fight) {
+		log.info("Current fight:"+fight);
 		Map result = new HashMap();
-		List<Skill> attackerSkills = skillSerivce.getSkills(fight.getAttackerHeroId(), fight.getAttackerSoldierId(), true);
-		List<Skill> defenderSkills =  skillSerivce.getSkills(fight.getDefenderHeroId(), fight.getDefenderSoldierId(), false);
-		result.put("attackerSkills", attackerSkills);
-		result.put("defenderSkills",defenderSkills);
+		List<Skill> attackerSkills = skillSerivce.getSkills(fight.getAttackerHeroId(), fight.getAttackerSoldierId(),
+				true);
+		List<Skill> defenderSkills = skillSerivce.getSkills(fight.getDefenderHeroId(), fight.getDefenderSoldierId(),
+				false);
+
+		List<CheckedSkill> attackerCheckedSkills = Lists.newArrayList();
+		List<CheckedSkill> defenderCheckedSkills = Lists.newArrayList();
+		
+		attackerSkills.stream().forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
+		defenderSkills.stream().forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
+		
+		result.put("attackerSkills", attackerCheckedSkills);
+		result.put("defenderSkills", defenderCheckedSkills);
 		result.put("attackerUserConditions", getUserConditionsFromSkill(attackerSkills));
 		result.put("defenderUserConditions", getUserConditionsFromSkill(defenderSkills));
 		return result;
 	}
-	
-	public List<UserCondition> getUserConditionsFromSkill(List<Skill> skills)
-	{
-		List<UserCondition> resultList = new ArrayList<UserCondition>();
-		if(skills != null) 
-		{
-			skills.stream().forEach(skill->{
-				log.info("haha");
-				if(skill== null)
-				{
+
+	private CheckedSkill checkSkill(Fight fight, Skill skill, boolean isAttack) {
+		CheckedSkill result = new CheckedSkill();
+		result.setSkill(skill);
+		result.setValid(Skill.checkCondition(fight, skill.getCondition(),
+				isAttack ? fight.getAttackerUserConditionChecked() : fight.getDefenderUserConditionChecked(),
+				isAttack));
+		return result;
+
+	}
+
+	public Map<String, UserCondition> getUserConditionsFromSkill(List<Skill> skills) {
+		Map<String, UserCondition> resultList = Maps.newHashMap();
+		if (skills != null) {
+			skills.stream().forEach(skill -> {
+				if (skill == null) {
 					log.error("skill is null");
 				}
-				if(skill.getCondition() instanceof UserCondition)
-				{
-					resultList.add((UserCondition)skill.getCondition());
+				if (skill.getCondition() instanceof UserCondition) {
+					resultList.put(((UserCondition) skill.getCondition()).getName(), (UserCondition) skill.getCondition());
 				}
-				if(skill.getCondition() instanceof CombinedCondition)
-				{
-					((CombinedCondition)skill.getCondition()).getConditions().stream().forEach(c->{
-						if(c instanceof UserCondition)
-						{
-							resultList.add((UserCondition)c);
+				if (skill.getCondition() instanceof CombinedCondition) {
+					((CombinedCondition) skill.getCondition()).getConditions().stream().forEach(c -> {
+						if (c instanceof UserCondition) {
+							resultList.put(((UserCondition) c).getName(), (UserCondition) c);
 						}
 					});
 				}
@@ -140,10 +149,9 @@ public class FightController {
 		}
 		return resultList;
 	}
-	
+
 	@RequestMapping(path = "/skills", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map allSkills()
-	{
+	public Map allSkills() {
 		return skillSerivce.getAllSkills();
 	}
 

@@ -72,4 +72,17 @@
 	min-height:40px;
 }
 
+.valid-skill {
+	color: green;
+}
+
+.not-valid-skill {
+	color: gray;
+}
+
+#attacker-user-condition-list li button {
+	position:absolute;
+  	right:5px;
+  	top:2px;
+}
 

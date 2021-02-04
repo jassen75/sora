@@ -34,6 +34,8 @@ public class SkillService {
 	SoldierRepository soldierRepository;
 
 	BarrackSkills barrackSkills = new BarrackSkills() ;
+	
+	List<Long> globalSkills = Lists.newArrayList(Skill.SuperBuff);
 
 	public Map<Long, Skill> skills = Maps.newHashMap();
 
@@ -113,6 +115,12 @@ public class SkillService {
 			}
 			
 		}
+		
+		globalSkills.forEach(i->{
+			if (this.skills.containsKey(i)) {
+				result.add(this.getSkill(i));
+			}
+		});
 
 
 		return result;

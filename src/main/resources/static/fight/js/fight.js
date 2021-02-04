@@ -8,6 +8,8 @@ var attackerSkills;
 var defenderSkills;
 var attackerUserConditions;
 var defenderUserConditions;
+var attackerUserConditionChecked = {};
+var defenderUserConditionChecked = {};
 var isAttacker = 1;
 
 $(document).ready(function() {
@@ -74,6 +76,8 @@ function buildFight()
 	{
 		request["defenderSoldierId"] = defenderSoldier["id"];
 	} 
+	request["attackerUserConditionChecked"]=attackerUserConditionChecked;
+	request["defenderUserConditionChecked"]=defenderUserConditionChecked;
 	return request;
 	
 }
@@ -285,8 +289,9 @@ function buildSkill()
 	{
 		for(var i=0; i<attackerSkills.length; i++)
 		{
-			var buff = $("<li class=\"list-group-item\">"+attackerSkills[i]["desc"]+"</li>");
-			buff.appendTo($("#attacker-buf-list"))
+			var valid = attackerSkills[i].valid ? "valid-skill":"not-valid-skill";
+			var buff = $("<li class=\"list-group-item "+valid+"\">"+attackerSkills[i]["skill"]["desc"]+"</li>");
+			buff.appendTo($("#attacker-buf-list"));
 		}
 		
 	}
@@ -296,10 +301,61 @@ function buildSkill()
 	{
 		for(var i=0; i<defenderSkills.length; i++)
 		{
-			var buff = $("<li class=\"list-group-item\">"+defenderSkills[i]["desc"]+"</li>");
-			buff.appendTo($("#defender-buf-list"))
+			var valid = defenderSkills[i].valid ? "valid-skill":"not-valid-skill";
+			var buff = $("<li class=\"list-group-item "+valid+"\">"+defenderSkills[i]["skill"]["desc"]+"</li>");
+			buff.appendTo($("#defender-buf-list"));
 		}
 		
 	}
+	buildUserCondition();
 }
 
+function buildUserCondition()
+{
+	$("#attacker-user-condition-list").children("li").remove();
+	if(attackerUserConditions)
+	{
+		for(var name in attackerUserConditions)
+		{
+			var checked = attackerUserConditionChecked[name];
+			if(checked == undefined)
+			{
+				checked = attackerUserConditions[name]["defaultValid"];
+			}
+			var buttonClass = checked ? "btn-success":"btn-default";
+			var buff = $("<li class=\"list-group-item\">"+attackerUserConditions[name]["desc"]+"</li>");
+			var button = $("<button type=\"button\" class=\"btn "+buttonClass+"\">选择</button>");
+			button.attr("uc-name", name);
+			button.click(function(e){
+			
+				if ( $(this).hasClass("btn-success"))
+				{
+					$(this).removeClass("btn-success");
+					$(this).addClass("btn-default");
+					attackerUserConditionChecked[$(this).attr("uc-name")]=false;
+				} else
+				{
+					$(this).removeClass("btn-default");
+					$(this).addClass("btn-success");
+					attackerUserConditionChecked[$(this).attr("uc-name")]=true;
+				}
+				loadSkillData();
+			});
+			button.appendTo(buff);
+			buff.appendTo($("#attacker-user-condition-list"));
+		}
+	}
+	
+	$("#defender-user-condition-list").children("li").remove();
+	if(defenderUserConditions)
+	{
+		for(var i in defenderUserConditions)
+		{
+			var buff = $("<li class=\"list-group-item\">"+defenderUserConditions[i]["desc"]+"</li>");
+			buff.appendTo($("#defender-user-condition-list"));
+		}
+	}
+	
+
+
+}
