@@ -123,10 +123,10 @@ INSERT INTO hero(id, name, life, attack, intel, physic_def, magic_def, tech, sol
 (2,'托娃',4168,527,240,305,302,166,30,30,40,15,1,1,'2');
 
 
-INSERT INTO soldier(id, name, life ,attack, physic_def,  magic_def, soldier_type) VALUES
-(1, '魔女', 583, 677, 297, 468, 8),
-(2, '魔晶术士', 723, 630, 375,328, 8),
-(3, '皇家狮鹫', 677,754, 344,390, 5);
+INSERT INTO soldier(id, name, life ,attack, physic_def,  magic_def, soldier_type, skills) VALUES
+(1, '魔女', 583, 677, 297, 468, 8, '2001'),
+(2, '魔晶术士', 723, 630, 375,328, 8, '2002'),
+(3, '皇家狮鹫', 677,754, 344,390, 5, '2003');
 
 
 INSERT INTO hero_soldiers(hero_id, soldiers_id) VALUES

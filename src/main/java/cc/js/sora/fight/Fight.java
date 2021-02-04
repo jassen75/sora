@@ -1,5 +1,6 @@
 package cc.js.sora.fight;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -44,12 +45,7 @@ public class Fight {
 	int defenderHeroLeftLife;
 	int defenderSoldierLeftLife;
 	
-	Map<UserCondition, Boolean> userConditions;
-	
-	public List<Skill> getSkills(long heroId, long soldierId, boolean isAttacker)
-	{
-		return null;
-	}
-	
+	//Map<UserCondition, Boolean> userConditions;
+
 
 }

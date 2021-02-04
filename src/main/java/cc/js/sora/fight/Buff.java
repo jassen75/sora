@@ -13,11 +13,10 @@ import lombok.ToString;
 @Setter
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 @ToString
 public class Buff {
 	
-	public Buff(BuffType buffType,  double number)
+	public Buff(BuffType buffType,  int number)
 	{
 		this.buffType = buffType;
 		this.number = number;
@@ -27,13 +26,13 @@ public class Buff {
 	//1 attack 2 physicDef 3 magicDef 4 damageInc 5 damageReduce 6 Skill 7 counter 
 	BuffType buffType;
 	
-	double number;
+	int number;
 	
 	boolean basic;
 	
 	public String getTitle()
 	{
-		return printBufferType()+"+"+number;				
+		return printBufferType()+"+"+number+"%";				
 	}
 	
 	public String printBufferType()

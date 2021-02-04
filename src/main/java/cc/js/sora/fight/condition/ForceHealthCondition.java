@@ -1,6 +1,8 @@
 package cc.js.sora.fight.condition;
 
-public interface ForceHealthCondition {
+import cc.js.sora.fight.Condition;
+
+public interface ForceHealthCondition extends Condition{
 	
 	
 	

@@ -1,0 +1,121 @@
+package cc.js.sora.fight.serivce;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+import com.google.common.primitives.Longs;
+
+import cc.js.sora.fight.BarrackSkills;
+import cc.js.sora.fight.Hero;
+import cc.js.sora.fight.Skill;
+import cc.js.sora.fight.Soldier;
+import cc.js.sora.fight.db.HeroRepository;
+import cc.js.sora.fight.db.SoldierRepository;
+import cc.js.sora.fight.skill.PatyleTalent;
+import cc.js.sora.fight.skill.SuperBuff;
+import cc.js.sora.fight.skill.WizardSkill;
+import lombok.extern.slf4j.Slf4j;
+
+@Service
+@Slf4j
+public class SkillService {
+
+	@Autowired
+	HeroRepository heroRepository;
+
+	@Autowired
+	SoldierRepository soldierRepository;
+
+	BarrackSkills barrackSkills = new BarrackSkills() ;
+
+	public Map<Long, Skill> skills = Maps.newHashMap();
+
+	public SkillService() {
+		init();
+	}
+
+	private void init() {
+		log.info("init skills");
+		skills.clear();
+
+		registerSkill(Skill.PatyleTalent, new PatyleTalent());
+
+		registerSkill(Skill.MonvSkill, new WizardSkill());
+		
+		registerSkill(Skill.SuperBuff, new SuperBuff());
+		skills.putAll(barrackSkills.getAllBarrackSkills());
+	}
+
+	public Map<Long, Skill> getAllSkills() {
+		if (skills.size() == 0) {
+			init();
+		}
+		return skills;
+	}
+
+	public Skill getSkill(long id) {
+
+		if (skills.size() == 0) {
+			init();
+		}
+		return skills.get(id);
+
+	}
+
+	public void registerSkill(long id, Skill skill) {
+
+		skills.put(id, skill);
+
+	}
+
+	public List<Skill> getSkills(long heroId, long soldierId, boolean isAttacker) {
+		List<Skill> result = new ArrayList<Skill>();
+		if(heroId > 0)
+		{
+			Hero hero = heroRepository.getOne(heroId);
+			String hs = hero.getSkills();
+			if (!StringUtils.isEmpty(hs)) {
+				String[] d = StringUtils.split(hs, ",");
+				for (int i = 0; i < d.length; i++) {
+					long skillId = Longs.tryParse(d[i]);
+					if (this.skills.containsKey(skillId)) {
+						result.add(this.getSkill(skillId));
+					}
+				}
+			}
+		}
+		
+		if(soldierId > 0) 
+		{
+			Soldier soldier = soldierRepository.getOne(soldierId);
+			String ss = soldier.getSkills();
+			if (!StringUtils.isEmpty(ss)) {
+				String[] d = StringUtils.split(ss, ",");
+				for (int i = 0; i < d.length; i++) {
+					long skillId = Longs.tryParse(d[i]);
+					if (this.skills.containsKey(skillId)) {
+						result.add(this.getSkill(skillId));
+					}
+				}
+			}
+
+			int soldierType = soldier.getType();
+			if(barrackSkills.getSkills(soldierType) != null)
+			{
+				result.addAll(barrackSkills.getSkills(soldierType));
+			}
+			
+		}
+
+
+		return result;
+	}
+
+}

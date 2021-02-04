@@ -4,6 +4,10 @@ var attackerSoldier;
 var defenderSoldier;
 var attackerEquip;
 var defenderEquip;
+var attackerSkills;
+var defenderSkills;
+var attackerUserConditions;
+var defenderUserConditions;
 var isAttacker = 1;
 
 $(document).ready(function() {
@@ -49,6 +53,54 @@ function loadHeroData()
 	});
 }
 
+function buildFight()
+{
+	var request = {
+			
+	};
+	if(attacker)
+	{
+		request["attackerHeroId"] = attacker["id"];
+	} 
+	if(defender)
+	{
+		request["defenderHeroId"] = defender["id"];
+	}
+	if(attackerSoldier)
+	{
+		request["attackerSoldierId"] = attackerSoldier["id"];
+	} 
+	if(defenderSoldier)
+	{
+		request["defenderSoldierId"] = defenderSoldier["id"];
+	} 
+	return request;
+	
+}
+function loadSkillData()
+{
+	var fight = buildFight();
+	$.ajax({
+		type : "POST",
+		url : "/fight/buffs",
+		data : JSON.stringify(fight),
+		dataType : "json",
+		contentType : "application/json",
+		processData : false,
+		success : function(data) {
+			attackerSkills = data["attackerSkills"];
+			defenderSkills = data["defenderSkills"];
+			attackerUserConditions = data["attackerUserConditions"];
+			defenderUserConditions = data["defenderUserConditions"];
+			
+			buildSkill();
+		},
+		error : function(jqXHR) {
+			// alert("Error: "+jqXHR.status);
+		}
+	});
+}
+
 function chooseHero(id)
 {
 	$.ajax({
@@ -86,12 +138,6 @@ function displayHero(id, hero, heroEquip)
 		attacker = hero;
 		attackerEquip = heroEquip;
 		attackerSoldier = undefined;
-		$("#attacker-buf-list").children("li").remove();
-		for(var i=0; i<attacker["buffs"].length; i++)
-		{
-			var buff = $("<li class=\"list-group-item\">"+attacker["buffs"][i]["name"]+":"+attacker["buffs"][i]["title"]+"</li>");
-			buff.appendTo($("#attacker-buf-list"))
-		}
 		
 		$("#attackerPic").children("div").remove();
 		var pic = $("<div><img src=\"/fight/image/"+id+".png\" alt=\"\" width=\"60\" height=\"86\"></img>"+hero["name"]+"</div>");
@@ -204,7 +250,8 @@ function refreshAttacker()
 		var magicDef = Math.floor(attackerSoldier["magicDef"]*(1+attacker["soldierMagicDefInc"]/100)*(1+0.2));
 		var life = Math.floor(attackerSoldier["life"]*(1+attacker["soldierLifeInc"]/100)*14);
 		$("#attacker-soldier-information").html("<p><b>"+attackerSoldier["name"]+"</b></p><p>攻击："+attack+"&nbsp;&nbsp;&nbsp;防御："+physicalDef+"&nbsp;&nbsp;&nbsp;魔防："+magicDef+"</p><p>生命："+life+"</p>");
-	}
+	} 
+	loadSkillData();
 }
 
 function refreshDefender()
@@ -228,6 +275,31 @@ function refreshDefender()
 		var life = Math.floor(defenderSoldier["life"]*(1+defender["soldierLifeInc"]/100)*14);
 		$("#defender-soldier-information").html("<p><b>"+defenderSoldier["name"]+"</b></p><p>攻击："+attack+"&nbsp;&nbsp;&nbsp;防御："+physicalDef+"&nbsp;&nbsp;&nbsp;魔防："+magicDef+"</p><p>生命："+life+"</p>");
 	}
+	loadSkillData();
 }
 
+function buildSkill()
+{
+	$("#attacker-buf-list").children("li").remove();
+	if(attackerSkills)
+	{
+		for(var i=0; i<attackerSkills.length; i++)
+		{
+			var buff = $("<li class=\"list-group-item\">"+attackerSkills[i]["desc"]+"</li>");
+			buff.appendTo($("#attacker-buf-list"))
+		}
+		
+	}
+
+	$("#defender-buf-list").children("li").remove();
+	if(defenderSkills)
+	{
+		for(var i=0; i<defenderSkills.length; i++)
+		{
+			var buff = $("<li class=\"list-group-item\">"+defenderSkills[i]["desc"]+"</li>");
+			buff.appendTo($("#defender-buf-list"))
+		}
+		
+	}
+}
 

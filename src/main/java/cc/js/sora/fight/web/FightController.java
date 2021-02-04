@@ -24,6 +24,7 @@ import cc.js.sora.fight.condition.UserCondition;
 import cc.js.sora.fight.db.HeroEquipRepository;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
+import cc.js.sora.fight.serivce.SkillService;
 import lombok.extern.slf4j.Slf4j;
 
 
@@ -40,6 +41,9 @@ public class FightController {
 	
 	@Autowired
 	HeroEquipRepository heroEquipRepository;
+	
+	@Autowired
+	SkillService skillSerivce;
 	
 	@RequestMapping(path = "/cal", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public FightResult calculate(@RequestBody Fight fight)
@@ -95,12 +99,12 @@ public class FightController {
 		return heroEquipRepository.findHeroEquip(heroId);
 	}
 	
-	@RequestMapping(path = "/buffs", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	@RequestMapping(path = "/buffs", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Map getBuffs(@RequestBody Fight fight)
 	{
 		Map result = new HashMap();
-		List<Skill> attackerSkills = fight.getSkills(fight.getAttackerHeroId(), fight.getAttackerSoldierId(), true);
-		List<Skill> defenderSkills =  fight.getSkills(fight.getDefenderHeroId(), fight.getDefenderSoldierId(), false);
+		List<Skill> attackerSkills = skillSerivce.getSkills(fight.getAttackerHeroId(), fight.getAttackerSoldierId(), true);
+		List<Skill> defenderSkills =  skillSerivce.getSkills(fight.getDefenderHeroId(), fight.getDefenderSoldierId(), false);
 		result.put("attackerSkills", attackerSkills);
 		result.put("defenderSkills",defenderSkills);
 		result.put("attackerUserConditions", getUserConditionsFromSkill(attackerSkills));
@@ -111,28 +115,36 @@ public class FightController {
 	public List<UserCondition> getUserConditionsFromSkill(List<Skill> skills)
 	{
 		List<UserCondition> resultList = new ArrayList<UserCondition>();
-		skills.stream().forEach(skill->{
-			if(skill.getCondition() instanceof UserCondition)
-			{
-				resultList.add((UserCondition)skill.getCondition());
-			}
-			if(skill.getCondition() instanceof CombinedCondition)
-			{
-				((CombinedCondition)skill.getCondition()).getConditions().stream().forEach(c->{
-					if(c instanceof UserCondition)
-					{
-						resultList.add((UserCondition)c);
-					}
-				});
-			}
-		});
+		if(skills != null) 
+		{
+			skills.stream().forEach(skill->{
+				log.info("haha");
+				if(skill== null)
+				{
+					log.error("skill is null");
+				}
+				if(skill.getCondition() instanceof UserCondition)
+				{
+					resultList.add((UserCondition)skill.getCondition());
+				}
+				if(skill.getCondition() instanceof CombinedCondition)
+				{
+					((CombinedCondition)skill.getCondition()).getConditions().stream().forEach(c->{
+						if(c instanceof UserCondition)
+						{
+							resultList.add((UserCondition)c);
+						}
+					});
+				}
+			});
+		}
 		return resultList;
 	}
 	
 	@RequestMapping(path = "/skills", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map allSkills()
 	{
-		return Skill.getAllSkills();
+		return skillSerivce.getAllSkills();
 	}
 
 }

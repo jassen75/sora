@@ -65,11 +65,11 @@
 
 
 #attacker-buf-list {
-	height:40px;
+	min-height:40px;
 }
 
 #defender-buf-list {
-	height:40px;
+	min-height:40px;
 }
 
 
