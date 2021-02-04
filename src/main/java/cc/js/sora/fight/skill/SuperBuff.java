@@ -45,7 +45,7 @@ public class SuperBuff extends Skill {
 
 	@Override
 	public List<Buff> getBuffs() {
-		return Lists.newArrayList(new Buff(BuffType.Attack, 20, true), new Buff(BuffType.PhysicDef,20, true), new Buff(BuffType.MagicDef, 30, true));
+		return Lists.newArrayList(new Buff(BuffType.Attack, 20, true), new Buff(BuffType.Intel, 20, true), new Buff(BuffType.PhysicDef,20, true), new Buff(BuffType.MagicDef, 30, true));
 	}
 
 	@Override

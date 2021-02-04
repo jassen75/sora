@@ -308,6 +308,7 @@ function buildSkill()
 		
 	}
 	buildUserCondition();
+	calculatePanel();
 }
 
 function buildUserCondition()
@@ -359,3 +360,78 @@ function buildUserCondition()
 
 
 }
+
+function calculatePanel()
+{
+	if(attacker && attackerEquip)
+	{
+		var attack = attacker["attack"] + attackerEquip["attackInc"];
+		var intel = attacker["intel"] + attackerEquip["intelInc"];
+		var ai  = attackerEquip["attackSkill"];
+		var ii  = attackerEquip["intelSkill"];
+		
+		if(attackerSkills)
+		{
+			var attackBasic = 0;
+			var intelBasic = 0
+			for(var i=0; i<attackerSkills.length; i++)
+			{
+				if(attackerSkills[i]["valid"])
+				{
+					var buffs = attackerSkills[i]["skill"]["buffs"];
+					for(var j=0; j<buffs.length; j++)
+					{
+						if(buffs[j]["buffType"]=="Attack")
+						{
+							if(buffs[j]["basic"])
+							{
+								attackBasic = Math.max(attackBasic, buffs[j]["number"]);
+							}else
+							{
+								ai = ai+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="Intel")
+						{
+							if(buffs[j]["basic"])
+							{
+								intelBasic = Math.max(intelBasic, buffs[j]["number"]);
+							}else
+							{
+								ii = ii+buffs[j]["number"];
+							}
+						}
+					}
+				}
+			}
+			ai = ai+attackBasic;
+			ii = ii+intelBasic;
+
+			var attackPanel = Math.floor(attack*(1+ai/100.0)+attackerEquip["atackJJC"]);
+			var intelPanel = Math.floor(intel*(1+ii/100.0)+attackerEquip["intelJJC"]);
+			
+			$("#attackerAttack").attr("value", attackPanel);
+			$("#attackerIntel").attr("value", intelPanel);
+		}
+		
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
