@@ -11,6 +11,7 @@ var defenderUserConditions;
 var attackerUserConditionChecked = {};
 var defenderUserConditionChecked = {};
 var isAttacker = 1;
+var fightInfo={};
 
 $(document).ready(function() {
 
@@ -78,10 +79,20 @@ function buildFight()
 	} 
 	request["attackerUserConditionChecked"]=attackerUserConditionChecked;
 	request["defenderUserConditionChecked"]=defenderUserConditionChecked;
-	return request;
+
+	for(var i in fightInfo)
+	{
+		request[i] = fightInfo[i];
+	}
+	
+	request["attackerHeroLeftLife"] = fightInfo["attackerLife"];
+	request["attackerSoldierLeftLife"] = fightInfo["attackerSoldierLife"];
+	request["defenderHeroLeftLife"] = fightInfo["defenderLife"];
+	request["defenderSoldierLeftLife"] = fightInfo["defenderSoldierLife"];
+	return request; 
 	
 }
-function loadSkillData()
+function loadSkillData(refresh)
 {
 	var fight = buildFight();
 	$.ajax({
@@ -98,6 +109,11 @@ function loadSkillData()
 			defenderUserConditions = data["defenderUserConditions"];
 			
 			buildSkill();
+			
+			if(refresh==true)
+			{
+				loadSkillData(false);
+			}
 		},
 		error : function(jqXHR) {
 			// alert("Error: "+jqXHR.status);
@@ -248,7 +264,7 @@ function refreshAttacker()
 		$("#attacker-soldier-information").html("");
 	}
 
-	loadSkillData();
+	loadSkillData(true);
 }
 
 function refreshDefender()
@@ -264,7 +280,7 @@ function refreshDefender()
 		"</p><p>技巧"+defender["tech"]+"</p>");
 		$("#defender-soldier-information").html("");
 	}
-	loadSkillData();
+	loadSkillData(true);
 }
 
 function buildSkill()
@@ -460,17 +476,17 @@ function calculatePanel()
 			mi = mi+magicDefBasic;
 			lii=lii+lifeBasic+40;  //jjc inc =0.4
 
-			var attackPanel = Math.ceil(attack*(1+ai/100.0)+attackerEquip["atackJJC"]);
-			var intelPanel = Math.ceil(intel*(1+ii/100.0)+attackerEquip["intelJJC"]);
-			var physicDefPanel = Math.ceil(physicDef*(1+pi/100.0)+attackerEquip["physicDefJJC"]);
-			var magicDefPanel = Math.ceil(magicDef*(1+mi/100.0)+attackerEquip["magicDefJJC"]);
-			var lifePanel = Math.ceil(life*(1+lii/100.0)+attackerEquip["lifeJJC"]);
+			fightInfo["attackerAttack"] = Math.ceil(attack*(1+ai/100.0)+attackerEquip["atackJJC"]);
+			fightInfo["attackerIntel"] =  Math.ceil(intel*(1+ii/100.0)+attackerEquip["intelJJC"]);
+			fightInfo["attackerPhysicDef"] = Math.ceil(physicDef*(1+pi/100.0)+attackerEquip["physicDefJJC"]);
+			fightInfo["attackerMagicDef"] = Math.ceil(magicDef*(1+mi/100.0)+attackerEquip["magicDefJJC"]);
+			fightInfo["attackerLife"] = Math.ceil(life*(1+lii/100.0)+attackerEquip["lifeJJC"]);
 			
-			$("#attackerAttack").attr("value", attackPanel);
-			$("#attackerIntel").attr("value", intelPanel);
-			$("#attackerPhysicDef").attr("value", physicDefPanel);
-			$("#attackerMagicDef").attr("value", magicDefPanel);
-			$("#attackerLife").attr("value", lifePanel);
+			$("#attackerAttack").attr("value", fightInfo["attackerAttack"]);
+			$("#attackerIntel").attr("value", fightInfo["attackerIntel"]);
+			$("#attackerPhysicDef").attr("value", fightInfo["attackerPhysicDef"]);
+			$("#attackerMagicDef").attr("value", fightInfo["attackerMagicDef"]);
+			$("#attackerLife").attr("value", fightInfo["attackerLife"]);
 		}
 		
 	}
@@ -567,17 +583,17 @@ function calculatePanel()
 			mi = mi+magicDefBasic;
 			lii=lii+lifeBasic+40;  //jjc inc =0.4
 			
-			var attackPanel = Math.ceil(attack*(1+ai/100.0)+defenderEquip["atackJJC"]);
-			var intelPanel = Math.ceil(intel*(1+ii/100.0)+defenderEquip["intelJJC"]);
-			var physicDefPanel = Math.ceil(physicDef*(1+pi/100.0)+defenderEquip["physicDefJJC"]);
-			var magicDefPanel = Math.ceil(magicDef*(1+mi/100.0)+defenderEquip["magicDefJJC"]);
-			var lifePanel = Math.ceil(life*(1+lii/100.0)+defenderEquip["lifeJJC"]);
+			fightInfo["defenderAttack"] = Math.ceil(attack*(1+ai/100.0)+defenderEquip["attackJJC"]);
+			fightInfo["defenderIntel"] = Math.ceil(intel*(1+ii/100.0)+defenderEquip["intelJJC"]);
+			fightInfo["defenderPhysicDef"] = Math.ceil(physicDef*(1+pi/100.0)+defenderEquip["physicDefJJC"]);
+			fightInfo["defenderMagicDef"] = Math.ceil(magicDef*(1+mi/100.0)+defenderEquip["magicDefJJC"]);
+			fightInfo["defenderLife"] = Math.ceil(life*(1+lii/100.0)+defenderEquip["lifeJJC"]);
 			
-			$("#defenderAttack").attr("value", attackPanel);
-			$("#defenderIntel").attr("value", intelPanel);
-			$("#defenderPhysicDef").attr("value", physicDefPanel);
-			$("#defenderMagicDef").attr("value", magicDefPanel);
-			$("#defenderLife").attr("value", lifePanel);
+			$("#defenderAttack").attr("value", fightInfo["defenderAttack"]);
+			$("#defenderIntel").attr("value", fightInfo["defenderIntel"]);
+			$("#defenderPhysicDef").attr("value", fightInfo["defenderPhysicDef"]);
+			$("#defenderMagicDef").attr("value", fightInfo["defenderMagicDef"]);
+			$("#defenderLife").attr("value", fightInfo["defenderLife"]);
 		}
 		
 	}
@@ -663,6 +679,11 @@ function calculatePanel()
 			var physicDefPanel = Math.ceil(physicDef*(1+pi/100.0));
 			var magicDefPanel = Math.ceil(magicDef*(1+mi/100.0));
 			var lifePanel = Math.ceil(life*(1+lii/100.0))*10;
+			
+			fightInfo["attackerSoldierAttack"]=attackPanel;
+			fightInfo["attackerSoldierPhysicDef"]=physicDefPanel;
+			fightInfo["attackerSoldierMagicDef"]=magicDefPanel;
+			fightInfo["attackerSoldierLife"]=lifePanel;
 		}
 		$("#attacker-soldier-information").html("<p><b>"+attackerSoldier["name"]+"</b></p><p>攻击："+attackPanel+"&nbsp;&nbsp;&nbsp;防御："+physicDefPanel+"&nbsp;&nbsp;&nbsp;魔防："+magicDefPanel+"</p><p>生命："+lifePanel+"</p>");
 	} 
@@ -748,6 +769,11 @@ function calculatePanel()
 			var physicDefPanel = Math.ceil(physicDef*(1+pi/100.0));
 			var magicDefPanel = Math.ceil(magicDef*(1+mi/100.0));
 			var lifePanel = Math.ceil(life*(1+lii/100.0))*10;
+			
+			fightInfo["defenderSoldierAttack"]=attackPanel;
+			fightInfo["defenderSoldierPhysicDef"]=physicDefPanel;
+			fightInfo["defenderSoldierMagicDef"]=magicDefPanel;
+			fightInfo["defenderSoldierLife"]=lifePanel;
 		}
 		$("#defender-soldier-information").html("<p><b>"+defenderSoldier["name"]+"</b></p><p>攻击："+attackPanel+"&nbsp;&nbsp;&nbsp;防御："+physicDefPanel+"&nbsp;&nbsp;&nbsp;魔防："+magicDefPanel+"</p><p>生命："+lifePanel+"</p>");
 	}

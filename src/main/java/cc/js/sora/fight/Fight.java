@@ -23,14 +23,14 @@ public class Fight {
 	
 	long defenderSoldierId;
 	
-	int attackerAttck;
+	int attackerAttack;
 	int attackerPhysicDef;
 	int attackerLife;
 	int attackerMagicDef;
 	int attackerIntel;
 	int attackerTech;
 	
-	int defenderAttck;
+	int defenderAttack;
 	int defenderPhysicDef;
 	int defenderLife;
 	int defenderMagicDef;
@@ -44,6 +44,14 @@ public class Fight {
 	
 	int attackerSoldierLife;
 	int defenderSoldierLife;
+	
+	int attackerSoldierAttack;
+	int attackerSoldierPhysicDef;
+	int attackerSoldierMagicDef;
+
+	int defenderSoldierAttack;
+	int defenderSoldierPhysicDef;
+	int defenderSoldierMagicDef;
 	
 	Map<String, Boolean> attackerUserConditionChecked;
 	Map<String, Boolean> defenderUserConditionChecked;
