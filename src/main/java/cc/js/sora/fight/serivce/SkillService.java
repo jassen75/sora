@@ -18,8 +18,10 @@ import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.Soldier;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
+import cc.js.sora.fight.skill.GriffinSkill;
 import cc.js.sora.fight.skill.PatyleTalent;
 import cc.js.sora.fight.skill.SuperBuff;
+import cc.js.sora.fight.skill.TowaTalent;
 import cc.js.sora.fight.skill.WizardSkill;
 import lombok.extern.slf4j.Slf4j;
 
@@ -48,8 +50,10 @@ public class SkillService {
 		skills.clear();
 
 		registerSkill(Skill.PatyleTalent, new PatyleTalent());
-
+		registerSkill(Skill.TowaTalent, new TowaTalent());
+		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
+		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
 		
 		registerSkill(Skill.SuperBuff, new SuperBuff());
 		skills.putAll(barrackSkills.getAllBarrackSkills());

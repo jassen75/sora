@@ -1,9 +1,9 @@
-package cc.js.sora.fight.condition;
+package cc.js.sora.fight.condition.health;
 
 public class SoldierGreaterHealthCondition implements ForceHealthCondition  {
 	
 	int percent;
-	SoldierGreaterHealthCondition(int percent)
+	public SoldierGreaterHealthCondition(int percent)
 	{
 		this.percent = percent;
 	}

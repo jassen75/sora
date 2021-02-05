@@ -86,3 +86,8 @@
   	top:2px;
 }
 
+#defender-user-condition-list li button {
+	position:absolute;
+  	right:5px;
+  	top:2px;
+}

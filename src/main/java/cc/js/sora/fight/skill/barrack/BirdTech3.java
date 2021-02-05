@@ -9,32 +9,45 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.HasBuffCondition;
 import cc.js.sora.fight.condition.UserCondition;
 
-public class SorceressTech1 extends Skill {
+public class BirdTech3 extends Skill {
 
 	@Override
 	public long getId() {
-		// TODO Auto-generated method stub
-		return Skill.SorceressTech1;
+		return Skill.BirdTech3;
 	}
 
 	@Override
 	public String getName() {
-		return "法师科技：自我暗示";
+		// TODO Auto-generated method stub
+		return "飞兵科技：特技飞行";
 	}
 
 	@Override
 	public Condition getCondition() {
-		return new HasBuffCondition() ;
+		return new UserCondition() {
 
+			@Override
+			public String getDesc() {
+				return "身处防御地形";
+			}
 
+			@Override
+			public String getName() {
+				return "DefensiveTerrain";
+			}
+
+			@Override
+			public boolean defaultValid() {
+				return false;
+			}};
 	}
 
 	@Override
 	public List<Buff> getBuffs() {
-		return Lists.newArrayList(new Buff(BuffType.Attack, 20), new Buff(BuffType.PhysicDef, 20));
+		// TODO Auto-generated method stub
+		return Lists.newArrayList(new Buff(BuffType.DamageDec, 20));
 	}
 
 	@Override

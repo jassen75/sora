@@ -6,8 +6,8 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import cc.js.sora.fight.condition.CombinedCondition;
-import cc.js.sora.fight.condition.ForceHealthCondition;
 import cc.js.sora.fight.condition.UserCondition;
+import cc.js.sora.fight.condition.health.ForceHealthCondition;
 
 public abstract class Skill {
 	

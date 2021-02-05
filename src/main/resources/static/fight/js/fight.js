@@ -247,14 +247,7 @@ function refreshAttacker()
 		
 		$("#attacker-soldier-information").html("");
 	}
-	if(attackerSoldier && attacker) 
-	{
-		var attack = Math.floor(attackerSoldier["attack"]*(1+attacker["soldierAttackInc"]/100)*(1+0.2));
-		var physicalDef = Math.floor(attackerSoldier["physicDef"]*(1+attacker["soldierPhysicDefInc"]/100)*(1+0.2));
-		var magicDef = Math.floor(attackerSoldier["magicDef"]*(1+attacker["soldierMagicDefInc"]/100)*(1+0.2));
-		var life = Math.floor(attackerSoldier["life"]*(1+attacker["soldierLifeInc"]/100)*14);
-		$("#attacker-soldier-information").html("<p><b>"+attackerSoldier["name"]+"</b></p><p>攻击："+attack+"&nbsp;&nbsp;&nbsp;防御："+physicalDef+"&nbsp;&nbsp;&nbsp;魔防："+magicDef+"</p><p>生命："+life+"</p>");
-	} 
+
 	loadSkillData();
 }
 
@@ -270,14 +263,6 @@ function refreshDefender()
 		"</p><p>魔防&nbsp;"+defender["magicDef"]+"+"+defenderEquip["magicDefInc"]+
 		"</p><p>技巧"+defender["tech"]+"</p>");
 		$("#defender-soldier-information").html("");
-	}
-	if(defenderSoldier && defender) 
-	{
-		var attack = Math.floor(defenderSoldier["attack"]*(1+defender["soldierAttackInc"]/100)*(1+0.2));
-		var physicalDef = Math.floor(defenderSoldier["physicDef"]*(1+defender["soldierPhysicDefInc"]/100)*(1+0.2));
-		var magicDef = Math.floor(defenderSoldier["magicDef"]*(1+defender["soldierMagicDefInc"]/100)*(1+0.2));
-		var life = Math.floor(defenderSoldier["life"]*(1+defender["soldierLifeInc"]/100)*14);
-		$("#defender-soldier-information").html("<p><b>"+defenderSoldier["name"]+"</b></p><p>攻击："+attack+"&nbsp;&nbsp;&nbsp;防御："+physicalDef+"&nbsp;&nbsp;&nbsp;魔防："+magicDef+"</p><p>生命："+life+"</p>");
 	}
 	loadSkillData();
 }
@@ -350,15 +335,36 @@ function buildUserCondition()
 	$("#defender-user-condition-list").children("li").remove();
 	if(defenderUserConditions)
 	{
-		for(var i in defenderUserConditions)
+		for(var name in defenderUserConditions)
 		{
-			var buff = $("<li class=\"list-group-item\">"+defenderUserConditions[i]["desc"]+"</li>");
+			var checked = defenderUserConditionChecked[name];
+			if(checked == undefined)
+			{
+				checked = defenderUserConditions[name]["defaultValid"];
+			}
+			var buttonClass = checked ? "btn-success":"btn-default";
+			var buff = $("<li class=\"list-group-item\">"+defenderUserConditions[name]["desc"]+"</li>");
+			var button = $("<button type=\"button\" class=\"btn "+buttonClass+"\">选择</button>");
+			button.attr("uc-name", name);
+			button.click(function(e){
+			
+				if ( $(this).hasClass("btn-success"))
+				{
+					$(this).removeClass("btn-success");
+					$(this).addClass("btn-default");
+					defenderUserConditionChecked[$(this).attr("uc-name")]=false;
+				} else
+				{
+					$(this).removeClass("btn-default");
+					$(this).addClass("btn-success");
+					defenderUserConditionChecked[$(this).attr("uc-name")]=true;
+				}
+				loadSkillData();
+			});
+			button.appendTo(buff);
 			buff.appendTo($("#defender-user-condition-list"));
 		}
 	}
-	
-
-
 }
 
 function calculatePanel()
@@ -367,16 +373,26 @@ function calculatePanel()
 	{
 		var attack = attacker["attack"] + attackerEquip["attackInc"];
 		var intel = attacker["intel"] + attackerEquip["intelInc"];
+		var physicDef = attacker["physicDef"] + attackerEquip["physicDefInc"];
+		var magicDef = attacker["magicDef"] + attackerEquip["magicDefInc"];
+		var life = attacker["life"] + attackerEquip["lifeInc"];
+		
 		var ai  = attackerEquip["attackSkill"];
 		var ii  = attackerEquip["intelSkill"];
-		
+		var pi  = attackerEquip["physicDefSkill"];
+		var mi  = attackerEquip["magicDefSkill"];
+		var lii  = attackerEquip["lifeSkill"];
+
 		if(attackerSkills)
 		{
 			var attackBasic = 0;
-			var intelBasic = 0
+			var intelBasic = 0;
+			var physicDefBasic = 0;
+			var magicDefBasic = 0;
+			var lifeBasic = 0;
 			for(var i=0; i<attackerSkills.length; i++)
 			{
-				if(attackerSkills[i]["valid"])
+				if(attackerSkills[i]["valid"] && (attackerSkills[i]["skill"]["scope"]=="All" || attackerSkills[i]["skill"]["scope"]=="Hero" ))
 				{
 					var buffs = attackerSkills[i]["skill"]["buffs"];
 					for(var j=0; j<buffs.length; j++)
@@ -402,19 +418,338 @@ function calculatePanel()
 								ii = ii+buffs[j]["number"];
 							}
 						}
+						
+						if(buffs[j]["buffType"]=="PhysicDef")
+						{
+							if(buffs[j]["basic"])
+							{
+								physicDefBasic = Math.max(physicDefBasic, buffs[j]["number"]);
+							}else
+							{
+								pi = pi+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="MagicDef")
+						{
+							if(buffs[j]["basic"])
+							{
+								magicDefBasic = Math.max(magicDefBasic, buffs[j]["number"]);
+							}else
+							{
+								mi = mi+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="Life")
+						{
+							if(buffs[j]["basic"])
+							{
+								lifeBasic = Math.max(lifeBasic, buffs[j]["number"]);
+							}else
+							{
+								lii = lii+buffs[j]["number"];
+							}
+						}
 					}
 				}
 			}
 			ai = ai+attackBasic;
 			ii = ii+intelBasic;
+			pi = pi+physicDefBasic;
+			mi = mi+magicDefBasic;
+			lii=lii+lifeBasic+40;  //jjc inc =0.4
 
-			var attackPanel = Math.floor(attack*(1+ai/100.0)+attackerEquip["atackJJC"]);
-			var intelPanel = Math.floor(intel*(1+ii/100.0)+attackerEquip["intelJJC"]);
+			var attackPanel = Math.ceil(attack*(1+ai/100.0)+attackerEquip["atackJJC"]);
+			var intelPanel = Math.ceil(intel*(1+ii/100.0)+attackerEquip["intelJJC"]);
+			var physicDefPanel = Math.ceil(physicDef*(1+pi/100.0)+attackerEquip["physicDefJJC"]);
+			var magicDefPanel = Math.ceil(magicDef*(1+mi/100.0)+attackerEquip["magicDefJJC"]);
+			var lifePanel = Math.ceil(life*(1+lii/100.0)+attackerEquip["lifeJJC"]);
 			
 			$("#attackerAttack").attr("value", attackPanel);
 			$("#attackerIntel").attr("value", intelPanel);
+			$("#attackerPhysicDef").attr("value", physicDefPanel);
+			$("#attackerMagicDef").attr("value", magicDefPanel);
+			$("#attackerLife").attr("value", lifePanel);
 		}
 		
+	}
+	
+	
+	if(defender && defenderEquip)
+	{
+		var attack = defender["attack"] + defenderEquip["attackInc"];
+		var intel = defender["intel"] + defenderEquip["intelInc"];
+		var physicDef = defender["physicDef"] + defenderEquip["physicDefInc"];
+		var magicDef = defender["magicDef"] + defenderEquip["magicDefInc"];
+		var life = defender["life"] + defenderEquip["lifeInc"];
+		
+		var ai  = defenderEquip["attackSkill"];
+		var ii  = defenderEquip["intelSkill"];
+		var pi  = defenderEquip["physicDefSkill"];
+		var mi  = defenderEquip["magicDefSkill"];
+		var lii  = defenderEquip["lifeSkill"];
+
+		if(defenderSkills)
+		{
+			var attackBasic = 0;
+			var intelBasic = 0;
+			var physicDefBasic = 0;
+			var magicDefBasic = 0;
+			var lifeBasic = 0;
+			for(var i=0; i<defenderSkills.length; i++)
+			{
+				if(defenderSkills[i]["valid"]  && (defenderSkills[i]["skill"]["scope"]=="All" || defenderSkills[i]["skill"]["scope"]=="Hero" ))
+				{
+					var buffs = defenderSkills[i]["skill"]["buffs"];
+					for(var j=0; j<buffs.length; j++)
+					{
+						if(buffs[j]["buffType"]=="Attack")
+						{
+							if(buffs[j]["basic"])
+							{
+								attackBasic = Math.max(attackBasic, buffs[j]["number"]);
+							}else
+							{
+								ai = ai+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="Intel")
+						{
+							if(buffs[j]["basic"])
+							{
+								intelBasic = Math.max(intelBasic, buffs[j]["number"]);
+							}else
+							{
+								ii = ii+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="PhysicDef")
+						{
+							if(buffs[j]["basic"])
+							{
+								physicDefBasic = Math.max(physicDefBasic, buffs[j]["number"]);
+							}else
+							{
+								pi = pi+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="MagicDef")
+						{
+							if(buffs[j]["basic"])
+							{
+								magicDefBasic = Math.max(magicDefBasic, buffs[j]["number"]);
+							}else
+							{
+								mi = mi+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="Life")
+						{
+							if(buffs[j]["basic"])
+							{
+								lifeBasic = Math.max(lifeBasic, buffs[j]["number"]);
+							}else
+							{
+								lii = lii+buffs[j]["number"];
+							}
+						}
+					}
+				}
+			}
+			ai = ai+attackBasic;
+			ii = ii+intelBasic;
+			pi = pi+physicDefBasic;
+			mi = mi+magicDefBasic;
+			lii=lii+lifeBasic+40;  //jjc inc =0.4
+			
+			var attackPanel = Math.ceil(attack*(1+ai/100.0)+defenderEquip["atackJJC"]);
+			var intelPanel = Math.ceil(intel*(1+ii/100.0)+defenderEquip["intelJJC"]);
+			var physicDefPanel = Math.ceil(physicDef*(1+pi/100.0)+defenderEquip["physicDefJJC"]);
+			var magicDefPanel = Math.ceil(magicDef*(1+mi/100.0)+defenderEquip["magicDefJJC"]);
+			var lifePanel = Math.ceil(life*(1+lii/100.0)+defenderEquip["lifeJJC"]);
+			
+			$("#defenderAttack").attr("value", attackPanel);
+			$("#defenderIntel").attr("value", intelPanel);
+			$("#defenderPhysicDef").attr("value", physicDefPanel);
+			$("#defenderMagicDef").attr("value", magicDefPanel);
+			$("#defenderLife").attr("value", lifePanel);
+		}
+		
+	}
+	
+	if(attackerSoldier && attacker) 
+	{
+		var attack = Math.ceil(attackerSoldier["attack"]*(1+attacker["soldierAttackInc"]/100));
+		var physicDef = Math.ceil(attackerSoldier["physicDef"]*(1+attacker["soldierPhysicDefInc"]/100));
+		var magicDef = Math.ceil(attackerSoldier["magicDef"]*(1+attacker["soldierMagicDefInc"]/100));
+		var life = Math.ceil(attackerSoldier["life"]*(1+attacker["soldierLifeInc"]/100));
+		
+		var ai  = 0;
+		var pi  = 0;
+		var mi  = 0;
+		var lii = 0;
+		
+		if(attackerSkills)
+		{
+			var attackBasic = 0;
+			var intelBasic = 0;
+			var physicDefBasic = 0;
+			var magicDefBasic = 0;
+			var lifeBasic = 0;
+			for(var i=0; i<attackerSkills.length; i++)
+			{
+				if(attackerSkills[i]["valid"] && (attackerSkills[i]["skill"]["scope"]=="All" || attackerSkills[i]["skill"]["scope"]=="Soldier" ))
+				{
+					var buffs = attackerSkills[i]["skill"]["buffs"];
+					for(var j=0; j<buffs.length; j++)
+					{
+						if(buffs[j]["buffType"]=="Attack")
+						{
+							if(buffs[j]["basic"])
+							{
+								attackBasic = Math.max(attackBasic, buffs[j]["number"]);
+							}else
+							{
+								ai = ai+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="PhysicDef")
+						{
+							if(buffs[j]["basic"])
+							{
+								physicDefBasic = Math.max(physicDefBasic, buffs[j]["number"]);
+							}else
+							{
+								pi = pi+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="MagicDef")
+						{
+							if(buffs[j]["basic"])
+							{
+								magicDefBasic = Math.max(magicDefBasic, buffs[j]["number"]);
+							}else
+							{
+								mi = mi+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="Life")
+						{
+							if(buffs[j]["basic"])
+							{
+								lifeBasic = Math.max(lifeBasic, buffs[j]["number"]);
+							}else
+							{
+								lii = lii+buffs[j]["number"];
+							}
+						}
+					}
+				}
+			}
+			ai = ai+attackBasic;
+			pi = pi+physicDefBasic;
+			mi = mi+magicDefBasic;
+			lii=lii+lifeBasic+40;  //jjc inc =0.4
+
+			var attackPanel = Math.ceil(attack*(1+ai/100.0));
+			var physicDefPanel = Math.ceil(physicDef*(1+pi/100.0));
+			var magicDefPanel = Math.ceil(magicDef*(1+mi/100.0));
+			var lifePanel = Math.ceil(life*(1+lii/100.0))*10;
+		}
+		$("#attacker-soldier-information").html("<p><b>"+attackerSoldier["name"]+"</b></p><p>攻击："+attackPanel+"&nbsp;&nbsp;&nbsp;防御："+physicDefPanel+"&nbsp;&nbsp;&nbsp;魔防："+magicDefPanel+"</p><p>生命："+lifePanel+"</p>");
+	} 
+	
+	if(defenderSoldier && defender) 
+	{
+		var attack = Math.ceil(defenderSoldier["attack"]*(1+defender["soldierAttackInc"]/100));
+		var physicDef = Math.ceil(defenderSoldier["physicDef"]*(1+defender["soldierPhysicDefInc"]/100));
+		var magicDef = Math.ceil(defenderSoldier["magicDef"]*(1+defender["soldierMagicDefInc"]/100));
+		var life = Math.ceil(defenderSoldier["life"]*(1+defender["soldierLifeInc"]/100));
+		
+		var ai  = 0;
+		var pi  = 0;
+		var mi  = 0;
+		var lii = 0;
+		
+		if(defenderSkills)
+		{
+			var attackBasic = 0;
+			var intelBasic = 0;
+			var physicDefBasic = 0;
+			var magicDefBasic = 0;
+			var lifeBasic = 0;
+			for(var i=0; i<defenderSkills.length; i++)
+			{
+				if(defenderSkills[i]["valid"] && (defenderSkills[i]["skill"]["scope"]=="All" || defenderSkills[i]["skill"]["scope"]=="Soldier" ))
+				{
+					var buffs = defenderSkills[i]["skill"]["buffs"];
+					for(var j=0; j<buffs.length; j++)
+					{
+						if(buffs[j]["buffType"]=="Attack")
+						{
+							if(buffs[j]["basic"])
+							{
+								attackBasic = Math.max(attackBasic, buffs[j]["number"]);
+							}else
+							{
+								ai = ai+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="PhysicDef")
+						{
+							if(buffs[j]["basic"])
+							{
+								physicDefBasic = Math.max(physicDefBasic, buffs[j]["number"]);
+							}else
+							{
+								pi = pi+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="MagicDef")
+						{
+							if(buffs[j]["basic"])
+							{
+								magicDefBasic = Math.max(magicDefBasic, buffs[j]["number"]);
+							}else
+							{
+								mi = mi+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="Life")
+						{
+							if(buffs[j]["basic"])
+							{
+								lifeBasic = Math.max(lifeBasic, buffs[j]["number"]);
+							}else
+							{
+								lii = lii+buffs[j]["number"];
+							}
+						}
+					}
+				}
+			}
+			ai = ai+attackBasic;
+			pi = pi+physicDefBasic;
+			mi = mi+magicDefBasic;
+			lii=lii+lifeBasic+40;  //jjc inc =0.4
+
+			var attackPanel = Math.ceil(attack*(1+ai/100.0));
+			var physicDefPanel = Math.ceil(physicDef*(1+pi/100.0));
+			var magicDefPanel = Math.ceil(magicDef*(1+mi/100.0));
+			var lifePanel = Math.ceil(life*(1+lii/100.0))*10;
+		}
+		$("#defender-soldier-information").html("<p><b>"+defenderSoldier["name"]+"</b></p><p>攻击："+attackPanel+"&nbsp;&nbsp;&nbsp;防御："+physicDefPanel+"&nbsp;&nbsp;&nbsp;魔防："+magicDefPanel+"</p><p>生命："+lifePanel+"</p>");
 	}
 }
 

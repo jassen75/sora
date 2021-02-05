@@ -1,4 +1,4 @@
-package cc.js.sora.fight.skill;
+package cc.js.sora.fight.skill.barrack;
 
 import java.util.List;
 
@@ -9,27 +9,28 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.health.FullHealthCondition;
+import cc.js.sora.fight.condition.health.GreaterHealthCondition;
 
-public class WizardSkill extends Skill {
+public class BirdTech1 extends Skill {
+
 	@Override
 	public long getId() {
-		return Skill.MonvSkill;
+		return Skill.BirdTech1;
 	}
 
 	@Override
 	public String getName() {
-		return "魔女技能";
+		return "飞兵科技：先制打击";
 	}
 
 	@Override
 	public Condition getCondition() {
-		return new FullHealthCondition();
+		return new GreaterHealthCondition(80);
 	}
 
 	@Override
 	public List<Buff> getBuffs() {
-		return Lists.newArrayList(new Buff(BuffType.Attack, 45), new Buff(BuffType.MagicDef, 45));
+		return Lists.newArrayList(new Buff(BuffType.Attack, 20), new Buff(BuffType.PhysicDef, 20));
 	}
 
 	@Override

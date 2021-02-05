@@ -1,4 +1,4 @@
-package cc.js.sora.fight.condition;
+package cc.js.sora.fight.condition.health;
 
 import cc.js.sora.fight.Condition;
 

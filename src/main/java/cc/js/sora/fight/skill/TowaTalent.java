@@ -9,32 +9,33 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.health.FullHealthCondition;
+import cc.js.sora.fight.condition.HasBuffCondition;
 
-public class WizardSkill extends Skill {
+public class TowaTalent extends Skill  {
+
 	@Override
 	public long getId() {
-		return Skill.MonvSkill;
+		return Skill.TowaTalent;
 	}
 
 	@Override
 	public String getName() {
-		return "魔女技能";
+		return "托娃天赋";
 	}
 
 	@Override
 	public Condition getCondition() {
-		return new FullHealthCondition();
+		return new HasBuffCondition();
 	}
 
 	@Override
 	public List<Buff> getBuffs() {
-		return Lists.newArrayList(new Buff(BuffType.Attack, 45), new Buff(BuffType.MagicDef, 45));
+		return Lists.newArrayList(new Buff(BuffType.Attack, 15), new Buff(BuffType.PhysicDef, 15));
 	}
 
 	@Override
 	public Scope getScope() {
-		return Scope.Soldier;
+		return Scope.All;
 	}
 
 }

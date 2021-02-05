@@ -9,23 +9,38 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.EnemyHasDebuffCondition;
+import cc.js.sora.fight.condition.UserCondition;
 
-public class SorceressTech2 extends Skill {
+public class BirdTech2 extends Skill {
 
 	@Override
 	public long getId() {
-		return Skill.SorceressTech2;
+		return Skill.BirdTech2;
 	}
 
 	@Override
 	public String getName() {
-		return "法师科技：法力虚空";
+		return "飞兵科技：空海奇袭";
 	}
 
 	@Override
 	public Condition getCondition() {
-		return new EnemyHasDebuffCondition();
+		return new UserCondition() {
+
+			@Override
+			public String getDesc() {
+				return "被攻击方不满血";
+			}
+
+			@Override
+			public String getName() {
+				return "enemyNotFull";
+			}
+
+			@Override
+			public boolean defaultValid() {
+				return false;
+			}};
 	}
 
 	@Override

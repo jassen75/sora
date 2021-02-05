@@ -10,6 +10,10 @@ import org.springframework.stereotype.Component;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import cc.js.sora.fight.skill.barrack.BirdTech1;
+import cc.js.sora.fight.skill.barrack.BirdTech2;
+import cc.js.sora.fight.skill.barrack.BirdTech3;
+import cc.js.sora.fight.skill.barrack.BirdTech4;
 import cc.js.sora.fight.skill.barrack.SorceressTech1;
 import cc.js.sora.fight.skill.barrack.SorceressTech2;
 import cc.js.sora.fight.skill.barrack.SorceressTech3;
@@ -50,8 +54,10 @@ public class BarrackSkills {
 	{
 		List<Skill> wizardSkillList = Lists.newArrayList(new SorceressTech1(),new SorceressTech2(), new SorceressTech3(), new SorceressTech4());
 		
-
+		List<Skill> birdSkillList = Lists.newArrayList(new BirdTech1(),new BirdTech2(), new BirdTech3(), new BirdTech4());
+		
 		skills.put(8, wizardSkillList);
+		skills.put(5, birdSkillList);
 	}
 	
 

@@ -9,27 +9,28 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.health.FullHealthCondition;
+import cc.js.sora.fight.condition.health.SoldierGreaterHealthCondition;
 
-public class WizardSkill extends Skill {
+public class GriffinSkill extends Skill{
+
 	@Override
 	public long getId() {
-		return Skill.MonvSkill;
+		return Skill.HuangjiashijiuSkill;
 	}
 
 	@Override
 	public String getName() {
-		return "魔女技能";
+		return "皇家狮鹫技能";
 	}
 
 	@Override
 	public Condition getCondition() {
-		return new FullHealthCondition();
+		return new SoldierGreaterHealthCondition(80);
 	}
 
 	@Override
 	public List<Buff> getBuffs() {
-		return Lists.newArrayList(new Buff(BuffType.Attack, 45), new Buff(BuffType.MagicDef, 45));
+		return Lists.newArrayList(new Buff(BuffType.Attack, 30), new Buff(BuffType.PhysicDef, 30));
 	}
 
 	@Override

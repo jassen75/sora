@@ -9,7 +9,7 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.LessHealthCondition;
+import cc.js.sora.fight.condition.health.LessHealthCondition;
 
 public class SorceressTech4 extends Skill {
 

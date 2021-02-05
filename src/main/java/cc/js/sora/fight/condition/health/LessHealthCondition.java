@@ -1,4 +1,4 @@
-package cc.js.sora.fight.condition;
+package cc.js.sora.fight.condition.health;
 
 public class LessHealthCondition implements ForceHealthCondition  {
 	
