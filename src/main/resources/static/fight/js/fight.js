@@ -84,15 +84,17 @@ function buildFight()
 	request["attackerUserConditionChecked"]=attackerUserConditionChecked;
 	request["defenderUserConditionChecked"]=defenderUserConditionChecked;
 
+	fightInfo["attackerHeroLeftLife"] = fightInfo["attackerLife"];
+	fightInfo["attackerSoldierLeftLife"] = fightInfo["attackerSoldierLife"];
+	fightInfo["defenderHeroLeftLife"] = fightInfo["defenderLife"];
+	fightInfo["defenderSoldierLeftLife"] = fightInfo["defenderSoldierLife"];
+	
 	for(var i in fightInfo)
 	{
 		request[i] = fightInfo[i];
 	}
 	
-	request["attackerHeroLeftLife"] = fightInfo["attackerLife"];
-	request["attackerSoldierLeftLife"] = fightInfo["attackerSoldierLife"];
-	request["defenderHeroLeftLife"] = fightInfo["defenderLife"];
-	request["defenderSoldierLeftLife"] = fightInfo["defenderSoldierLife"];
+
 	return request; 
 	
 }
@@ -947,20 +949,118 @@ function calculate()
 	
 	if(attacker && defenderSoldier)
 	{
-		HeroToSoldier = attacker["isPhysic"]? oneHit(fightInfo["attackerAttack"], fightInfo["defenderSoldierPhysicDef"], fightInfo["attackerDamageInc"], 
+		heroToSoldier = attacker["isPhysic"]? oneHit(fightInfo["attackerAttack"], fightInfo["defenderSoldierPhysicDef"], fightInfo["attackerDamageInc"], 
 															fightInfo["defenderSoldierDamageDec"]) 
 													: oneHit(fightInfo["attackerIntel"], fightInfo["defenderSoldierMagicDef"],
 														fightInfo["attackerDamageInc"], fightInfo["defenderSoldierDamageDec"]);		
-	    fightDetails+="<p>"+attacker["name"]+"攻击"+defenderSoldier["name"]+"1hit:"+HeroToSoldier+"</p>";
+	    fightDetails+="<p>"+attacker["name"]+"攻击"+defenderSoldier["name"]+"1hit:"+heroToSoldier+"</p>";
 	}
 
 	if(attacker && defender)
 	{
-		HeroToHero = attacker["isPhysic"]? oneHit(fightInfo["attackerAttack"], fightInfo["defenderPhysicDef"], fightInfo["attackerDamageInc"], fightInfo["defenderDamageDec"]) 
+		heroToHero = attacker["isPhysic"]? oneHit(fightInfo["attackerAttack"], fightInfo["defenderPhysicDef"], fightInfo["attackerDamageInc"], fightInfo["defenderDamageDec"]) 
 													: oneHit(fightInfo["attackerIntel"], fightInfo["defenderMagicDef"], fightInfo["attackerDamageInc"], fightInfo["defenderDamageDec"]);	
-	    fightDetails+="<p>"+attacker["name"]+"攻击"+defender["name"]+"1hit:"+HeroToHero+"</p>";
+	    fightDetails+="<p>"+attacker["name"]+"攻击"+defender["name"]+"1hit:"+heroToHero+"</p>";
 	}
-									
+	
+	var soldierCount = attackerSoldier ? 20 : 0;
+	var heroCount = attacker ? 20 : 0;
+	var dl = defender ? fightInfo["defenderHeroLeftLife"] : 0;
+	var dsl = defenderSoldier ? fightInfo["defenderSoldierLeftLife"] : 0;
+	if(defenderSoldier) 
+	{
+		
+		var oneSoldierLife = fightInfo["defenderSoldierLife"] / 10;
+		if(soldierCount > 0)
+		{
+			var hit = Math.ceil(oneSoldierLife / soldierToSoldier);
+			
+			
+			var needHit = 0;
+			var soldierKillSoldier = 0;
+			
+			while(needHit + hit <= soldierCount &&  dsl > oneSoldierLife)  
+			{
+				needHit += hit;
+				dsl -= oneSoldierLife;
+				soldierKillSoldier++;
+			}
+			
+			// left many soldier
+			if( dsl > oneSoldierLife)
+			{
+				dsl - soldierToSoldier * (soldierCount - needHit);
+				needHit = soldierCount;
+				
+				fightDetails+="<p>"+attackerSoldier["name"]+" use "+soldierCount+" hit kill "+soldierKillSoldier+defenderSoldier["name"]+"</p>";
+				
+				// hero to soldier
+				
+				if(heroCount > 0 )
+				{
+					var hit = Math.ceil(oneSoldierLife / heroToSoldier);		
+					
+					var needHit = 0;
+					var heroKillSoldier = 0;
+					
+					while(needHit + hit <= heroCount &&  dsl > oneSoldierLife)  
+					{
+						needHit += hit;
+						dsl -= oneSoldierLife;
+						heroKillSoldier++;
+					}
+					
+					// soldier left
+					if( dsl > oneSoldierLife)
+					{
+						dsl - heroToSoldier * (soldierCount - needHit);
+						needHit = heroCount;
+				
+						fightDetails+="<p>"+attacker["name"]+" use "+heroCount+" hit kill "+heroKillSoldier+defenderSoldier["name"]+"</p>";
+					} 
+					else
+					{
+						needHit+= Math.ceil((oneSoldierLife-dsl)/heroToSoldier);
+						heroKillSoldier++;
+						fightDetails+="<p>"+attacker["name"]+" use "+needHit+" hit kill "+heroKillSoldier+defenderSoldier["name"]+"</p>";
+						dsl =0;
+						heroCount -= needHit;
+					}
+				}
+			} else
+			{
+				// soldier to hero
+				
+				needHit+= Math.ceil((oneSoldierLife-dsl)/soldierToSoldier);
+				fightDetails+="<p>"+attackerSoldier["name"]+" use "+needHit+" hit kill 10 "+defenderSoldier["name"]+"</p>";
+				dsl = 0;
+				soldierCount-=needHit
+				
+				if(defender)
+				{
+					var stohDamage = soldierToHero* soldierCount;
+					dl -= stohDamage;
+					fightDetails+="<p>"+attackerSoldier["name"]+" use "+soldierCount+" hit to generate "+stohDamage+" damage to "+defenderSoldier["name"]+"</p>";
+				}
+				
+			}
+		}
+	}
+	
+	if(dl > 0 && dsl == 0)
+	{
+		if(heroCount > 0)
+		{
+			var htohDamage = heroToHero* heroCount;
+			fightDetails+="<p>"+attacker["name"]+" use "+heroCount+" hit to generate "+htohDamage+" damage to "+defender["name"]+"</p>";
+		} else
+		{
+			alert("no here count");
+		}
+	} else
+	{
+		alert("dl=="+dl+", dsl=="+dsl);
+	}
 										
 	$("#fightDetails").html(fightDetails);
 }
