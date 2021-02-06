@@ -40,7 +40,7 @@ public class HeroEquip {
 	
 	
 	@Column(name="attack_jjc")
-	int atackJJC;
+	int attackJJC;
 	
 	@Column(name="physic_def_jjc")
 	int physicDefJJC;

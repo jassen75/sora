@@ -83,6 +83,7 @@ create table soldier (
 	physic_def integer not null, 
 	soldier_type integer not null,
 	skills VARCHAR(4096),
+	is_physic tinyint(1),
 	primary key (id)
 );
 
@@ -119,14 +120,14 @@ INSERT INTO player(name, server) VALUES
 ('不是山谷','羁绊之地');
 
 INSERT INTO hero(id, name, life, attack, intel, physic_def, magic_def, tech, soldier_life_inc, soldier_attack_inc,  soldier_physic_def_inc, soldier_magic_def_inc, is_physic, is_woman, skills) VALUES
-(1,'帕希尔',3548,271,520,258,312,104,30,35,15,20,0,1,'1'),
-(2,'托娃',4168,527,240,305,302,166,30,30,40,15,1,1,'2');
+(1,'帕希尔',3548,271,520,258,312,104,30,35,15,20,0,1,'1,1001,1101'),
+(2,'托娃',4168,527,240,305,302,166,30,30,40,15,1,1,'2,1001,1101');
 
 
-INSERT INTO soldier(id, name, life ,attack, physic_def,  magic_def, soldier_type, skills) VALUES
-(1, '魔女', 583, 677, 297, 468, 8, '2001'),
-(2, '魔晶术士', 723, 630, 375,328, 8, '2002'),
-(3, '皇家狮鹫', 677,754, 344,390, 5, '2003');
+INSERT INTO soldier(id, name, life ,attack, physic_def,  magic_def, soldier_type, is_physic, skills) VALUES
+(1, '魔女', 583, 677, 297, 468, 8, 0, '2001'),
+(2, '魔晶术士', 723, 630, 375,328, 8, 0, '2002'),
+(3, '皇家狮鹫', 677,754, 344,390, 5, 1, '2003');
 
 
 INSERT INTO hero_soldiers(hero_id, soldiers_id) VALUES

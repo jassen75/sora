@@ -28,6 +28,10 @@ $(document).ready(function() {
 	
 	$("#dp").show();
 	$("#dm").hide();
+	
+	$("#calculate").click(function(){
+		calculate();
+	});
 });
 
 
@@ -398,7 +402,9 @@ function calculatePanel()
 		var pi  = attackerEquip["physicDefSkill"];
 		var mi  = attackerEquip["magicDefSkill"];
 		var lii  = attackerEquip["lifeSkill"];
-
+		var di = 0;
+		var dd = 0;
+		
 		if(attackerSkills)
 		{
 			var attackBasic = 0;
@@ -406,6 +412,9 @@ function calculatePanel()
 			var physicDefBasic = 0;
 			var magicDefBasic = 0;
 			var lifeBasic = 0;
+			var damageIncBasic = 0;
+			var damageDecBasic = 0;
+			
 			for(var i=0; i<attackerSkills.length; i++)
 			{
 				if(attackerSkills[i]["valid"] && (attackerSkills[i]["skill"]["scope"]=="All" || attackerSkills[i]["skill"]["scope"]=="Hero" ))
@@ -467,6 +476,27 @@ function calculatePanel()
 								lii = lii+buffs[j]["number"];
 							}
 						}
+						if(buffs[j]["buffType"]=="DamageInc")
+						{
+							if(buffs[j]["basic"])
+							{
+								damageIncBasic = Math.max(damageIncBasic, buffs[j]["number"]);
+							}else
+							{
+								di = di+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="DamageDec")
+						{
+							if(buffs[j]["basic"])
+							{
+								damageDecBasic = Math.max(damageDncBasic, buffs[j]["number"]);
+							}else
+							{
+								dd = dd+buffs[j]["number"];
+							}
+						}
 					}
 				}
 			}
@@ -475,18 +505,24 @@ function calculatePanel()
 			pi = pi+physicDefBasic;
 			mi = mi+magicDefBasic;
 			lii=lii+lifeBasic+40;  //jjc inc =0.4
+			di = di+damageIncBasic;
+			dd = dd+damageDecBasic;
 
-			fightInfo["attackerAttack"] = Math.ceil(attack*(1+ai/100.0)+attackerEquip["atackJJC"]);
+			fightInfo["attackerAttack"] = Math.ceil(attack*(1+ai/100.0)+attackerEquip["attackJJC"]);
 			fightInfo["attackerIntel"] =  Math.ceil(intel*(1+ii/100.0)+attackerEquip["intelJJC"]);
 			fightInfo["attackerPhysicDef"] = Math.ceil(physicDef*(1+pi/100.0)+attackerEquip["physicDefJJC"]);
 			fightInfo["attackerMagicDef"] = Math.ceil(magicDef*(1+mi/100.0)+attackerEquip["magicDefJJC"]);
 			fightInfo["attackerLife"] = Math.ceil(life*(1+lii/100.0)+attackerEquip["lifeJJC"]);
+			fightInfo["attackerDamageInc"] = di;
+			fightInfo["attackerDamageDec"] = dd;
 			
 			$("#attackerAttack").attr("value", fightInfo["attackerAttack"]);
 			$("#attackerIntel").attr("value", fightInfo["attackerIntel"]);
 			$("#attackerPhysicDef").attr("value", fightInfo["attackerPhysicDef"]);
 			$("#attackerMagicDef").attr("value", fightInfo["attackerMagicDef"]);
 			$("#attackerLife").attr("value", fightInfo["attackerLife"]);
+			
+			$("#attackerDetail").html("<p>增伤："+fightInfo["attackerDamageInc"]+"&nbsp;&nbsp;&nbsp;减伤："+fightInfo["attackerDamageDec"]+"</p>");
 		}
 		
 	}
@@ -505,6 +541,9 @@ function calculatePanel()
 		var pi  = defenderEquip["physicDefSkill"];
 		var mi  = defenderEquip["magicDefSkill"];
 		var lii  = defenderEquip["lifeSkill"];
+		
+		var di = 0;
+		var dd = 0;
 
 		if(defenderSkills)
 		{
@@ -513,6 +552,9 @@ function calculatePanel()
 			var physicDefBasic = 0;
 			var magicDefBasic = 0;
 			var lifeBasic = 0;
+			var damageIncBasic = 0;
+			var damageDecBasic = 0;
+									
 			for(var i=0; i<defenderSkills.length; i++)
 			{
 				if(defenderSkills[i]["valid"]  && (defenderSkills[i]["skill"]["scope"]=="All" || defenderSkills[i]["skill"]["scope"]=="Hero" ))
@@ -574,6 +616,28 @@ function calculatePanel()
 								lii = lii+buffs[j]["number"];
 							}
 						}
+						
+						if(buffs[j]["buffType"]=="DamageInc")
+						{
+							if(buffs[j]["basic"])
+							{
+								damageIncBasic = Math.max(damageIncBasic, buffs[j]["number"]);
+							}else
+							{
+								di = di+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="DamageDec")
+						{
+							if(buffs[j]["basic"])
+							{
+								damageDecBasic = Math.max(damageDncBasic, buffs[j]["number"]);
+							}else
+							{
+								dd = dd+buffs[j]["number"];
+							}
+						}
 					}
 				}
 			}
@@ -582,6 +646,8 @@ function calculatePanel()
 			pi = pi+physicDefBasic;
 			mi = mi+magicDefBasic;
 			lii=lii+lifeBasic+40;  //jjc inc =0.4
+			di = di+damageIncBasic;
+			dd = dd+damageDecBasic;
 			
 			fightInfo["defenderAttack"] = Math.ceil(attack*(1+ai/100.0)+defenderEquip["attackJJC"]);
 			fightInfo["defenderIntel"] = Math.ceil(intel*(1+ii/100.0)+defenderEquip["intelJJC"]);
@@ -589,11 +655,16 @@ function calculatePanel()
 			fightInfo["defenderMagicDef"] = Math.ceil(magicDef*(1+mi/100.0)+defenderEquip["magicDefJJC"]);
 			fightInfo["defenderLife"] = Math.ceil(life*(1+lii/100.0)+defenderEquip["lifeJJC"]);
 			
+			fightInfo["defenderDamageInc"] = di;
+			fightInfo["defenderDamageDec"] = dd;
+			
 			$("#defenderAttack").attr("value", fightInfo["defenderAttack"]);
 			$("#defenderIntel").attr("value", fightInfo["defenderIntel"]);
 			$("#defenderPhysicDef").attr("value", fightInfo["defenderPhysicDef"]);
 			$("#defenderMagicDef").attr("value", fightInfo["defenderMagicDef"]);
 			$("#defenderLife").attr("value", fightInfo["defenderLife"]);
+						
+			$("#defenderDetail").html("<p>增伤："+fightInfo["defenderDamageInc"]+"&nbsp;&nbsp;&nbsp;减伤："+fightInfo["defenderDamageDec"]+"</p>");
 		}
 		
 	}
@@ -609,6 +680,8 @@ function calculatePanel()
 		var pi  = 0;
 		var mi  = 0;
 		var lii = 0;
+		var di = 0;
+		var dd = 0;
 		
 		if(attackerSkills)
 		{
@@ -617,6 +690,9 @@ function calculatePanel()
 			var physicDefBasic = 0;
 			var magicDefBasic = 0;
 			var lifeBasic = 0;
+			var damageIncBasic = 0;
+			var damageDecBasic = 0;
+			
 			for(var i=0; i<attackerSkills.length; i++)
 			{
 				if(attackerSkills[i]["valid"] && (attackerSkills[i]["skill"]["scope"]=="All" || attackerSkills[i]["skill"]["scope"]=="Soldier" ))
@@ -667,6 +743,27 @@ function calculatePanel()
 								lii = lii+buffs[j]["number"];
 							}
 						}
+						if(buffs[j]["buffType"]=="DamageInc")
+						{
+							if(buffs[j]["basic"])
+							{
+								damageIncBasic = Math.max(damageIncBasic, buffs[j]["number"]);
+							}else
+							{
+								di = di+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="DamageDec")
+						{
+							if(buffs[j]["basic"])
+							{
+								damageDecBasic = Math.max(damageDncBasic, buffs[j]["number"]);
+							}else
+							{
+								dd = dd+buffs[j]["number"];
+							}
+						}
 					}
 				}
 			}
@@ -674,6 +771,8 @@ function calculatePanel()
 			pi = pi+physicDefBasic;
 			mi = mi+magicDefBasic;
 			lii=lii+lifeBasic+40;  //jjc inc =0.4
+			di = di+damageIncBasic;
+			dd = dd+damageDecBasic;
 
 			var attackPanel = Math.ceil(attack*(1+ai/100.0));
 			var physicDefPanel = Math.ceil(physicDef*(1+pi/100.0));
@@ -684,8 +783,13 @@ function calculatePanel()
 			fightInfo["attackerSoldierPhysicDef"]=physicDefPanel;
 			fightInfo["attackerSoldierMagicDef"]=magicDefPanel;
 			fightInfo["attackerSoldierLife"]=lifePanel;
+			
+			fightInfo["attackerSoldierDamageInc"] = di;
+			fightInfo["attackerSoldierDamageDec"] = dd;
 		}
-		$("#attacker-soldier-information").html("<p><b>"+attackerSoldier["name"]+"</b></p><p>攻击："+attackPanel+"&nbsp;&nbsp;&nbsp;防御："+physicDefPanel+"&nbsp;&nbsp;&nbsp;魔防："+magicDefPanel+"</p><p>生命："+lifePanel+"</p>");
+		$("#attacker-soldier-information").html("<p><b>"+attackerSoldier["name"]+"</b></p><p>攻击："+attackPanel+"&nbsp;&nbsp;&nbsp;防御："+
+		physicDefPanel+"&nbsp;&nbsp;&nbsp;魔防："+magicDefPanel+"</p><p>生命："+lifePanel+
+		"&nbsp;&nbsp;&nbsp;增伤:"+fightInfo["attackerSoldierDamageInc"]+"&nbsp;&nbsp;&nbsp;减伤:"+fightInfo["attackerSoldierDamageDec"]+"</p>");
 	} 
 	
 	if(defenderSoldier && defender) 
@@ -699,6 +803,8 @@ function calculatePanel()
 		var pi  = 0;
 		var mi  = 0;
 		var lii = 0;
+		var di = 0;
+		var dd = 0;
 		
 		if(defenderSkills)
 		{
@@ -707,6 +813,9 @@ function calculatePanel()
 			var physicDefBasic = 0;
 			var magicDefBasic = 0;
 			var lifeBasic = 0;
+			var damageIncBasic = 0;
+			var damageDecBasic = 0;
+			
 			for(var i=0; i<defenderSkills.length; i++)
 			{
 				if(defenderSkills[i]["valid"] && (defenderSkills[i]["skill"]["scope"]=="All" || defenderSkills[i]["skill"]["scope"]=="Soldier" ))
@@ -757,6 +866,27 @@ function calculatePanel()
 								lii = lii+buffs[j]["number"];
 							}
 						}
+						if(buffs[j]["buffType"]=="DamageInc")
+						{
+							if(buffs[j]["basic"])
+							{
+								damageIncBasic = Math.max(damageIncBasic, buffs[j]["number"]);
+							}else
+							{
+								di = di+buffs[j]["number"];
+							}
+						}
+						
+						if(buffs[j]["buffType"]=="DamageDec")
+						{
+							if(buffs[j]["basic"])
+							{
+								damageDecBasic = Math.max(damageDncBasic, buffs[j]["number"]);
+							}else
+							{
+								dd = dd+buffs[j]["number"];
+							}
+						}
 					}
 				}
 			}
@@ -764,6 +894,8 @@ function calculatePanel()
 			pi = pi+physicDefBasic;
 			mi = mi+magicDefBasic;
 			lii=lii+lifeBasic+40;  //jjc inc =0.4
+			di = di+damageIncBasic;
+			dd = dd+damageDecBasic;
 
 			var attackPanel = Math.ceil(attack*(1+ai/100.0));
 			var physicDefPanel = Math.ceil(physicDef*(1+pi/100.0));
@@ -774,9 +906,68 @@ function calculatePanel()
 			fightInfo["defenderSoldierPhysicDef"]=physicDefPanel;
 			fightInfo["defenderSoldierMagicDef"]=magicDefPanel;
 			fightInfo["defenderSoldierLife"]=lifePanel;
+			fightInfo["defenderSoldierDamageInc"] = di;
+			fightInfo["defenderSoldierDamageDec"] = dd;
 		}
-		$("#defender-soldier-information").html("<p><b>"+defenderSoldier["name"]+"</b></p><p>攻击："+attackPanel+"&nbsp;&nbsp;&nbsp;防御："+physicDefPanel+"&nbsp;&nbsp;&nbsp;魔防："+magicDefPanel+"</p><p>生命："+lifePanel+"</p>");
+		$("#defender-soldier-information").html("<p><b>"+defenderSoldier["name"]+"</b></p><p>攻击："+attackPanel+"&nbsp;&nbsp;&nbsp;防御："+
+		physicDefPanel+"&nbsp;&nbsp;&nbsp;魔防："+magicDefPanel+"</p><p>生命："+lifePanel+
+		"&nbsp;&nbsp;&nbsp;增伤:"+fightInfo["defenderSoldierDamageInc"]+"&nbsp;&nbsp;&nbsp;减伤:"+fightInfo["defenderSoldierDamageDec"]+"</p>");
 	}
+}
+
+
+function calculate()
+
+{
+	var soldierToSoldier=0;
+	var soldierToHero=0;
+	var HeroToSoldier=0;
+	var HeroToHero=0;
+	var fightDetails= "";
+	if(attackerSoldier && defenderSoldier)
+	{
+	
+		soldierToSoldier = attackerSoldier["isPhysic"]? oneHit(fightInfo["attackerSoldierAttack"], fightInfo["defenderSoldierPhysicDef"], 
+																fightInfo["attackerSoldierDamageInc"], fightInfo["defenderSoldierDamageDec"]) 
+														: oneHit(fightInfo["attackerSoldierAttack"], fightInfo["defenderSoldierMagicDef"], 
+														         fightInfo["attackerSoldierDamageInc"], fightInfo["defenderSoldierDamageDec"]);
+														         
+        fightDetails+="<p>"+attackerSoldier["name"]+"攻击"+defenderSoldier["name"]+"1hit:"+soldierToSoldier+"</p>";
+	}
+	
+	if(attackerSoldier && defender)
+	{
+		soldierToHero = attackerSoldier["isPhysic"]? oneHit(fightInfo["attackerSoldierAttack"], fightInfo["defenderPhysicDef"], 
+															fightInfo["attackerSoldierDamageInc"], fightInfo["defenderDamageDec"]) 
+													: oneHit(fightInfo["attackerSoldierAttack"], fightInfo["defenderMagicDef"], 
+															fightInfo["attackerSoldierDamageInc"], fightInfo["defenderDamageDec"]);
+		
+		fightDetails+="<p>"+attackerSoldier["name"]+"攻击"+defender["name"]+"1hit:"+soldierToHero+"</p>";
+	}
+	
+	if(attacker && defenderSoldier)
+	{
+		HeroToSoldier = attacker["isPhysic"]? oneHit(fightInfo["attackerAttack"], fightInfo["defenderSoldierPhysicDef"], fightInfo["attackerDamageInc"], 
+															fightInfo["defenderSoldierDamageDec"]) 
+													: oneHit(fightInfo["attackerIntel"], fightInfo["defenderSoldierMagicDef"],
+														fightInfo["attackerDamageInc"], fightInfo["defenderSoldierDamageDec"]);		
+	    fightDetails+="<p>"+attacker["name"]+"攻击"+defenderSoldier["name"]+"1hit:"+HeroToSoldier+"</p>";
+	}
+
+	if(attacker && defender)
+	{
+		HeroToHero = attacker["isPhysic"]? oneHit(fightInfo["attackerAttack"], fightInfo["defenderPhysicDef"], fightInfo["attackerDamageInc"], fightInfo["defenderDamageDec"]) 
+													: oneHit(fightInfo["attackerIntel"], fightInfo["defenderMagicDef"], fightInfo["attackerDamageInc"], fightInfo["defenderDamageDec"]);	
+	    fightDetails+="<p>"+attacker["name"]+"攻击"+defender["name"]+"1hit:"+HeroToHero+"</p>";
+	}
+									
+										
+	$("#fightDetails").html(fightDetails);
+}
+
+function oneHit(attack, enemyDef, damageInc, enemyDamageDec)
+{
+	return Math.ceil((attack-enemyDef)*(1+(damageInc-enemyDamageDec)/100.0) /2) ;
 }
 
 

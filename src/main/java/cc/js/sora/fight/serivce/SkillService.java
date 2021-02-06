@@ -23,6 +23,8 @@ import cc.js.sora.fight.skill.PatyleTalent;
 import cc.js.sora.fight.skill.SuperBuff;
 import cc.js.sora.fight.skill.TowaTalent;
 import cc.js.sora.fight.skill.WizardSkill;
+import cc.js.sora.fight.skill.equip.LastSuit;
+import cc.js.sora.fight.skill.equip.WindEnhance;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -49,6 +51,9 @@ public class SkillService {
 		log.info("init skills");
 		skills.clear();
 
+		registerSkill(Skill.Zuihouzhifu, new LastSuit());
+		registerSkill(Skill.WindEnhance, new WindEnhance());
+		
 		registerSkill(Skill.PatyleTalent, new PatyleTalent());
 		registerSkill(Skill.TowaTalent, new TowaTalent());
 		

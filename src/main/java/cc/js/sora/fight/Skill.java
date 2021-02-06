@@ -85,9 +85,15 @@ public abstract class Skill {
 	 * 
 	 * 1-300  hero talent
 	 * 300-1000 passive skill
-	 * 2000-2500 soldier skill
-	 * 2500-3000 bz kj
-	 * 3000-4000 equip skill
+	 * 
+	 * 1000-1100 enhance
+	 * 
+	 * 1100-2000 equip skill
+	 * 
+	 * 2000-3000 soldier skill
+	 * 
+	 * 3000-4000 barrack tech
+
 	 * 4000-5000 global skill
 	 */
 	
@@ -95,6 +101,9 @@ public abstract class Skill {
 	public static final long PatyleTalent = 1;
 	public static final long TowaTalent = 2;
 
+	public static final long WindEnhance = 1001;
+			
+	public static final long Zuihouzhifu = 1101;
 	
 	public static final long MonvSkill = 2001;
 	public static final long MojingshushiSkill = 2002;
@@ -110,6 +119,7 @@ public abstract class Skill {
 	public static final long BirdTech3 = 3007;
 	public static final long BirdTech4 = 3008;
 	
+
 	
 	public static final long SuperBuff = 4001;
 }
