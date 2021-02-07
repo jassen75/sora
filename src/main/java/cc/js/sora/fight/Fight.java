@@ -55,6 +55,8 @@ public class Fight {
 	int defenderSoldierPhysicDef;
 	int defenderSoldierMagicDef;
 	
+	Land attackerLand = Land.Flat;
+	Land defenderLand = Land.Flat;
 	Map<String, Boolean> attackerUserConditionChecked;
 	Map<String, Boolean> defenderUserConditionChecked;
 

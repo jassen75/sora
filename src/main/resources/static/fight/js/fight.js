@@ -13,6 +13,7 @@ var attackerUserConditionChecked = {};
 var defenderUserConditionChecked = {};
 var isAttacker = 1;
 var fightInfo={};
+var lands = {"Flat":"平地","Water":"水","Wood":"树林","Wall":"城墙","Grass":"草地","Mountain":"山地"};
 
 $(document).ready(function() {
 
@@ -243,6 +244,19 @@ function displayHero(id, hero, heroEquip)
 			})
 		}
 
+		$("#attacker-land-list").children("li").remove();
+		for(var i in lands)
+		{
+			var land = $("<li>"+lands[i]+"</li>");
+			land.attr("landid", i);
+			land.appendTo($("#attacker-land-list"));
+
+			land.click(function(event){
+				fightInfo["attackerLand"] = $(this).attr("landid");
+				refreshAttacker();
+			})
+		}
+
 		refreshAttacker();
 		isAttacker=0;
 	} else
@@ -292,10 +306,33 @@ function displayHero(id, hero, heroEquip)
 				})
 			})
 		}
+		
+		$("#defender-land-list").children("li").remove();
+		for(var i in lands)
+		{
+			var land = $("<li>"+lands[i]+"</li>");
+			land.attr("landid", i);
+			land.appendTo($("#defender-land-list"));
+
+			land.click(function(event){
+				fightInfo["defenderLand"] = $(this).attr("landid");
+				refreshAttacker();
+			})
+		}
+
 		refreshDefender();
 		isAttacker=1;
 	}
 	
+	if(fightInfo["defenderLand"] == undefined)
+	{
+		fightInfo["defenderLand"] = "Flat";
+	}
+
+	if(fightInfo["attackerLand"] == undefined)
+	{
+		fightInfo["attackerLand"] = "Flat";
+	}
 }
 
 function refreshAttacker()
@@ -1014,7 +1051,12 @@ function calculatePanel()
 		$("#defender-soldier-information").html("<p><b>"+defenderSoldier["name"]+"</b></p><p>攻击："+fightInfo["defenderSoldierAttack"]+"&nbsp;&nbsp;&nbsp;防御："+
 		fightInfo["defenderSoldierPhysicDef"]+"&nbsp;&nbsp;&nbsp;魔防："+fightInfo["defenderSoldierMagicDef"]+"</p><p>生命："+fightInfo["defenderSoldierLife"]+
 		"&nbsp;&nbsp;&nbsp;增伤:"+fightInfo["defenderSoldierDamageInc"]+"&nbsp;&nbsp;&nbsp;减伤:"+fightInfo["defenderSoldierDamageDec"]+"</p>");
+		
 	}
+	
+	
+	$("#attacker-land-information").html("<p>地形:<b>"+lands[fightInfo["attackerLand"]]+"</b></p>");
+	$("#defender-land-information").html("<p>地形:<b>"+lands[fightInfo["defenderLand"]]+"</b></p>");
 }
 
 
@@ -1144,7 +1186,13 @@ function calculate()
 				if(defender && soldierCount >0)
 				{
 					var stohDamage = soldierToHero* soldierCount;
-					dl -= stohDamage;
+					if(dl > stohDamage ) 
+					{
+						dl -= stohDamage;
+					} else
+					{
+						dl = 0;
+					}
 					fightDetails+="<p>"+attackerSoldier["name"]+"用 <b>"+soldierCount+"</b> hit 对"+defender["name"]+"造成<b>"+stohDamage+"</b>伤害</p>";
 				}
 				
@@ -1152,8 +1200,21 @@ function calculate()
 		}
 	}
 	
+
 	if(dl > 0 && dsl == 0)
 	{
+		if(soldierCount >0)
+		{
+			var stohDamage = soldierToHero* soldierCount;
+			if(dl > stohDamage ) 
+			{
+				dl -= stohDamage;
+			} else
+			{
+				dl = 0;
+			}
+			fightDetails+="<p>"+attackerSoldier["name"]+"用 <b>"+soldierCount+"</b> hit 对"+defender["name"]+"造成<b>"+stohDamage+"</b>伤害</p>";
+		}
 		if(heroCount > 0)
 		{
 			var htohDamage = heroToHero* heroCount;

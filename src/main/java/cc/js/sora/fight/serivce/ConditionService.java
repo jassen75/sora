@@ -62,18 +62,24 @@ public class ConditionService {
 			Hero h = null;
 			if(isAttack)
 			{
-				h = heroRepository.getOne(fight.getDefenderHeroId());
-				if(h != null)
+				if(fight.getDefenderHeroId() > 0)
 				{
-					return ((EnemyHeroCondition)condition).valid(h);
+					h = heroRepository.getOne(fight.getDefenderHeroId());
+					if(h != null)
+					{
+						return ((EnemyHeroCondition)condition).valid(h);
+					}
 				}
 				 
 			} else
 			{
-				h = heroRepository.getOne(fight.getAttackerHeroId());
-				if(h != null)
+				if(fight.getAttackerHeroId() > 0) 
 				{
-					return ((EnemyHeroCondition)condition).valid(h);
+					h = heroRepository.getOne(fight.getAttackerHeroId());
+					if(h != null)
+					{
+						return ((EnemyHeroCondition)condition).valid(h);
+					}
 				}
 			}
 			
