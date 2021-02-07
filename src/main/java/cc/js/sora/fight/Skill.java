@@ -76,6 +76,7 @@ public abstract class Skill {
 	public static final long MonvSkill = 2001;
 	public static final long MojingshushiSkill = 2002;
 	public static final long HuangjiashijiuSkill = 2003;
+	public static final long LongxiajushouSkill = 2004;
 	
 	public static final long SorceressTech1 = 3001;
 	public static final long SorceressTech2 = 3002;

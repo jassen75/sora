@@ -194,6 +194,7 @@ function displayHero(id, hero, heroEquip)
 			$("#dp").hide();
 		}
 		
+		attackerSoldier = undefined;
 		$("#attacker-soldier-list").children("li").remove();
 		var soldiers = hero["soldiers"];
 		for(var i=0; i<soldiers.length; i++)
@@ -220,6 +221,7 @@ function displayHero(id, hero, heroEquip)
 		}
 		
 		$("#attacker-action-list").children("li").remove();
+		attackerAction = undefined;
 		var actions = hero["actions"];
 		for(var i=0; i<actions.length; i++)
 		{
@@ -284,6 +286,7 @@ function displayHero(id, hero, heroEquip)
 			$("#ap").hide();
 		}
 		
+		defenderSoldier = undefined;
 		$("#defender-soldier-list").children("li").remove();
 		var soldiers = hero["soldiers"];
 		for(var i=0; i<soldiers.length; i++)
@@ -1136,11 +1139,11 @@ function calculate()
 			// left many soldier
 			if( dsl > oneSoldierLife)
 			{
-				dsl - soldierToSoldier * (soldierCount - needHit);
+				dsl -= soldierToSoldier * (soldierCount - needHit);
 				needHit = soldierCount;
-				
-				fightDetails+="<p>"+attackerSoldier["name"]+" 用 <b>"+soldierCount+"</b> hit 干掉 <b>"+soldierKillSoldier+"</b>"+defenderSoldier["name"]+"</p>";
-				
+				soldierCount = 0;
+				fightDetails+="<p>"+attackerSoldier["name"]+" 用 <b>"+needHit+"</b> hit 干掉 <b>"+soldierKillSoldier+"</b>"+defenderSoldier["name"]+"</p>";
+
 				// hero to soldier
 				
 				if(heroCount > 0 )

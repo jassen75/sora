@@ -145,11 +145,12 @@ soldier_physic_def_inc, soldier_magic_def_inc, is_physic, is_woman, default_sold
 INSERT INTO soldier(id, name, life ,attack, physic_def,  magic_def, soldier_type, is_physic, skills) VALUES
 (1, '魔女', 583, 677, 297, 468, 8, 0, '2001'),
 (2, '魔晶术士', 723, 630, 375,328, 8, 0, '2002'),
-(3, '皇家狮鹫', 677,754, 344,390, 5, 1, '2003');
+(3, '皇家狮鹫', 677,754, 344,390, 5, 1, '2003'),
+(4, '龙虾巨兽', 723,630, 437,282, 4, 1, '2004');
 
 
 INSERT INTO hero_soldiers(hero_id, soldiers_id) VALUES
-(1, 1),(1, 2),(2, 3);
+(1, 1),(1, 2),(2, 3),(63,4);
 
 INSERT INTO hero_equip(hero_id,attack_inc,life_inc, physic_def_inc,  magic_def_inc, intel_inc, attack_skill, life_skill, physic_def_skill, magic_def_skill, intel_skill, attack_jjc, life_jjc,  physic_def_jjc, magic_def_jjc, intel_jjc) VALUES
 (1,14,3357,184,59,449,0,15,10,0,8,0,452,39,0,60),

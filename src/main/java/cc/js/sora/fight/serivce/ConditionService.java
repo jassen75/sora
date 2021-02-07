@@ -10,6 +10,7 @@ import cc.js.sora.fight.Fight;
 import cc.js.sora.fight.Hero;
 import cc.js.sora.fight.condition.CombinedCondition;
 import cc.js.sora.fight.condition.EnemyHeroCondition;
+import cc.js.sora.fight.condition.LandCondition;
 import cc.js.sora.fight.condition.UserCondition;
 import cc.js.sora.fight.condition.health.ForceHealthCondition;
 import cc.js.sora.fight.db.HeroRepository;
@@ -81,6 +82,18 @@ public class ConditionService {
 						return ((EnemyHeroCondition)condition).valid(h);
 					}
 				}
+			}
+			
+		}
+		
+		if(condition instanceof LandCondition) {
+			
+			if(isAttack)
+			{
+				return ((LandCondition)condition).valid(fight.getAttackerLand());
+			} else
+			{
+				return ((LandCondition)condition).valid(fight.getDefenderLand());
 			}
 			
 		}

@@ -21,6 +21,7 @@ import cc.js.sora.fight.db.ActionRepository;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
 import cc.js.sora.fight.skill.GriffinSkill;
+import cc.js.sora.fight.skill.LobsterSkill;
 import cc.js.sora.fight.skill.PatyleTalent;
 import cc.js.sora.fight.skill.SuperBuff;
 import cc.js.sora.fight.skill.TowaTalent;
@@ -65,6 +66,7 @@ public class SkillService {
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
+		registerSkill(Skill.LongxiajushouSkill, new LobsterSkill());
 		
 		registerSkill(Skill.Shimeng, new DreamAction());
 		
