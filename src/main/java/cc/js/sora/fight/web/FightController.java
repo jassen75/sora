@@ -25,6 +25,7 @@ import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.Soldier;
 import cc.js.sora.fight.condition.CombinedCondition;
 import cc.js.sora.fight.condition.UserCondition;
+import cc.js.sora.fight.db.ActionRepository;
 import cc.js.sora.fight.db.HeroEquipRepository;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
@@ -44,6 +45,9 @@ public class FightController {
 
 	@Autowired
 	HeroEquipRepository heroEquipRepository;
+	
+	@Autowired
+	ActionRepository actionRepository;
 
 	@Autowired
 	SkillService skillSerivce;
@@ -100,9 +104,9 @@ public class FightController {
 	public Map getBuffs(@RequestBody Fight fight) {
 		log.info("Current fight:"+fight);
 		Map result = new HashMap();
-		List<Skill> attackerSkills = skillSerivce.getSkills(fight.getAttackerHeroId(), fight.getAttackerSoldierId(),
+		List<Skill> attackerSkills = skillSerivce.getSkills(fight.getAttackerHeroId(), fight.getAttackerSoldierId(), fight.getAttackerActionId(),
 				true);
-		List<Skill> defenderSkills = skillSerivce.getSkills(fight.getDefenderHeroId(), fight.getDefenderSoldierId(),
+		List<Skill> defenderSkills = skillSerivce.getSkills(fight.getDefenderHeroId(), fight.getDefenderSoldierId(), 0, 
 				false);
 
 		List<CheckedSkill> attackerCheckedSkills = Lists.newArrayList();

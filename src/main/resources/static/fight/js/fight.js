@@ -2,6 +2,7 @@ var attacker;
 var defender;
 var attackerSoldier;
 var defenderSoldier;
+var attackerAction;
 var attackerEquip;
 var defenderEquip;
 var attackerSkills;
@@ -81,6 +82,12 @@ function buildFight()
 	{
 		request["defenderSoldierId"] = defenderSoldier["id"];
 	} 
+	
+	if(attackerAction)
+	{
+		request["attackerActionId"] = attackerAction["id"];
+		
+	}
 	request["attackerUserConditionChecked"]=attackerUserConditionChecked;
 	request["defenderUserConditionChecked"]=defenderUserConditionChecked;
 
@@ -88,6 +95,7 @@ function buildFight()
 	fightInfo["attackerSoldierLeftLife"] = fightInfo["attackerSoldierLife"];
 	fightInfo["defenderHeroLeftLife"] = fightInfo["defenderLife"];
 	fightInfo["defenderSoldierLeftLife"] = fightInfo["defenderSoldierLife"];
+	
 	
 	for(var i in fightInfo)
 	{
@@ -192,6 +200,11 @@ function displayHero(id, hero, heroEquip)
 			var soldier = $("<li><img src=\"/fight/image/soldier_"+soldiers[i]["id"]+".png\" alt=\"\" width=\"50\" height=\"62\"></img>"+soldiers[i]["name"]+"</li>");
 			soldier.attr("soldierid", soldiers[i]["id"]);
 			soldier.appendTo($("#attacker-soldier-list"));
+			
+			if(hero["defaultSoldierId"] == soldiers[i]["id"])
+			{
+				attackerSoldier = soldiers[i];
+			}
 			soldier.click(function(event){
 				var find = $(this).attr("soldierid");
 				attacker["soldiers"].forEach(function(e){
@@ -204,6 +217,32 @@ function displayHero(id, hero, heroEquip)
 				
 			})
 		}
+		
+		$("#attacker-action-list").children("li").remove();
+		var actions = hero["actions"];
+		for(var i=0; i<actions.length; i++)
+		{
+			var action = $("<li><img src=\"/fight/image/action_"+actions[i]["id"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+actions[i]["name"]+"</li>");
+			action.attr("actionid", actions[i]["id"]);
+			action.appendTo($("#attacker-action-list"));
+			
+			if(actions[i]["id"] == 10001 || actions[i]["id"] == 10002)
+			{
+				attackerAction = actions[i];
+			}
+			action.click(function(event){
+				var find = $(this).attr("actionid");
+				attacker["actions"].forEach(function(e){
+					if(e["id"]==find)
+					{
+						attackerAction = e;
+						refreshAttacker();
+					}
+				})
+				
+			})
+		}
+
 		refreshAttacker();
 		isAttacker=0;
 	} else
@@ -235,6 +274,10 @@ function displayHero(id, hero, heroEquip)
 		var soldiers = hero["soldiers"];
 		for(var i=0; i<soldiers.length; i++)
 		{
+			if(hero["defaultSoldierId"] == soldiers[i]["id"])
+			{
+				defenderSoldier = soldiers[i];
+			}
 			var soldier = $("<li><img src=\"/fight/image/soldier_"+soldiers[i]["id"]+".png\" alt=\"\" width=\"50\" height=\"62\"></img>"+soldiers[i]["name"]+"</li>");
 			soldier.attr("soldierid", soldiers[i]["id"]);
 			soldier.appendTo($("#defender-soldier-list"));
@@ -524,7 +567,13 @@ function calculatePanel()
 			$("#attackerMagicDef").attr("value", fightInfo["attackerMagicDef"]);
 			$("#attackerLife").attr("value", fightInfo["attackerLife"]);
 			
-			$("#attackerDetail").html("<p>增伤："+fightInfo["attackerDamageInc"]+"&nbsp;&nbsp;&nbsp;减伤："+fightInfo["attackerDamageDec"]+"</p>");
+			var detail="<p>";
+			if(attackerAction)
+			{
+				detail+="<b>"+attackerAction["name"]+"</b>&nbsp;&nbsp;&nbsp;"+attackerAction["coefficient"]+"倍&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+			}
+			detail+="增伤："+fightInfo["attackerDamageInc"]+"&nbsp;&nbsp;&nbsp;减伤："+fightInfo["attackerDamageDec"]+"</p>";
+			$("#attackerDetail").html(detail);
 		}
 		
 	}
@@ -926,6 +975,12 @@ function calculate()
 	var HeroToSoldier=0;
 	var HeroToHero=0;
 	var fightDetails= "";
+	var coefficient = 1;
+	if(attackerAction)
+	{
+		coefficient = attackerAction["coefficient"];
+		alert(coefficient);
+	}
 	if(attackerSoldier && defenderSoldier)
 	{
 	
@@ -949,17 +1004,17 @@ function calculate()
 	
 	if(attacker && defenderSoldier)
 	{
-		heroToSoldier = attacker["isPhysic"]? oneHit(fightInfo["attackerAttack"], fightInfo["defenderSoldierPhysicDef"], fightInfo["attackerDamageInc"], 
+		heroToSoldier = attacker["isPhysic"]? coefficient* oneHit(fightInfo["attackerAttack"], fightInfo["defenderSoldierPhysicDef"], fightInfo["attackerDamageInc"], 
 															fightInfo["defenderSoldierDamageDec"]) 
-													: oneHit(fightInfo["attackerIntel"], fightInfo["defenderSoldierMagicDef"],
+													: coefficient* oneHit(fightInfo["attackerIntel"], fightInfo["defenderSoldierMagicDef"],
 														fightInfo["attackerDamageInc"], fightInfo["defenderSoldierDamageDec"]);		
 	    fightDetails+="<p>"+attacker["name"]+"攻击"+defenderSoldier["name"]+"1hit:"+heroToSoldier+"</p>";
 	}
 
 	if(attacker && defender)
 	{
-		heroToHero = attacker["isPhysic"]? oneHit(fightInfo["attackerAttack"], fightInfo["defenderPhysicDef"], fightInfo["attackerDamageInc"], fightInfo["defenderDamageDec"]) 
-													: oneHit(fightInfo["attackerIntel"], fightInfo["defenderMagicDef"], fightInfo["attackerDamageInc"], fightInfo["defenderDamageDec"]);	
+		heroToHero = attacker["isPhysic"]? coefficient * oneHit(fightInfo["attackerAttack"], fightInfo["defenderPhysicDef"], fightInfo["attackerDamageInc"], fightInfo["defenderDamageDec"]) 
+													: coefficient* oneHit(fightInfo["attackerIntel"], fightInfo["defenderMagicDef"], fightInfo["attackerDamageInc"], fightInfo["defenderDamageDec"]);	
 	    fightDetails+="<p>"+attacker["name"]+"攻击"+defender["name"]+"1hit:"+heroToHero+"</p>";
 	}
 	

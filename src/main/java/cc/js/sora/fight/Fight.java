@@ -23,6 +23,8 @@ public class Fight {
 	
 	long defenderSoldierId;
 	
+	long attackerActionId;
+	
 	int attackerAttack;
 	int attackerPhysicDef;
 	int attackerLife;

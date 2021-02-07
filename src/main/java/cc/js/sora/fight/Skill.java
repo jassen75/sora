@@ -88,7 +88,9 @@ public abstract class Skill {
 	 * 
 	 * 1000-1100 enhance
 	 * 
-	 * 1100-2000 equip skill
+	 * 1100-1600 equip skill
+	 * 
+	 * 1600-2000 action skill
 	 * 
 	 * 2000-3000 soldier skill
 	 * 
@@ -104,6 +106,8 @@ public abstract class Skill {
 	public static final long WindEnhance = 1001;
 			
 	public static final long Zuihouzhifu = 1101;
+	
+	public static final long Shimeng = 1601;
 	
 	public static final long MonvSkill = 2001;
 	public static final long MojingshushiSkill = 2002;

@@ -59,6 +59,9 @@ public class Hero {
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	List<Soldier> soldiers;
 	
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	List<Action> actions;
+	
 	@Column(name="soldier_attack_inc")
 	int soldierAttackInc;
 	
@@ -77,6 +80,9 @@ public class Hero {
 	@JsonProperty("isPhysic")
 	@Column(name="is_physic")
 	boolean isPhysic;
+	
+	@Column(name="default_soldier")
+	long defaultSoldierId;
 	
 	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "hero")
 	HeroEquip heroEquip;
