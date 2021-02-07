@@ -29,6 +29,7 @@ import cc.js.sora.fight.db.ActionRepository;
 import cc.js.sora.fight.db.HeroEquipRepository;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
+import cc.js.sora.fight.serivce.ConditionService;
 import cc.js.sora.fight.serivce.SkillService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -51,6 +52,9 @@ public class FightController {
 
 	@Autowired
 	SkillService skillSerivce;
+	
+	@Autowired
+	ConditionService conditionService;
 
 	@RequestMapping(path = "/cal", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
 	public FightResult calculate(@RequestBody Fight fight) {
@@ -125,7 +129,7 @@ public class FightController {
 	private CheckedSkill checkSkill(Fight fight, Skill skill, boolean isAttack) {
 		CheckedSkill result = new CheckedSkill();
 		result.setSkill(skill);
-		result.setValid(Skill.checkCondition(fight, skill.getCondition(),
+		result.setValid(conditionService.checkCondition(fight, skill.getCondition(),
 				isAttack ? fight.getAttackerUserConditionChecked() : fight.getDefenderUserConditionChecked(),
 				isAttack));
 		return result;

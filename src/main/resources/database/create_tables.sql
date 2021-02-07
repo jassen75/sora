@@ -137,7 +137,9 @@ INSERT INTO player(name, server) VALUES
 INSERT INTO hero(id, name, life, attack, intel, physic_def, magic_def, tech, soldier_life_inc, soldier_attack_inc,  
 soldier_physic_def_inc, soldier_magic_def_inc, is_physic, is_woman, default_soldier,skills) VALUES
 (1,'帕希尔',3548,271,520,258,312,104,30,35,15,20,0,1,1,'1,1001,1101'),
-(2,'托娃',4168,527,240,305,302,166,30,30,40,15,1,1,3,'2,1001,1101');
+(2,'托娃',4168,527,240,305,302,166,30,30,40,15,1,1,3,'2,1001,1101'),
+(63,'古巨拉',5442,412,247,317,285,124,40,15,35,10,1,0,4,'')
+;
 
 
 INSERT INTO soldier(id, name, life ,attack, physic_def,  magic_def, soldier_type, is_physic, skills) VALUES
@@ -151,7 +153,8 @@ INSERT INTO hero_soldiers(hero_id, soldiers_id) VALUES
 
 INSERT INTO hero_equip(hero_id,attack_inc,life_inc, physic_def_inc,  magic_def_inc, intel_inc, attack_skill, life_skill, physic_def_skill, magic_def_skill, intel_skill, attack_jjc, life_jjc,  physic_def_jjc, magic_def_jjc, intel_jjc) VALUES
 (1,14,3357,184,59,449,0,15,10,0,8,0,452,39,0,60),
-(2,513,2526,220,59,12,18,10,10,0,0,58,412,45,0,0);
+(2,513,2526,220,59,12,18,10,10,0,0,58,412,45,0,0),
+(63,96,4293,304,227,0,5,10,23,13,5,0,0,45,43,0);
 
 INSERT INTO action(id, name, coefficient, direct, range,  hit_time, is_physic, skills) VALUES 
 (10001,'物理普攻',1,0,0,1500,1,''),

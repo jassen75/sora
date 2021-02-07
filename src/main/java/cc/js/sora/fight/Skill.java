@@ -6,6 +6,7 @@ import java.util.Map;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import cc.js.sora.fight.condition.CombinedCondition;
+import cc.js.sora.fight.condition.EnemyHeroCondition;
 import cc.js.sora.fight.condition.UserCondition;
 import cc.js.sora.fight.condition.health.ForceHealthCondition;
 
@@ -24,44 +25,7 @@ public abstract class Skill {
 
 
 
-	public static boolean checkCondition(Fight fight, Condition condition, Map<String, Boolean> userCondtionChecked, boolean isAttack)
-	{
-		if(condition instanceof CombinedCondition)
-		{
-			return (((CombinedCondition)condition).getConditions().stream().allMatch(c->checkCondition(fight, c, userCondtionChecked, isAttack)));
-		}
-		
-		if(condition instanceof UserCondition)
-		{
-			String name = ((UserCondition)condition).getName();
-			if(userCondtionChecked.containsKey(name))
-			{
-				return userCondtionChecked.get(name);
-			}else
-			{
-				return ((UserCondition)condition).defaultValid();
-			}
-		}
-		
-		if(condition instanceof ForceHealthCondition)
-		{
-			if(isAttack)
-			{
-				return ((ForceHealthCondition)condition).valid(fight.getAttackerLife(), fight.getAttackerSoldierLife(), fight.getAttackerHeroLeftLife(), 
-						fight.getAttackerSoldierLeftLife(), fight.getDefenderLife(), fight.getDefenderSoldierLife(),
-						fight.getDefenderHeroLeftLife(), fight.getDefenderSoldierLeftLife());
-			} else
-			{
-				return ((ForceHealthCondition)condition).valid(fight.getDefenderLife(), fight.getDefenderSoldierLife(),
-						fight.getDefenderHeroLeftLife(), fight.getDefenderSoldierLeftLife(), fight.getAttackerLife(), fight.getAttackerSoldierLife(), fight.getAttackerHeroLeftLife(), 
-						fight.getAttackerSoldierLeftLife());
-			}
 
-		}
-		
-		return false;
-		
-	}
 	
 	@JsonProperty("desc")
 	public String toString()
