@@ -979,7 +979,6 @@ function calculate()
 	if(attackerAction)
 	{
 		coefficient = attackerAction["coefficient"];
-		alert(coefficient);
 	}
 	if(attackerSoldier && defenderSoldier)
 	{
