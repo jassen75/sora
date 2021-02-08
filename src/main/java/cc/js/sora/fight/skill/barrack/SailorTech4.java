@@ -1,4 +1,4 @@
-package cc.js.sora.fight.skill;
+package cc.js.sora.fight.skill.barrack;
 
 import java.util.List;
 
@@ -13,30 +13,29 @@ import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.LandCondition;
 import cc.js.sora.fight.condition.SpecialLandCondition;
 
-public class LobsterSkill extends Skill {
+public class SailorTech4  extends Skill {
 
 	@Override
 	public long getId() {
 		// TODO Auto-generated method stub
-		return Skill.LongxiajushouSkill;
+		return Skill.SailorTech4;
 	}
 
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "龙虾巨兽技能";
+		return "水兵科技：水灵加护";
 	}
 
 	@Override
 	public Condition getCondition() {
-		// TODO Auto-generated method stub
 		return new SpecialLandCondition(Land.Water);
 	}
 
 	@Override
 	public List<Buff> getBuffs() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Buff(BuffType.DamageDec, 50));
+		return Lists.newArrayList(new Buff(BuffType.Attack,20), new Buff(BuffType.MagicDef, 20));
 	}
 
 	@Override

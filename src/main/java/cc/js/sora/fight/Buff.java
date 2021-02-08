@@ -48,8 +48,16 @@ public class Buff {
 			return "减伤";
 		case SkillDamage:
 			return "技能伤害";
-		case Counter:
+		case AttackCounter:
 			return "克制伤害";
+		case PhysicDamageDec:
+			return "物理减伤";
+		case MagicDamageDec:
+			return "魔法减伤";
+		case PhysicDefCounter:
+			return "防御提升";
+		case MagicDefCounter:
+			return "魔防提升";
 		case Life:
 			return "生命";
 		}

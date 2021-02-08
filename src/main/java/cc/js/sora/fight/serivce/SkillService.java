@@ -3,6 +3,7 @@ package cc.js.sora.fight.serivce;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -96,6 +97,17 @@ public class SkillService {
 
 	}
 
+	private boolean checkSkillType(int skillType,  boolean isAttacker)
+	{
+		if(isAttacker)
+		{
+			return skillType==1 || skillType==3;
+		} else
+		{
+			return skillType==2 || skillType==3;
+		}
+	}
+	
 	public List<Skill> getSkills(long heroId, long soldierId, long actionId,  boolean isAttacker) {
 		List<Skill> result = new ArrayList<Skill>();
 		if(heroId > 0)
@@ -107,7 +119,10 @@ public class SkillService {
 				for (int i = 0; i < d.length; i++) {
 					long skillId = Longs.tryParse(d[i]);
 					if (this.skills.containsKey(skillId)) {
-						result.add(this.getSkill(skillId));
+						if(checkSkillType(this.getSkill(skillId).getSkillType(), isAttacker))
+						{
+							result.add(this.getSkill(skillId));
+						}
 					}
 				}
 			}
@@ -122,7 +137,10 @@ public class SkillService {
 				for (int i = 0; i < d.length; i++) {
 					long skillId = Longs.tryParse(d[i]);
 					if (this.skills.containsKey(skillId)) {
-						result.add(this.getSkill(skillId));
+						if(checkSkillType(this.getSkill(skillId).getSkillType(), isAttacker))
+						{
+							result.add(this.getSkill(skillId));
+						}
 					}
 				}
 			}
@@ -130,7 +148,7 @@ public class SkillService {
 			int soldierType = soldier.getType();
 			if(barrackSkills.getSkills(soldierType) != null)
 			{
-				result.addAll(barrackSkills.getSkills(soldierType));
+				result.addAll(barrackSkills.getSkills(soldierType).stream().filter(s->checkSkillType(s.getSkillType(), isAttacker)).collect(Collectors.toList()));
 			}
 			
 		}
@@ -144,7 +162,10 @@ public class SkillService {
 				for (int i = 0; i < d.length; i++) {
 					long skillId = Longs.tryParse(d[i]);
 					if (this.skills.containsKey(skillId)) {
-						result.add(this.getSkill(skillId));
+						if(checkSkillType(this.getSkill(skillId).getSkillType(), isAttacker))
+						{
+							result.add(this.getSkill(skillId));
+						}
 					}
 				}
 			}
@@ -153,7 +174,10 @@ public class SkillService {
 		
 		globalSkills.forEach(i->{
 			if (this.skills.containsKey(i)) {
-				result.add(this.getSkill(i));
+				if(checkSkillType(this.getSkill(i).getSkillType(), isAttacker))
+				{
+					result.add(this.getSkill(i));
+				}
 			}
 		});
 

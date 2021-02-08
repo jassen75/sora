@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS hero (
 	skills VARCHAR(4096),
 	is_physic tinyint(1),
 	is_woman tinyint(1),
+	type integer,
 	default_soldier bigint
 );
 
@@ -135,10 +136,10 @@ INSERT INTO player(name, server) VALUES
 ('不是山谷','羁绊之地');
 
 INSERT INTO hero(id, name, life, attack, intel, physic_def, magic_def, tech, soldier_life_inc, soldier_attack_inc,  
-soldier_physic_def_inc, soldier_magic_def_inc, is_physic, is_woman, default_soldier,skills) VALUES
-(1,'帕希尔',3548,271,520,258,312,104,30,35,15,20,0,1,1,'1,1001,1101'),
-(2,'托娃',4168,527,240,305,302,166,30,30,40,15,1,1,3,'2,1001,1101'),
-(63,'古巨拉',5442,412,247,317,285,124,40,15,35,10,1,0,4,'')
+soldier_physic_def_inc, soldier_magic_def_inc, is_physic, is_woman, default_soldier, type, skills) VALUES
+(1,'帕希尔',3548,271,520,258,312,104,30,35,15,20,0,1,1,7,'1,1001,1101'),
+(2,'托娃',4168,527,240,305,302,166,30,30,40,15,1,1,3,5,'2,1001,1101'),
+(63,'古巨拉',5442,412,247,317,285,124,40,15,35,10,1,0,4,4,'1101')
 ;
 
 

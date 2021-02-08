@@ -14,6 +14,10 @@ import cc.js.sora.fight.skill.barrack.BirdTech1;
 import cc.js.sora.fight.skill.barrack.BirdTech2;
 import cc.js.sora.fight.skill.barrack.BirdTech3;
 import cc.js.sora.fight.skill.barrack.BirdTech4;
+import cc.js.sora.fight.skill.barrack.SailorTech1;
+import cc.js.sora.fight.skill.barrack.SailorTech2;
+import cc.js.sora.fight.skill.barrack.SailorTech3;
+import cc.js.sora.fight.skill.barrack.SailorTech4;
 import cc.js.sora.fight.skill.barrack.SorceressTech1;
 import cc.js.sora.fight.skill.barrack.SorceressTech2;
 import cc.js.sora.fight.skill.barrack.SorceressTech3;
@@ -55,9 +59,11 @@ public class BarrackSkills {
 		List<Skill> wizardSkillList = Lists.newArrayList(new SorceressTech1(),new SorceressTech2(), new SorceressTech3(), new SorceressTech4());
 		
 		List<Skill> birdSkillList = Lists.newArrayList(new BirdTech1(),new BirdTech2(), new BirdTech3(), new BirdTech4());
+		List<Skill> sailorSkillList = Lists.newArrayList(new SailorTech1(),new SailorTech2(), new SailorTech3(), new SailorTech4());
 		
 		skills.put(8, wizardSkillList);
 		skills.put(5, birdSkillList);
+		skills.put(4, sailorSkillList);
 	}
 	
 

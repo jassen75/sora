@@ -88,7 +88,34 @@ public abstract class Skill {
 	public static final long BirdTech3 = 3007;
 	public static final long BirdTech4 = 3008;
 	
-
+	public static final long SailorTech1 = 3009;
+	public static final long SailorTech2 = 3010;
+	public static final long SailorTech3 = 3011;
+	public static final long SailorTech4 = 3012;
+	
+	public static final long FootTech1 = 3013;
+	public static final long FootTech2 = 3014;
+	public static final long FootTech3 = 3015;
+	public static final long FootTech4 = 3016;
+	
+	public static final long PikeTech1 = 3017;
+	public static final long PikeTech2 = 3018;
+	public static final long PikeTech3 = 3019;
+	public static final long PikeTech4 = 3020;
+	
+	public static final long HorseTech1 = 3021;
+	public static final long HorseTech2 = 3022;
+	public static final long HorseTech3 = 3023;
+	public static final long HorseTech4 = 3024;
+	
+	
 	
 	public static final long SuperBuff = 4001;
+	
+	//1 attack 2 defender 3 all
+	public int getSkillType()
+	{
+		return 3;
+	}
+			
 }

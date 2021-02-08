@@ -41,7 +41,7 @@ public class PatyleTalent extends Skill {
 
 	@Override
 	public List<Buff> getBuffs() {
-		return Lists.newArrayList(new Buff(BuffType.Counter, 25));
+		return Lists.newArrayList(new Buff(BuffType.AttackCounter, 25));
 	}
 
 	@Override

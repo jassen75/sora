@@ -7,52 +7,44 @@ import com.google.common.collect.Lists;
 import cc.js.sora.fight.Buff;
 import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
+import cc.js.sora.fight.Land;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.UserCondition;
+import cc.js.sora.fight.condition.LandCondition;
+import cc.js.sora.fight.condition.SpecialLandCondition;
 
-public class BirdTech2 extends Skill {
+public class SailorTech3  extends Skill {
 
 	@Override
 	public long getId() {
-		return Skill.BirdTech2;
+		// TODO Auto-generated method stub
+		return Skill.SailorTech3;
 	}
 
 	@Override
 	public String getName() {
-		return "飞兵科技：空海奇袭";
+		// TODO Auto-generated method stub
+		return "水兵科技：水战强化";
 	}
 
 	@Override
 	public Condition getCondition() {
-		return new UserCondition() {
-
-			@Override
-			public String getDesc() {
-				return "被攻击方不满血";
-			}
-
-			@Override
-			public String getName() {
-				return "enemyNotFull";
-			}
-
-			@Override
-			public boolean defaultValid() {
-				return false;
-			}};
+		return new SpecialLandCondition(Land.Water);
 	}
 
 	@Override
 	public List<Buff> getBuffs() {
-		return Lists.newArrayList(new Buff(BuffType.Attack, 20), new Buff(BuffType.PhysicDef, 20));
+		// TODO Auto-generated method stub
+		return Lists.newArrayList(new Buff(BuffType.DamageInc, 30));
 	}
 
 	@Override
 	public Scope getScope() {
+		// TODO Auto-generated method stub
 		return Scope.Soldier;
 	}
 	
+	//1 attack 2 defender 3 all
 	public int getSkillType()
 	{
 		return 1;
