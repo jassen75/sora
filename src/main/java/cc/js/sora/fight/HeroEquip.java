@@ -61,6 +61,11 @@ public class HeroEquip {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long id;
 	
+	int criticalProbInc;
+	int criticalProbDec;
+	int criticalDamageInc;
+	int criticalDamageDec;
+	
 	@OneToOne
 	@JsonIgnore
 	Hero hero;
