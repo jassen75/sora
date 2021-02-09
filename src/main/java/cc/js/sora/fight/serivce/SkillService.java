@@ -27,6 +27,7 @@ import cc.js.sora.fight.skill.action.DreamAction;
 import cc.js.sora.fight.skill.equip.FuriousEnhance;
 import cc.js.sora.fight.skill.equip.LastSuit;
 import cc.js.sora.fight.skill.equip.WindEnhance;
+import cc.js.sora.fight.skill.passivity.BloodBattle;
 import cc.js.sora.fight.skill.soldier.GriffinSkill;
 import cc.js.sora.fight.skill.soldier.LobsterSkill;
 import cc.js.sora.fight.skill.soldier.WizardSkill;
@@ -66,6 +67,8 @@ public class SkillService {
 		registerSkill(Skill.Zuihouzhifu, new LastSuit());
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
+		
+		registerSkill(Skill.BloodBattle, new BloodBattle());
 		
 		registerSkill(Skill.PatyleTalent, new PatyleTalent());
 		registerSkill(Skill.TowaTalent, new TowaTalent());
