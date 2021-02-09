@@ -1,4 +1,4 @@
-package cc.js.sora.fight.skill;
+package cc.js.sora.fight.skill.passivity;
 
 import java.util.List;
 
@@ -7,42 +7,40 @@ import com.google.common.collect.Lists;
 import cc.js.sora.fight.Buff;
 import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
-import cc.js.sora.fight.Land;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.LandCondition;
-import cc.js.sora.fight.condition.SpecialLandCondition;
+import cc.js.sora.fight.condition.NoCondition;
 
-public class LobsterSkill extends Skill {
+public class BloodBattle extends Skill {
 
 	@Override
 	public long getId() {
 		// TODO Auto-generated method stub
-		return Skill.LongxiajushouSkill;
+		return Skill.BloodBattle;
 	}
 
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "龙虾巨兽技能";
+		return "血战";
 	}
 
 	@Override
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
-		return new SpecialLandCondition(Land.Water);
+		return new NoCondition();
 	}
 
 	@Override
 	public List<Buff> getBuffs() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Buff(BuffType.DamageDec, 50));
+		return Lists.newArrayList(new Buff(BuffType.Attack,10) , new Buff(BuffType.PhysicDef, 10));
 	}
 
 	@Override
 	public Scope getScope() {
 		// TODO Auto-generated method stub
-		return Scope.Soldier;
+		return Scope.All;
 	}
 
 }

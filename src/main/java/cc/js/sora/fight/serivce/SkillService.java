@@ -21,15 +21,19 @@ import cc.js.sora.fight.Soldier;
 import cc.js.sora.fight.db.ActionRepository;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
-import cc.js.sora.fight.skill.GriffinSkill;
-import cc.js.sora.fight.skill.LobsterSkill;
-import cc.js.sora.fight.skill.PatyleTalent;
 import cc.js.sora.fight.skill.SuperBuff;
-import cc.js.sora.fight.skill.TowaTalent;
-import cc.js.sora.fight.skill.WizardSkill;
+import cc.js.sora.fight.skill.action.BloodSwordAction;
 import cc.js.sora.fight.skill.action.DreamAction;
+import cc.js.sora.fight.skill.equip.FuriousEnhance;
 import cc.js.sora.fight.skill.equip.LastSuit;
 import cc.js.sora.fight.skill.equip.WindEnhance;
+import cc.js.sora.fight.skill.soldier.GriffinSkill;
+import cc.js.sora.fight.skill.soldier.LobsterSkill;
+import cc.js.sora.fight.skill.soldier.WizardSkill;
+import cc.js.sora.fight.skill.talent.PatyleTalent;
+import cc.js.sora.fight.skill.talent.TowaTalent;
+import cc.js.sora.fight.skill.talent.ZalrahdaTalent1;
+import cc.js.sora.fight.skill.talent.ZalrahdaTalent2;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -61,15 +65,19 @@ public class SkillService {
 
 		registerSkill(Skill.Zuihouzhifu, new LastSuit());
 		registerSkill(Skill.WindEnhance, new WindEnhance());
+		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
 		
 		registerSkill(Skill.PatyleTalent, new PatyleTalent());
 		registerSkill(Skill.TowaTalent, new TowaTalent());
+		registerSkill(Skill.ZalrahdaTalent1, new ZalrahdaTalent1());
+		registerSkill(Skill.ZalrahdaTalent2, new ZalrahdaTalent2());
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
 		registerSkill(Skill.LongxiajushouSkill, new LobsterSkill());
 		
 		registerSkill(Skill.Shimeng, new DreamAction());
+		registerSkill(Skill.Shixuemojian, new BloodSwordAction());
 		
 		registerSkill(Skill.SuperBuff, new SuperBuff());
 		skills.putAll(barrackSkills.getAllBarrackSkills());

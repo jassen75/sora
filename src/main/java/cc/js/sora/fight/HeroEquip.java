@@ -31,13 +31,14 @@ public class HeroEquip {
 	int magicDefInc;
 	int lifeInc;
 	int intelInc;
+	int techInc;
 	
 	int attackSkill;
 	int physicDefSkill;
 	int magicDefSkill;
 	int lifeSkill;
 	int intelSkill;
-	
+	int techSkill;
 	
 	@Column(name="attack_jjc")
 	int attackJJC;
@@ -53,6 +54,9 @@ public class HeroEquip {
 	
 	@Column(name="intel_jjc")
 	int intelJJC;
+	
+	@Column(name="tech_jjc")
+	int techJJC;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long id;

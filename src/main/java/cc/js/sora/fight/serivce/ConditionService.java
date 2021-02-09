@@ -11,6 +11,7 @@ import cc.js.sora.fight.Hero;
 import cc.js.sora.fight.condition.CombinedCondition;
 import cc.js.sora.fight.condition.EnemyHeroCondition;
 import cc.js.sora.fight.condition.LandCondition;
+import cc.js.sora.fight.condition.NoCondition;
 import cc.js.sora.fight.condition.UserCondition;
 import cc.js.sora.fight.condition.health.ForceHealthCondition;
 import cc.js.sora.fight.db.HeroRepository;
@@ -96,6 +97,11 @@ public class ConditionService {
 				return ((LandCondition)condition).valid(fight.getDefenderLand());
 			}
 			
+		}
+		
+		if(condition instanceof NoCondition)
+		{
+			return true;
 		}
 		
 		return false;

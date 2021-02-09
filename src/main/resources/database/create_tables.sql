@@ -106,6 +106,13 @@ create table soldier (
 	 intel_inc integer not null, 
 	 intel_skill integer not null, 
 	 intel_jjc integer not null, 
+	 tech_inc integer not null,
+	 tech_skill integer not null,
+	 tech_jjc integer not null,
+	 critical_prob_inc integer,
+	 critical_damage_inc integer, 
+	 critical_prob_dec integer,  
+	 critical_damage_dec integer,
 	 hero_id bigint
  );
 
@@ -139,7 +146,8 @@ INSERT INTO hero(id, name, life, attack, intel, physic_def, magic_def, tech, sol
 soldier_physic_def_inc, soldier_magic_def_inc, is_physic, is_woman, default_soldier, type, skills) VALUES
 (1,'帕希尔',3548,271,520,258,312,104,30,35,15,20,0,1,1,7,'1,1001,1101'),
 (2,'托娃',4168,527,240,305,302,166,30,30,40,15,1,1,3,5,'2,1001,1101'),
-(63,'古巨拉',5442,412,247,317,285,124,40,15,35,10,1,0,4,4,'1101')
+(63,'古巨拉',5442,412,247,317,285,124,40,15,35,10,1,0,4,4,'3011,1101'),
+(62,'泽瑞达',3723,534,240,288,281,331,10,40,10,40,1,1,5,7,'3,4,301,1002,1101')
 ;
 
 
@@ -147,25 +155,32 @@ INSERT INTO soldier(id, name, life ,attack, physic_def,  magic_def, soldier_type
 (1, '魔女', 583, 677, 297, 468, 8, 0, '2001'),
 (2, '魔晶术士', 723, 630, 375,328, 8, 0, '2002'),
 (3, '皇家狮鹫', 677,754, 344,390, 5, 1, '2003'),
-(4, '龙虾巨兽', 723,630, 437,282, 4, 1, '2004');
+(4, '龙虾巨兽', 723,630, 437,282, 4, 1, '2004'),
+(5, '火焰骷髅弓手', 609,706, 359,342, 9, 1, '')
+;
 
 
 INSERT INTO hero_soldiers(hero_id, soldiers_id) VALUES
-(1, 1),(1, 2),(2, 3),(63,4);
+(1, 1),(1, 2),(2, 3),(62,5),(63,4);
 
-INSERT INTO hero_equip(hero_id,attack_inc,life_inc, physic_def_inc,  magic_def_inc, intel_inc, attack_skill, life_skill, physic_def_skill, magic_def_skill, intel_skill, attack_jjc, life_jjc,  physic_def_jjc, magic_def_jjc, intel_jjc) VALUES
-(1,14,3357,184,59,449,0,15,10,0,8,0,452,39,0,60),
-(2,513,2526,220,59,12,18,10,10,0,0,58,412,45,0,0),
-(63,96,4293,304,227,0,5,10,23,13,5,0,0,45,43,0);
+INSERT INTO hero_equip(hero_id,life_inc, attack_inc, intel_inc, physic_def_inc,  magic_def_inc, tech_inc, life_skill, attack_skill, intel_skill, physic_def_skill, magic_def_skill, tech_skill, life_jjc, intel_jjc, attack_jjc,  physic_def_jjc, magic_def_jjc, tech_jjc,critical_prob_inc, critical_damage_inc, critical_prob_dec,  critical_damage_dec) VALUES
+(1,  3251,14,456,187,59,0,   15,0,8,10,0,0,     452,0,60,39,0,0,   0,0,18,30),
+(2,  2526,513,12,220,59,15,   10,18,0,10,0,0,   412,58,0,45,0,0,   0,0,20,30),
+(62,  2725,479,21,145,69,82,   5,18,0,10,0,0,    405,59,0,0,0,67,   9,18,0,0),
+(63,  4293,96,0,304,227,0,    10,5,5,23,13,5,   0,0,0,45,43,65,   0,0,20,30);
 
 INSERT INTO action(id, name, coefficient, direct, range,  hit_time, is_physic, skills) VALUES 
 (10001,'物理普攻',1,0,0,1500,1,''),
 (10002,'魔法普攻',1,0,0,1500,0,''),
-(1,'嗜梦',1.5,0,2,500,0,'1601');
+(1,'嗜梦',1.5,0,2,500,0,'1601'),
+(2,'绝命一击',1.4,1,2,300,1,'1602'),
+(3,'优势打击',1.5,0,1,1300,1,'1603'),
+(4,'自由之刃',1.4,0,1,1300,1,'1604')
+;
 
 
 INSERT INTO hero_actions(hero_id, actions_id) VALUES
-(1, 1),(1, 10002);
+(1, 1),(1, 10002),(62,10001),(62,2),(2,10001),(2,3);
 
 
 

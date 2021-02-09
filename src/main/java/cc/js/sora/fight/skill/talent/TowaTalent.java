@@ -1,4 +1,4 @@
-package cc.js.sora.fight.skill;
+package cc.js.sora.fight.skill.talent;
 
 import java.util.List;
 
@@ -9,33 +9,33 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.health.SoldierGreaterHealthCondition;
+import cc.js.sora.fight.condition.HasBuffCondition;
 
-public class GriffinSkill extends Skill{
+public class TowaTalent extends Skill  {
 
 	@Override
 	public long getId() {
-		return Skill.HuangjiashijiuSkill;
+		return Skill.TowaTalent;
 	}
 
 	@Override
 	public String getName() {
-		return "皇家狮鹫技能";
+		return "托娃天赋";
 	}
 
 	@Override
 	public Condition getCondition() {
-		return new SoldierGreaterHealthCondition(80);
+		return new HasBuffCondition();
 	}
 
 	@Override
 	public List<Buff> getBuffs() {
-		return Lists.newArrayList(new Buff(BuffType.Attack, 30), new Buff(BuffType.PhysicDef, 30));
+		return Lists.newArrayList(new Buff(BuffType.Attack, 15), new Buff(BuffType.PhysicDef, 15));
 	}
 
 	@Override
 	public Scope getScope() {
-		return Scope.Soldier;
+		return Scope.All;
 	}
 
 }

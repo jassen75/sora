@@ -92,6 +92,18 @@
   	top:2px;
 }
 
+#attacker-critical li button {
+	position:absolute;
+  	right:5px;
+  	top:2px;
+}
+
+#defender-critical li button {
+	position:absolute;
+  	right:5px;
+  	top:2px;
+}
+
 #fightDetails {
 	color:brown;
 }

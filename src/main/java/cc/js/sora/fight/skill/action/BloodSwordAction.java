@@ -1,4 +1,4 @@
-package cc.js.sora.fight.skill;
+package cc.js.sora.fight.skill.action;
 
 import java.util.List;
 
@@ -9,32 +9,37 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.HasBuffCondition;
+import cc.js.sora.fight.condition.NoCondition;
 
-public class TowaTalent extends Skill  {
+public class BloodSwordAction extends Skill {
 
 	@Override
 	public long getId() {
-		return Skill.TowaTalent;
+		// TODO Auto-generated method stub
+		return Skill.Shixuemojian;
 	}
 
 	@Override
 	public String getName() {
-		return "托娃天赋";
+		// TODO Auto-generated method stub
+		return "嗜血魔剑";
 	}
 
 	@Override
 	public Condition getCondition() {
-		return new HasBuffCondition();
+		// TODO Auto-generated method stub
+		return new NoCondition();
 	}
 
 	@Override
 	public List<Buff> getBuffs() {
-		return Lists.newArrayList(new Buff(BuffType.Attack, 15), new Buff(BuffType.PhysicDef, 15));
+		// TODO Auto-generated method stub
+		return Lists.newArrayList(new Buff(BuffType.DamageInc, 30));
 	}
 
 	@Override
 	public Scope getScope() {
+		// TODO Auto-generated method stub
 		return Scope.All;
 	}
 

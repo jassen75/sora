@@ -60,6 +60,17 @@ public class Buff {
 			return "魔防提升";
 		case Life:
 			return "生命";
+			
+		case Tech:
+			return "技巧";
+		case CriticalProbInc:
+			return "暴击概率增加";
+		case CriticalDamageInc:
+			return "暴击伤害增加";
+		case CriticalProbDec:
+			return "暴击概率减少";
+		case CriticalDamageDec:
+			return "暴击伤害减少";
 		}
 		return "";
 	}

@@ -66,12 +66,20 @@ public abstract class Skill {
 
 	public static final long PatyleTalent = 1;
 	public static final long TowaTalent = 2;
+	public static final long ZalrahdaTalent1 = 3;
+	public static final long ZalrahdaTalent2 = 4;
 
+	public static final long BloodBattle = 301;
+	
 	public static final long WindEnhance = 1001;
-			
+	public static final long FuriousEnhance = 1002;
+	
 	public static final long Zuihouzhifu = 1101;
 	
 	public static final long Shimeng = 1601;
+	public static final long Shixuemojian = 1602;
+	public static final long Youshidaji = 1603;
+	public static final long Ziyouzhiren = 1604;
 	
 	public static final long MonvSkill = 2001;
 	public static final long MojingshushiSkill = 2002;

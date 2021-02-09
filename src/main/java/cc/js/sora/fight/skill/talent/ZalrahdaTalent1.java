@@ -1,4 +1,4 @@
-package cc.js.sora.fight.skill;
+package cc.js.sora.fight.skill.talent;
 
 import java.util.List;
 
@@ -7,41 +7,33 @@ import com.google.common.collect.Lists;
 import cc.js.sora.fight.Buff;
 import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
-import cc.js.sora.fight.Hero;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.EnemyHeroCondition;
+import cc.js.sora.fight.condition.NoCondition;
 
-public class PatyleTalent extends Skill {
-	
+public class ZalrahdaTalent1 extends Skill {
+
 	@Override
 	public long getId() {
-		return Skill.PatyleTalent;
+		// TODO Auto-generated method stub
+		return Skill.ZalrahdaTalent1;
 	}
 
 	@Override
 	public String getName() {
-		return "帕希尔天赋";
+		// TODO Auto-generated method stub
+		return "白毛天赋";
 	}
 
 	@Override
 	public Condition getCondition() {
-		return new EnemyHeroCondition() {
-
-			@Override
-			public boolean valid(Hero enemyHero) {
-				return !enemyHero.isWoman();
-			}
-
-			@Override
-			public String getDesc() {
-				return "对方英雄不是女性";
-			}};
+		return new NoCondition();
 	}
 
 	@Override
 	public List<Buff> getBuffs() {
-		return Lists.newArrayList(new Buff(BuffType.AttackCounter, 25));
+		// TODO Auto-generated method stub
+		return Lists.newArrayList(new Buff(BuffType.CriticalProbInc, 20));
 	}
 
 	@Override
@@ -49,6 +41,5 @@ public class PatyleTalent extends Skill {
 		// TODO Auto-generated method stub
 		return Scope.All;
 	}
-	
 
 }
