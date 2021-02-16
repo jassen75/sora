@@ -1,20 +1,20 @@
 function calculatePanel()
 {
-	if(attacker && attackerEquip)
+	if(attacker)
 	{
-		var attack = attacker["attack"] + attackerEquip["attackInc"];
-		var intel = attacker["intel"] + attackerEquip["intelInc"];
-		var physicDef = attacker["physicDef"] + attackerEquip["physicDefInc"];
-		var magicDef = attacker["magicDef"] + attackerEquip["magicDefInc"];
-		var life = attacker["life"] + attackerEquip["lifeInc"];
-		var tech = attacker["tech"] + attackerEquip["techInc"];
+		var attack = attacker["attack"] + attacker["attackInc"];
+		var intel = attacker["intel"] + attacker["intelInc"];
+		var physicDef = attacker["physicDef"] + attacker["physicDefInc"];
+		var magicDef = attacker["magicDef"] + attacker["magicDefInc"];
+		var life = attacker["life"] + attacker["lifeInc"];
+		var tech = attacker["tech"] + attacker["techInc"];
 		
-		var ai  = attackerEquip["attackSkill"];
-		var ii  = attackerEquip["intelSkill"];
-		var pi  = attackerEquip["physicDefSkill"];
-		var mi  = attackerEquip["magicDefSkill"];
-		var lii  = attackerEquip["lifeSkill"];
-		var ti = attackerEquip["techSkill"];
+		var ai  = attacker["attackSkill"];
+		var ii  = attacker["intelSkill"];
+		var pi  = attacker["physicDefSkill"];
+		var mi  = attacker["magicDefSkill"];
+		var lii  = attacker["lifeSkill"];
+		var ti = attacker["techSkill"];
 		
 		var di = 0;
 		var pdd = 0;
@@ -22,10 +22,10 @@ function calculatePanel()
 		var counters = [];
 		var pd_counters = [];
 		
-		var cpi = attackerEquip["criticalProbInc"];
-		var cdi = attackerEquip["criticalDamageInc"];
-		var cpd = attackerEquip["criticalProbDec"];
-		var cdd = attackerEquip["criticalDamageDec"];
+		var cpi = attacker["criticalProbInc"];
+		var cdi = attacker["criticalDamageInc"];
+		var cpd = attacker["criticalProbDec"];
+		var cdd = attacker["criticalDamageDec"];
 		
 		if(attackerSkills)
 		{
@@ -180,12 +180,12 @@ function calculatePanel()
 			mdd = mdd+damageDecBasic;
 			ti = ti+techBasic;
 
-			fightInfo["attackerAttack"] = Math.floor(attack*(1+ai/100.0)+attackerEquip["attackJJC"]);
-			fightInfo["attackerIntel"] =  Math.floor(intel*(1+ii/100.0)+attackerEquip["intelJJC"]);
-			fightInfo["attackerPhysicDef"] = Math.floor(physicDef*(1+pi/100.0)+attackerEquip["physicDefJJC"]);
-			fightInfo["attackerMagicDef"] = Math.floor(magicDef*(1+mi/100.0)+attackerEquip["magicDefJJC"]);
-			fightInfo["attackerLife"] = Math.floor(life*(1+lii/100.0)+attackerEquip["lifeJJC"]);
-			fightInfo["attackerTech"] = Math.floor(tech*(1+ti/100.0)+attackerEquip["techJJC"]);
+			fightInfo["attackerAttack"] = Math.floor(attack*(1+ai/100.0)+attacker["attackJJC"]);
+			fightInfo["attackerIntel"] =  Math.floor(intel*(1+ii/100.0)+attacker["intelJJC"]);
+			fightInfo["attackerPhysicDef"] = Math.floor(physicDef*(1+pi/100.0)+attacker["physicDefJJC"]);
+			fightInfo["attackerMagicDef"] = Math.floor(magicDef*(1+mi/100.0)+attacker["magicDefJJC"]);
+			fightInfo["attackerLife"] = Math.floor(life*(1+lii/100.0)+attacker["lifeJJC"]);
+			fightInfo["attackerTech"] = Math.floor(tech*(1+ti/100.0)+attacker["techJJC"]);
 			fightInfo["attackerDamageInc"] = di;
 			fightInfo["attackerPhysicDamageDec"] = pdd;
 			fightInfo["attackerMagicDamageDec"] = mdd;		
@@ -240,21 +240,21 @@ function calculatePanel()
 	}
 	
 	
-	if(defender && defenderEquip)
+	if(defender)
 	{
-		var attack = defender["attack"] + defenderEquip["attackInc"];
-		var intel = defender["intel"] + defenderEquip["intelInc"];
-		var physicDef = defender["physicDef"] + defenderEquip["physicDefInc"];
-		var magicDef = defender["magicDef"] + defenderEquip["magicDefInc"];
-		var life = defender["life"] + defenderEquip["lifeInc"];
-		var tech = defender["tech"] + defenderEquip["techInc"];
+		var attack = defender["attack"] + defender["attackInc"];
+		var intel = defender["intel"] + defender["intelInc"];
+		var physicDef = defender["physicDef"] + defender["physicDefInc"];
+		var magicDef = defender["magicDef"] + defender["magicDefInc"];
+		var life = defender["life"] + defender["lifeInc"];
+		var tech = defender["tech"] + defender["techInc"];
 		
-		var ai  = defenderEquip["attackSkill"];
-		var ii  = defenderEquip["intelSkill"];
-		var pi  = defenderEquip["physicDefSkill"];
-		var mi  = defenderEquip["magicDefSkill"];
-		var lii  = defenderEquip["lifeSkill"];
-		var ti = defenderEquip["techSkill"];
+		var ai  = defender["attackSkill"];
+		var ii  = defender["intelSkill"];
+		var pi  = defender["physicDefSkill"];
+		var mi  = defender["magicDefSkill"];
+		var lii  = defender["lifeSkill"];
+		var ti = defender["techSkill"];
 		
 		var di = 0;
 		var pdd = 0;
@@ -262,10 +262,10 @@ function calculatePanel()
 		var counters = [];
 		var pd_counters = [];
 		
-		var cpi = defenderEquip["criticalProbInc"];
-		var cdi = defenderEquip["criticalDamageInc"];
-		var cpd = defenderEquip["criticalProbDec"];
-		var cdd = defenderEquip["criticalDamageDec"];
+		var cpi = defender["criticalProbInc"];
+		var cdi = defender["criticalDamageInc"];
+		var cpd = defender["criticalProbDec"];
+		var cdd = defender["criticalDamageDec"];
 		
 		if(defenderSkills)
 		{
@@ -425,12 +425,12 @@ function calculatePanel()
 			mdd = mdd+damageDecBasic;
 			ti = ti+techBasic;
 			
-			fightInfo["defenderAttack"] = Math.floor(attack*(1+ai/100.0)+defenderEquip["attackJJC"]);
-			fightInfo["defenderIntel"] = Math.floor(intel*(1+ii/100.0)+defenderEquip["intelJJC"]);
-			fightInfo["defenderPhysicDef"] = Math.floor(physicDef*(1+pi/100.0)+defenderEquip["physicDefJJC"]);
-			fightInfo["defenderMagicDef"] = Math.floor(magicDef*(1+mi/100.0)+defenderEquip["magicDefJJC"]);
-			fightInfo["defenderLife"] = Math.floor(life*(1+lii/100.0)+defenderEquip["lifeJJC"]);
-			fightInfo["defenderTech"] = Math.floor(tech*(1+ti/100.0)+defenderEquip["techJJC"]);
+			fightInfo["defenderAttack"] = Math.floor(attack*(1+ai/100.0)+defender["attackJJC"]);
+			fightInfo["defenderIntel"] = Math.floor(intel*(1+ii/100.0)+defender["intelJJC"]);
+			fightInfo["defenderPhysicDef"] = Math.floor(physicDef*(1+pi/100.0)+defender["physicDefJJC"]);
+			fightInfo["defenderMagicDef"] = Math.floor(magicDef*(1+mi/100.0)+defender["magicDefJJC"]);
+			fightInfo["defenderLife"] = Math.floor(life*(1+lii/100.0)+defender["lifeJJC"]);
+			fightInfo["defenderTech"] = Math.floor(tech*(1+ti/100.0)+defender["techJJC"]);
 			fightInfo["defenderDamageInc"] = di;
 			fightInfo["defenderPhysicDamageDec"] = pdd;
 			fightInfo["defenderMagicDamageDec"] = mdd;
@@ -980,4 +980,5 @@ function calculatePanel()
 		}
 		buff.appendTo($("#defender-critical"));	
 	}
+	
 }

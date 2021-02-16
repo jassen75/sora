@@ -1,6 +1,6 @@
 package cc.js.sora.fight;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -10,9 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -29,6 +29,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
+//@JsonIgnoreProperties(value = { "hibernateLazyInitializer"})
 public class Hero {
 	
 	@Id
@@ -56,14 +57,17 @@ public class Hero {
 	@Column(name="tech")
 	int tech;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	List<Soldier> soldiers;
+	@ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+	Set<Soldier> soldiers;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	List<Action> actions;
+	@ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+	Set<Action> actions;
 	
-	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
-	List<EquipType> equips;
+//	@ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+//	@JsonIgnore
+//	List<EquipType> equipTypes;
+	@Column(name="supported_equip_types")
+	String supportedEquipTypes;
 	
 	@Column(name="soldier_attack_inc")
 	int soldierAttackInc;
@@ -85,10 +89,7 @@ public class Hero {
 	boolean isPhysic;
 	
 	@Column(name="default_soldier")
-	long defaultSoldierId;
-	
-	@OneToOne(cascade=CascadeType.ALL, fetch=FetchType.LAZY, mappedBy = "hero")
-	HeroEquip heroEquip;
+	long defaultSoldierId; 
 	
 	@Column(name="is_woman")
 	boolean isWoman;

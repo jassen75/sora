@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -16,22 +17,21 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import com.google.common.primitives.Longs;
 
 import cc.js.sora.fight.CheckedSkill;
 import cc.js.sora.fight.Equip;
 import cc.js.sora.fight.EquipPart;
 import cc.js.sora.fight.EquipType;
 import cc.js.sora.fight.Fight;
-import cc.js.sora.fight.FightResult;
 import cc.js.sora.fight.Hero;
-import cc.js.sora.fight.HeroEquip;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.Soldier;
 import cc.js.sora.fight.condition.CombinedCondition;
 import cc.js.sora.fight.condition.UserCondition;
 import cc.js.sora.fight.db.ActionRepository;
 import cc.js.sora.fight.db.EquipRepository;
-import cc.js.sora.fight.db.HeroEquipRepository;
+import cc.js.sora.fight.db.EquipTypeRepository;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
 import cc.js.sora.fight.serivce.ConditionService;
@@ -50,22 +50,22 @@ public class FightController {
 	SoldierRepository soldierRepository;
 
 	@Autowired
-	HeroEquipRepository heroEquipRepository;
-	
-	@Autowired
 	ActionRepository actionRepository;
 
 	@Autowired
 	SkillService skillSerivce;
-	
+
 	@Autowired
 	ConditionService conditionService;
 
 	@Autowired
 	EquipRepository equipRepository;
-	
-	ReentrantReadWriteLock lock = new java.util.concurrent.locks.ReentrantReadWriteLock();
-	
+
+	@Autowired
+	EquipTypeRepository equipTypeRepository;
+
+	Lock lock = new ReentrantLock();
+
 	@RequestMapping(path = "/heros", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Hero> heros() {
 		List<Hero> currentRecord = heroRepository.findAll();
@@ -80,98 +80,128 @@ public class FightController {
 
 	@RequestMapping(path = "/heros/{heroId}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Hero hero(@PathVariable long heroId) {
-		Hero hero = heroRepository.findById(heroId).get();
-		return hero;
-	}
-
-	@RequestMapping(path = "/heros/{heroId}/heroEquip", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public HeroEquip heroEquip(@PathVariable long heroId) {
-		return heroEquipRepository.findHeroEquip(heroId);
+		lock.lock();
+		try {
+			Hero hero = heroRepository.findById(heroId).get();
+			log.info(hero.toString());
+			return hero;
+		} finally {
+			lock.unlock();
+		}
 	}
 
 	@RequestMapping(path = "/buffs", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Map getBuffs(@RequestBody Fight fight) {
-		log.info("Current fight:"+fight);
-		Map result = new HashMap();
-		List<Skill> attackerSkills = skillSerivce.getSkills(fight.getAttackerHeroId(), fight.getAttackerSoldierId(), fight.getAttackerActionId(),
-				true);
-		List<Skill> defenderSkills = skillSerivce.getSkills(fight.getDefenderHeroId(), fight.getDefenderSoldierId(), 0, 
-				false);
+		lock.lock();
+		try {
+			log.info("Current fight:" + fight);
+			Map result = new HashMap();
+			List<Skill> attackerSkills = skillSerivce.getSkills(fight.getAttackerHeroId(), fight.getAttackerSoldierId(),
+					fight.getAttackerActionId(), true);
+			List<Skill> defenderSkills = skillSerivce.getSkills(fight.getDefenderHeroId(), fight.getDefenderSoldierId(),
+					0, false);
 
-		List<CheckedSkill> attackerCheckedSkills = Lists.newArrayList();
-		List<CheckedSkill> defenderCheckedSkills = Lists.newArrayList();
-		
-		attackerSkills.stream().forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
-		defenderSkills.stream().forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
-		
-		result.put("attackerSkills", attackerCheckedSkills);
-		result.put("defenderSkills", defenderCheckedSkills);
-		result.put("attackerUserConditions", getUserConditionsFromSkill(attackerSkills));
-		result.put("defenderUserConditions", getUserConditionsFromSkill(defenderSkills));
-		return result;
+			List<CheckedSkill> attackerCheckedSkills = Lists.newArrayList();
+			List<CheckedSkill> defenderCheckedSkills = Lists.newArrayList();
+
+			attackerSkills.stream().forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
+			defenderSkills.stream().forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
+
+			result.put("attackerSkills", attackerCheckedSkills);
+			result.put("defenderSkills", defenderCheckedSkills);
+			result.put("attackerUserConditions", getUserConditionsFromSkill(attackerSkills));
+			result.put("defenderUserConditions", getUserConditionsFromSkill(defenderSkills));
+			return result;
+		} finally {
+			lock.unlock();
+
+		}
 	}
 
 	private CheckedSkill checkSkill(Fight fight, Skill skill, boolean isAttack) {
-		CheckedSkill result = new CheckedSkill();
-		result.setSkill(skill);
-		result.setValid(conditionService.checkCondition(fight, skill.getCondition(),
-				isAttack ? fight.getAttackerUserConditionChecked() : fight.getDefenderUserConditionChecked(),
-				isAttack));
-		return result;
+		lock.lock();
+		try {
+
+			CheckedSkill result = new CheckedSkill();
+			result.setSkill(skill);
+			result.setValid(conditionService.checkCondition(fight, skill.getCondition(),
+					isAttack ? fight.getAttackerUserConditionChecked() : fight.getDefenderUserConditionChecked(),
+					isAttack));
+			return result;
+		} finally {
+			lock.unlock();
+
+		}
 
 	}
 
 	public Map<String, UserCondition> getUserConditionsFromSkill(List<Skill> skills) {
-		Map<String, UserCondition> resultList = Maps.newHashMap();
-		if (skills != null) {
-			skills.stream().forEach(skill -> {
-				if (skill == null) {
-					log.error("skill is null");
-				}
-				if (skill.getCondition() instanceof UserCondition) {
-					resultList.put(((UserCondition) skill.getCondition()).getName(), (UserCondition) skill.getCondition());
-				}
-				if (skill.getCondition() instanceof CombinedCondition) {
-					((CombinedCondition) skill.getCondition()).getConditions().stream().forEach(c -> {
-						if (c instanceof UserCondition) {
-							resultList.put(((UserCondition) c).getName(), (UserCondition) c);
-						}
-					});
-				}
-			});
+		lock.lock();
+		try
+		{
+			Map<String, UserCondition> resultList = Maps.newHashMap();
+			if (skills != null) {
+				skills.stream().forEach(skill -> {
+					if (skill == null) {
+						log.error("skill is null");
+					}
+					if (skill.getCondition() instanceof UserCondition) {
+						resultList.put(((UserCondition) skill.getCondition()).getName(),
+								(UserCondition) skill.getCondition());
+					}
+					if (skill.getCondition() instanceof CombinedCondition) {
+						((CombinedCondition) skill.getCondition()).getConditions().stream().forEach(c -> {
+							if (c instanceof UserCondition) {
+								resultList.put(((UserCondition) c).getName(), (UserCondition) c);
+							}
+						});
+					}
+				});
+			}
+			return resultList;
+		} finally
+		{
+			lock.unlock();
 		}
-		return resultList;
 	}
 
 	@RequestMapping(path = "/skills", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map allSkills() {
-		return skillSerivce.getAllSkills();
-	}
-	
-	@RequestMapping(path = "/equips/{heroId}/{part}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public List<Equip> getEquips(@PathVariable long heroId, @PathVariable EquipPart part) {
-		log.info("equip part:"+part);
-		lock.readLock().lock();
+		lock.lock();
 		try
 		{
+			return skillSerivce.getAllSkills();
+		} finally
+		{
+			lock.unlock();
+		}
+	}
+
+	@RequestMapping(path = "/equips/{heroId}/{part}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Equip> getEquips(@PathVariable long heroId, @PathVariable EquipPart part) {
+		lock.lock();
+		try {
 			Hero hero = heroRepository.findById(heroId).get();
-			List<EquipType> supportedTypes = hero.getEquips();
+			String supportedTypes = hero.getSupportedEquipTypes();
+
+			String[] data = supportedTypes.split(",");
 			List<Equip> result = Lists.newArrayList();
-			
-			supportedTypes.forEach(et -> {
-				if(et.getPart() == part) 
-				{
-					List<Equip> el = equipRepository.findByType(et.getId());	
-					if(el != null)
-					{
+
+			for (int i = 0; i < data.length; i++) {
+				EquipType et = equipTypeRepository.findById(Longs.tryParse(data[i])).get();
+				if (et.getPart() == part) {
+					List<Equip> el = equipRepository.findByType(et.getId());
+					if (el != null) {
 						result.addAll(el);
 					}
 				}
-			});
+			}
 			return result;
-		} finally
-		{
-			lock.readLock().unlock();
+		} catch (Exception ex) {
+			log.error(ex.getMessage());
+			return new ArrayList<Equip>();
+		} finally {
+			lock.unlock();
 		}
 	}
 
