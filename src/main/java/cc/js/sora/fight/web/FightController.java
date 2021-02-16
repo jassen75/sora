@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,6 +18,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import cc.js.sora.fight.CheckedSkill;
+import cc.js.sora.fight.Equip;
+import cc.js.sora.fight.EquipPart;
+import cc.js.sora.fight.EquipType;
 import cc.js.sora.fight.Fight;
 import cc.js.sora.fight.FightResult;
 import cc.js.sora.fight.Hero;
@@ -26,6 +30,7 @@ import cc.js.sora.fight.Soldier;
 import cc.js.sora.fight.condition.CombinedCondition;
 import cc.js.sora.fight.condition.UserCondition;
 import cc.js.sora.fight.db.ActionRepository;
+import cc.js.sora.fight.db.EquipRepository;
 import cc.js.sora.fight.db.HeroEquipRepository;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
@@ -56,31 +61,11 @@ public class FightController {
 	@Autowired
 	ConditionService conditionService;
 
-	@RequestMapping(path = "/cal", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-	public FightResult calculate(@RequestBody Fight fight) {
-		log.info("fight:" + fight);
-		FightResult result = new FightResult(fight);
-//		if(fight.getAttacker().isPhysic())
-//		{
-//			log.info("come here");
-//			int damage = (fight.getAttackerAttck() - fight.getDefenderPhysicDef())/2;
-//			int number = 20;
-//			result.setAttackerHeroDamage2(damage*number);
-//		} else
-//		{
-//			
-//		}
-//		
-//		if(fight.getDefender().isPhysic())
-//		{
-//			
-//		} else
-//		{
-//			
-//		}
-		return result;
-	}
-
+	@Autowired
+	EquipRepository equipRepository;
+	
+	ReentrantReadWriteLock lock = new java.util.concurrent.locks.ReentrantReadWriteLock();
+	
 	@RequestMapping(path = "/heros", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public List<Hero> heros() {
 		List<Hero> currentRecord = heroRepository.findAll();
@@ -161,6 +146,33 @@ public class FightController {
 	@RequestMapping(path = "/skills", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map allSkills() {
 		return skillSerivce.getAllSkills();
+	}
+	
+	@RequestMapping(path = "/equips/{heroId}/{part}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+	public List<Equip> getEquips(@PathVariable long heroId, @PathVariable EquipPart part) {
+		log.info("equip part:"+part);
+		lock.readLock().lock();
+		try
+		{
+			Hero hero = heroRepository.findById(heroId).get();
+			List<EquipType> supportedTypes = hero.getEquips();
+			List<Equip> result = Lists.newArrayList();
+			
+			supportedTypes.forEach(et -> {
+				if(et.getPart() == part) 
+				{
+					List<Equip> el = equipRepository.findByType(et.getId());	
+					if(el != null)
+					{
+						result.addAll(el);
+					}
+				}
+			});
+			return result;
+		} finally
+		{
+			lock.readLock().unlock();
+		}
 	}
 
 }

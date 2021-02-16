@@ -111,3 +111,35 @@
 .critical {
 	color:orange;
 }
+
+#csvFileInput{
+    position: absolute;
+    right: 0px;
+    opacity: 0;
+}
+
+#import_fm {
+	margin-top:50px;
+	margin-bottom:20px;
+}
+
+#fm {
+	min-height:500px;
+}
+
+.fm_type_red {
+	color: red;
+}
+
+.fm_type_yellow {
+	color: yellow;
+}
+
+.fm_type_green {
+	color: green;
+}
+
+.fm_type_blue {
+	color: blue;
+}
+

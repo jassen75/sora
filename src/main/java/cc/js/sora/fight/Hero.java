@@ -62,6 +62,9 @@ public class Hero {
 	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
 	List<Action> actions;
 	
+	@ManyToMany(cascade=CascadeType.ALL, fetch=FetchType.LAZY)
+	List<EquipType> equips;
+	
 	@Column(name="soldier_attack_inc")
 	int soldierAttackInc;
 	

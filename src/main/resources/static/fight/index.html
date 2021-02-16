@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<meta HTTP-EQUIV="pragma" CONTENT="no-cache">
+<meta HTTP-EQUIV="Cache-Control" CONTENT="no-cache, must-revalidate">
+<meta HTTP-EQUIV="expires" CONTENT="0">
+<meta http-equiv="Cache" content="no-cache">
 <title>梦站战斗计算器</title>
 <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="/css/main.css">
@@ -12,6 +16,9 @@
 <script src="/lib/bootstrap/js/bootstrap.min.js"></script>
 <script src="/lib/vue/vue.min.js"></script>
 <script src="/fight/js/fight.js"></script>
+<script src="/fight/js/calculate.js"></script>
+<script src="/fight/js/buff.js"></script>
+<script src="/fight/js/fm.js"></script>
 </head>
 <body>
 	<nav id="header" class="navbar">
@@ -26,8 +33,7 @@
 	</nav>
 	<nav>
 		<div class="navbar navbar-inverse">
-			<div id="nav" class="container">
-			</div>
+			<div id="nav" class="container"></div>
 		</div>
 	</nav>
 	<div id="content">
@@ -37,107 +43,168 @@
 					<div id="attacker-sel-soldier" class="row">
 						<div class="col-md-6">
 							<div id="attackerPic">
-							<div><img src="/fight/image/0.png" alt="" width="60" height="86"></img>未指定</div>
+								<div>
+									<img src="/fight/image/0.png" alt="" width="60" height="86"></img>未指定
+								</div>
 							</div>
 							<div id="attacker-sel-soldier" class="dropdown">
-							  <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-							    选择兵种
-							    <span class="caret"></span>
-							  </button>
-							  <ul id="attacker-soldier-list" class="dropdown-menu" aria-labelledby="attacker-sel-soldier">
-							  </ul>
+								<button class="btn btn-info dropdown-toggle" type="button"
+									data-toggle="dropdown" aria-haspopup="true"
+									aria-expanded="true">
+									选择兵种 <span class="caret"></span>
+								</button>
+								<ul id="attacker-soldier-list" class="dropdown-menu"
+									aria-labelledby="attacker-sel-soldier">
+								</ul>
 							</div>
-							
+
 							<div id="attacker-sel-action" class="dropdown">
-							  <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-							    选择技能
-							    <span class="caret"></span>
-							  </button>
-							  <ul id="attacker-action-list" class="dropdown-menu" aria-labelledby="attacker-sel-action">
-							  </ul>
+								<button class="btn btn-info dropdown-toggle" type="button"
+									data-toggle="dropdown" aria-haspopup="true"
+									aria-expanded="true">
+									选择技能 <span class="caret"></span>
+								</button>
+								<ul id="attacker-action-list" class="dropdown-menu"
+									aria-labelledby="attacker-sel-action">
+								</ul>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div id="attacker-info"></div>
 						</div>
 					</div>
-
 					<div class="row">
-						<div class="panel panel-default">
-						  <div class="panel-heading">进攻方战斗面板</div>
-						  <div class="panel-body">
-						 	 <form>
-							      <div id="aa" class="form-group">
-								    <label for="attackerAttack">攻击</label>
-								    <input type="text" class="form-control" id="attackerAttack" placeholder="">
-								  </div>
-								  <div id="ai" class="form-group">
-								    <label for="attackerIntel">智力</label>
-								    <input type="text" class="form-control" id="attackerIntel" placeholder="">
-								  </div>
-								   <div id="ap" class="form-group">
-								    <label for="attackerPhysicDef">防御</label>
-								    <input type="text" class="form-control" id="attackerPhysicDef" placeholder="">
-								  </div>
-								  <div id="am" class="form-group">
-								    <label for="attackerMagicDef">魔防</label>
-								    <input type="text" class="form-control" id="attackerMagicDef" placeholder="">
-								  </div>
-								  <div class="form-group">
-								    <label for="attackerLife">生命</label>
-								    <input type="text" class="form-control" id="attackerLife" placeholder="">
-								  </div>
-							  </form>
-							  <div id="attackerDetail"></div>
-							  <div id="attacker-soldier-information">
-							  <p>士兵未选择</p><p></p><p></p>
-							  </div>
-							  <div id="attacker-land-information">
-							  </div>
-						  </div>
+						<div class="col-md-3">
+							<div id="attacker-weapon" class="dropdown">
+								<button class="btn btn-default dropdown-toggle" type="button"
+									data-toggle="dropdown" aria-haspopup="true"
+									aria-expanded="true">
+									<span class="caret"></span>
+								</button>
+								<ul id="attacker-weapon-list" class="dropdown-menu"
+									aria-labelledby="attacker-weapon">
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div id="attacker-armor" class="dropdown">
+								<button class="btn btn-default dropdown-toggle" type="button"
+									data-toggle="dropdown" aria-haspopup="true"
+									aria-expanded="true">
+									<span class="caret"></span> 
+								</button>
+								<ul id="attacker-armor-list" class="dropdown-menu"
+									aria-labelledby="attacker-armor">
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div id="attacker-helmet" class="dropdown">
+								<button class="btn btn-default dropdown-toggle" type="button"
+									data-toggle="dropdown" aria-haspopup="true"
+									aria-expanded="true">
+									<span class="caret"></span> 
+								</button>
+								<ul id="attacker-helmet-list" class="dropdown-menu"
+									aria-labelledby="attacker-helmet">
+
+								</ul>
+							</div>
+						</div>
+						<div class="col-md-3">
+							<div id="attacker-jewelry" class="dropdown">
+								<button class="btn btn-default dropdown-toggle" type="button"
+									data-toggle="dropdown" aria-haspopup="true"
+									aria-expanded="true">
+									<span class="caret"></span>
+								</button>
+								<ul id="attacker-jewelry-list" class="dropdown-menu"
+									aria-labelledby="attacker-jewelry">
+								</ul>
+							</div>
 						</div>
 					</div>
-						<div class="row">
-							<div class="panel panel-default">
-							   <div class="panel-heading">
-							   </div>
-							   <div class="panel-body">
-									<ul id="attacker-user-condition-list" class="list-group"></ul>
-									<ul id="attacker-critical" class="list-group"></ul>
-									<div id="attacker-sel-land" class="dropdown">
-									  <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-									    选择地形
-									    <span class="caret"></span>
-									  </button>
-									  <ul id="attacker-land-list" class="dropdown-menu" aria-labelledby="attacker-sel-land">
-									  </ul>
-								  </div>
-							  </div>
+					<div class="row">
+						<div class="panel panel-default">
+							<div class="panel-heading">进攻方战斗面板</div>
+							<div class="panel-body">
+								<form>
+									<div id="aa" class="form-group">
+										<label for="attackerAttack">攻击</label> <input type="text"
+											class="form-control" id="attackerAttack" placeholder="">
+									</div>
+									<div id="ai" class="form-group">
+										<label for="attackerIntel">智力</label> <input type="text"
+											class="form-control" id="attackerIntel" placeholder="">
+									</div>
+									<div id="ap" class="form-group">
+										<label for="attackerPhysicDef">防御</label> <input type="text"
+											class="form-control" id="attackerPhysicDef" placeholder="">
+									</div>
+									<div id="am" class="form-group">
+										<label for="attackerMagicDef">魔防</label> <input type="text"
+											class="form-control" id="attackerMagicDef" placeholder="">
+									</div>
+									<div class="form-group">
+										<label for="attackerLife">生命</label> <input type="text"
+											class="form-control" id="attackerLife" placeholder="">
+									</div>
+								</form>
+								<div id="attackerDetail"></div>
+								<div id="attacker-soldier-information">
+									<p>士兵未选择</p>
+									<p></p>
+									<p></p>
+								</div>
+								<div id="attacker-land-information"></div>
 							</div>
-					   </div>
-					   <div class="row">						
-							<div class="panel panel-default">
-							   <div class="panel-heading">
-							   </div>
-							   <div class="panel-body">
-								  	<ul id="attacker-buf-list" class="list-group"></ul>
-							   </div>
-							</div>
-					   </div>			
+						</div>
 					</div>
+					<div class="row">
+						<div class="panel panel-default">
+							<div class="panel-heading"></div>
+							<div class="panel-body">
+								<ul id="attacker-user-condition-list" class="list-group"></ul>
+								<ul id="attacker-critical" class="list-group"></ul>
+								<div id="attacker-sel-land" class="dropdown">
+									<button class="btn btn-warning dropdown-toggle" type="button"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="true">
+										选择地形 <span class="caret"></span>
+									</button>
+									<ul id="attacker-land-list" class="dropdown-menu"
+										aria-labelledby="attacker-sel-land">
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="panel panel-default">
+							<div class="panel-heading"></div>
+							<div class="panel-body">
+								<ul id="attacker-buf-list" class="list-group"></ul>
+							</div>
+						</div>
+					</div>
+				</div>
 				<div class="col-md-6">
 					<div class="row">
 						<div class="col-md-6">
 							<div id="defenderPic">
-							<div><img src="/fight/image/0.png" alt="" width="60" height="86"></img>未指定</div>
+								<div>
+									<img src="/fight/image/0.png" alt="" width="60" height="86"></img>未指定
+								</div>
 							</div>
 							<div id="defender-sel-soldier" class="dropdown">
-							  <button class="btn btn-info dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-							    选择兵种
-							    <span class="caret"></span>
-							  </button>
-							  <ul id="defender-soldier-list" class="dropdown-menu" aria-labelledby="defender--sel-soldier">
-							  </ul>
+								<button class="btn btn-info dropdown-toggle" type="button"
+									data-toggle="dropdown" aria-haspopup="true"
+									aria-expanded="true">
+									选择兵种 <span class="caret"></span>
+								</button>
+								<ul id="defender-soldier-list" class="dropdown-menu"
+									aria-labelledby="defender--sel-soldier">
+								</ul>
 							</div>
 						</div>
 						<div class="col-md-6">
@@ -146,131 +213,174 @@
 					</div>
 					<div class="row">
 						<div class="panel panel-default">
-						 
-						  <div class="panel-heading">挨揍方战斗面板</div>
-						  <div class="panel-body">
-						      <form>
-								  <div id="da" class="form-group">
-								    <label for="defendAttack">攻击</label>
-								    <input type="text" class="form-control" id="defenderAttack" placeholder="">
-								  </div>
-								  <div id="di" class="form-group">
-								    <label for="defenderIntel">智力</label>
-								    <input type="text" class="form-control" id="defenderIntel" placeholder="">
-								  </div>
-								   <div id="dp" class="form-group">
-								    <label for="defenderPhysicDef">防御</label>
-								    <input type="text" class="form-control" id="defenderPhysicDef" placeholder="">
-								  </div>
-								  <div id="dm" class="form-group">
-								    <label for="defenderMagicDef">魔防</label>
-								    <input type="text" class="form-control" id="defenderMagicDef" placeholder="">
-								  </div>
-								  <div class="form-group">
-								    <label for="defenderLife">生命</label>
-								    <input type="text" class="form-control" id="defenderLife" placeholder="">
-								  </div>
-								  
-							  </form>
-							   <div id="defenderDetail"></div>
-							   <div id="defender-soldier-information">
-							   	<p>士兵未选择</p><p></p><p></p>
-							  </div>
-							  <div id="defender-land-information">
-							  </div>
-						  </div>
+
+							<div class="panel-heading">挨揍方战斗面板</div>
+							<div class="panel-body">
+								<form>
+									<div id="da" class="form-group">
+										<label for="defendAttack">攻击</label> <input type="text"
+											class="form-control" id="defenderAttack" placeholder="">
+									</div>
+									<div id="di" class="form-group">
+										<label for="defenderIntel">智力</label> <input type="text"
+											class="form-control" id="defenderIntel" placeholder="">
+									</div>
+									<div id="dp" class="form-group">
+										<label for="defenderPhysicDef">防御</label> <input type="text"
+											class="form-control" id="defenderPhysicDef" placeholder="">
+									</div>
+									<div id="dm" class="form-group">
+										<label for="defenderMagicDef">魔防</label> <input type="text"
+											class="form-control" id="defenderMagicDef" placeholder="">
+									</div>
+									<div class="form-group">
+										<label for="defenderLife">生命</label> <input type="text"
+											class="form-control" id="defenderLife" placeholder="">
+									</div>
+
+								</form>
+								<div id="defenderDetail"></div>
+								<div id="defender-soldier-information">
+									<p>士兵未选择</p>
+									<p></p>
+									<p></p>
+								</div>
+								<div id="defender-land-information"></div>
+							</div>
 						</div>
 					</div>
 					<div class="row">
-							<div class="panel panel-default">
-							  <div class="panel-heading"></div>
-								  <div class="panel-body">
-									  <ul id="defender-user-condition-list" class="list-group"></ul>
-									  <ul id="defender-critical" class="list-group"> </ul>
-									  <div id="defender-sel-land" class="dropdown">
-										  <button class="btn btn-warning dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-										    选择地形
-										    <span class="caret"></span>
-										  </button>
-										  <ul id="defender-land-list" class="dropdown-menu" aria-labelledby="defender-sel-land">
-										  </ul>
-									  </div>
-								  </div>
+						<div class="panel panel-default">
+							<div class="panel-heading"></div>
+							<div class="panel-body">
+								<ul id="defender-user-condition-list" class="list-group"></ul>
+								<ul id="defender-critical" class="list-group">
+								</ul>
+								<div id="defender-sel-land" class="dropdown">
+									<button class="btn btn-warning dropdown-toggle" type="button"
+										data-toggle="dropdown" aria-haspopup="true"
+										aria-expanded="true">
+										选择地形 <span class="caret"></span>
+									</button>
+									<ul id="defender-land-list" class="dropdown-menu"
+										aria-labelledby="defender-sel-land">
+									</ul>
+								</div>
 							</div>
-							
+						</div>
+
 					</div>
 					<div class="row">
-							<div class="panel panel-default">
-							   <div class="panel-heading"></div>
-							   <div class="panel-body">
+						<div class="panel panel-default">
+							<div class="panel-heading"></div>
+							<div class="panel-body">
 								<ul id="defender-buf-list" class="list-group"></ul>
-							  </div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
-			</div>
-			
+
 			<div class="row">
 				<button id="calculate" type="button" class="btn btn-primary">计算</button>
-				<br>
-				<br>
-					<div class="container">
+				<br> <br>
+				<div class="container">
 
-						<div class="row">
+					<div class="row">
 						<div class="col-md-6">
 							<div class="panel panel-info">
 								<div class="panel-heading">进攻方战斗数据</div>
-							 	 <div class="panel-body">
+								<div class="panel-body">
 									<div id="fightDetails"></div>
 								</div>
 							</div>
 							英雄血量：
 							<div class="progress">
-  								<div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-  								100%
-  								</div>
+								<div class="progress-bar" role="progressbar" aria-valuenow="100"
+									aria-valuemin="0" aria-valuemax="100" style="width: 100%;">100%</div>
 							</div>
 							小兵血量：
 							<div class="progress">
-							  <div class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-							    100%
-							  </div>
+								<div class="progress-bar" role="progressbar" aria-valuenow="100"
+									aria-valuemin="0" aria-valuemax="100" style="width: 100%;">100%</div>
 							</div>
 						</div>
 						<div class="col-md-6">
 							<div class="panel panel-info">
-								 <div class="panel-heading">挨揍方战斗数据</div>
-								  <div class="panel-body">
-								 </div>
-							 </div>
+								<div class="panel-heading">挨揍方战斗数据</div>
+								<div class="panel-body"></div>
+							</div>
 							英雄血量：
 							<div class="progress">
-	  							<div id="defenderHeroBar" class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-	  							100%
-	  							</div>
+								<div id="defenderHeroBar" class="progress-bar"
+									role="progressbar" aria-valuenow="100" aria-valuemin="0"
+									aria-valuemax="100" style="width: 100%;">100%</div>
 							</div>
 							小兵血量：
 							<div class="progress">
-							  <div id="defenderSoldierBar" class="progress-bar" role="progressbar" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100" style="width: 100%;">
-							    100%
-							  </div>
+								<div id="defenderSoldierBar" class="progress-bar"
+									role="progressbar" aria-valuenow="100" aria-valuemin="0"
+									aria-valuemax="100" style="width: 100%;">100%</div>
 							</div>
 						</div>
 					</div>
-			</div>
+				</div>
 
 			</div>
-			
-		    <div class="row">
-		    	<div id="hero_pics">
-		    	</div>
+
+			<div class="row">
+				<div id="hero_pics"></div>
 			</div>
-		
+
+
+			<div class="row">
+				<div id="fm">
+					<button id="import_fm" class="btn btn-default" type="button">导入附魔数据</button>
+					<table id="fm_info" class="table table-striped table-bordered table-hover table-condensed">
+						<thead>
+							<tr>
+								<th>名字</th>
+								<th>武器</th>
+								<th>盔甲</th>
+								<th>头盔</th>
+								<th>饰品</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					<table id="jt_info" class="table table-striped table-bordered table-hover table-condensed">
+						<thead>
+							<tr>
+								<th>名字</th>
+								<th>生命</th>
+								<th>攻击</th>
+								<th>智力</th>
+								<th>防御</th>
+								<th>魔防</th>
+								<th>技巧</th>
+								<th>竞技场生命</th>
+								<th>竞技场攻击</th>
+								<th>竞技场智力</th>
+								<th>竞技场防御</th>
+								<th>竞技场魔防</th>
+								<th>竞技场技巧</th>
+								<th>暴击</th>
+								<th>爆伤</th>
+								<th>减爆</th>
+								<th>减爆伤</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+					<input type="file" id="csvFileInput" onchange="readCSVFile(this)" />
+				</div>
+			</div>
 		</div>
 	</div>
 	<nav class="navbar">
 		<div id="footer" class="container"></div>
 	</nav>
-
 </body>
 </html>
