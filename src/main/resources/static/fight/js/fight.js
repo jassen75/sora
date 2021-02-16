@@ -407,8 +407,6 @@ function displayEquip(type, equips)
 			
 		})
 	}
-	
-	
 }
 
 function refreshAttacker()
