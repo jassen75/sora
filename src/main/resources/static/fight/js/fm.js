@@ -18,19 +18,19 @@ function readCSVFile(obj) {
 }
 
 var fm_type = [];
-fm_type[0]="轻风"; 
-fm_type[1]="满月"; 
-fm_type[2]="魔术"; 
-fm_type[4]="怒涛"; 
-fm_type[3]="时钟"; 
-fm_type[5]="烈日"; 
-fm_type[6]="流星"; 
-fm_type[7]="顽石"; 
-fm_type[8]="水晶"; 
-fm_type[9]="寒冰"; 
-fm_type[10]="大树"; 
-fm_type[11]="荆棘"; 
-fm_type[12]="钢铁"; 
+fm_type[1]="轻风"; 
+fm_type[2]="满月"; 
+fm_type[3]="魔术"; 
+fm_type[5]="怒涛"; 
+fm_type[4]="时钟"; 
+fm_type[6]="烈日"; 
+fm_type[7]="流星"; 
+fm_type[8]="顽石"; 
+fm_type[9]="水晶"; 
+fm_type[10]="寒冰"; 
+fm_type[11]="大树"; 
+fm_type[12]="荆棘"; 
+fm_type[13]="钢铁"; 
 
 var fm_inc_key = {};
 fm_inc_key["attackInc"] = "攻击";
@@ -194,23 +194,23 @@ function refreshTable()
 function fmClass(fmType)
 {
 	switch(fmType)
-	{
-		case "0":
+	{		
 		case "1":
 		case "2":
 		case "3":
 		case "4":
-			return "fm_type_red";
 		case "5":
+			return "fm_type_red";
 		case "6":
-			return "fm_type_yellow";
 		case "7":
+			return "fm_type_yellow";
 		case "8":
-		case "9":
-			return "fm_type_blue";
+		case "9":	
 		case "10":
+			return "fm_type_blue";
 		case "11":
 		case "12":
+		case "13":
 			return "fm_type_green";
 	}
 }
@@ -342,55 +342,58 @@ function generateHeroInc(hero, equip)
 			heroInc["criticalProbInc"] += fmInfo["criticalInc"];
 		}
 
-		if(equip[i]["equipType"]["life"])
+		if(equip[i])
 		{
-			lifes+=equip[i]["equipType"]["life"];
-		}
-		if(equip[i]["equipType"]["attack"])
-		{
-			attacks+=equip[i]["equipType"]["attack"];
-		}
-		if(equip[i]["equipType"]["intel"])
-		{
-			intels+=equip[i]["equipType"]["intel"];
-		}
-		if(equip[i]["equipType"]["physicDef"])
-		{
-			physics+=equip[i]["equipType"]["physicDef"];
-		}
-		if(equip[i]["equipType"]["magicDef"])
-		{
-			magics+=equip[i]["equipType"]["magicDef"];
-		}
-		if(equip[i]["equipType"]["tech"])
-		{
-			techs+=equip[i]["equipType"]["tech"];
-		}
-		
-		
-		if(equip[i]["lifeSkill"])
-		{
-			heroInc["lifeSkill"] += equip[i]["lifeSkill"];
-		}
-		if(equip[i]["attackSkill"])
-		{
-			heroInc["attackSkill"] += equip[i]["attackSkill"];
-		}
-		if(equip[i]["intelSkill"])
-		{
-			heroInc["intelSkill"] += equip[i]["intelSkill"];
-		}
-		if(equip[i]["physicDefSkill"])
-		{
-			heroInc["physicDefSkill"] += equip[i]["physicDefSkill"];
-		}
-		if(equip[i]["magicDefSkill"])
-		{
-			heroInc["magicDefSkill"] += equip[i]["magicDefSkill"];
-		}
-		if(equip[i]["techSkill"])
-		{
-			heroInc["techSkill"] += equip[i]["techSkill"];
+			if(equip[i]["equipType"]["life"])
+			{
+				lifes+=equip[i]["equipType"]["life"];
+			}
+			if(equip[i]["equipType"]["attack"])
+			{
+				attacks+=equip[i]["equipType"]["attack"];
+			}
+			if(equip[i]["equipType"]["intel"])
+			{
+				intels+=equip[i]["equipType"]["intel"];
+			}
+			if(equip[i]["equipType"]["physicDef"])
+			{
+				physics+=equip[i]["equipType"]["physicDef"];
+			}
+			if(equip[i]["equipType"]["magicDef"])
+			{
+				magics+=equip[i]["equipType"]["magicDef"];
+			}
+			if(equip[i]["equipType"]["tech"])
+			{
+				techs+=equip[i]["equipType"]["tech"];
+			}
+			
+			
+			if(equip[i]["lifeSkill"])
+			{
+				heroInc["lifeSkill"] += equip[i]["lifeSkill"];
+			}
+			if(equip[i]["attackSkill"])
+			{
+				heroInc["attackSkill"] += equip[i]["attackSkill"];
+			}
+			if(equip[i]["intelSkill"])
+			{
+				heroInc["intelSkill"] += equip[i]["intelSkill"];
+			}
+			if(equip[i]["physicDefSkill"])
+			{
+				heroInc["physicDefSkill"] += equip[i]["physicDefSkill"];
+			}
+			if(equip[i]["magicDefSkill"])
+			{
+				heroInc["magicDefSkill"] += equip[i]["magicDefSkill"];
+			}
+			if(equip[i]["techSkill"])
+			{
+				heroInc["techSkill"] += equip[i]["techSkill"];
+			}
 		}
 	}
 	
@@ -417,6 +420,11 @@ function generateHeroInc(hero, equip)
 		if(i>=10 && i<=12 && fmTypeCount[i]>=2)
 		{
 			lifep+=5;
+		}
+		
+		if(fmTypeCount[i]==4)
+		{
+			heroInc["fmSkill"] = i;
 		}
 	}
 	

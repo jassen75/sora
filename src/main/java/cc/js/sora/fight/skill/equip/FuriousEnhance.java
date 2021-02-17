@@ -9,6 +9,7 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
+import cc.js.sora.fight.condition.NoCondition;
 import cc.js.sora.fight.condition.UserCondition;
 
 public class FuriousEnhance extends Skill {
@@ -27,22 +28,7 @@ public class FuriousEnhance extends Skill {
 
 	@Override
 	public Condition getCondition() {
-		return new UserCondition() {
-
-			@Override
-			public String getDesc() {
-				return "使用怒涛附魔";
-			}
-
-			@Override
-			public String getName() {
-				return "useFuriousEnhance";
-			}
-
-			@Override
-			public boolean defaultValid() {
-				return true;
-			}};
+		return new NoCondition();
 	}
 
 	@Override

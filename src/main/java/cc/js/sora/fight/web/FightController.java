@@ -91,21 +91,30 @@ public class FightController {
 	}
 
 	@RequestMapping(path = "/buffs", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Map getBuffs(@RequestBody Fight fight) {
+	public Map<String, Object> getBuffs(@RequestBody Fight fight) {
 		lock.lock();
 		try {
 			log.info("Current fight:" + fight);
-			Map result = new HashMap();
+			Map<String, Object> result = Maps.newHashMap();
 			List<Skill> attackerSkills = skillSerivce.getSkills(fight.getAttackerHeroId(), fight.getAttackerSoldierId(),
-					fight.getAttackerActionId(), true);
+					fight.getAttackerActionId(), fight.getAttackerEnhance(), fight.getAttackerEquip(), true);
 			List<Skill> defenderSkills = skillSerivce.getSkills(fight.getDefenderHeroId(), fight.getDefenderSoldierId(),
-					0, false);
+					0, fight.getDefenderEnhance(), fight.getDefenderEquip(), false);
 
 			List<CheckedSkill> attackerCheckedSkills = Lists.newArrayList();
 			List<CheckedSkill> defenderCheckedSkills = Lists.newArrayList();
+			
+			attackerSkills.stream().filter(s->s.getBattleType()==0).forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
+			defenderSkills.stream().filter(s->s.getBattleType()==0).forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
+			
+			attackerSkills.stream().filter(s->s.getBattleType()==1).forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
+			defenderSkills.stream().filter(s->s.getBattleType()==1).forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
 
-			attackerSkills.stream().forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
-			defenderSkills.stream().forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
+			attackerSkills.stream().filter(s->s.getBattleType()==2).forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
+			defenderSkills.stream().filter(s->s.getBattleType()==2).forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
+			
+			attackerSkills.stream().filter(s->s.getBattleType()==3).forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
+			defenderSkills.stream().filter(s->s.getBattleType()==3).forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
 
 			result.put("attackerSkills", attackerCheckedSkills);
 			result.put("defenderSkills", defenderCheckedSkills);
@@ -124,9 +133,15 @@ public class FightController {
 
 			CheckedSkill result = new CheckedSkill();
 			result.setSkill(skill);
-			result.setValid(conditionService.checkCondition(fight, skill.getCondition(),
+			boolean valid = conditionService.checkCondition(fight, skill.getCondition(),
 					isAttack ? fight.getAttackerUserConditionChecked() : fight.getDefenderUserConditionChecked(),
-					isAttack));
+					isAttack);
+			if(valid)
+			{
+				skill.process(fight, isAttack);
+			}
+			
+			result.setValid(valid);
 			return result;
 		} finally {
 			lock.unlock();
@@ -166,7 +181,7 @@ public class FightController {
 	}
 
 	@RequestMapping(path = "/skills", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-	public Map allSkills() {
+	public Map<Long, Skill> allSkills() {
 		lock.lock();
 		try
 		{

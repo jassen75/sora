@@ -94,9 +94,23 @@ function buildFight() {
 	};
 	if (attacker) {
 		request["attackerHeroId"] = attacker["id"];
+		if(attacker["fmSkill"])
+		{
+			request["attackerEnhance"] = attacker["fmSkill"];
+		} else
+		{
+			request["attackerEnhance"] = 0;
+		}
 	}
 	if (defender) {
 		request["defenderHeroId"] = defender["id"];
+		if(defender["fmSkill"])
+		{
+			request["defenderEnhance"] = defender["fmSkill"];
+		} else
+		{
+			request["defenderEnhance"] = 0;
+		}
 	}
 	if (attackerSoldier) {
 		request["attackerSoldierId"] = attackerSoldier["id"];
@@ -107,7 +121,14 @@ function buildFight() {
 
 	if (attackerAction) {
 		request["attackerActionId"] = attackerAction["id"];
-
+	}
+	
+	if(attackerEquip) {
+		request["attackerEquip"] = attackerEquip;
+	}
+	
+	if(defenderEquip) {
+		request["defenderEquip"] = defenderEquip;
 	}
 	request["attackerUserConditionChecked"] = attackerUserConditionChecked;
 	request["defenderUserConditionChecked"] = defenderUserConditionChecked;
@@ -120,7 +141,6 @@ function buildFight() {
 	for (var i in fightInfo) {
 		request[i] = fightInfo[i];
 	}
-
 	return request;
 
 }
@@ -448,12 +468,11 @@ function displayEquip(id, type, equips, role) {
 							if(role == "attacker")
 							{
 								attackerEquip[type] = e;
-								refreshAttacker();
 							} else 
 							{
 								defenderEquip[type] = e;
-								refreshDefender();
 							}
+							loadComplete(role);
 						}
 					})
 
@@ -473,7 +492,7 @@ function refreshAttacker() {
 						+ attacker["physicDef"] + "+"
 						+ attacker["physicDefInc"] + "</p><p>魔防&nbsp;"
 						+ attacker["magicDef"] + "+"
-						+ attacker["magicDefInc"] + "</p><p>技巧"
+						+ attacker["magicDefInc"] + "</p><p>技巧&nbsp;"
 						+ attacker["tech"] + "+" + attacker["techInc"]
 						+ "</p>");
 
@@ -507,7 +526,7 @@ function refreshDefender() {
 						+ defender["physicDef"] + "+"
 						+ defender["physicDefInc"] + "</p><p>魔防&nbsp;"
 						+ defender["magicDef"] + "+"
-						+ defender["magicDefInc"] + "</p><p>技巧"
+						+ defender["magicDefInc"] + "</p><p>技巧&nbsp;"
 						+ defender["tech"] + "+" + defender["techInc"]
 						+ "</p>");
 		$("#defender-soldier-information").html("");

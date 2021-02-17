@@ -150,12 +150,14 @@ INSERT INTO player(name, server) VALUES
 ('琳雪','羁绊之地'),
 ('不是山谷','羁绊之地');
 
-INSERT INTO hero(id, name, life, attack, intel, physic_def, magic_def, tech, soldier_life_inc, soldier_attack_inc,  
-soldier_physic_def_inc, soldier_magic_def_inc, is_physic, is_woman, default_soldier, type,  supported_equip_types,  skills) VALUES
-(1,'帕希尔',3548,271,520,258,312,104,30,35,15,20,0,1,1,7,'1,12,15,16,17,21,22,23', '1,1001,1101'),
-(2,'托娃',4168,527,240,305,302,166,30,30,40,15,1,1,3,5,'5,6,12,15,18,19,20,21,22,23','2,1001,1101'),
-(63,'古巨拉',5442,412,247,317,285,124,40,15,35,10,1,0,4,4,'4,7,12,15,18,19','3011,1101'),
-(62,'泽瑞达',3723,534,240,288,281,331,10,40,10,40,1,1,5,7,'8,12,15,22,23','3,4,301,1002,1101')
+INSERT INTO hero(id, name, 
+life, attack, intel, physic_def, magic_def, tech, soldier_life_inc, soldier_attack_inc, soldier_physic_def_inc, soldier_magic_def_inc,
+is_physic, is_woman, default_soldier, type,  supported_equip_types,  skills) VALUES
+(1,'帕希尔',3548,271,520,258,312,104,30,35,15,20,       0,1,1,7,   '1,12,15,16,17,21,22,23', '1'),
+(2,'托娃',4168,527,240,305,302,166,30,30,40,15,        1,1,3,5,   '5,6,12,15,18,19,20,21,22,23','2'),
+(5,'忍部火美子',3838,533,242,293,263,326,20,20,35,25,    1,1,6,6,  '4,7,12,15,18,19,20,21',''),
+(62,'泽瑞达',3723,534,240,288,281,331,10,40,10,40,     1,1,5,6,   '4,7,12,15,18,19,20,21','3,4,301'),
+(63,'古巨拉',5442,412,247,317,285,124,40,15,35,10,     1,0,4,4,  '8,12,15,22,23','3011')
 ;
 
 
@@ -164,12 +166,13 @@ INSERT INTO soldier(id, name, life ,attack, physic_def,  magic_def, soldier_type
 (2, '魔晶术士', 723, 630, 375,328, 8, 0, '2002'),
 (3, '皇家狮鹫', 677,754, 344,390, 5, 1, '2003'),
 (4, '龙虾巨兽', 723,630, 437,282, 4, 1, '2004'),
-(5, '火焰骷髅弓手', 609,706, 359,342, 9, 1, '')
+(5, '火焰骷髅弓手', 609,706, 359,342, 9, 1, ''),
+(6, '地精骑士', 614,723, 344,344, 7, 1, '')
 ;
 
 
 INSERT INTO hero_soldiers(hero_id, soldiers_id) VALUES
-(1, 1),(1, 2),(2, 3),(62,5),(63,4);
+(1, 1),(1, 2),(2, 3),(5,6),(62,5),(63,4);
 
 INSERT INTO action(id, name, coefficient, direct, range,  hit_time, is_physic, skills) VALUES 
 (10001,'物理普攻',1,0,0,1500,1,''),
@@ -202,29 +205,28 @@ INSERT INTO equip_type(id, name, life, attack, intel, physic_def, magic_def, tec
 (14,'LightHelm', 364, 0, 0, 0, 65, 0, 'Helmet'),
 (15,'LeatherHelm',437, 0, 0, 0, 59, 0, 'Helmet'),
 
-(16,'Jewelry1', 509, 0, 75, 0, 0, 0, 'Jewelry'),
-(17,'Jewelry3', 0, 0, 75, 0, 43, 0,'Jewelry'),
+(16,'Jewelry-Intel-Life', 509, 0, 75, 0, 0, 0, 'Jewelry'),
+(17,'Jewelry-Intel-Magic', 0, 0, 75, 0, 43, 0,'Jewelry'),
 
-(18,'Jewelry2', 509, 75, 0, 0, 0, 0, 'Jewelry'),
-(19,'Jewelry4', 0, 75, 0, 43, 0, 0, 'Jewelry'),
-(20,'Jewelry7', 0, 75, 0, 0, 0, 37, 'Jewelry'),
+(18,'Jewelry-Attack-Life', 509, 75, 0, 0, 0, 0, 'Jewelry'),
+(19,'Jewelry-Attack-Physic', 0, 75, 0, 43, 0, 0, 'Jewelry'),
+(20,'Jewelry-Attack-Tech', 0, 75, 0, 0, 0, 37, 'Jewelry'),
+(21,'Jewelry-Attack-Intel',  0, 75, 75, 0, 0, 0 , 'Jewelry'),
 
-(21,'Jewelry5',  0, 75, 75, 0, 0, 0 , 'Jewelry'),
-(22,'Jewelry6', 0, 0, 0, 48, 43, 0 , 'Jewelry'),
-(23,'Jewelry6', 509, 0, 0, 48, 0, 0 , 'Jewelry');
+(22,'Jewelry-2-Def', 0, 0, 0, 48, 43, 0 , 'Jewelry'),
+(23,'Jewelry-Def-Life', 509, 0, 0, 48, 0, 0 , 'Jewelry');
 
 
 INSERT INTO equip(id, name, life_skill, attack_skill, intel_skill, physic_def_skill, magic_def_skill, tech_skill, equip_type, skills) VALUES
-(1,'最后之服',0,0,0,10,0,0, 12,'1101'),
-(2,'逸才权杖',5,0,0,0,0,0, 1,''),
-(3,'尼约德的羽冠',10,0,0,0,0,0, 15,''),
-(4,'星之耳坠',0,0,8,0,0,0, 16,''),
-(5,'拉格纳罗克',0,10,0,0,0,0,5,''),
-(6,'神翼护胫',0,0,0,10,0,0,19,'');
-
-INSERT INTO hero_equip_types(hero_id, equip_types_id) VALUES
-(1,1),(1,12),(1,15),(1,16),(1,17),(1,21),(1,22),(1,23),
-(2,5),(2,6),(2,12),(2,15),(2,18),(2,19),(2,20),(2,21),(2,22),(2,23),
-(62,4),(62,7),(62,12),(62,15),(62,18),(62,19),(62,20),(62,21),(62,22),(62,23),
-(63,8),(63,12),(63,15),(63,22),(63,23);
+(1,'最后之服',0,0,0,10,0,0,  12,'1001'),
+(2,'逸才权杖',5,0,0,0,0,0,   1,''),
+(3,'尼约德的羽冠',10,0,0,0,0,  0, 15,''),
+(4,'星之耳坠',0,0,8,0,0,0,   16,''),
+(5,'拉格纳罗克',0,10,0,0,0,0,  5,'1002'),
+(6,'神翼护胫',0,0,0,10,0,0,   19,''),
+(7,'极限魔弓',0,10,0,0,0,0,   7,''),
+(8,'鲜花礼帽',10,0,0,0,0,0,   15,''),
+(9,'审判魔符',0,10,0,0,0,0,   19,''),
+(10,'铸剑者勋章',5,5,5,5,5,5,   22,'1003')
+;
 

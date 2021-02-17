@@ -1,3 +1,55 @@
+
+
+function checkHeroEffect(effect, role)
+{
+	if(role=="attacker")
+	{
+		for(var i=0; i<fightInfo["attackerEffects"].length; i++)
+		{
+			if(effect==fightInfo["attackerEffects"][i])
+			{
+				return true;
+			}
+		}
+	} 
+	if(role=="defender")
+	{
+		for(var i=0; i<fightInfo["defenderEffects"].length; i++)
+		{
+			if(effect==fightInfo["defenderEffects"][i])
+			{
+				return true;
+			}
+		}
+	} 
+	return false;
+}
+
+function checkSoldierEffect(effect, role)
+{
+	if(role=="attacker")
+	{
+		for(var i=0; i<fightInfo["attackerSoldierEffects"].length; i++)
+		{
+			if(effect==fightInfo["attackerSoldierEffects"][i])
+			{
+				return true;
+			}
+		}
+	} 
+	if(role=="defender")
+	{
+		for(var i=0; i<fightInfo["defenderSoldierEffects"].length; i++)
+		{
+			if(effect==fightInfo["defenderSoldierEffects"][i])
+			{
+				return true;
+			}
+		}
+	} 
+	return false;
+}
+
 function calculate()
 
 {
@@ -63,93 +115,117 @@ function calculate()
 	fightDetails+="<p>-------------------------------------------------------------------------------------------</p>";
 	var soldierCount = attackerSoldier ? 20 : 0;
 	var heroCount = attacker ? 20 : 0;
+	var soldierLeftCount = soldierCount;
+	var heroLeftCount = heroCount;
 	var dl = defender ? fightInfo["defenderHeroLeftLife"] : 0;
 	var dsl = defenderSoldier ? fightInfo["defenderSoldierLeftLife"] : 0;
 	var direct = attackerAction ? attackerAction["direct"] : 0;
+	
+	if(fightInfo["attackerPreBattleDamage"] > 0)
+	{
+		var preDamage = fightInfo["attackerPreBattleDamage"]*fightInfo["attackerAttack"];
+		if(defender)
+		{
+			if(checkHeroEffect("ImmuneToFixedDamage", "defender"))
+			{
+				fightDetails+="<p>"+defender["name"]+"免疫掉战前固伤</p>";
+			} else
+			{
+				dl  -= preDamage;
+				fightDetails+="<p>"+attacker["name"]+"战前对"+defender["name"]+"造成<b>"+preDamage+"</b>伤害</p>";
+			}
+		}
+	} 
 	if(defenderSoldier && !direct) 
 	{
 		
 		var oneSoldierLife = fightInfo["defenderSoldierLife"] / 10;
-		if(soldierCount > 0)
+		if(preDamage)
+		{
+			if(checkSoldierEffect("ImmuneToFixedDamage", "defender"))
+			{
+				fightDetails+="<p>"+defenderSoldier["name"]+"免疫掉战前固伤</p>";
+			} else
+			{
+				dsl -= preDamage;
+				var count = Math.floor(preDamage/oneSoldierLife);
+				fightDetails+="<p>"+attacker["name"]+"战前对士兵造成<b>"+preDamage+"</b>伤害, 杀死<b>"+count+"</b>"+defenderSoldier["name"]+"</p>";
+				//fightDetails+="<p>dsl=="+dsl+"</p>";
+			}
+		}
+		if(soldierLeftCount > 0)
 		{
 			var hit = Math.ceil(oneSoldierLife / soldierToSoldier);
-			
-			
-			var needHit = 0;
 			var soldierKillSoldier = 0;
 			
-			while(needHit + hit <= soldierCount &&  dsl > oneSoldierLife)  
+			while(soldierLeftCount > hit &&  dsl > oneSoldierLife)  
 			{
-				needHit += hit;
 				dsl -= oneSoldierLife;
 				soldierKillSoldier++;
+				soldierLeftCount -= hit;
+				//fightDetails+="<p>dsl=="+dsl+"   soldierKillSoldier=="+soldierKillSoldier+"</p>";
 			}
 
 			// left many soldier
 			if( dsl > oneSoldierLife)
 			{
-				dsl -= soldierToSoldier * (soldierCount - needHit);
-				needHit = soldierCount;
-				soldierCount = 0;
+				dsl -= soldierToSoldier * soldierLeftCount;
+				soldierLeftCount = 0;
 				var c = attackerSoldierCriticalChecked?" class=\"critical\"":"";
-				fightDetails+="<p"+c+">"+attackerSoldier["name"]+" 用 <b>"+needHit+"</b> hit 干掉 <b>"+soldierKillSoldier+"</b>"+defenderSoldier["name"]+"</p>";
+				fightDetails+="<p"+c+">"+attackerSoldier["name"]+" 用 <b>"+soldierCount+"</b> hit 干掉 <b>"+soldierKillSoldier+"</b>"+defenderSoldier["name"]+"</p>";
 
 				// hero to soldier
-				
-				if(heroCount > 0 )
+				if(heroLeftCount > 0 )
 				{
 					var hit = Math.ceil(oneSoldierLife / heroToSoldier);		
-					
-					var needHit = 0;
 					var heroKillSoldier = 0;
 					
-					while(needHit + hit <= heroCount &&  dsl > oneSoldierLife)  
+					while(heroLeftCount > hit &&  dsl > oneSoldierLife)  
 					{
-						needHit += hit;
 						dsl -= oneSoldierLife;
 						heroKillSoldier++;
+						heroLeftCount -= hit;
 					}
 					
 					// soldier left
 					if( dsl > oneSoldierLife)
 					{
-						dsl - heroToSoldier * (soldierCount - needHit);
-						needHit = heroCount;
+						dsl -= heroToSoldier * heroLeftCount;
+						heroLeftCount = 0;
 						var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
 						fightDetails+="<p"+c+">"+attacker["name"]+"用 <b>"+heroCount+"</b> hit 干掉 <b>"+heroKillSoldier+"</b>"+defenderSoldier["name"]+"</p>";
 					} 
 					else
 					{
-						needHit+= Math.ceil((oneSoldierLife-dsl)/heroToSoldier);
+						heroLeftCount -= Math.ceil((oneSoldierLife-dsl)/heroToSoldier);
 						heroKillSoldier++;
+						dsl =0;
 						var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
 						fightDetails+="<p"+c+">"+attacker["name"]+"用 <b>"+needHit+"</b> hit 干掉 <b>"+heroKillSoldier+"</b>"+defenderSoldier["name"]+"</p>";
-						dsl =0;
-						heroCount -= needHit;
 					}
 				}
 			} else
 			{
 				// soldier to hero
-				
-				needHit+= Math.ceil(dsl/soldierToSoldier);
-				var c = attackerSoldierCriticalChecked?" class=\"critical\"":"";
-				fightDetails+="<p"+c+">"+attackerSoldier["name"]+"用 <b>"+needHit+"</b> hit 干掉 <b>10</b> "+defenderSoldier["name"]+"</p>";
+				soldierLeftCount -= Math.ceil(dsl/soldierToSoldier);
+				soldierKillSoldier++;
 				dsl = 0;
-				soldierCount-=needHit
+				var c = attackerSoldierCriticalChecked?" class=\"critical\"":"";
+				fightDetails+="<p"+c+">"+attackerSoldier["name"]+"用 <b>"+(soldierCount-soldierLeftCount)+"</b> hit 干掉 <b>"+soldierKillSoldier+"</b> "+defenderSoldier["name"]+"</p>";
 				
-				if(defender && soldierCount >0)
+				if(defender && soldierLeftCount >0)
 				{
-					var stohDamage = soldierToHero* soldierCount;
+					var stohDamage = soldierToHero* soldierLeftCount;
 					if(dl > stohDamage ) 
 					{
-						dl -= stohDamage;
+						dl -= stohDamage;	
 					} else
 					{
 						dl = 0;
 					}
 					var c = attackerSoldierCriticalChecked?" class=\"critical\"":"";
-					fightDetails+="<p"+c+">"+attackerSoldier["name"]+"用 <b>"+soldierCount+"</b> hit 对"+defender["name"]+"造成<b>"+stohDamage+"</b>伤害</p>";
+					fightDetails+="<p"+c+">"+attackerSoldier["name"]+"用 <b>"+soldierLeftCount+"</b> hit 对"+defender["name"]+"造成<b>"+stohDamage+"</b>伤害</p>";
+					soldierLeftCount = 0;
 				}
 				
 			}
@@ -159,9 +235,9 @@ function calculate()
    
 	if(dl > 0 && (dsl == 0 || direct) )
 	{
-		if(soldierCount >0 && !direct)
+		if(soldierLeftCount >0 && !direct)
 		{
-			var stohDamage = soldierToHero* soldierCount;
+			var stohDamage = soldierToHero* soldierLeftCount;
 			if(dl > stohDamage ) 
 			{
 				dl -= stohDamage;
@@ -170,11 +246,11 @@ function calculate()
 				dl = 0;
 			}
 			var c = attackerSoldierCriticalChecked?" class=\"critical\"":"";
-			fightDetails+="<p"+c+">"+attackerSoldier["name"]+"用 <b>"+soldierCount+"</b> hit 对"+defender["name"]+"造成<b>"+stohDamage+"</b>伤害</p>";
+			fightDetails+="<p"+c+">"+attackerSoldier["name"]+"用 <b>"+soldierLeftCount+"</b> hit 对"+defender["name"]+"造成<b>"+stohDamage+"</b>伤害</p>";
 		}
-		if(heroCount > 0)
+		if(heroLeftCount > 0)
 		{
-			var htohDamage = heroToHero* heroCount;
+			var htohDamage = heroToHero* heroLeftCount;
 			if(dl > htohDamage ) 
 			{
 				dl -= htohDamage;
@@ -183,9 +259,14 @@ function calculate()
 				dl = 0;
 			}
 			var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
-			fightDetails+="<p"+c+">"+attacker["name"]+"用 <b>"+heroCount+"</b> hit 对"+defender["name"]+"造成<b>"+htohDamage+"</b>伤害 </p>";
+			fightDetails+="<p"+c+">"+attacker["name"]+"用 <b>"+heroLeftCount+"</b> hit 对"+defender["name"]+"造成<b>"+htohDamage+"</b>伤害 </p>";
 		}
 	} 
+	
+	if(dl == 0)
+	{
+		fightDetails+="<p>"+defender["name"]+"死亡</p>";
+	}
 	
 	$("#defenderSoldierBar").text(dsl+"/"+fightInfo["defenderSoldierLife"]);
 	

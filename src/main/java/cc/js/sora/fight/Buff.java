@@ -27,7 +27,13 @@ public class Buff {
 	
 	public String getTitle()
 	{
-		return printBufferType()+"+"+number+"%";				
+		if(buffType == BuffType.PreBattleDamage || buffType == BuffType.PostBattleDamage)
+		{
+			return printBufferType() + number+ "倍伤害";
+		}else
+		{
+			return printBufferType()+"+"+number+"%";		
+		}
 	}
 	
 	public String printBufferType()
@@ -71,6 +77,10 @@ public class Buff {
 			return "暴击概率减少";
 		case CriticalDamageDec:
 			return "暴击伤害减少";
+		case PreBattleDamage:
+			return "战前造成";
+		case PostBattleDamage:
+			return "战后造成";
 		}
 		return "";
 	}

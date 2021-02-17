@@ -1,5 +1,9 @@
 function calculatePanel()
 {
+	fightInfo["attackerEffects"] = [];
+	fightInfo["defenderEffects"] = [];
+	fightInfo["attackerSoldierEffects"] = [];
+	fightInfo["defenderSoldierEffects"] = [];
 	if(attacker)
 	{
 		var attack = attacker["attack"] + attacker["attackInc"];
@@ -26,7 +30,7 @@ function calculatePanel()
 		var cdi = attacker["criticalDamageInc"];
 		var cpd = attacker["criticalProbDec"];
 		var cdd = attacker["criticalDamageDec"];
-		
+
 		if(attackerSkills)
 		{
 			var attackBasic = 0;
@@ -37,6 +41,8 @@ function calculatePanel()
 			var techBasic = 0;
 			var damageIncBasic = 0;
 			var damageDecBasic = 0;
+			var preBattleDamage = 0;
+			var postBattleDamage = 0;
 			
 			for(var i=0; i<attackerSkills.length; i++)
 			{
@@ -163,7 +169,24 @@ function calculatePanel()
 						{
 							cdd = cdd+buffs[j]["number"];
 						}
+						
+						if(buffs[j]["buffType"]=="PreBattleDamage")
+						{
+							
+							preBattleDamage = preBattleDamage+buffs[j]["number"];							
+						}
+						if(buffs[j]["buffType"]=="PostBattleDamage")
+						{
+							postBattleDamage = postBattleDamage+buffs[j]["number"];
+						}
 					}
+					
+					var effects = attackerSkills[i]["skill"]["effects"];
+					for(var j=0; j<effects.length; j++)
+					{
+						fightInfo["attackerEffects"].push(effects[j]);
+					}
+					
 				}
 			}
 			ai = ai+attackBasic;
@@ -194,6 +217,8 @@ function calculatePanel()
 			fightInfo["attackerCriticalProbDec"] = cpd;	
 			fightInfo["attackerCriticalDamageInc"] = cdi;	
 			fightInfo["attackerCriticalDamageDec"] = cdd;	
+			fightInfo["attackerPreBattleDamage"] = preBattleDamage;
+			fightInfo["attackerpostBattleDamage"] = postBattleDamage;
 						
 			for(var i=0; i<counters.length; i++)
 			{
@@ -277,6 +302,8 @@ function calculatePanel()
 			var techBasic = 0;
 			var damageIncBasic = 0;
 			var damageDecBasic = 0;
+			var preBattleDamage = 0;
+			var postBattleDamage = 0;
 									
 			for(var i=0; i<defenderSkills.length; i++)
 			{
@@ -407,8 +434,22 @@ function calculatePanel()
 						{
 							cdd = cdd+buffs[j]["number"];
 						}
+						if(buffs[j]["buffType"]=="PreBattleDamage")
+						{
+							preBattleDamage = postBattleDamage+buffs[j]["number"];
+						}
+						if(buffs[j]["buffType"]=="PostBattleDamage")
+						{
+							postBattleDamage = postBattleDamage+buffs[j]["number"];
+						}
 					}
 				}
+				
+					var effects = defenderSkills[i]["skill"]["effects"];
+					for(var j=0; j<effects.length; j++)
+					{
+						fightInfo["defenderEffects"].push(effects[j]);
+					}
 			}
 			ai = ai+attackBasic;
 			ii = ii+intelBasic;
@@ -438,6 +479,8 @@ function calculatePanel()
 			fightInfo["defenderCriticalProbDec"] = cpd;	
 			fightInfo["defenderCriticalDamageInc"] = cdi;	
 			fightInfo["defenderCriticalDamageDec"] = cdd;
+			fightInfo["defenderPreBattleDamage"] = preBattleDamage;
+			fightInfo["defenderPostBattleDamage"] = postBattleDamage;
 			
 			for(var i=0; i<counters.length; i++)
 			{
@@ -609,6 +652,12 @@ function calculatePanel()
 						{
 							cdd = cdd+buffs[j]["number"];
 						}
+					}
+					
+					var effects = attackerSkills[i]["skill"]["effects"];
+					for(var j=0; j<effects.length; j++)
+					{
+						fightInfo["attackerSoldierEffects"].push(effects[j]);
 					}
 				}
 			}
@@ -800,6 +849,13 @@ function calculatePanel()
 						{
 							cdd = cdd+buffs[j]["number"];
 						}
+					}
+					
+					var effects = defenderSkills[i]["skill"]["effects"];
+					for(var j=0; j<effects.length; j++)
+					{
+						
+						fightInfo["defenderSoldierEffects"].push(effects[j]);
 					}
 				}
 			}

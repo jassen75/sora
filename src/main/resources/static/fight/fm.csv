@@ -1,2 +1,3 @@
-1,帕希尔,0,intelInc=15;physicDefInc=5;magicDefInc=4,0,intelInc=4;intel=5;physicDefInc=14,0,intelInc=2;intel=10;lifeInc=15,0,intelInc=9;physicDefInc=10;physicDef=5,685|0|79|58|0|0,452|0|60|39|0|0,0|0|18|30,2,1,3,4
-2,托娃,0,attackInc=15;attack=20;lifeInc=3,0,attackInc=4;attack=8;physicDefInc=11,0,attackInc=4;attack=3;physicDefInc=10,0,attackInc=10;lifeInc=10;attack=10,675|78|0|53|0|15,412|58|0|45|0|0,0|0|20|30,5,1,3,6
+1,帕希尔,1,intelInc=15;physicDefInc=5;magicDefInc=4,1,intelInc=4;intel=5;physicDefInc=14,1,intelInc=2;intel=10;lifeInc=15,1,intelInc=9;physicDefInc=10;physicDef=5,685|0|79|58|0|0,452|0|60|39|0|0,0|0|18|30,2,1,3,4
+2,托娃,1,attackInc=15;attack=20;lifeInc=3,1,attackInc=4;attack=8;physicDefInc=11,1,attackInc=4;attack=3;physicDefInc=10,1,attackInc=10;lifeInc=10;attack=10,675|78|0|53|0|15,412|58|0|45|0|0,0|0|20|30,5,1,3,6
+5,忍部火美子,4,attackInc=15;attack=12;life=57,4,attackInc=4;lifeInc=10;life=67,4,attackInc=4;attack=6;life=190,4,attackInc=7;attack=11;lifeInc=5,680|78|0|55|0|0,449|60|45|0|0|0,0|19|0|28,7,1,8,9

@@ -15,26 +15,20 @@ import com.google.common.primitives.Longs;
 
 import cc.js.sora.fight.Action;
 import cc.js.sora.fight.BarrackSkills;
+import cc.js.sora.fight.Equip;
 import cc.js.sora.fight.Hero;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.Soldier;
 import cc.js.sora.fight.db.ActionRepository;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
-import cc.js.sora.fight.skill.SuperBuff;
-import cc.js.sora.fight.skill.action.BloodSwordAction;
-import cc.js.sora.fight.skill.action.DreamAction;
-import cc.js.sora.fight.skill.equip.FuriousEnhance;
-import cc.js.sora.fight.skill.equip.LastSuit;
-import cc.js.sora.fight.skill.equip.WindEnhance;
-import cc.js.sora.fight.skill.passivity.BloodBattle;
-import cc.js.sora.fight.skill.soldier.GriffinSkill;
-import cc.js.sora.fight.skill.soldier.LobsterSkill;
-import cc.js.sora.fight.skill.soldier.WizardSkill;
-import cc.js.sora.fight.skill.talent.PatyleTalent;
-import cc.js.sora.fight.skill.talent.TowaTalent;
-import cc.js.sora.fight.skill.talent.ZalrahdaTalent1;
-import cc.js.sora.fight.skill.talent.ZalrahdaTalent2;
+import cc.js.sora.fight.skill.*;
+import cc.js.sora.fight.skill.action.*;
+import cc.js.sora.fight.skill.equip.*;
+import cc.js.sora.fight.skill.passivity.*;
+import cc.js.sora.fight.skill.soldier.*;
+import cc.js.sora.fight.skill.talent.*;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -53,7 +47,9 @@ public class SkillService {
 	BarrackSkills barrackSkills = new BarrackSkills() ;
 	
 	List<Long> globalSkills = Lists.newArrayList(Skill.SuperBuff);
-
+	
+	List<Long> ehanceSkills = Lists.newArrayList(0L, Skill.WindEnhance, 0L, 0L, 0L, Skill.FuriousEnhance, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+	
 	public Map<Long, Skill> skills = Maps.newHashMap();
 
 	public SkillService() {
@@ -65,6 +61,9 @@ public class SkillService {
 		skills.clear();
 
 		registerSkill(Skill.Zuihouzhifu, new LastSuit());
+		registerSkill(Skill.Lage, new Lage());
+		registerSkill(Skill.Xunzhang, new Xunzhang());
+		
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
 		
@@ -119,18 +118,16 @@ public class SkillService {
 		}
 	}
 	
-	public List<Skill> getSkills(long heroId, long soldierId, long actionId,  boolean isAttacker) {
-		List<Skill> result = new ArrayList<Skill>();
-		if(heroId > 0)
-		{
-			Hero hero = heroRepository.getOne(heroId);
-			String hs = hero.getSkills();
-			if (!StringUtils.isEmpty(hs)) {
-				String[] d = StringUtils.split(hs, ",");
-				for (int i = 0; i < d.length; i++) {
-					long skillId = Longs.tryParse(d[i]);
-					if (this.skills.containsKey(skillId)) {
-						if(checkSkillType(this.getSkill(skillId).getSkillType(), isAttacker))
+	private void loadSkill(String skillList, List<Skill> result, boolean isAttacker)
+	{
+		if (!StringUtils.isEmpty(skillList)) {
+			String[] d = StringUtils.split(skillList, ",");
+			for (int i = 0; i < d.length; i++) {
+				long skillId = Longs.tryParse(d[i]);
+				if (this.skills.containsKey(skillId)) {
+					if(checkSkillType(this.getSkill(skillId).getSkillType(), isAttacker))
+					{
+						if(this.getSkill(skillId) != null)
 						{
 							result.add(this.getSkill(skillId));
 						}
@@ -138,23 +135,41 @@ public class SkillService {
 				}
 			}
 		}
+	}
+	
+	public List<Skill> getSkills(long heroId, long soldierId, long actionId, int enhance, Map<String, Equip> equips,  boolean isAttacker) {
+		List<Skill> result = new ArrayList<Skill>();
+		if(heroId > 0)
+		{
+			Hero hero = heroRepository.getOne(heroId);
+			loadSkill(hero.getSkills(), result, isAttacker);
+		}
+		
+		if(equips != null)
+		{
+			equips.values().stream().forEach(e->{
+				
+				loadSkill(e.getSkills(), result, isAttacker);
+				
+			});
+		}
+		
+		if(enhance > 0)
+		{
+			long enhanceSkill = ehanceSkills.get(enhance);
+			if(enhanceSkill > 0)
+			{
+				if(this.getSkill(enhanceSkill) != null)
+				{
+					result.add(this.getSkill(enhanceSkill));
+				}
+			}
+		}
 		
 		if(soldierId > 0) 
 		{
 			Soldier soldier = soldierRepository.getOne(soldierId);
-			String ss = soldier.getSkills();
-			if (!StringUtils.isEmpty(ss)) {
-				String[] d = StringUtils.split(ss, ",");
-				for (int i = 0; i < d.length; i++) {
-					long skillId = Longs.tryParse(d[i]);
-					if (this.skills.containsKey(skillId)) {
-						if(checkSkillType(this.getSkill(skillId).getSkillType(), isAttacker))
-						{
-							result.add(this.getSkill(skillId));
-						}
-					}
-				}
-			}
+			loadSkill(soldier.getSkills(), result, isAttacker);
 
 			int soldierType = soldier.getType();
 			if(barrackSkills.getSkills(soldierType) != null)
@@ -167,19 +182,7 @@ public class SkillService {
 		if(actionId > 0)
 		{
 			Action action = actionRepository.getOne(actionId);
-			String as = action.getSkills();
-			if (!StringUtils.isEmpty(as)) {
-				String[] d = StringUtils.split(as, ",");
-				for (int i = 0; i < d.length; i++) {
-					long skillId = Longs.tryParse(d[i]);
-					if (this.skills.containsKey(skillId)) {
-						if(checkSkillType(this.getSkill(skillId).getSkillType(), isAttacker))
-						{
-							result.add(this.getSkill(skillId));
-						}
-					}
-				}
-			}
+			loadSkill(action.getSkills(), result, isAttacker);
 			
 		}
 		
@@ -187,7 +190,10 @@ public class SkillService {
 			if (this.skills.containsKey(i)) {
 				if(checkSkillType(this.getSkill(i).getSkillType(), isAttacker))
 				{
-					result.add(this.getSkill(i));
+					if(this.getSkill(i) != null)
+					{
+						result.add(this.getSkill(i));
+					}
 				}
 			}
 		});
