@@ -158,7 +158,7 @@ function calculate()
 			var hit = Math.ceil(oneSoldierLife / soldierToSoldier);
 			var soldierKillSoldier = 0;
 			
-			while(soldierLeftCount > hit &&  dsl > oneSoldierLife)  
+			while(soldierLeftCount >= hit &&  dsl > oneSoldierLife)  
 			{
 				dsl -= oneSoldierLife;
 				soldierKillSoldier++;
@@ -180,7 +180,7 @@ function calculate()
 					var hit = Math.ceil(oneSoldierLife / heroToSoldier);		
 					var heroKillSoldier = 0;
 					
-					while(heroLeftCount > hit &&  dsl > oneSoldierLife)  
+					while(heroLeftCount >= hit &&  dsl > oneSoldierLife)  
 					{
 						dsl -= oneSoldierLife;
 						heroKillSoldier++;
@@ -201,7 +201,7 @@ function calculate()
 						heroKillSoldier++;
 						dsl =0;
 						var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
-						fightDetails+="<p"+c+">"+attacker["name"]+"用 <b>"+needHit+"</b> hit 干掉 <b>"+heroKillSoldier+"</b>"+defenderSoldier["name"]+"</p>";
+						fightDetails+="<p"+c+">"+attacker["name"]+"用 <b>"+(heroCount-heroLeftCount)+"</b> hit 干掉 <b>"+heroKillSoldier+"</b>"+defenderSoldier["name"]+"</p>";
 					}
 				}
 			} else

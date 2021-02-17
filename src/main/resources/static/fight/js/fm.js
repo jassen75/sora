@@ -36,16 +36,16 @@ var fm_inc_key = {};
 fm_inc_key["attackInc"] = "攻击";
 fm_inc_key["intelInc"] = "智力";
 fm_inc_key["lifeInc"] = "生命";
-fm_inc_key["physicDefInc"] = "防御";
-fm_inc_key["magicDefInc"] = "魔防";
+fm_inc_key["physicInc"] = "防御";
+fm_inc_key["magicInc"] = "魔防";
 fm_inc_key["criticalInc"] = "暴击概率";
 
 var fm_key = {};
 fm_key["attack"] = "攻击";
 fm_key["intel"] = "智力";
 fm_key["life"] = "生命";
-fm_key["physicDef"] = "防御";
-fm_key["magicDef"] = "魔防";
+fm_key["physic"] = "防御";
+fm_key["magic"] = "魔防";
 
 function parseCSV(data)
 {
@@ -124,8 +124,8 @@ function parseJT(obj)
 	 result["life"] = parseInt(temp[0]);
 	 result["attack"] = parseInt(temp[1]);
 	 result["intel"] = parseInt(temp[2]);
-	 result["physicDef"] = parseInt(temp[3]);
-	 result["magicDef"] = parseInt(temp[4]);
+	 result["physic"] = parseInt(temp[3]);
+	 result["magic"] = parseInt(temp[4]);
 	 result["tech"] = parseInt(temp[5]);
 	 return result;
 }
@@ -139,8 +139,8 @@ function parseJJC(obj1, obj2)
 	 result["life"] = parseInt(temp1[0]);
 	 result["attack"] = parseInt(temp1[1]);
 	 result["intel"] = parseInt(temp1[2]);
-	 result["physicDef"] = parseInt(temp1[3]);
-	 result["magicDef"] =parseInt( temp1[4]);
+	 result["physic"] = parseInt(temp1[3]);
+	 result["magic"] =parseInt( temp1[4]);
 	 result["tech"] = parseInt(temp1[5]);
 	 
 	 result["criticalProbInc"] = parseInt(temp2[0]);
@@ -173,14 +173,14 @@ function refreshTable()
 							gameData["jt"][i]["life"]+"</td><td>"+
 							gameData["jt"][i]["attack"]+"</td><td>"+
 							gameData["jt"][i]["intel"]+"</td><td>"+
-							gameData["jt"][i]["physicDef"]+"</td><td>"+
-							gameData["jt"][i]["magicDef"]+"</td><td>"+
+							gameData["jt"][i]["physic"]+"</td><td>"+
+							gameData["jt"][i]["magic"]+"</td><td>"+
 							gameData["jt"][i]["tech"]+"</td><td>"+
 							gameData["jjc"][i]["life"]+"</td><td>"+
 							gameData["jjc"][i]["attack"]+"</td><td>"+
 							gameData["jjc"][i]["intel"]+"</td><td>"+
-							gameData["jjc"][i]["physicDef"]+"</td><td>"+
-							gameData["jjc"][i]["magicDef"]+"</td><td>"+
+							gameData["jjc"][i]["physic"]+"</td><td>"+
+							gameData["jjc"][i]["magic"]+"</td><td>"+
 							gameData["jjc"][i]["tech"]+"</td><td>"+
 							gameData["jjc"][i]["criticalProbInc"]+"</td><td>"+
 							gameData["jjc"][i]["criticalDamageInc"]+"</td><td>"+
@@ -276,7 +276,7 @@ function generateHeroInc(hero, equip)
 	var techs = 0;
 
 	var fmTypeCount=[];
-	for(var i=0; i<12; i++)
+	for(var i=0; i<=13; i++)
 	{
 		fmTypeCount[i]=0;
 	}
@@ -312,21 +312,21 @@ function generateHeroInc(hero, equip)
 		{
 			intels = intels+fmInfo["intel"];
 		}
-		if(fmInfo["physicDefInc"])
+		if(fmInfo["physicInc"])
 		{
-			physicp += fmInfo["physicDefInc"];
+			physicp += fmInfo["physicInc"];
 		}
-		if(fmInfo["physicDef"])
+		if(fmInfo["physic"])
 		{
-			physics += fmInfo["physicDef"];
+			physics += fmInfo["physic"];
 		}
-		if(fmInfo["magicDefInc"])
+		if(fmInfo["magicInc"])
 		{
-			magicp += fmInfo["magicDefInc"];
+			magicp += fmInfo["magicInc"];
 		}
-		if(fmInfo["magicDef"])
+		if(fmInfo["magic"])
 		{
-			magics += fmInfo["magicDef"];
+			magics += fmInfo["magic"];
 		}
 		if(fmInfo["techInc"])
 		{
@@ -368,8 +368,6 @@ function generateHeroInc(hero, equip)
 			{
 				techs+=equip[i]["equipType"]["tech"];
 			}
-			
-			
 			if(equip[i]["lifeSkill"])
 			{
 				heroInc["lifeSkill"] += equip[i]["lifeSkill"];
@@ -397,29 +395,25 @@ function generateHeroInc(hero, equip)
 		}
 	}
 	
-	for(var i=0; i<12; i++)
+	for(var i=1; i<=13; i++)
 	{
-		if(i>=0 && i<=3 && fmTypeCount[i]>=2)
+		if(i>=1 && i<=5 && fmTypeCount[i]>=2)
 		{
 			attackp+=5;
 			intelp+=5;
 		}
-		if(i==4 && fmTypeCount[i]>=2)
-		{
-			attackp+=5;
-		}
-		if(i>=5 && i<=6 && fmTypeCount[i]>=2)
+		if(i>=6 && i<=7 && fmTypeCount[i]>=2)
 		{
 			heroInc["criticalProbInc"]+=7;
 		}
-		if(i>=7 && i<=9 && fmTypeCount[i]>=2)
+		if(i>=8 && i<=10 && fmTypeCount[i]>=2)
 		{
 			physicp+=5;
 			magicp+=5;
 		}
-		if(i>=10 && i<=12 && fmTypeCount[i]>=2)
+		if(i>=11 && i<=13 && fmTypeCount[i]>=2)
 		{
-			lifep+=5;
+			lifep+=10;
 		}
 		
 		if(fmTypeCount[i]==4)
@@ -427,19 +421,19 @@ function generateHeroInc(hero, equip)
 			heroInc["fmSkill"] = i;
 		}
 	}
-	
+	//alert(lifep+","+lifes+","+jt["life"]);
 	heroInc["lifeInc"]=Math.round(hero["life"]*lifep/100)+lifes+jt["life"];
 	heroInc["attackInc"]=Math.ceil(hero["attack"]*attackp/100)+attacks+jt["attack"];
 	heroInc["intelInc"]=Math.ceil(hero["intel"]*intelp/100)+intels+jt["intel"];
-	heroInc["physicDefInc"]=Math.ceil(hero["physicDef"]*physicp/100)+physics+jt["physicDef"];
-	heroInc["magicDefInc"]=Math.ceil(hero["magicDef"]*magicp/100)+magics+jt["magicDef"];
+	heroInc["physicDefInc"]=Math.ceil(hero["physicDef"]*physicp/100)+physics+jt["physic"];
+	heroInc["magicDefInc"]=Math.ceil(hero["magicDef"]*magicp/100)+magics+jt["magic"];
 	heroInc["techInc"]=Math.ceil(hero["tech"]*techp/100)+techs+jt["tech"];
 	
 	heroInc["lifeJJC"] = jjc["life"];
 	heroInc["attackJJC"] = jjc["attack"];
 	heroInc["intelJJC"] = jjc["intel"];
-	heroInc["physicDefJJC"] = jjc["physicDef"];
-	heroInc["magicDefJJC"] = jjc["magicDef"];
+	heroInc["physicDefJJC"] = jjc["physic"];
+	heroInc["magicDefJJC"] = jjc["magic"];
 	heroInc["techJJC"] = jjc["tech"];
 	
 	heroInc["criticalProbInc"] += jjc["criticalProbInc"];
