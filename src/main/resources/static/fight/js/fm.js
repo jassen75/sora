@@ -49,11 +49,12 @@ fm_key["magic"] = "魔防";
 
 function parseCSV(data)
 {
+
 	gameData["fm"] = {};
 	gameData["jt"] = {};
 	gameData["jjc"] = {};
 	gameData["equip"] = {};
-	var csvarry = data.split("\r\n");
+	var csvarry = data.split("\n");
      for(var i = 0; i<csvarry.length;i++){
      	
         var temp = csvarry[i].split(",");
@@ -101,6 +102,7 @@ function parseCSV(data)
         	gameData["equip"][id]["jewelry"]  = temp[16];
         }
     }
+
     refreshTable();
 }
 
@@ -291,6 +293,7 @@ function generateHeroInc(hero, equip)
 		if(fmInfo["lifeInc"])
 		{
 			lifep += fmInfo["lifeInc"];
+			//lifes += Math.round(hero["life"]*fmInfo["lifeInc"]/100);
 		}
 		if(fmInfo["life"])
 		{
@@ -299,6 +302,7 @@ function generateHeroInc(hero, equip)
 		if(fmInfo["attackInc"])
 		{
 			attackp = attackp+fmInfo["attackInc"];
+			//attacks += Math.round(hero["attack"]*fmInfo["attackInc"]/100);
 		}
 		if(fmInfo["attack"])
 		{
@@ -307,6 +311,7 @@ function generateHeroInc(hero, equip)
 		if(fmInfo["intelInc"])
 		{
 			intelp = intelp+fmInfo["intelInc"];
+			//intels += Math.round(hero["intel"]*fmInfo["intelInc"]/100);
 		}
 		if(fmInfo["intel"])
 		{
@@ -315,6 +320,7 @@ function generateHeroInc(hero, equip)
 		if(fmInfo["physicInc"])
 		{
 			physicp += fmInfo["physicInc"];
+			//physics += Math.round(hero["physicDef"]*fmInfo["physicInc"]/100);
 		}
 		if(fmInfo["physic"])
 		{
@@ -323,6 +329,7 @@ function generateHeroInc(hero, equip)
 		if(fmInfo["magicInc"])
 		{
 			magicp += fmInfo["magicInc"];
+			//magics += Math.round(hero["magicDef"]*fmInfo["magicInc"]/100);
 		}
 		if(fmInfo["magic"])
 		{
@@ -401,6 +408,8 @@ function generateHeroInc(hero, equip)
 		{
 			attackp+=5;
 			intelp+=5;
+			//attacks += Math.floor(hero["attack"]*5/100);
+			//intels += Math.floor(hero["intel"]*5/100);
 		}
 		if(i>=6 && i<=7 && fmTypeCount[i]>=2)
 		{
@@ -410,10 +419,14 @@ function generateHeroInc(hero, equip)
 		{
 			physicp+=5;
 			magicp+=5;
+			//physics += Math.floor(hero["physicDef"]*5/100);
+			//magics += Math.floor(hero["magicDef"]*5/100);
 		}
 		if(i>=11 && i<=13 && fmTypeCount[i]>=2)
 		{
 			lifep+=10;
+			//lifes += Math.floor(hero["life"]*10/100);
+			
 		}
 		
 		if(fmTypeCount[i]==4)
@@ -421,7 +434,6 @@ function generateHeroInc(hero, equip)
 			heroInc["fmSkill"] = i;
 		}
 	}
-	//alert(lifep+","+lifes+","+jt["life"]);
 	heroInc["lifeInc"]=Math.round(hero["life"]*lifep/100)+lifes+jt["life"];
 	heroInc["attackInc"]=Math.ceil(hero["attack"]*attackp/100)+attacks+jt["attack"];
 	heroInc["intelInc"]=Math.ceil(hero["intel"]*intelp/100)+intels+jt["intel"];

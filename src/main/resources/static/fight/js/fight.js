@@ -191,6 +191,8 @@ function buildHero(hero) {
 		attackerSoldier = undefined;
 		attackerHeroCriticalChecked = undefined;
 		attackerSoldierCriticalChecked = undefined;
+		attackerEquip = {};
+
 	} else
 	{
 		var role = "defender";
@@ -199,6 +201,7 @@ function buildHero(hero) {
 		defenderSoldier = undefined;
 		defenderHeroCriticalChecked = undefined;
 		defenderSoldierCriticalCheckede = undefined;
+		defenderEquip = {};
 	}
 	loadWeapon(hero["id"], role);
 }
@@ -504,10 +507,10 @@ function refreshAttacker() {
 		for(var i in equipPart )
 		{
 			var part = equipPart[i];
+			$("#attacker-"+equipPart[i]).children("div").remove();
 			if(attackerEquip[part])
 			{
 				var pic = $("<div><img src=\"/fight/image/equip_"+attackerEquip[equipPart[i]]["id"]+".png\" alt=\"\" width=\"60\" height=\"60\"></img><p>"+attackerEquip[equipPart[i]]["name"]+"</p></div>");
-				$("#attacker-"+equipPart[i]).children("div").remove();
 				pic.insertBefore($("#attacker-"+equipPart[i]+" > button"));			
 			} 
 		}
@@ -537,10 +540,10 @@ function refreshDefender() {
 		for(var i in equipPart )
 		{
 			var part = equipPart[i];
+			$("#defender-"+equipPart[i]).children("div").remove();
 			if(defenderEquip[part])
 			{
 				var pic = $("<div><img src=\"/fight/image/equip_"+defenderEquip[equipPart[i]]["id"]+".png\" alt=\"\" width=\"60\" height=\"60\"></img><p>"+defenderEquip[equipPart[i]]["name"]+"</p></div>");
-				$("#defender-"+equipPart[i]).children("div").remove();
 				pic.insertBefore($("#defender-"+equipPart[i]+" > button"));			
 			} 
 		}

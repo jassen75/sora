@@ -9,10 +9,11 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -58,9 +59,11 @@ public class Hero {
 	int tech;
 	
 	@ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+	@JoinTable(name="hero_soldiers",joinColumns={@JoinColumn(name="hero_id")},inverseJoinColumns={@JoinColumn(name="soldiers_id")})
 	Set<Soldier> soldiers;
 	
 	@ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)
+	@JoinTable(name="hero_actions",joinColumns={@JoinColumn(name="hero_id")},inverseJoinColumns={@JoinColumn(name="actions_id")})
 	Set<Action> actions;
 	
 //	@ManyToMany(cascade=CascadeType.MERGE, fetch=FetchType.LAZY)

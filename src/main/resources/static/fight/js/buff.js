@@ -21,6 +21,7 @@ function calculatePanel()
 		var ti = attacker["techSkill"];
 		
 		var di = 0;
+		var dd = 0;
 		var pdd = 0;
 		var mdd = 0;
 		var counters = [];
@@ -129,8 +130,9 @@ function calculatePanel()
 								damageDecBasic = Math.max(damageDncBasic, buffs[j]["number"]);
 							}else
 							{
-								pdd = pdd+buffs[j]["number"];
-								mdd = mdd+buffs[j]["number"];
+								//pdd = pdd+buffs[j]["number"];
+								//mdd = mdd+buffs[j]["number"];
+								dd = dd+buffs[j]["number"];
 							}
 						}
 						
@@ -169,10 +171,8 @@ function calculatePanel()
 						{
 							cdd = cdd+buffs[j]["number"];
 						}
-						
 						if(buffs[j]["buffType"]=="PreBattleDamage")
 						{
-							
 							preBattleDamage = preBattleDamage+buffs[j]["number"];							
 						}
 						if(buffs[j]["buffType"]=="PostBattleDamage")
@@ -199,8 +199,7 @@ function calculatePanel()
 			mi = mi+magicDefBasic;
 			lii=lii+lifeBasic+40;  //jjc inc =0.4
 			di = di+damageIncBasic;
-			pdd = pdd+damageDecBasic;
-			mdd = mdd+damageDecBasic;
+			dd = dd+damageDecBasic;
 			ti = ti+techBasic;
 
 			fightInfo["attackerAttack"] = Math.floor(attack*(1+ai/100.0)+attacker["attackJJC"]);
@@ -212,6 +211,7 @@ function calculatePanel()
 			fightInfo["attackerDamageInc"] = di;
 			fightInfo["attackerPhysicDamageDec"] = pdd;
 			fightInfo["attackerMagicDamageDec"] = mdd;		
+			fightInfo["attackerDamageDec"] = dd;
 			
 			fightInfo["attackerCriticalProbInc"] = cpi;	
 			fightInfo["attackerCriticalProbDec"] = cpd;	
@@ -251,8 +251,9 @@ function calculatePanel()
 				detail+="<b>"+attackerAction["name"]+"</b>&nbsp;&nbsp;&nbsp;<b>"+attackerAction["coefficient"]+"倍</b></p>";
 			}
 			
-			detail+="<p>增伤："+fightInfo["attackerDamageInc"]+
-			"&nbsp;&nbsp;&nbsp;物理减伤："+fightInfo["attackerPhysicDamageDec"]+
+			detail+="<p><b>增伤："+fightInfo["attackerDamageInc"]+
+			"</b>&nbsp;&nbsp;&nbsp;<b>减伤："+fightInfo["attackerDamageDec"]+
+			"</b>&nbsp;&nbsp;&nbsp;物理减伤："+fightInfo["attackerPhysicDamageDec"]+
 			"&nbsp;&nbsp;&nbsp;魔法减伤："+fightInfo["attackerMagicDamageDec"]+
 			"&nbsp;&nbsp;&nbsp;技巧："+fightInfo["attackerTech"]+"</p><p>" + 
 			"暴击："+fightInfo["attackerCriticalProbInc"]+
@@ -282,6 +283,7 @@ function calculatePanel()
 		var ti = defender["techSkill"];
 		
 		var di = 0;
+		var dd = 0;
 		var pdd = 0;
 		var mdd = 0;
 		var counters = [];
@@ -394,8 +396,9 @@ function calculatePanel()
 								damageDecBasic = Math.max(damageDncBasic, buffs[j]["number"]);
 							}else
 							{
-								pdd = pdd+buffs[j]["number"];
-								mdd = mdd+buffs[j]["number"];
+								//pdd = pdd+buffs[j]["number"];
+								//mdd = mdd+buffs[j]["number"];
+								dd = dd+buffs[j]["number"];
 							}
 						}
 						if(buffs[j]["buffType"]=="PhysicDamageDec")
@@ -462,8 +465,7 @@ function calculatePanel()
 			mi = mi+magicDefBasic;
 			lii=lii+lifeBasic+40;  //jjc inc =0.4
 			di = di+damageIncBasic;
-			pdd = pdd+damageDecBasic;
-			mdd = mdd+damageDecBasic;
+			dd = dd+damageDecBasic;
 			ti = ti+techBasic;
 			
 			fightInfo["defenderAttack"] = Math.floor(attack*(1+ai/100.0)+defender["attackJJC"]);
@@ -475,6 +477,7 @@ function calculatePanel()
 			fightInfo["defenderDamageInc"] = di;
 			fightInfo["defenderPhysicDamageDec"] = pdd;
 			fightInfo["defenderMagicDamageDec"] = mdd;
+			fightInfo["defenderDamageDec"] = dd;
 			fightInfo["defenderCriticalProbInc"] = cpi;	
 			fightInfo["defenderCriticalProbDec"] = cpd;	
 			fightInfo["defenderCriticalDamageInc"] = cdi;	
@@ -503,8 +506,9 @@ function calculatePanel()
 			$("#defenderMagicDef").attr("value", fightInfo["defenderMagicDef"]);
 			$("#defenderLife").attr("value", fightInfo["defenderLife"]);
 						
-			$("#defenderDetail").html("<p>增伤："+fightInfo["defenderDamageInc"]+
-					"&nbsp;&nbsp;&nbsp;物理减伤："+fightInfo["defenderPhysicDamageDec"]+
+			$("#defenderDetail").html("<p><b>增伤："+fightInfo["defenderDamageInc"]+
+					"</b>&nbsp;&nbsp;&nbsp;<b>减伤："+fightInfo["defenderDamageDec"]+
+					"</b>&nbsp;&nbsp;&nbsp;物理减伤："+fightInfo["defenderPhysicDamageDec"]+
 					"&nbsp;&nbsp;&nbsp;魔法减伤："+fightInfo["defenderMagicDamageDec"]+
 					"&nbsp;&nbsp;&nbsp;技巧："+fightInfo["defenderTech"]+"</p><p>" +
 					"暴击："+fightInfo["defenderCriticalProbInc"]+
@@ -527,6 +531,7 @@ function calculatePanel()
 		var mi  = 0;
 		var lii = 0;
 		var di = 0;
+		var dd = 0;
 		var pdd = 0;
 		var mdd = 0;
 		var counters = [];
@@ -614,8 +619,9 @@ function calculatePanel()
 								damageDecBasic = Math.max(damageDncBasic, buffs[j]["number"]);
 							}else
 							{
-								pdd = pdd+buffs[j]["number"];
-								mdd = mdd+buffs[j]["number"];
+								//pdd = pdd+buffs[j]["number"];
+								//mdd = mdd+buffs[j]["number"];
+								dd = dd+buffs[j]["number"];
 							}
 						}
 						if(buffs[j]["buffType"]=="PhysicDamageDec")
@@ -670,8 +676,7 @@ function calculatePanel()
 			mi = mi+magicDefBasic;
 			lii=lii+lifeBasic+40;  //jjc inc =0.4
 			di = di+damageIncBasic;
-			pdd = pdd+damageDecBasic;
-			mdd = mdd+damageDecBasic;
+			dd = dd+damageDecBasic;
 			
 			var attackPanel = Math.floor(attack*(1+ai/100.0));
 			var physicDefPanel = Math.floor(physicDef*(1+pi/100.0));
@@ -684,6 +689,7 @@ function calculatePanel()
 			fightInfo["attackerSoldierLife"]=lifePanel;
 			
 			fightInfo["attackerSoldierDamageInc"] = di;
+			fightInfo["attackerSoldierDamageDec"] = dd;
 			fightInfo["attackerSoldierPhysicDamageDec"] = pdd;
 			fightInfo["attackerSoldierMagicDamageDec"] = mdd;
 			
@@ -703,8 +709,9 @@ function calculatePanel()
 		}
 		$("#attacker-soldier-information").html("<p><b>"+attackerSoldier["name"]+"</b></p><p>攻击："+fightInfo["attackerSoldierAttack"]+"&nbsp;&nbsp;&nbsp;防御："+
 		fightInfo["attackerSoldierPhysicDef"]+"&nbsp;&nbsp;&nbsp;魔防："+fightInfo["attackerSoldierMagicDef"]+"</p><p>生命："+fightInfo["attackerSoldierLife"]+
-		"&nbsp;&nbsp;&nbsp;增伤:"+fightInfo["attackerSoldierDamageInc"]+
-		"&nbsp;&nbsp;&nbsp;物理减伤:"+fightInfo["attackerSoldierPhysicDamageDec"]+
+		"&nbsp;&nbsp;&nbsp;<b>增伤:"+fightInfo["attackerSoldierDamageInc"]+
+		"</b>&nbsp;&nbsp;&nbsp;<b>减伤:"+fightInfo["attackerSoldierDamageDec"]+
+		"</b>&nbsp;&nbsp;&nbsp;物理减伤:"+fightInfo["attackerSoldierPhysicDamageDec"]+
 		"&nbsp;&nbsp;&nbsp;魔法减伤:"+fightInfo["attackerSoldierMagicDamageDec"]+"</p><p>"+
 		"暴击："+fightInfo["attackerSoldierCriticalProbInc"]+
 		"&nbsp;&nbsp;&nbsp;暴伤："+fightInfo["attackerSoldierCriticalDamageInc"]+
@@ -725,6 +732,7 @@ function calculatePanel()
 		var mi  = 0;
 		var lii = 0;
 		var di = 0;
+		var dd = 0;
 		var pdd = 0;
 		var mdd = 0;
 		var counters = [];
@@ -811,8 +819,9 @@ function calculatePanel()
 								damageDecBasic = Math.max(damageDncBasic, buffs[j]["number"]);
 							}else
 							{
-								pdd = pdd+buffs[j]["number"];
-								mdd = mdd+buffs[j]["number"];
+								//pdd = pdd+buffs[j]["number"];
+								//mdd = mdd+buffs[j]["number"];
+								dd = dd+buffs[j]["number"];
 							}
 						}
 						if(buffs[j]["buffType"]=="PhysicDamageDec")
@@ -868,8 +877,7 @@ function calculatePanel()
 			mi = mi+magicDefBasic;
 			lii=lii+lifeBasic+40;  //jjc inc =0.4
 			di = di+damageIncBasic;
-			pdd = pdd+damageDecBasic;
-			mdd = mdd+damageDecBasic;
+			dd = dd+damageDecBasic;
 			
 			var attackPanel = Math.floor(attack*(1+ai/100.0));
 			var physicDefPanel = Math.floor(physicDef*(1+pi/100.0));
@@ -881,6 +889,7 @@ function calculatePanel()
 			fightInfo["defenderSoldierMagicDef"]=magicDefPanel;
 			fightInfo["defenderSoldierLife"]=lifePanel;
 			fightInfo["defenderSoldierDamageInc"] = di;
+			fightInfo["defenderSoldierDamageDec"] = dd;
 			fightInfo["defenderSoldierPhysicDamageDec"] = pdd;
 			fightInfo["defenderSoldierMagicDamageDec"] = mdd;
 			fightInfo["defenderSoldierCriticalProbInc"] = cpi;	
@@ -899,7 +908,9 @@ function calculatePanel()
 		}
 		$("#defender-soldier-information").html("<p><b>"+defenderSoldier["name"]+"</b></p><p>攻击："+fightInfo["defenderSoldierAttack"]+"&nbsp;&nbsp;&nbsp;防御："+
 		fightInfo["defenderSoldierPhysicDef"]+"&nbsp;&nbsp;&nbsp;魔防："+fightInfo["defenderSoldierMagicDef"]+"</p><p>生命："+fightInfo["defenderSoldierLife"]+
-		"&nbsp;&nbsp;&nbsp;增伤:"+fightInfo["defenderSoldierDamageInc"]+"&nbsp;&nbsp;&nbsp;物理减伤:"+fightInfo["defenderSoldierPhysicDamageDec"]+
+		"&nbsp;&nbsp;&nbsp;<b>增伤:"+fightInfo["defenderSoldierDamageInc"]+
+		"</b>&nbsp;&nbsp;&nbsp;<b>减伤:"+fightInfo["defenderSoldierDamageInc"]+
+		"</b>&nbsp;&nbsp;&nbsp;物理减伤:"+fightInfo["defenderSoldierPhysicDamageDec"]+
 		"&nbsp;&nbsp;&nbsp;魔法减伤:"+fightInfo["defenderSoldierMagicDamageDec"]+"</p><p>"+
 		"暴击："+fightInfo["defenderSoldierCriticalProbInc"]+
 		"&nbsp;&nbsp;&nbsp;暴伤："+fightInfo["defenderSoldierCriticalDamageInc"]+
