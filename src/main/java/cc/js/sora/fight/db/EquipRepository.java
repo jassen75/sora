@@ -11,5 +11,11 @@ public interface EquipRepository extends JpaRepository<Equip, Long> {
 	
 	@Query("from Equip r where r.equipType.id=?1")
 	List<Equip> findByType(long equipType);
+	
+	
+	
+	@Query("from Equip r where r.owner=?1")
+	List<Equip> findByOwner(long heroId);
+
 
 }

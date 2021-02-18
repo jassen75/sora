@@ -49,5 +49,7 @@ public class Equip {
 	
 	@Column(name="skills")
 	String skills;
-
+	
+	@Column(name="owner")
+	long owner;
 }

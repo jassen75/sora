@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -207,9 +208,15 @@ public class FightController {
 				if (et.getPart() == part) {
 					List<Equip> el = equipRepository.findByType(et.getId());
 					if (el != null) {
-						result.addAll(el);
+						result.addAll(el.stream().filter(e->e.getOwner()==0).collect(Collectors.toList()));
 					}
 				}
+			}
+			
+			List<Equip> ow = equipRepository.findByOwner(heroId);
+			if(ow != null && ow.size()>0)
+			{
+				result.add(ow.get(0));
 			}
 			return result;
 		} catch (Exception ex) {
