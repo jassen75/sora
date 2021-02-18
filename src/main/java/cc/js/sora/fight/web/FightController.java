@@ -216,7 +216,10 @@ public class FightController {
 			List<Equip> ow = equipRepository.findByOwner(heroId);
 			if(ow != null && ow.size()>0)
 			{
-				result.add(ow.get(0));
+				if(ow.get(0).getEquipType().getPart()==part)
+				{
+					result.add(ow.get(0));
+				}
 			}
 			return result;
 		} catch (Exception ex) {
