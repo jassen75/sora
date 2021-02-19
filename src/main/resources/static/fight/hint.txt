@@ -15,15 +15,19 @@ attacker/defender(FightRole?)
 ---> load validated skill   
 
 attacker/defender 
-     hero skill-list                 useConditionChecked  -> (fightInfo["attacker"]["useConditionChecked"])
+     hero skill-list first time      useConditionChecked  -> (fightInfo["attacker"]["useConditionChecked"])
      
 ---> caculate buffs                  hero panel               (fightInfo["attacker"])
-                                     heroCriticalChecked       fightInfo["attacker"]["heroCriticalChecked"]
-                                     soldierCriticalChecked    fightInfo["attacker"]["soldierCriticalChecked"]
+                                     
      
      
+     
+     
+      hero skill-list  second time 
+---> caculate buffs                  hero panel               (fightInfo["attacker"])      
      
      
      
 --->     action list (game data)  -> choose ->                (fightInfo["attacker"]["action"])
-     
+         critical                    heroCriticalChecked       fightInfo["attacker"]["heroCriticalChecked"]
+                                     soldierCriticalChecked    fightInfo["attacker"]["soldierCriticalChecked"]
