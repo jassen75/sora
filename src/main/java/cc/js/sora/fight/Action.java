@@ -51,4 +51,7 @@ public class Action {
 	@JsonProperty("isPhysic")
 	@Column(name="is_physic")
 	boolean isPhysic;
+	
+	//1 battle 2 aoe 3 fix damage
+	int battleType;
 }

@@ -163,7 +163,7 @@ function calculate()
 				dsl -= oneSoldierLife;
 				soldierKillSoldier++;
 				soldierLeftCount -= hit;
-				//fightDetails+="<p>dsl=="+dsl+"   soldierKillSoldier=="+soldierKillSoldier+"</p>";
+				fightDetails+="<p>dsl=="+dsl+"   soldierKillSoldier=="+soldierKillSoldier+"</p>";
 			}
 
 			// left many soldier
@@ -185,6 +185,7 @@ function calculate()
 						dsl -= oneSoldierLife;
 						heroKillSoldier++;
 						heroLeftCount -= hit;
+						fightDetails+="<p>dsl=="+dsl+"   heroKillSoldier=="+heroKillSoldier+"</p>";
 					}
 					
 					// soldier left

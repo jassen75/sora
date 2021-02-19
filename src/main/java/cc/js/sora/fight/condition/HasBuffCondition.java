@@ -1,5 +1,7 @@
 package cc.js.sora.fight.condition;
 
+import cc.js.sora.fight.FightInfo;
+
 public class HasBuffCondition implements UserCondition {
 	
 	@Override
@@ -15,6 +17,12 @@ public class HasBuffCondition implements UserCondition {
 	@Override
 	public String getName() {
 		return "hasbuff";
+	}
+
+	@Override
+	public boolean valid(FightInfo fightInfo, boolean isAttack) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

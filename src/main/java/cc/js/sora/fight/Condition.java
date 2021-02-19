@@ -6,6 +6,8 @@ public interface Condition {
 //	public int getId();
 //	
 	public String getDesc();
+	
+	public boolean valid(FightInfo fightInfo, boolean isAttack);
 //	
 //	public boolean valid();
 //	

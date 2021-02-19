@@ -14,15 +14,23 @@ import lombok.ToString;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class FightInfo {
+public class PanelInfo {
 	
+	int life;
+	int attack;
+	int intel;
+	int physic;
+	int magic;
+	int tech;
 	
-	FightRole attacker;
-	FightRole defender;
+	int criticalProbInc;
+	int criticalProbDecc;
+	int criticalDamageInc;
+	int criticalDamageDnc;
 	
-	public FightRole getRole(boolean isAttack)
-	{
-		return isAttack ? attacker : defender;
-	}
-
+	int damageInc;
+	int physicDamageDec;
+	int magicDamageDec;
+	
+	Map<String, Object> effects;
 }

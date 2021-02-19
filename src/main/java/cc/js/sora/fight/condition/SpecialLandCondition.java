@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Land;
 
 public class SpecialLandCondition implements LandCondition {
@@ -34,6 +35,12 @@ public class SpecialLandCondition implements LandCondition {
 	@Override
 	public boolean valid(Land land) {
 		return lands.stream().anyMatch(l -> l==land);
+	}
+
+	@Override
+	public boolean valid(FightInfo fightInfo, boolean isAttack) {
+		// TODO Auto-generated method stub
+		return this.valid(fightInfo.getRole(isAttack).getLand());
 	}
 
 }

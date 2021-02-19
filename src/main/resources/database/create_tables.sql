@@ -231,13 +231,13 @@ INSERT INTO hero_soldiers(hero_id, soldiers_id) VALUES
 (62,5),(63,4),(64,10),(66,16),(68,3),(69,23),(72,1),(74,17),(75,10),(76,15),(81,23),
 (91,12);
 
-INSERT INTO action(id, name, coefficient, direct, range,  hit_time, is_physic, skills) VALUES 
-(10001,'物理普攻',1,0,0,1500,1,''),
-(10002,'魔法普攻',1,0,0,1500,0,''),
-(1,'嗜梦',1.5,0,2,500,0,'1601'),
-(2,'绝命一击',1.4,1,2,300,1,'1602'),
-(3,'优势打击',1.5,0,1,1300,1,'1603'),
-(4,'自由之刃',1.4,0,1,1300,1,'1604')
+INSERT INTO action(id, name, coefficient, direct, range,  hit_time, is_physic ,battle_type, skills) VALUES 
+(10001,'物理普攻',1,0,0,1500,1,1,''),
+(10002,'魔法普攻',1,0,0,1500,0,1,''),
+(1,'嗜梦',1.5,0,2,500,0,1,'1601'),
+(2,'绝命一击',1.4,1,2,300,1,1,'1602'),
+(3,'优势打击',1.5,0,1,1300,1,1,'1603'),
+(4,'自由之刃',1.4,0,1,1300,1,1,'1604')
 ;
 
 INSERT INTO hero_actions(hero_id, actions_id) VALUES
