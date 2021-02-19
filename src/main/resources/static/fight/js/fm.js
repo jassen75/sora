@@ -158,11 +158,11 @@ function refreshTable()
 	
 	for(var i in gameData["fm"]){
 		
-		var tr = $("<tr><td>"+gameData["fm"][i]["name"]+"</td><td>"+
-							displayFM(gameData["fm"][i]["weapon"])+"</td><td>"+
-							displayFM(gameData["fm"][i]["armor"])+"</td><td>"+
-							displayFM(gameData["fm"][i]["helmet"])+"</td><td>"+
-							displayFM(gameData["fm"][i]["jewelry"])+"</td></tr>");
+		var tr = $("<tr><td>"+gameData["fm"][i]["name"]+"</td><td><div><img src=\"/fight/image/equip_"+gameData["equip"][i]["weapon"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
+							displayFM(gameData["fm"][i]["weapon"])+"</div></td><td><div><img src=\"/fight/image/equip_"+gameData["equip"][i]["armor"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
+							displayFM(gameData["fm"][i]["armor"])+"</div></td><td><div><img src=\"/fight/image/equip_"+gameData["equip"][i]["helmet"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
+							displayFM(gameData["fm"][i]["helmet"])+"</div></td><td><div><img src=\"/fight/image/equip_"+gameData["equip"][i]["jewelry"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
+							displayFM(gameData["fm"][i]["jewelry"])+"</div></td></tr>");
 		
 	  	tr.appendTo($("#fm_info > tbody"));
     }
@@ -235,7 +235,7 @@ function displayFM(fm)
 		}
 		result += "&nbsp;&nbsp;";
 	}
-	
+	//result+="</b>"
 	return result;
 }
 
