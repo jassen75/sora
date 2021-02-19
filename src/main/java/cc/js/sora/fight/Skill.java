@@ -17,15 +17,17 @@ public abstract class Skill {
 
 	public abstract Condition getCondition();
 
-	public abstract List<Buff> getBuffs();
+	//public abstract List<Buff> getBuffs();
+	
+	public abstract List<Effect> getEffects();
 	
 	//1 hero 2 soldier 3 all 4 enemy hero 5 enemy soldier 6 enemy all
 	public abstract Scope getScope();
 
-    public List<String> getEffects()
-    {
-    	return Lists.newArrayList();
-    }
+//    public List<String> getEffects()
+//    {
+//    	return Lists.newArrayList();
+//    }
     
     public void process(Fight fight, boolean isAttack)
     {
@@ -58,10 +60,10 @@ public abstract class Skill {
 			}
 		}
 		
-		if(this.getBuffs().size()>0)
+		if(this.getEffects().size()>0)
 		{
 			//this.getBuffs().stream().forEach(buff->sb.append(","+buff.getTitle()));
-			sb.append(StringUtils.join(this.getBuffs().stream().map(b->b.getTitle()).toArray(), "，"));
+			sb.append(StringUtils.join(this.getEffects().stream().map(b->b.toString()).toArray(), "，"));
 		}
 		
 		if(StringUtils.isNotEmpty(description()))

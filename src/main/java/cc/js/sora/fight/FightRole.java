@@ -1,5 +1,6 @@
 package cc.js.sora.fight;
 
+import java.util.List;
 import java.util.Map;
 
 import lombok.AllArgsConstructor;
@@ -31,5 +32,6 @@ public class FightRole {
 	
 	Action action;
 	
-	
+	List<Buff> buffList;
+	List<Debuff> debuffList;
 }

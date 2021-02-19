@@ -1,17 +1,13 @@
 package cc.js.sora.fight;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import java.util.List;
+import java.util.Map;
 
-@Setter
-@Getter
-@AllArgsConstructor
-@ToString
-public class Effect {
+public interface Effect {
 	
-	//1 enhance  
-	int type;
+	public EffectType getEffectType();
 
+	public List<Enhance> getEnhanceList();
+	
+	public Map<String, Object> getFeatures();
 }
