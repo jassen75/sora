@@ -1,6 +1,6 @@
 package cc.js.sora.fight.condition.health;
 
-public class FullHealthCondition implements ForceHealthCondition {
+public class FullHealthCondition extends ForceHealthCondition {
 	
 
 	@Override

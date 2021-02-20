@@ -1,6 +1,6 @@
 package cc.js.sora.fight.condition.health;
 
-public class LessEqualHealthCondition implements ForceHealthCondition  {
+public class LessEqualHealthCondition extends ForceHealthCondition  {
 	
 	int percent;
 	public LessEqualHealthCondition(int percent)

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cc.js.sora.fight.Condition;
+import cc.js.sora.fight.FightInfo;
 
 public class CombinedCondition implements Condition {
 
@@ -28,6 +29,12 @@ public class CombinedCondition implements Condition {
 		}
 		
 		return sb.toString();
+	}
+
+	@Override
+	public boolean valid(FightInfo fightInfo, boolean isAttack) {
+		// TODO Auto-generated method stub
+		return getConditions().stream().allMatch(c->c.valid(fightInfo, isAttack));
 	}
 	
 	

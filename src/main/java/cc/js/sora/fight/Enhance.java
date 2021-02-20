@@ -3,20 +3,16 @@ package cc.js.sora.fight;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang3.StringUtils;
-
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Setter
 @Getter
 @AllArgsConstructor
-@ToString
 public class Enhance implements Effect{
 	
 	

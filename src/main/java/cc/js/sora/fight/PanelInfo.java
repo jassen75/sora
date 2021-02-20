@@ -1,6 +1,5 @@
 package cc.js.sora.fight;
 
-import java.util.List;
 import java.util.Map;
 
 import lombok.AllArgsConstructor;
@@ -32,5 +31,23 @@ public class PanelInfo {
 	int physicDamageDec;
 	int magicDamageDec;
 	
-	Map<String, Object> effects;
+	Map<String, Object> features;
+	
+	
+	int lifeInc;
+	int attackInc;
+	int intelInc;
+	int physicInc;
+	int magicInc;
+	int techInc;
+	
+	int lifeJJC;
+	int attackJJC;
+	int intelJJC;
+	
+	int physicJJC;
+	int magicJJC;
+	int techJJC;
+	
+	int preBattleDamage;
 }

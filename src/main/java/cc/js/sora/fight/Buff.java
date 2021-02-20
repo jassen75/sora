@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import lombok.Getter;
@@ -23,6 +24,12 @@ public class Buff implements Effect {
 		
 	}
 	
+	public Buff(BuffType bufftType, int number)
+	{
+		this.name = bufftType.name();
+		this.enhanceList = Lists.newArrayList(new Enhance(bufftType, number));
+		
+	}
 	List<Enhance> enhanceList;
 	String name;
 	@Override

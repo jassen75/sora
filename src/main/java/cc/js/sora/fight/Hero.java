@@ -43,14 +43,14 @@ public class Hero {
 	@Column(name="attack")
 	int attack;
 	
-	@Column(name="physic_def")
-	int physicDef;
+	@Column(name="physic")
+	int physic;
 	
 	@Column(name="life")
 	int life;
 	
-	@Column(name="magic_def")
-	int magicDef;
+	@Column(name="magic")
+	int magic;
 	
 	@Column(name="intel")
 	int intel;
@@ -75,11 +75,11 @@ public class Hero {
 	@Column(name="soldier_attack_inc")
 	int soldierAttackInc;
 	
-	@Column(name="soldier_physic_def_inc")
-	int soldierPhysicDefInc;
+	@Column(name="soldier_physic_inc")
+	int soldierPhysicInc;
 	
-	@Column(name="soldier_magic_def_inc")
-	int soldierMagicDefInc;
+	@Column(name="soldier_magic_inc")
+	int soldierMagicInc;
 	
 	@Column(name="soldier_life_inc")
 	int soldierLifeInc;

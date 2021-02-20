@@ -4,10 +4,12 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import cc.js.sora.fight.Buff;
 import cc.js.sora.fight.Condition;
-import cc.js.sora.fight.Effects;
+import cc.js.sora.fight.Effect;
+import cc.js.sora.fight.Feature;
+import cc.js.sora.fight.Features;
 import cc.js.sora.fight.Fight;
+import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.NoCondition;
@@ -33,20 +35,15 @@ public class Xunzhang extends Skill{
 	}
 
 	@Override
-	public List<Buff> getBuffs() {
-		return Lists.newArrayList();
-	}
-
-	@Override
 	public Scope getScope() {
 		// TODO Auto-generated method stub
 		return Scope.All;
 	}
 	
 	@Override
-    public List<String> getEffects()
+    public List<Effect> getEffects()
     {
-    	return Lists.newArrayList(Effects.ImmuneToFixedDamage);
+    	return Lists.newArrayList(new Feature(Features.ImmuneToFixedDamage, true, "免疫固伤"));
     }
 	
 	@Override
@@ -56,16 +53,9 @@ public class Xunzhang extends Skill{
     }
 	
 	@Override
-    public void process(Fight fight, boolean isAttack)
+    public void process(FightInfo fight, boolean isAttack)
     {
-		if(isAttack)
-		{
-			fight.getAttackerEffects().add(Effects.ImmuneToFixedDamage);
-		} else
-		{
-			fight.getDefenderEffects().add(Effects.ImmuneToFixedDamage);
-		}
-    	
+		fight.getRole(isAttack).getHeroPanel().getFeatures().put(Features.ImmuneToFixedDamage, true);
     }
 	
 	@Override

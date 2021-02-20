@@ -137,11 +137,10 @@ public class SkillService {
 		}
 	}
 	
-	public List<Skill> getSkills(long heroId, long soldierId, long actionId, int enhance, Map<String, Equip> equips,  boolean isAttacker) {
+	public List<Skill> getSkills(Hero hero, Soldier soldier, long actionId, int enhance, Map<String, Equip> equips,  boolean isAttacker) {
 		List<Skill> result = new ArrayList<Skill>();
-		if(heroId > 0)
+		if(hero != null)
 		{
-			Hero hero = heroRepository.getOne(heroId);
 			loadSkill(hero.getSkills(), result, isAttacker);
 		}
 		
@@ -166,9 +165,8 @@ public class SkillService {
 			}
 		}
 		
-		if(soldierId > 0) 
+		if(soldier != null) 
 		{
-			Soldier soldier = soldierRepository.getOne(soldierId);
 			loadSkill(soldier.getSkills(), result, isAttacker);
 
 			int soldierType = soldier.getType();

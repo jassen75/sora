@@ -1,6 +1,9 @@
 package cc.js.sora.fight.condition;
 
-public class EnemyHasDebuffCondition implements UserCondition{
+import cc.js.sora.fight.Condition;
+import cc.js.sora.fight.FightInfo;
+
+public class EnemyHasDebuffCondition implements Condition {
 	
 	@Override
 	public String getDesc() {
@@ -8,13 +11,9 @@ public class EnemyHasDebuffCondition implements UserCondition{
 	}
 
 	@Override
-	public boolean defaultValid() {
-		return false;
-	}
-
-	@Override
-	public String getName() {
-		return "hasdebuff";
+	public boolean valid(FightInfo fightInfo, boolean isAttack) {
+		
+		return fightInfo.getEnemyRole(isAttack).getDebuffList()!= null && fightInfo.getEnemyRole(isAttack).getDebuffList().size() > 0;
 	}
 
 }

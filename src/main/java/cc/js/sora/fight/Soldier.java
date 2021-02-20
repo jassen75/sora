@@ -34,14 +34,14 @@ public class Soldier {
 	@Column(name="attack")
 	int attack;
 	
-	@Column(name="physic_def")
-	int physicDef;
+	@Column(name="physic")
+	int physic;
 	
 	@Column(name="life")
 	int life;
 	
-	@Column(name="magic_def")
-	int magicDef;
+	@Column(name="magic")
+	int magic;
 
 	@Column(name="skills")
 	String skills;

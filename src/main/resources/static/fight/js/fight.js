@@ -1,3 +1,5 @@
+var fightInfo = {};
+
 // session info
 var attacker;
 var defender;
@@ -10,7 +12,7 @@ var defenderUserConditions;
 var isAttacker = 1;
 
 // user input
-var fightInfo = {};
+
 var attackerUserConditionChecked = {};
 var defenderUserConditionChecked = {};
 var attackerHeroCriticalChecked;
@@ -22,7 +24,7 @@ var attackerEquip = {};
 var defenderEquip = {};
 
 // game data
-var gameData = {};
+var userData = {};
 var lands = {
 	"Flat" : "平地",
 	"Water" : "水",
@@ -64,16 +66,7 @@ $(document).ready(function() {
 
 		});
 
-function buildHeroPics(data) {
-	$("#hero_pics").children("div").remove();
-	for (var j = 0; j < data.length; j++) {
-		var pic = $("<div onclick=\"chooseHero(" + data[j]["id"]
-				+ ")\" class=\"hero_pic\"><img src=\"/fight/image/"
-				+ data[j]["id"]
-				+ ".png\" alt=\"\" width=\"60\" height=\"86\"></img></div>");
-		pic.appendTo($("#hero_pics"));
-	}
-}
+
 
 function loadHeroData() {
 	$.ajax({
@@ -88,86 +81,15 @@ function loadHeroData() {
 			});
 }
 
-function buildFight() {
-	var request = {
-
-	};
-	if (attacker) {
-		request["attackerHeroId"] = attacker["id"];
-		if(attacker["fmSkill"])
-		{
-			request["attackerEnhance"] = attacker["fmSkill"];
-		} else
-		{
-			request["attackerEnhance"] = 0;
-		}
+function buildHeroPics(data) {
+	$("#hero_pics").children("div").remove();
+	for (var j = 0; j < data.length; j++) {
+		var pic = $("<div onclick=\"chooseHero(" + data[j]["id"]
+				+ ")\" class=\"hero_pic\"><img src=\"/fight/image/"
+				+ data[j]["id"]
+				+ ".png\" alt=\"\" width=\"60\" height=\"86\"></img></div>");
+		pic.appendTo($("#hero_pics"));
 	}
-	if (defender) {
-		request["defenderHeroId"] = defender["id"];
-		if(defender["fmSkill"])
-		{
-			request["defenderEnhance"] = defender["fmSkill"];
-		} else
-		{
-			request["defenderEnhance"] = 0;
-		}
-	}
-	if (attackerSoldier) {
-		request["attackerSoldierId"] = attackerSoldier["id"];
-	}
-	if (defenderSoldier) {
-		request["defenderSoldierId"] = defenderSoldier["id"];
-	}
-
-	if (attackerAction) {
-		request["attackerActionId"] = attackerAction["id"];
-	}
-	
-	if(attackerEquip) {
-		request["attackerEquip"] = attackerEquip;
-	}
-	
-	if(defenderEquip) {
-		request["defenderEquip"] = defenderEquip;
-	}
-	request["attackerUserConditionChecked"] = attackerUserConditionChecked;
-	request["defenderUserConditionChecked"] = defenderUserConditionChecked;
-
-	fightInfo["attackerHeroLeftLife"] = fightInfo["attackerLife"];
-	fightInfo["attackerSoldierLeftLife"] = fightInfo["attackerSoldierLife"];
-	fightInfo["defenderHeroLeftLife"] = fightInfo["defenderLife"];
-	fightInfo["defenderSoldierLeftLife"] = fightInfo["defenderSoldierLife"];
-
-	for (var i in fightInfo) {
-		request[i] = fightInfo[i];
-	}
-	return request;
-
-}
-function loadSkillData(refresh) {
-	var fight = buildFight();
-	$.ajax({
-				type : "POST",
-				url : "/fight/buffs",
-				data : JSON.stringify(fight),
-				dataType : "json",
-				contentType : "application/json",
-				processData : false,
-				success : function(data) {
-					attackerSkills = data["attackerSkills"];
-					defenderSkills = data["defenderSkills"];
-					attackerUserConditions = data["attackerUserConditions"];
-					defenderUserConditions = data["defenderUserConditions"];
-
-					buildSkill();
-
-					if (refresh == true) {
-						loadSkillData(false);
-					}
-				},
-				error : function(jqXHR) {
-				}
-			});
 }
 
 function chooseHero(id) {
@@ -181,30 +103,25 @@ function chooseHero(id) {
 				error : function(jqXHR) {
 				}
 			});
-
 }
+
 function buildHero(hero) {
 	if (isAttacker == 1) {
 		var role = "attacker";
-		isAttacker = 0;
-		attacker = hero;
-		attackerSoldier = undefined;
-		attackerHeroCriticalChecked = undefined;
-		attackerSoldierCriticalChecked = undefined;
-		attackerEquip = {};
-
+		isAttacker = 0;		
+		displayAttackerAction();
 	} else
 	{
 		var role = "defender";
 		isAttacker = 1;
-		defender = hero;
-		defenderSoldier = undefined;
-		defenderHeroCriticalChecked = undefined;
-		defenderSoldierCriticalCheckede = undefined;
-		defenderEquip = {};
 	}
+	fightInfo[role]={};
+	fightInfo[role]["hero"] = hero;
 	loadWeapon(hero["id"], role);
 }
+
+
+
 
 function loadWeapon(heroId,  role) {
 	$.ajax({
@@ -265,36 +182,51 @@ function loadJewelry(heroId, role) {
 	});
 }
 
+
+function displayEquip(id, type, equips, role) {
+	var list = $("#"+role+"-" + type + "-list");
+	list.children("li").remove();
+	//attackerEquip[type] = {};
+	for (var i = 0; i < equips.length; i++) {
+		var e = $("<li><img src=\"/fight/image/equip_" + equips[i]["id"]
+				+ ".png\" alt=\"\" width=\"40\" height=\"40\"></img>"
+				+ equips[i]["name"] + "</li>");
+		e.attr("equipid", equips[i]["id"]);
+
+		if(userData["equip"][id])
+		{
+			if (equips[i]["id"] == userData["equip"][id][type]) {
+				
+				fightInfo[role]["equip"][type] = equips[i];
+			}
+		}
+		e.click(function(event) {
+			var find = $(this).attr("equipid");
+			equips.forEach(function(e) {
+						if (e["id"] == find) {
+							fightInfo[role]["equip"][type] = e;
+							loadComplete(role);
+						}
+					})
+
+				})
+				
+		e.appendTo(list);
+	}
+}
+
 function loadComplete(role)
 {
-	if(role == "attacker")
+	var heroInc = generateHeroInc(fightInfo[role]["hero"], fightInfo[role]["equip"]);
+	for(var i in heroInc)
 	{
-		var heroInc = generateHeroInc(attacker, attackerEquip);
-		for(var i in heroInc)
-		{
-			attacker[i] = heroInc[i];
-		}
-		
-	} else if (role == "defender")
-	{
-		var heroInc = generateHeroInc(defender, defenderEquip);
-		for(var i in heroInc)
-		{
-			defender[i] = heroInc[i];
-		}
+		fightInfo[role]["heroPanel"][i] = heroInc[i];
 	}
 	displayHero(role);
 }
 
-
 function displayHero(role) {
 	if (role == "attacker") {
-		$("#attackerPic").children("div").remove();
-		var pic = $("<div><img src=\"/fight/image/" + attacker["id"]
-				+ ".png\" alt=\"\" width=\"60\" height=\"86\"></img>"
-				+ attacker["name"] + "</div>");
-		pic.appendTo($("#attackerPic"));
-
 		if (attacker["isPhysic"]) {
 			$("#aa").show();
 			$("#ai").hide();
@@ -308,79 +240,7 @@ function displayHero(role) {
 			$("#dm").show();
 			$("#dp").hide();
 		}
-
-		$("#attacker-soldier-list").children("li").remove();
-		var soldiers = attacker["soldiers"];
-		for (var i = 0; i < soldiers.length; i++) {
-			var soldier = $("<li><img src=\"/fight/image/soldier_"
-					+ soldiers[i]["id"]
-					+ ".png\" alt=\"\" width=\"50\" height=\"62\"></img>"
-					+ soldiers[i]["name"] + "</li>");
-			soldier.attr("soldierid", soldiers[i]["id"]);
-			soldier.appendTo($("#attacker-soldier-list"));
-
-			if (attacker["defaultSoldierId"] == soldiers[i]["id"]) {
-				attackerSoldier = soldiers[i];
-			}
-			soldier.click(function(event) {
-						var find = $(this).attr("soldierid");
-						attacker["soldiers"].forEach(function(e) {
-									if (e["id"] == find) {
-										attackerSoldier = e;
-										refreshAttacker();
-									}
-								})
-
-					})
-		}
-
-		$("#attacker-action-list").children("li").remove();
-		attackerAction = undefined;
-		var actions = attacker["actions"];
-		for (var i = 0; i < actions.length; i++) {
-			var action = $("<li><img src=\"/fight/image/action_"
-					+ actions[i]["id"]
-					+ ".png\" alt=\"\" width=\"40\" height=\"40\"></img>"
-					+ actions[i]["name"] + "</li>");
-			action.attr("actionid", actions[i]["id"]);
-			action.appendTo($("#attacker-action-list"));
-
-			if (actions[i]["id"] == 10001 || actions[i]["id"] == 10002) {
-				attackerAction = actions[i];
-			}
-			action.click(function(event) {
-						var find = $(this).attr("actionid");
-						attacker["actions"].forEach(function(e) {
-									if (e["id"] == find) {
-										attackerAction = e;
-										refreshAttacker();
-									}
-								})
-
-					})
-		}
-
-		$("#attacker-land-list").children("li").remove();
-		for (var i in lands) {
-			var land = $("<li>" + lands[i] + "</li>");
-			land.attr("landid", i);
-			land.appendTo($("#attacker-land-list"));
-
-			land.click(function(event) {
-						fightInfo["attackerLand"] = $(this).attr("landid");
-						refreshAttacker();
-					})
-		}
-
-		refreshAttacker();
-
 	} else if(role == "defender") { 
-		$("#defenderPic").children("div").remove();
-		var pic = $("<div><img src=\"/fight/image/" + defender["id"]
-				+ ".png\" alt=\"\" width=\"60\" height=\"86\"></img>"
-				+ defender["name"] + "</div>");
-		pic.appendTo($("#defenderPic"));
-
 		if (defender["isPhysic"]) {
 			$("#da").show();
 			$("#di").hide();
@@ -394,205 +254,268 @@ function displayHero(role) {
 			$("#am").show();
 			$("#ap").hide();
 		}
-
-		$("#defender-soldier-list").children("li").remove();
-		var soldiers = defender["soldiers"];
-		for (var i = 0; i < soldiers.length; i++) {
-			if (defender["defaultSoldierId"] == soldiers[i]["id"]) {
-				defenderSoldier = soldiers[i];
-			}
-			var soldier = $("<li><img src=\"/fight/image/soldier_"
-					+ soldiers[i]["id"]
-					+ ".png\" alt=\"\" width=\"50\" height=\"62\"></img>"
-					+ soldiers[i]["name"] + "</li>");
-			soldier.attr("soldierid", soldiers[i]["id"]);
-			soldier.appendTo($("#defender-soldier-list"));
-			soldier.click(function(event) {
-						var find = $(this).attr("soldierid");
-						defender["soldiers"].forEach(function(e) {
-									if (e["id"] == find) {
-										defenderSoldier = e;
-										refreshDefender();
-									}
-								})
-					})
-		}
-
-		$("#defender-land-list").children("li").remove();
-		for (var i in lands) {
-			var land = $("<li>" + lands[i] + "</li>");
-			land.attr("landid", i);
-			land.appendTo($("#defender-land-list"));
-
-			land.click(function(event) {
-						fightInfo["defenderLand"] = $(this).attr("landid");
-						refreshAttacker();
-					})
-		}
-
-		refreshDefender();
 	}
+	var rolePic = $("#"+role+"Pic");
+	rolePic.children("div").remove();
+	var pic = $("<div><img src=\"/fight/image/" + fightInfo[role]["hero"]["id"]
+			+ ".png\" alt=\"\" width=\"60\" height=\"86\"></img>"
+			+ fightInfo[role]["hero"]["name"] + "</div>");
+	pic.appendTo(rolePic);
+	
+	$("#"+role+"-soldier-list").children("li").remove();
+	var soldiers = fightInfo[role]["hero"]["soldiers"];
+	for (var i = 0; i < soldiers.length; i++) {
+		var soldier = $("<li><img src=\"/fight/image/soldier_"
+				+ soldiers[i]["id"]
+				+ ".png\" alt=\"\" width=\"50\" height=\"62\"></img>"
+				+ soldiers[i]["name"] + "</li>");
+		soldier.attr("soldierid", soldiers[i]["id"]);
+		soldier.appendTo($("#"+role+"-soldier-list"));
 
-	if (fightInfo["defenderLand"] == undefined) {
-		fightInfo["defenderLand"] = "Flat";
-	}
-
-	if (fightInfo["attackerLand"] == undefined) {
-		fightInfo["attackerLand"] = "Flat";
-	}
-}
-
-function displayEquip(id, type, equips, role) {
-	var list = $("#"+role+"-" + type + "-list");
-	list.children("li").remove();
-	//attackerEquip[type] = {};
-	for (var i = 0; i < equips.length; i++) {
-		var e = $("<li><img src=\"/fight/image/equip_" + equips[i]["id"]
-				+ ".png\" alt=\"\" width=\"40\" height=\"40\"></img>"
-				+ equips[i]["name"] + "</li>");
-		e.attr("equipid", equips[i]["id"]);
-
-		if(gameData["equip"][id])
-		{
-			if (equips[i]["id"] == gameData["equip"][id][type]) {
-				if(role=="attacker")
-				{
-					attackerEquip[type] = equips[i];
-				} else 
-				{
-					defenderEquip[type] = equips[i];
-				}
-			}
+		if (fightInfo[role]["hero"]["defaultSoldierId"] == soldiers[i]["id"]) {
+			attackerSoldier = soldiers[i];
 		}
-		e.click(function(event) {
-			var find = $(this).attr("equipid");
-			equips.forEach(function(e) {
-						if (e["id"] == find) {
-							if(role == "attacker")
-							{
-								attackerEquip[type] = e;
-							} else 
-							{
-								defenderEquip[type] = e;
-							}
-							loadComplete(role);
-						}
-					})
+		soldier.click(function(event) {
+					var find = $(this).attr("soldierid");
+					fightInfo[role]["hero"]["soldiers"].forEach(function(e) {
+								if (e["id"] == find) {
+									attackerSoldier = e;
+									refreshAttacker();
+								}
+							})
 
 				})
-				
-		e.appendTo(list);
 	}
-}
+	$("#"+role+"-land-list").children("li").remove();
+	for (var i in lands) {
+		var land = $("<li>" + lands[i] + "</li>");
+		land.attr("landid", i);
+		land.appendTo($("#"+role+"-land-list"));
 
-function refreshAttacker() {
-	if (attacker) {
-		$("#attacker-info").html("<p>生命&nbsp;" + attacker["life"] + "+"
-						+ attacker["lifeInc"] + "</p><p>攻击&nbsp;"
-						+ attacker["attack"] + "+" + attacker["attackInc"]
-						+ "</p><p>智力&nbsp;" + attacker["intel"] + "+"
-						+ attacker["intelInc"] + "</p><p>防御&nbsp;"
-						+ attacker["physicDef"] + "+"
-						+ attacker["physicDefInc"] + "</p><p>魔防&nbsp;"
-						+ attacker["magicDef"] + "+"
-						+ attacker["magicDefInc"] + "</p><p>技巧&nbsp;"
-						+ attacker["tech"] + "+" + attacker["techInc"]
-						+ "</p>");
-
-		$("#attacker-soldier-information").html("");
+		land.click(function(event) {
+					fightInfo[role]["land"] = $(this).attr("landid");
+					refreshAttacker();
+				})
 	}
 	
-	if(attackerEquip)
+	$("#"+role+"-info").html("<p>生命&nbsp;" + fightInfo[role]["hero"]["life"] + "+"
+			+ fightInfo[role]["heroPanel"]["lifeInc"] + "</p><p>攻击&nbsp;"
+			+ fightInfo[role]["hero"]["attack"] + "+" + fightInfo[role]["heroPanel"]["attackInc"]
+			+ "</p><p>智力&nbsp;" + fightInfo[role]["hero"]["life"]["intel"] + "+"
+			+ ightInfo[role]["heroPanel"]["intelInc"] + "</p><p>防御&nbsp;"
+			+ fightInfo[role]["hero"]["physicDef"] + "+"
+			+ fightInfo[role]["heroPanel"]["physicInc"] + "</p><p>魔防&nbsp;"
+			+ fightInfo[role]["hero"]["magicDef"] + "+"
+			+ fightInfo[role]["heroPanel"]["magicDefInc"] + "</p><p>技巧&nbsp;"
+			+ fightInfo[role]["hero"]["tech"] + "+" + fightInfo[role]["heroPanel"]["techInc"]
+			+ "</p>");
+
+	$("#"+role+"-soldier-information").html("");
+	
+	if(fightInfo[role]["equip"])
 	{
 		for(var i in equipPart )
 		{
 			var part = equipPart[i];
-			$("#attacker-"+equipPart[i]).children("div").remove();
-			if(attackerEquip[part])
+			$("#"+role+"-"+equipPart[i]).children("div").remove();
+			if(fightInfo[role]["equip"][part])
 			{
-				var pic = $("<div><img src=\"/fight/image/equip_"+attackerEquip[equipPart[i]]["id"]+".png\" alt=\"\" width=\"60\" height=\"60\"></img><p>"+attackerEquip[equipPart[i]]["name"]+"</p></div>");
+				var pic = $("<div><img src=\"/fight/image/equip_"+fightInfo[role]["equip"][equipPart[i]]["id"]+".png\" alt=\"\" width=\"60\" height=\"60\"></img><p>"
+						+fightInfo[role]["equip"][equipPart[i]]["name"]+"</p></div>");
 				pic.insertBefore($("#attacker-"+equipPart[i]+" > button"));			
 			} 
 		}
-
 	} 
-	loadSkillData(true);
+	
+	$("#"+role+"-critical").children("li").remove();
+	if(fightInfo[role]["heroCriticalChecked"] == undefined)
+	{
+		fightInfo[role]["heroCriticalChecked"] = fightInfo[role]["heroPanel"]["criticalProbInc"]+fightInfo[role]["heroPanel"]["tech"]/10>70;
+	}
+	var buttonClass = fightInfo[role]["heroCriticalChecked"] ? "btn-warning":"btn-default";
+	var buff = $("<li class=\"list-group-item\">英雄暴击</li>");
+	var button = $("<button type=\"button\" class=\"btn "+buttonClass+"\">暴击</button>");
+	button.attr("uc-name", name);
+	button.click(function(e){
+	
+		if (fightInfo[role]["heroCriticalChecked"])
+		{
+			$(this).removeClass("btn-warning");
+			$(this).addClass("btn-default");
+			fightInfo[role]["heroCriticalChecked"] = false;
+		} else
+		{
+			$(this).removeClass("btn-default");
+			$(this).addClass("btn-warning");
+			fightInfo[role]["heroCriticalChecked"] = true;
+		}
+	});
+	button.appendTo(buff);
+	buff.appendTo($("#"+role+"-critical"));	
+	
+	if(fightInfo[role]["soldierCriticalChecked"] == undefined)
+	{
+		fightInfo[role]["soldierCriticalChecked"] = fightInfo[role]["soldierPanel"]["criticalProbInc"]>70;
+	}
+	var buff = $("<li class=\"list-group-item\">士兵暴击</li>");
+	if(fightInfo[role]["soldierPanel"]["criticalProbInc"]>0) 
+	{
+		var buttonClass = (fightInfo[role]["soldierCriticalChecked"]) ? "btn-warning":"btn-default";
+
+		var button = $("<button type=\"button\" class=\"btn "+buttonClass+"\">暴击</button>");
+		button.attr("uc-name", name);
+		button.click(function(e){
+		
+			if (fightInfo[role]["soldierCriticalChecked"])
+			{
+				$(this).removeClass("btn-warning");
+				$(this).addClass("btn-default");
+				fightInfo[role]["soldierCriticalChecked"] = false;
+			} else
+			{
+				$(this).removeClass("btn-default");
+				$(this).addClass("btn-warning");
+				fightInfo[role]["soldierCriticalChecked"] = true;
+			}
+			//loadSkillData();
+		});
+		button.appendTo(buff);
+	}
+	buff.appendTo($("#defender-critical"));	
+	
+	
+	$("#"+role+"-land-information").html("<p><b>地形:"+lands[fightInfo[role]["land"]]+"</b></p>");
+
+	sync();
 }
 
-function refreshDefender() {
-	if (defender) {
-		$("#defender-info").html("<p>生命&nbsp;" + defender["life"] + "+"
-						+ defender["lifeInc"] + "</p><p>攻击&nbsp;"
-						+ defender["attack"] + "+" + defender["attackInc"]
-						+ "</p><p>智力&nbsp;" + defender["intel"] + "+"
-						+ defender["intelInc"] + "</p><p>防御&nbsp;"
-						+ defender["physicDef"] + "+"
-						+ defender["physicDefInc"] + "</p><p>魔防&nbsp;"
-						+ defender["magicDef"] + "+"
-						+ defender["magicDefInc"] + "</p><p>技巧&nbsp;"
-						+ defender["tech"] + "+" + defender["techInc"]
-						+ "</p>");
-		$("#defender-soldier-information").html("");
+function displayAttackerAction()
+{
+
+	$("#attacker-action-list").children("li").remove();
+	var actions = fightInfo["attacker"]["hero"]["actions"];
+	for (var i = 0; i < actions.length; i++) {
+		var action = $("<li><img src=\"/fight/image/action_"
+				+ actions[i]["id"]
+				+ ".png\" alt=\"\" width=\"40\" height=\"40\"></img>"
+				+ actions[i]["name"] + "</li>");
+		action.attr("actionid", actions[i]["id"]);
+		action.appendTo($("#"+role+"-action-list"));
+
+		if (actions[i]["id"] == 10001 || actions[i]["id"] == 10002) {
+			fightInfo["attacker"]["action"] = actions[i];
+		}
+		action.click(function(event) {
+					var find = $(this).attr("actionid");
+					fightInfo["attacker"]["hero"]["actions"].forEach(function(e) {
+								if (e["id"] == find) {
+									fightInfo["attacker"]["action"] = e;
+									sync();
+								}
+							})
+
+				})
+	}
+}
+
+function refreshHero(role)
+{
+
+	sync();
+}
+
+function sync()
+{
+	$.ajax({
+		type : "POST",
+		url : "/fight/sync",
+		data : JSON.stringify(fightInfo),
+		dataType : "json",
+		contentType : "application/json",
+		processData : false,
+		success : function(data) {
+			fightInfo = data;
+			syncComplete("attacker");
+			syncComplete("defender");
+		},
+		error : function(jqXHR) {
+		}
+	});
+	
+}
+
+
+function syncComplete(role)
+{
+	buildSkill(role);
+	buildUserCondition(role);
+	buildHeroPanel(role);
+	buildSoldierPanel(role)
+}
+
+
+function buildHeroPanel(role) {
+	var detail="<p>";
+	if(fightInfo[role]["action"])
+	{
+		detail+="<b>"+fightInfo[role]["action"]["name"]+"</b>&nbsp;&nbsp;&nbsp;<b>"+fightInfo[role]["action"]["coefficient"]+"倍</b></p>";
 	}
 	
-	if(defenderEquip)
-	{
-		for(var i in equipPart )
-		{
-			var part = equipPart[i];
-			$("#defender-"+equipPart[i]).children("div").remove();
-			if(defenderEquip[part])
-			{
-				var pic = $("<div><img src=\"/fight/image/equip_"+defenderEquip[equipPart[i]]["id"]+".png\" alt=\"\" width=\"60\" height=\"60\"></img><p>"+defenderEquip[equipPart[i]]["name"]+"</p></div>");
-				pic.insertBefore($("#defender-"+equipPart[i]+" > button"));			
-			} 
-		}
-
-	} 
-	loadSkillData(true);
+	detail+="<p><b>增伤："+fightInfo[role]["heroPanel"]["DamageInc"]+
+	"&nbsp;&nbsp;&nbsp;物理减伤："+fightInfo[role]["heroPanel"]["physicDamageDec"]+
+	"&nbsp;&nbsp;&nbsp;魔法减伤："+fightInfo[role]["heroPanel"]["magicDamageDec"]+"</b></p>"+
+	"<p>技巧："+fightInfo[role]["heroPanel"]["tech"]+
+	"&nbsp;&nbsp;&nbsp;暴击："+fightInfo[role]["heroPanel"]["criticalProbInc"]+
+	"&nbsp;&nbsp;&nbsp;暴伤："+fightInfo[role]["heroPanel"]["criticalDamageInc"]+
+	"&nbsp;&nbsp;&nbsp;防爆:"+fightInfo[role]["heroPanel"]["criticalProbDec"]+
+	"&nbsp;&nbsp;&nbsp;减爆伤："+fightInfo[role]["heroPanel"]["criticalDamageDec"]+"</p>";
+	$("#"+role+"Detail").html(detail);
+	
 }
 
-function buildSkill() {
-	$("#attacker-buf-list").children("li").remove();
-	if (attackerSkills) {
-		for (var i = 0; i < attackerSkills.length; i++) {
-			var valid = attackerSkills[i].valid
+function buildSolderPanel(role) {
+	$("#"+role+"-soldier-information").html(
+			"<p><b>"+fightInfo[role]["soldier"]["name"]+
+			"</b></p><p>攻击："+fightInfo[role]["soldierPanel"]["attackerSoldierAttack"]+
+			"&nbsp;&nbsp;&nbsp;防御："+fightInfo[role]["soldierPanel"]["physic"]+
+			"&nbsp;&nbsp;&nbsp;魔防："+fightInfo[role]["soldierPanel"]["magic"]+
+			"&nbsp;&nbsp;&nbsp;生命："+fightInfo[role]["soldierPanel"]["life"]+
+			"</p><p><b>增伤:"+fightInfo[role]["soldierPanel"]["damageInc"]+
+			"&nbsp;&nbsp;&nbsp;物理减伤:"+fightInfo[role]["soldierPanel"]["physicDamageDec"]+
+			"&nbsp;&nbsp;&nbsp;魔法减伤:"+fightInfo[role]["soldierPanel"]["magicDamageDec"]+"</b></p><p>"+
+			"暴击："+fightInfo[role]["soldierPanel"]["criticalProbInc"]+
+			"&nbsp;&nbsp;&nbsp;暴伤："+fightInfo[role]["soldierPanel"]["criticalDamageInc"]+
+			"&nbsp;&nbsp;&nbsp;防爆："+fightInfo[role]["soldierPanel"]["criticalProbDec"]+
+			"&nbsp;&nbsp;&nbsp;减爆伤："+fightInfo[role]["soldierPanel"]["criticalDamageDec"]+"</p>");
+	
+}
+
+function buildSkill(role) {
+	$("#"+role+"-buf-list").children("li").remove();
+	if (fightInfo[role]["skills"]) {
+		for (var i = 0; i < fightInfo[role]["skills"].length; i++) {
+			var valid = fightInfo[role]["skills"][i].valid
 					? "valid-skill"
 					: "not-valid-skill";
 			var buff = $("<li class=\"list-group-item " + valid + "\">"
-					+ attackerSkills[i]["skill"]["desc"] + "</li>");
-			buff.appendTo($("#attacker-buf-list"));
+					+ fightInfo[role]["skills"][i]["skill"]["desc"] + "</li>");
+			buff.appendTo($("#"+role+"-buf-list"));
 		}
 
 	}
-
-	$("#defender-buf-list").children("li").remove();
-	if (defenderSkills) {
-		for (var i = 0; i < defenderSkills.length; i++) {
-			var valid = defenderSkills[i].valid
-					? "valid-skill"
-					: "not-valid-skill";
-			var buff = $("<li class=\"list-group-item " + valid + "\">"
-					+ defenderSkills[i]["skill"]["desc"] + "</li>");
-			buff.appendTo($("#defender-buf-list"));
-		}
-
-	}
-	buildUserCondition();
-	calculatePanel();
 }
 
-function buildUserCondition() {
-	$("#attacker-user-condition-list").children("li").remove();
-	if (attackerUserConditions) {
-		for (var name in attackerUserConditions) {
-			var checked = attackerUserConditionChecked[name];
+function buildUserCondition(role) {
+	$("#"role"-user-condition-list").children("li").remove();
+	if (fightInfo[role]["userConditions"]) {
+		for (var name in fightInfo[role]["userConditions"]) {
+			var checked = fightInfo[role]["userConditionChecked"][name];
 			if (checked == undefined) {
-				checked = attackerUserConditions[name]["defaultValid"];
+				checked = fightInfo[role]["userConditions"][name]["defaultValid"];
 			}
 			var buttonClass = checked ? "btn-success" : "btn-default";
 			var buff = $("<li class=\"list-group-item\">"
-					+ attackerUserConditions[name]["desc"] + "</li>");
+					+ fightInfo[role]["userConditions"][name]["desc"] + "</li>");
 			var button = $("<button type=\"button\" class=\"btn " + buttonClass
 					+ "\">选择</button>");
 			button.attr("uc-name", name);
@@ -601,47 +524,16 @@ function buildUserCondition() {
 				if ($(this).hasClass("btn-success")) {
 					$(this).removeClass("btn-success");
 					$(this).addClass("btn-default");
-					attackerUserConditionChecked[$(this).attr("uc-name")] = false;
+					fightInfo[role]["userConditionChecked"][$(this).attr("uc-name")] = false;
 				} else {
 					$(this).removeClass("btn-default");
 					$(this).addClass("btn-success");
-					attackerUserConditionChecked[$(this).attr("uc-name")] = true;
+					fightInfo[role]["userConditionChecked"][$(this).attr("uc-name")] = true;
 				}
-				loadSkillData();
+				sync();
 			});
 			button.appendTo(buff);
-			buff.appendTo($("#attacker-user-condition-list"));
-		}
-	}
-
-	$("#defender-user-condition-list").children("li").remove();
-	if (defenderUserConditions) {
-		for (var name in defenderUserConditions) {
-			var checked = defenderUserConditionChecked[name];
-			if (checked == undefined) {
-				checked = defenderUserConditions[name]["defaultValid"];
-			}
-			var buttonClass = checked ? "btn-success" : "btn-default";
-			var buff = $("<li class=\"list-group-item\">"
-					+ defenderUserConditions[name]["desc"] + "</li>");
-			var button = $("<button type=\"button\" class=\"btn " + buttonClass
-					+ "\">选择</button>");
-			button.attr("uc-name", name);
-			button.click(function(e) {
-
-				if ($(this).hasClass("btn-success")) {
-					$(this).removeClass("btn-success");
-					$(this).addClass("btn-default");
-					defenderUserConditionChecked[$(this).attr("uc-name")] = false;
-				} else {
-					$(this).removeClass("btn-default");
-					$(this).addClass("btn-success");
-					defenderUserConditionChecked[$(this).attr("uc-name")] = true;
-				}
-				loadSkillData();
-			});
-			button.appendTo(buff);
-			buff.appendTo($("#defender-user-condition-list"));
+			buff.appendTo($("#"+role+"-user-condition-list"));
 		}
 	}
 }

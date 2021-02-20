@@ -1,7 +1,6 @@
 package cc.js.sora.fight;
 
-import java.util.List;
-import java.util.Map;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -19,10 +18,22 @@ public class FightInfo {
 	
 	FightRole attacker;
 	FightRole defender;
-	
+	int distance;
+//	
+//	//0 init  1 calculate inc/jjc 2 build user conditions 3 calculate panel 
+//	int stage = 0;
+//	
+	@JsonIgnore
 	public FightRole getRole(boolean isAttack)
 	{
 		return isAttack ? attacker : defender;
 	}
+	
+	@JsonIgnore
+	public FightRole getEnemyRole(boolean isAttack)
+	{
+		return isAttack ? defender : attacker;
+	}
+	
 
 }

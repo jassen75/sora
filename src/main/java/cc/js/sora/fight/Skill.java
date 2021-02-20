@@ -29,7 +29,7 @@ public abstract class Skill {
 //    	return Lists.newArrayList();
 //    }
     
-    public void process(Fight fight, boolean isAttack)
+    public void process(FightInfo fight, boolean isAttack)
     {
     	// do nothing
     }

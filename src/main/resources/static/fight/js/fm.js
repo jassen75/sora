@@ -50,10 +50,10 @@ fm_key["magic"] = "魔防";
 function parseCSV(data)
 {
 
-	gameData["fm"] = {};
-	gameData["jt"] = {};
-	gameData["jjc"] = {};
-	gameData["equip"] = {};
+	userData["fm"] = {};
+	userData["jt"] = {};
+	userData["jjc"] = {};
+	userData["equip"] = {};
 	var csvarry = data.split("\n");
      for(var i = 0; i<csvarry.length;i++){
      	
@@ -62,44 +62,44 @@ function parseCSV(data)
         if(temp.length==17)
         {
         	var id =  temp[0];
-        	gameData["fm"][id] = {};
-        	gameData["fm"][id]["id"] = temp[0];
-        	gameData["fm"][id]["name"] = temp[1];
+        	userData["fm"][id] = {};
+        	userData["fm"][id]["id"] = temp[0];
+        	userData["fm"][id]["name"] = temp[1];
         	
-        	gameData["fm"][id]["weapon"] = {};
-        	gameData["fm"][id]["weapon"]["fm_type"] =temp[2];
-        	gameData["fm"][id]["weapon"]["fm_info"] = parseFM(temp[3]);
+        	userData["fm"][id]["weapon"] = {};
+        	userData["fm"][id]["weapon"]["fm_type"] =temp[2];
+        	userData["fm"][id]["weapon"]["fm_info"] = parseFM(temp[3]);
         	
-        	gameData["fm"][id]["armor"] = {};
-        	gameData["fm"][id]["armor"]["fm_type"] = temp[4];
-        	gameData["fm"][id]["armor"]["fm_info"] = parseFM(temp[5]);
+        	userData["fm"][id]["armor"] = {};
+        	userData["fm"][id]["armor"]["fm_type"] = temp[4];
+        	userData["fm"][id]["armor"]["fm_info"] = parseFM(temp[5]);
         	
-        	gameData["fm"][id]["helmet"]  = {};
-        	gameData["fm"][id]["helmet"]["fm_type"] = temp[6];
-        	gameData["fm"][id]["helmet"]["fm_info"] = parseFM(temp[7]);
+        	userData["fm"][id]["helmet"]  = {};
+        	userData["fm"][id]["helmet"]["fm_type"] = temp[6];
+        	userData["fm"][id]["helmet"]["fm_info"] = parseFM(temp[7]);
         	
-        	gameData["fm"][id]["jewelry"]  = {};
-        	gameData["fm"][id]["jewelry"]["fm_type"] = temp[8];
-        	gameData["fm"][id]["jewelry"]["fm_info"] = parseFM(temp[9]);
+        	userData["fm"][id]["jewelry"]  = {};
+        	userData["fm"][id]["jewelry"]["fm_type"] = temp[8];
+        	userData["fm"][id]["jewelry"]["fm_info"] = parseFM(temp[9]);
         	
-        	gameData["jt"][id]  = {};
+        	userData["jt"][id]  = {};
 
-        	gameData["jt"][id] = parseJT(temp[10]);
-        	gameData["jt"][id]["id"] = temp[0];
-        	gameData["jt"][id]["name"] = temp[1];
+        	userData["jt"][id] = parseJT(temp[10]);
+        	userData["jt"][id]["id"] = temp[0];
+        	userData["jt"][id]["name"] = temp[1];
         	
-        	gameData["jjc"][id]  = {};
-        	gameData["jjc"][id] = parseJJC(temp[11], temp[12]);
-        	gameData["jjc"][id]["id"] = temp[0];
-        	gameData["jjc"][id]["name"] = temp[1];
+        	userData["jjc"][id]  = {};
+        	userData["jjc"][id] = parseJJC(temp[11], temp[12]);
+        	userData["jjc"][id]["id"] = temp[0];
+        	userData["jjc"][id]["name"] = temp[1];
         	
-        	gameData["equip"][id]  = {};
-        	gameData["equip"][id]["id"]  = temp[0];
-        	gameData["equip"][id]["name"]  = temp[1];
-        	gameData["equip"][id]["weapon"]  = temp[13];
-        	gameData["equip"][id]["armor"]  = temp[14];
-        	gameData["equip"][id]["helmet"]  = temp[15];
-        	gameData["equip"][id]["jewelry"]  = temp[16];
+        	userData["equip"][id]  = {};
+        	userData["equip"][id]["id"]  = temp[0];
+        	userData["equip"][id]["name"]  = temp[1];
+        	userData["equip"][id]["weapon"]  = temp[13];
+        	userData["equip"][id]["armor"]  = temp[14];
+        	userData["equip"][id]["helmet"]  = temp[15];
+        	userData["equip"][id]["jewelry"]  = temp[16];
         }
     }
 
@@ -156,38 +156,38 @@ function refreshTable()
 {
 	$("#fm_info > tbody").children("tr").remove();
 	
-	for(var i in gameData["fm"]){
+	for(var i in userData["fm"]){
 		
-		var tr = $("<tr><td>"+gameData["fm"][i]["name"]+"</td><td><div><img src=\"/fight/image/equip_"+gameData["equip"][i]["weapon"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
-							displayFM(gameData["fm"][i]["weapon"])+"</div></td><td><div><img src=\"/fight/image/equip_"+gameData["equip"][i]["armor"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
-							displayFM(gameData["fm"][i]["armor"])+"</div></td><td><div><img src=\"/fight/image/equip_"+gameData["equip"][i]["helmet"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
-							displayFM(gameData["fm"][i]["helmet"])+"</div></td><td><div><img src=\"/fight/image/equip_"+gameData["equip"][i]["jewelry"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
-							displayFM(gameData["fm"][i]["jewelry"])+"</div></td></tr>");
+		var tr = $("<tr><td>"+userData["fm"][i]["name"]+"</td><td><div><img src=\"/fight/image/equip_"+userData["equip"][i]["weapon"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
+							displayFM(userData["fm"][i]["weapon"])+"</div></td><td><div><img src=\"/fight/image/equip_"+userData["equip"][i]["armor"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
+							displayFM(userData["fm"][i]["armor"])+"</div></td><td><div><img src=\"/fight/image/equip_"+userData["equip"][i]["helmet"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
+							displayFM(userData["fm"][i]["helmet"])+"</div></td><td><div><img src=\"/fight/image/equip_"+userData["equip"][i]["jewelry"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
+							displayFM(userData["fm"][i]["jewelry"])+"</div></td></tr>");
 		
 	  	tr.appendTo($("#fm_info > tbody"));
     }
     
     $("#jt_info > tbody").children("tr").remove();
 	
-	for(var i in gameData["jt"]){
+	for(var i in userData["jt"]){
 		
-		var tr = $("<tr><td>"+gameData["jt"][i]["name"]+"</td><td>"+
-							gameData["jt"][i]["life"]+"</td><td>"+
-							gameData["jt"][i]["attack"]+"</td><td>"+
-							gameData["jt"][i]["intel"]+"</td><td>"+
-							gameData["jt"][i]["physic"]+"</td><td>"+
-							gameData["jt"][i]["magic"]+"</td><td>"+
-							gameData["jt"][i]["tech"]+"</td><td>"+
-							gameData["jjc"][i]["life"]+"</td><td>"+
-							gameData["jjc"][i]["attack"]+"</td><td>"+
-							gameData["jjc"][i]["intel"]+"</td><td>"+
-							gameData["jjc"][i]["physic"]+"</td><td>"+
-							gameData["jjc"][i]["magic"]+"</td><td>"+
-							gameData["jjc"][i]["tech"]+"</td><td>"+
-							gameData["jjc"][i]["criticalProbInc"]+"</td><td>"+
-							gameData["jjc"][i]["criticalDamageInc"]+"</td><td>"+
-							gameData["jjc"][i]["criticalProbDec"]+"</td><td>"+
-							gameData["jjc"][i]["criticalDamageDec"]+"</td></tr>");
+		var tr = $("<tr><td>"+userData["jt"][i]["name"]+"</td><td>"+
+							userData["jt"][i]["life"]+"</td><td>"+
+							userData["jt"][i]["attack"]+"</td><td>"+
+							userData["jt"][i]["intel"]+"</td><td>"+
+							userData["jt"][i]["physic"]+"</td><td>"+
+							userData["jt"][i]["magic"]+"</td><td>"+
+							userData["jt"][i]["tech"]+"</td><td>"+
+							userData["jjc"][i]["life"]+"</td><td>"+
+							userData["jjc"][i]["attack"]+"</td><td>"+
+							userData["jjc"][i]["intel"]+"</td><td>"+
+							userData["jjc"][i]["physic"]+"</td><td>"+
+							userData["jjc"][i]["magic"]+"</td><td>"+
+							userData["jjc"][i]["tech"]+"</td><td>"+
+							userData["jjc"][i]["criticalProbInc"]+"</td><td>"+
+							userData["jjc"][i]["criticalDamageInc"]+"</td><td>"+
+							userData["jjc"][i]["criticalProbDec"]+"</td><td>"+
+							userData["jjc"][i]["criticalDamageDec"]+"</td></tr>");
 		
 	  	tr.appendTo($("#jt_info > tbody"));
     }
@@ -246,9 +246,9 @@ function generateHeroInc(hero, equip)
 {
 	var heroInc = {};
 	var id = hero["id"]
-	var fm = gameData["fm"][id];
-	var jt = gameData["jt"][id];
-	var jjc = gameData["jjc"][id];
+	var fm = userData["fm"][id];
+	var jt = userData["jt"][id];
+	var jjc = userData["jjc"][id];
 	
 	if(!fm || !jt)
 	{

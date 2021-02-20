@@ -1,8 +1,9 @@
 package cc.js.sora.fight.condition;
 
+import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.FightInfo;
 
-public class HasBuffCondition implements UserCondition {
+public class HasBuffCondition implements Condition {
 	
 	@Override
 	public String getDesc() {
@@ -10,19 +11,8 @@ public class HasBuffCondition implements UserCondition {
 	}
 
 	@Override
-	public boolean defaultValid() {
-		return true;
-	}
-
-	@Override
-	public String getName() {
-		return "hasbuff";
-	}
-
-	@Override
 	public boolean valid(FightInfo fightInfo, boolean isAttack) {
-		// TODO Auto-generated method stub
-		return false;
+	    return fightInfo.getRole(isAttack).getDebuffList()!= null && fightInfo.getRole(isAttack).getDebuffList().size() > 0;
 	}
 
 }

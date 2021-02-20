@@ -39,8 +39,8 @@ public class EquipType {
 	EquipPart part;
 	
 	int attack;
-	int physicDef;
-	int magicDef;
+	int physic;
+	int magic;
 	int life;
 	int intel;
 	int tech;

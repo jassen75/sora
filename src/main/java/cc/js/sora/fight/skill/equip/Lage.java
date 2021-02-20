@@ -7,8 +7,10 @@ import com.google.common.collect.Lists;
 import cc.js.sora.fight.Buff;
 import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
-import cc.js.sora.fight.Effects;
+import cc.js.sora.fight.Effect;
+import cc.js.sora.fight.Features;
 import cc.js.sora.fight.Fight;
+import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.health.EnemyFullHealthCondition;
@@ -33,7 +35,7 @@ public class Lage extends Skill {
 	}
 
 	@Override
-	public List<Buff> getBuffs() {
+	public List<Effect> getEffects()  {
 		// TODO Auto-generated method stub
 		return Lists.newArrayList(new Buff(BuffType.PreBattleDamage, 1));
 	}
@@ -56,14 +58,14 @@ public class Lage extends Skill {
 	}
 	
 	@Override
-    public void process(Fight fight, boolean isAttack)
+    public void process(FightInfo fightInfo, boolean isAttack)
     {
 		if(isAttack)
 		{
-			if(!fight.getDefenderEffects().contains(Effects.ImmuneToFixedDamage))
+			if(!fightInfo.getDefender().getHeroPanel().getFeatures().containsKey(Features.ImmuneToFixedDamage))
 			{
-		    	fight.setDefenderHeroLeftLife(fight.getDefenderHeroLeftLife() - fight.getAttackerAttack());
-		    	fight.setDefenderSoldierLeftLife(fight.getDefenderHeroLeftLife() - fight.getAttackerAttack());		
+				fightInfo.getDefender().setHeroLeftLife(fightInfo.getDefender().getHeroLeftLife() - fightInfo.getAttacker().getHero().getAttack());
+				fightInfo.getDefender().setSoldierLeftLife(fightInfo.getDefender().getHeroLeftLife() - fightInfo.getAttacker().getHero().getAttack());		
 			}
 		}
     }

@@ -1,3 +1,60 @@
+function buildFight() {
+	var request = {
+
+	};
+	if (attacker) {
+		request["attackerHeroId"] = attacker["id"];
+		if(attacker["fmSkill"])
+		{
+			request["attackerEnhance"] = attacker["fmSkill"];
+		} else
+		{
+			request["attackerEnhance"] = 0;
+		}
+	}
+	if (defender) {
+		request["defenderHeroId"] = defender["id"];
+		if(defender["fmSkill"])
+		{
+			request["defenderEnhance"] = defender["fmSkill"];
+		} else
+		{
+			request["defenderEnhance"] = 0;
+		}
+	}
+	if (attackerSoldier) {
+		request["attackerSoldierId"] = attackerSoldier["id"];
+	}
+	if (defenderSoldier) {
+		request["defenderSoldierId"] = defenderSoldier["id"];
+	}
+
+	if (attackerAction) {
+		request["attackerActionId"] = attackerAction["id"];
+	}
+	
+	if(attackerEquip) {
+		request["attackerEquip"] = attackerEquip;
+	}
+	
+	if(defenderEquip) {
+		request["defenderEquip"] = defenderEquip;
+	}
+	request["attackerUserConditionChecked"] = attackerUserConditionChecked;
+	request["defenderUserConditionChecked"] = defenderUserConditionChecked;
+
+	fightInfo["attackerHeroLeftLife"] = fightInfo["attackerLife"];
+	fightInfo["attackerSoldierLeftLife"] = fightInfo["attackerSoldierLife"];
+	fightInfo["defenderHeroLeftLife"] = fightInfo["defenderLife"];
+	fightInfo["defenderSoldierLeftLife"] = fightInfo["defenderSoldierLife"];
+
+	for (var i in fightInfo) {
+		request[i] = fightInfo[i];
+	}
+	return request;
+
+}
+
 function calculatePanel()
 {
 	fightInfo["attackerEffects"] = [];
@@ -247,22 +304,7 @@ function calculatePanel()
 			$("#attackerMagicDef").attr("value", fightInfo["attackerMagicDef"]);
 			$("#attackerLife").attr("value", fightInfo["attackerLife"]);
 			
-			var detail="<p>";
-			if(attackerAction)
-			{
-				detail+="<b>"+attackerAction["name"]+"</b>&nbsp;&nbsp;&nbsp;<b>"+attackerAction["coefficient"]+"倍</b></p>";
-			}
-			
-			detail+="<p><b>增伤："+fightInfo["attackerDamageInc"]+
-//			"</b>&nbsp;&nbsp;&nbsp;<b>减伤："+fightInfo["attackerDamageDec"]+
-			"&nbsp;&nbsp;&nbsp;物理减伤："+fightInfo["attackerPhysicDamageDec"]+
-			"&nbsp;&nbsp;&nbsp;魔法减伤："+fightInfo["attackerMagicDamageDec"]+"</b></p>"+
-			"<p>技巧："+fightInfo["attackerTech"]+
-			"&nbsp;&nbsp;&nbsp;暴击："+fightInfo["attackerCriticalProbInc"]+
-			"&nbsp;&nbsp;&nbsp;暴伤："+fightInfo["attackerCriticalDamageInc"]+
-			"&nbsp;&nbsp;&nbsp;防爆:"+fightInfo["attackerCriticalProbDec"]+
-			"&nbsp;&nbsp;&nbsp;减爆伤："+fightInfo["attackerCriticalDamageDec"]+"</p>";
-			$("#attackerDetail").html(detail);
+
 		}
 		
 	}
@@ -713,16 +755,7 @@ function calculatePanel()
 			fightInfo["attackerSoldierCriticalDamageInc"] = cdi;	
 			fightInfo["attackerSoldierCriticalDamageDec"] = cdd;
 		}
-		$("#attacker-soldier-information").html("<p><b>"+attackerSoldier["name"]+"</b></p><p>攻击："+fightInfo["attackerSoldierAttack"]+"&nbsp;&nbsp;&nbsp;防御："+
-		fightInfo["attackerSoldierPhysicDef"]+"&nbsp;&nbsp;&nbsp;魔防："+fightInfo["attackerSoldierMagicDef"]+"&nbsp;&nbsp;&nbsp;生命："+fightInfo["attackerSoldierLife"]+
-		"</p><p><b>增伤:"+fightInfo["attackerSoldierDamageInc"]+
-//		"</b>&nbsp;&nbsp;&nbsp;<b>减伤:"+fightInfo["attackerSoldierDamageDec"]+&nbsp;&nbsp;&nbsp;
-		"&nbsp;&nbsp;&nbsp;物理减伤:"+fightInfo["attackerSoldierPhysicDamageDec"]+
-		"&nbsp;&nbsp;&nbsp;魔法减伤:"+fightInfo["attackerSoldierMagicDamageDec"]+"</b></p><p>"+
-		"暴击："+fightInfo["attackerSoldierCriticalProbInc"]+
-		"&nbsp;&nbsp;&nbsp;暴伤："+fightInfo["attackerSoldierCriticalDamageInc"]+
-		"&nbsp;&nbsp;&nbsp;防爆："+fightInfo["attackerSoldierCriticalProbDec"]+
-		"&nbsp;&nbsp;&nbsp;减爆伤："+fightInfo["attackerSoldierCriticalDamageDec"]+"</p>");
+
 		
 	} 
 	
@@ -925,135 +958,6 @@ function calculatePanel()
 		"&nbsp;&nbsp;&nbsp;防爆："+fightInfo["defenderSoldierCriticalProbDec"]+
 		"&nbsp;&nbsp;&nbsp;减爆伤："+fightInfo["defenderSoldierCriticalDamageDec"]+"</p>");
 	}
-	
-	$("#attacker-land-information").html("<p><b>地形:"+lands[fightInfo["attackerLand"]]+"</b></p>");
-	$("#defender-land-information").html("<p><b>地形:"+lands[fightInfo["defenderLand"]]+"</b></p>");
-	
-	
-	$("#attacker-critical").children("li").remove();
-	if(attacker)
-	{
-		if(attackerHeroCriticalChecked == undefined)
-		{
-			attackerHeroCriticalChecked = fightInfo["attackerCriticalProbInc"]+fightInfo["attackerTech"]/10>70;
-		}
 
-		var buttonClass = attackerHeroCriticalChecked ? "btn-warning":"btn-default";
-		var buff = $("<li class=\"list-group-item\">英雄暴击</li>");
-		var button = $("<button type=\"button\" class=\"btn "+buttonClass+"\">暴击</button>");
-		button.attr("uc-name", name);
-		button.click(function(e){
-		
-			if ( $(this).hasClass("btn-warning"))
-			{
-				$(this).removeClass("btn-warning");
-				$(this).addClass("btn-default");
-				attackerHeroCriticalChecked = false;
-			} else
-			{
-				$(this).removeClass("btn-default");
-				$(this).addClass("btn-warning");
-				attackerHeroCriticalChecked = true;
-			}
-			//loadSkillData();
-		});
-		button.appendTo(buff);
-		buff.appendTo($("#attacker-critical"));	
-	}
-	if(attackerSoldier)
-	{
-		if(attackerSoldierCriticalChecked == undefined)
-		{
-			attackerSoldierCriticalChecked = fightInfo["attackerSoldierCriticalProbInc"]>70;
-		}
-		
-		var buff = $("<li class=\"list-group-item\">士兵暴击</li>");
-		
-		if( fightInfo["attackerSoldierCriticalProbInc"]>0) 
-		{
-			var buttonClass = (attackerSoldierCriticalChecked) ? "btn-warning":"btn-default";
-			var button = $("<button type=\"button\" class=\"btn "+buttonClass+"\">暴击</button>");
-			button.attr("uc-name", name);
-			button.click(function(e){
-			
-				if ( $(this).hasClass("btn-warning"))
-				{
-					$(this).removeClass("btn-warning");
-					$(this).addClass("btn-default");
-					attackerSoldierCriticalChecked = false;
-				} else
-				{
-					$(this).removeClass("btn-default");
-					$(this).addClass("btn-warning");
-					attackerSoldierCriticalChecked = true;
-				}
-				//loadSkillData();
-			});
-			button.appendTo(buff);
-		}
-		buff.appendTo($("#attacker-critical"));	
-	}
-	
-	$("#defender-critical").children("li").remove();
-	if(defender)
-	{
-		if(defenderHeroCriticalChecked == undefined)
-		{
-			defenderHeroCriticalChecked = fightInfo["defenderCriticalProbInc"]+fightInfo["defenderTech"]/10>70;
-		}
-		var buttonClass = defenderHeroCriticalChecked ? "btn-warning":"btn-default";
-		var buff = $("<li class=\"list-group-item\">英雄暴击</li>");
-		var button = $("<button type=\"button\" class=\"btn "+buttonClass+"\">暴击</button>");
-		button.attr("uc-name", name);
-		button.click(function(e){
-		
-			if ( $(this).hasClass("btn-warning"))
-			{
-				$(this).removeClass("btn-warning");
-				$(this).addClass("btn-default");
-				defenderHeroCriticalChecked = false;
-			} else
-			{
-				$(this).removeClass("btn-default");
-				$(this).addClass("btn-warning");
-				defenderHeroCriticalChecked = true;
-			}
-			//loadSkillData();
-		});
-		button.appendTo(buff);
-		buff.appendTo($("#defender-critical"));	
-	}
-	if(defenderSoldier)
-	{
-		if(defenderSoldierCriticalChecked == undefined)
-		{
-			defenderSoldierCriticalChecked = fightInfo["defenderSoldierCriticalProbInc"]>70;
-		}
-		var buff = $("<li class=\"list-group-item\">士兵暴击</li>");
-		if(fightInfo["defenderSoldierCriticalProbInc"]>0) 
-		{
-			var buttonClass = (defenderSoldierCriticalChecked) ? "btn-warning":"btn-default";
-	
-			var button = $("<button type=\"button\" class=\"btn "+buttonClass+"\">暴击</button>");
-			button.attr("uc-name", name);
-			button.click(function(e){
-			
-				if ( $(this).hasClass("btn-warning"))
-				{
-					$(this).removeClass("btn-warning");
-					$(this).addClass("btn-default");
-					defenderSoldierCriticalChecked = false;
-				} else
-				{
-					$(this).removeClass("btn-default");
-					$(this).addClass("btn-warning");
-					defenderSoldierCriticalChecked = true;
-				}
-				//loadSkillData();
-			});
-			button.appendTo(buff);
-		}
-		buff.appendTo($("#defender-critical"));	
-	}
-	
+
 }

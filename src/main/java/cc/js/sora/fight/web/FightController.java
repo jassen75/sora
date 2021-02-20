@@ -1,7 +1,6 @@
 package cc.js.sora.fight.web;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.locks.Lock;
@@ -24,7 +23,7 @@ import cc.js.sora.fight.CheckedSkill;
 import cc.js.sora.fight.Equip;
 import cc.js.sora.fight.EquipPart;
 import cc.js.sora.fight.EquipType;
-import cc.js.sora.fight.Fight;
+import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Hero;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.Soldier;
@@ -35,7 +34,6 @@ import cc.js.sora.fight.db.EquipRepository;
 import cc.js.sora.fight.db.EquipTypeRepository;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
-import cc.js.sora.fight.serivce.ConditionService;
 import cc.js.sora.fight.serivce.SkillService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -55,9 +53,6 @@ public class FightController {
 
 	@Autowired
 	SkillService skillSerivce;
-
-	@Autowired
-	ConditionService conditionService;
 
 	@Autowired
 	EquipRepository equipRepository;
@@ -90,17 +85,24 @@ public class FightController {
 			lock.unlock();
 		}
 	}
+	
+	
+	@RequestMapping(path = "/sync", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+	public FightInfo sync(@RequestBody FightInfo fight) {
+		
+		return fight;
+	}
 
 	@RequestMapping(path = "/buffs", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getBuffs(@RequestBody Fight fight) {
+	public Map<String, Object> getBuffs(@RequestBody FightInfo fight) {
 		lock.lock();
 		try {
 			log.info("Current fight:" + fight);
 			Map<String, Object> result = Maps.newHashMap();
-			List<Skill> attackerSkills = skillSerivce.getSkills(fight.getAttackerHeroId(), fight.getAttackerSoldierId(),
-					fight.getAttackerActionId(), fight.getAttackerEnhance(), fight.getAttackerEquip(), true);
-			List<Skill> defenderSkills = skillSerivce.getSkills(fight.getDefenderHeroId(), fight.getDefenderSoldierId(),
-					0, fight.getDefenderEnhance(), fight.getDefenderEquip(), false);
+			List<Skill> attackerSkills = skillSerivce.getSkills(fight.getAttacker().getHero(), fight.getAttacker().getSoldier(),
+					fight.getAttacker().getAction().getId(), fight.getAttacker().getEnhance(), fight.getAttacker().getEquip(), true);
+			List<Skill> defenderSkills = skillSerivce.getSkills(fight.getDefender().getHero(), fight.getDefender().getSoldier(),
+					0, fight.getDefender().getEnhance(), fight.getDefender().getEquip(), false);
 
 			List<CheckedSkill> attackerCheckedSkills = Lists.newArrayList();
 			List<CheckedSkill> defenderCheckedSkills = Lists.newArrayList();
@@ -128,18 +130,16 @@ public class FightController {
 		}
 	}
 
-	private CheckedSkill checkSkill(Fight fight, Skill skill, boolean isAttack) {
+	private CheckedSkill checkSkill(FightInfo fightInfo, Skill skill, boolean isAttack) {
 		lock.lock();
 		try {
 
 			CheckedSkill result = new CheckedSkill();
 			result.setSkill(skill);
-			boolean valid = conditionService.checkCondition(fight, skill.getCondition(),
-					isAttack ? fight.getAttackerUserConditionChecked() : fight.getDefenderUserConditionChecked(),
-					isAttack);
+			boolean valid = skill.getCondition().valid(fightInfo, isAttack);
 			if(valid)
 			{
-				skill.process(fight, isAttack);
+				skill.process(fightInfo, isAttack);
 			}
 			
 			result.setValid(valid);

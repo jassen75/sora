@@ -1,10 +1,22 @@
 package cc.js.sora.fight.condition;
 
+import org.springframework.stereotype.Component;
+
 import cc.js.sora.fight.Condition;
+import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Hero;
 
-public interface EnemyHeroCondition extends Condition {
+public abstract class EnemyHeroCondition implements Condition {
 	
-	boolean valid(Hero enemyHero);
+	public abstract boolean valid(Hero enemyHero);
+
+	@Override
+	public abstract String getDesc() ;
+
+	@Override
+	public boolean valid(FightInfo fightInfo, boolean isAttack) {
+
+		return valid(fightInfo.getEnemyRole(isAttack).getHero());
+	}
 
 }
