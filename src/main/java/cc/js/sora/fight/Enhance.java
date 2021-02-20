@@ -3,6 +3,7 @@ package cc.js.sora.fight;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
@@ -85,11 +86,13 @@ public class Enhance implements Effect{
 	}
 
 	@Override
+	@JsonIgnore
 	public List<Enhance> getEnhanceList() {
 		return Lists.newArrayList(this);
 	}
 
 	@Override
+	@JsonIgnore
 	public Map<String, Object> getFeatures() {
 		return Maps.newHashMap();
 	}

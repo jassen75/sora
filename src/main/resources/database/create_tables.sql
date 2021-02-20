@@ -75,6 +75,7 @@ CREATE TABLE IF NOT EXISTS hero (
 	is_physic tinyint(1),
 	is_woman tinyint(1),
 	type integer,
+	range integer,
 	hero_equip_id bigint,
 	supported_equip_types VARCHAR(1024),
 	default_soldier bigint
@@ -87,8 +88,8 @@ create table soldier (
 	name VARCHAR(255),
 	attack integer not null, 
 	life integer not null, 
-	magic_def integer not null, 
-	physic_def integer not null, 
+	magic integer not null, 
+	physic integer not null, 
 	soldier_type integer not null,
 	skills VARCHAR(4096),
 	is_physic tinyint(1),
@@ -104,6 +105,7 @@ create table action (
 	range integer, 
 	skills varchar(255), 
 	is_physic tinyint(1),
+	battle_type integer,
 	primary key (id));
 
  create table equip (
@@ -112,8 +114,8 @@ create table action (
 	 attack_skill integer not null, 
 	 intel_skill integer not null, 
 	 life_skill integer not null, 
-	 magic_def_skill integer not null, 
-	 physic_def_skill integer not null,
+	 magic_skill integer not null, 
+	 physic_skill integer not null,
 	 tech_skill integer not null, 
 	 equip_type varchar(64), 
 	 skills varchar(255),
@@ -126,10 +128,10 @@ create table equip_type (
 	attack integer not null, 
 	intel integer not null, 
 	life integer not null, 
-	magic_def integer not null, 
+	magic integer not null, 
 	name varchar(255), 
 	part varchar(64), 
-	physic_def integer not null, 
+	physic integer not null, 
 	tech integer not null, 
 	primary key (id)
 );
@@ -152,7 +154,7 @@ INSERT INTO player(name, server) VALUES
 ('不是山谷','羁绊之地');
 
 INSERT INTO hero(id, name, 
-life, attack, intel, physic_def, magic_def, tech, soldier_life_inc, soldier_attack_inc, soldier_physic_def_inc, soldier_magic_def_inc,
+life, attack, intel, physic, magic, tech, soldier_life_inc, soldier_attack_inc, soldier_physic_inc, soldier_magic_inc,
 is_physic, is_woman, default_soldier, type, range, supported_equip_types,  skills) VALUES
 (1,'帕希尔',3548,271,520,258,312,104,30,35,15,20,       0,1,1,7,2, '1,12,15,16,17,21,22,23', '1'),
 (2,'托娃',4168,527,240,305,302,166,30,30,40,15,        1,1,3,5,1,   '5,6,12,15,18,19,20,21,22,23','2'),
@@ -280,7 +282,7 @@ INSERT INTO equip_type(id, name, life, attack, intel, physic, magic, tech, part)
 ;
 
 
-INSERT INTO equip(id, name, life_skill, attack_skill, intel_skill, physic_def_skill, magic_def_skill, tech_skill, equip_type, owner, skills) VALUES
+INSERT INTO equip(id, name, life_skill, attack_skill, intel_skill, physic_skill, magic_skill, tech_skill, equip_type, owner, skills) VALUES
 (1,'最后之服',0,0,0,10,0,0,  12,0,'1001'),
 (2,'逸才权杖',5,0,0,0,0,0,   1,0,''),
 (3,'尼约德的羽冠',10,0,0,0,0,0,  15,0,''),

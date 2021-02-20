@@ -257,8 +257,8 @@ function generateHeroInc(hero, equip)
 	heroInc["lifeSkill"] = 0;
 	heroInc["attackSkill"] = 0;
 	heroInc["intelSkill"] = 0;
-	heroInc["physicDefSkill"] = 0;
-	heroInc["magicDefSkill"] = 0;
+	heroInc["physicSkill"] = 0;
+	heroInc["magicSkill"] = 0;
 	heroInc["techSkill"] = 0;
 	heroInc["criticalProbInc"]=0;
 	heroInc["criticalDamageInc"]=0;
@@ -363,13 +363,13 @@ function generateHeroInc(hero, equip)
 			{
 				intels+=equip[i]["equipType"]["intel"];
 			}
-			if(equip[i]["equipType"]["physicDef"])
+			if(equip[i]["equipType"]["physic"])
 			{
-				physics+=equip[i]["equipType"]["physicDef"];
+				physics+=equip[i]["equipType"]["physic"];
 			}
-			if(equip[i]["equipType"]["magicDef"])
+			if(equip[i]["equipType"]["magic"])
 			{
-				magics+=equip[i]["equipType"]["magicDef"];
+				magics+=equip[i]["equipType"]["magic"];
 			}
 			if(equip[i]["equipType"]["tech"])
 			{
@@ -387,13 +387,13 @@ function generateHeroInc(hero, equip)
 			{
 				heroInc["intelSkill"] += equip[i]["intelSkill"];
 			}
-			if(equip[i]["physicDefSkill"])
+			if(equip[i]["physicSkill"])
 			{
-				heroInc["physicDefSkill"] += equip[i]["physicDefSkill"];
+				heroInc["physicSkill"] += equip[i]["physicSkill"];
 			}
-			if(equip[i]["magicDefSkill"])
+			if(equip[i]["magicSkill"])
 			{
-				heroInc["magicDefSkill"] += equip[i]["magicDefSkill"];
+				heroInc["magicSkill"] += equip[i]["magicSkill"];
 			}
 			if(equip[i]["techSkill"])
 			{
@@ -437,15 +437,15 @@ function generateHeroInc(hero, equip)
 	heroInc["lifeInc"]=Math.round(hero["life"]*lifep/100)+lifes+jt["life"];
 	heroInc["attackInc"]=Math.ceil(hero["attack"]*attackp/100)+attacks+jt["attack"];
 	heroInc["intelInc"]=Math.ceil(hero["intel"]*intelp/100)+intels+jt["intel"];
-	heroInc["physicDefInc"]=Math.ceil(hero["physicDef"]*physicp/100)+physics+jt["physic"];
-	heroInc["magicDefInc"]=Math.ceil(hero["magicDef"]*magicp/100)+magics+jt["magic"];
+	heroInc["physicInc"]=Math.ceil(hero["physic"]*physicp/100)+physics+jt["physic"];
+	heroInc["magicInc"]=Math.ceil(hero["magic"]*magicp/100)+magics+jt["magic"];
 	heroInc["techInc"]=Math.ceil(hero["tech"]*techp/100)+techs+jt["tech"];
 	
 	heroInc["lifeJJC"] = jjc["life"];
 	heroInc["attackJJC"] = jjc["attack"];
 	heroInc["intelJJC"] = jjc["intel"];
-	heroInc["physicDefJJC"] = jjc["physic"];
-	heroInc["magicDefJJC"] = jjc["magic"];
+	heroInc["physicJJC"] = jjc["physic"];
+	heroInc["magicJJC"] = jjc["magic"];
 	heroInc["techJJC"] = jjc["tech"];
 	
 	heroInc["criticalProbInc"] += jjc["criticalProbInc"];
@@ -477,17 +477,17 @@ function defaultHeroInc(hero)
 	}
 	
 	heroInc["lifeSkill"] = 10;
-	heroInc["physicDefSkill"] = 10;
-	heroInc["magicDefSkill"] = 0;
+	heroInc["physicSkill"] = 10;
+	heroInc["magicSkill"] = 0;
 	heroInc["techSkill"] = 0;
 	
-	heroInc["physicDefInc"]=Math.ceil(hero["physicDef"]*0.15)+55+60;
-	heroInc["magicDefInc"]=60;
+	heroInc["physicInc"]=Math.ceil(hero["physic"]*0.15)+55+60;
+	heroInc["magicInc"]=60;
 	heroInc["techInc"]=0;
 	
 	heroInc["lifeJJC"] = 480;
-	heroInc["physicDefJJC"] = 45;
-	heroInc["magicDefJJC"] = 0;
+	heroInc["physicJJC"] = 45;
+	heroInc["magicJJC"] = 0;
 	heroInc["techJJC"] = 0;
 	
 	heroInc["criticalProbInc"] = 0;

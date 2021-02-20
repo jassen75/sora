@@ -34,6 +34,7 @@ import cc.js.sora.fight.db.EquipRepository;
 import cc.js.sora.fight.db.EquipTypeRepository;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
+import cc.js.sora.fight.serivce.FightService;
 import cc.js.sora.fight.serivce.SkillService;
 import lombok.extern.slf4j.Slf4j;
 
@@ -53,6 +54,9 @@ public class FightController {
 
 	@Autowired
 	SkillService skillSerivce;
+	
+	@Autowired
+	FightService fightService;
 
 	@Autowired
 	EquipRepository equipRepository;
@@ -88,98 +92,50 @@ public class FightController {
 	
 	
 	@RequestMapping(path = "/sync", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public FightInfo sync(@RequestBody FightInfo fight) {
+	public Map<String, Object>  sync(@RequestBody FightInfo fight) {
 		
-		return fight;
+		 Map<String, Object> result =fightService.calculatePanel(fight);
+		return result;
 	}
 
-	@RequestMapping(path = "/buffs", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
-	public Map<String, Object> getBuffs(@RequestBody FightInfo fight) {
-		lock.lock();
-		try {
-			log.info("Current fight:" + fight);
-			Map<String, Object> result = Maps.newHashMap();
-			List<Skill> attackerSkills = skillSerivce.getSkills(fight.getAttacker().getHero(), fight.getAttacker().getSoldier(),
-					fight.getAttacker().getAction().getId(), fight.getAttacker().getEnhance(), fight.getAttacker().getEquip(), true);
-			List<Skill> defenderSkills = skillSerivce.getSkills(fight.getDefender().getHero(), fight.getDefender().getSoldier(),
-					0, fight.getDefender().getEnhance(), fight.getDefender().getEquip(), false);
+//	@RequestMapping(path = "/buffs", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
+//	public Map<String, Object> getBuffs(@RequestBody FightInfo fight) {
+//		lock.lock();
+//		try {
+//			log.info("Current fight:" + fight);
+//			Map<String, Object> result = Maps.newHashMap();
+//			List<Skill> attackerSkills = skillSerivce.getSkills(fight.getAttacker().getHero(), fight.getAttacker().getSoldier(),
+//					fight.getAttacker().getAction().getId(), fight.getAttacker().getEnhance(), fight.getAttacker().getEquip(), true);
+//			List<Skill> defenderSkills = skillSerivce.getSkills(fight.getDefender().getHero(), fight.getDefender().getSoldier(),
+//					0, fight.getDefender().getEnhance(), fight.getDefender().getEquip(), false);
+//
+//			List<CheckedSkill> attackerCheckedSkills = Lists.newArrayList();
+//			List<CheckedSkill> defenderCheckedSkills = Lists.newArrayList();
+//			
+//			attackerSkills.stream().filter(s->s.getBattleType()==0).forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
+//			defenderSkills.stream().filter(s->s.getBattleType()==0).forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
+//			
+//			attackerSkills.stream().filter(s->s.getBattleType()==1).forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
+//			defenderSkills.stream().filter(s->s.getBattleType()==1).forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
+//
+//			attackerSkills.stream().filter(s->s.getBattleType()==2).forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
+//			defenderSkills.stream().filter(s->s.getBattleType()==2).forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
+//			
+//			attackerSkills.stream().filter(s->s.getBattleType()==3).forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
+//			defenderSkills.stream().filter(s->s.getBattleType()==3).forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
+//
+//			result.put("attackerSkills", attackerCheckedSkills);
+//			result.put("defenderSkills", defenderCheckedSkills);
+//			result.put("attackerUserConditions", getUserConditionsFromSkill(attackerSkills));
+//			result.put("defenderUserConditions", getUserConditionsFromSkill(defenderSkills));
+//			return result;
+//		} finally {
+//			lock.unlock();
+//
+//		}
+//	}
 
-			List<CheckedSkill> attackerCheckedSkills = Lists.newArrayList();
-			List<CheckedSkill> defenderCheckedSkills = Lists.newArrayList();
-			
-			attackerSkills.stream().filter(s->s.getBattleType()==0).forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
-			defenderSkills.stream().filter(s->s.getBattleType()==0).forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
-			
-			attackerSkills.stream().filter(s->s.getBattleType()==1).forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
-			defenderSkills.stream().filter(s->s.getBattleType()==1).forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
 
-			attackerSkills.stream().filter(s->s.getBattleType()==2).forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
-			defenderSkills.stream().filter(s->s.getBattleType()==2).forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
-			
-			attackerSkills.stream().filter(s->s.getBattleType()==3).forEach(s -> attackerCheckedSkills.add(checkSkill(fight, s, true)));
-			defenderSkills.stream().filter(s->s.getBattleType()==3).forEach(s -> defenderCheckedSkills.add(checkSkill(fight, s, false)));
-
-			result.put("attackerSkills", attackerCheckedSkills);
-			result.put("defenderSkills", defenderCheckedSkills);
-			result.put("attackerUserConditions", getUserConditionsFromSkill(attackerSkills));
-			result.put("defenderUserConditions", getUserConditionsFromSkill(defenderSkills));
-			return result;
-		} finally {
-			lock.unlock();
-
-		}
-	}
-
-	private CheckedSkill checkSkill(FightInfo fightInfo, Skill skill, boolean isAttack) {
-		lock.lock();
-		try {
-
-			CheckedSkill result = new CheckedSkill();
-			result.setSkill(skill);
-			boolean valid = skill.getCondition().valid(fightInfo, isAttack);
-			if(valid)
-			{
-				skill.process(fightInfo, isAttack);
-			}
-			
-			result.setValid(valid);
-			return result;
-		} finally {
-			lock.unlock();
-
-		}
-
-	}
-
-	public Map<String, UserCondition> getUserConditionsFromSkill(List<Skill> skills) {
-		lock.lock();
-		try
-		{
-			Map<String, UserCondition> resultList = Maps.newHashMap();
-			if (skills != null) {
-				skills.stream().forEach(skill -> {
-					if (skill == null) {
-						log.error("skill is null");
-					}
-					if (skill.getCondition() instanceof UserCondition) {
-						resultList.put(((UserCondition) skill.getCondition()).getName(),
-								(UserCondition) skill.getCondition());
-					}
-					if (skill.getCondition() instanceof CombinedCondition) {
-						((CombinedCondition) skill.getCondition()).getConditions().stream().forEach(c -> {
-							if (c instanceof UserCondition) {
-								resultList.put(((UserCondition) c).getName(), (UserCondition) c);
-							}
-						});
-					}
-				});
-			}
-			return resultList;
-		} finally
-		{
-			lock.unlock();
-		}
-	}
 
 	@RequestMapping(path = "/skills", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	public Map<Long, Skill> allSkills() {

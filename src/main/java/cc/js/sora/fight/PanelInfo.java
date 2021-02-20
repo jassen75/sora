@@ -23,9 +23,9 @@ public class PanelInfo {
 	int tech;
 	
 	int criticalProbInc;
-	int criticalProbDecc;
+	int criticalProbDec;
 	int criticalDamageInc;
-	int criticalDamageDnc;
+	int criticalDamageDec;
 	
 	int damageInc;
 	int physicDamageDec;
@@ -40,6 +40,13 @@ public class PanelInfo {
 	int physicInc;
 	int magicInc;
 	int techInc;
+	
+	int lifeSkill;
+	int attackSkill;
+	int intelSkill;
+	int physicSkill;
+	int magicSkill;
+	int techSkill;
 	
 	int lifeJJC;
 	int attackJJC;

@@ -3,7 +3,8 @@ package cc.js.sora.fight;
 import java.util.List;
 import java.util.Map;
 
-import cc.js.sora.fight.condition.UserCondition;
+import com.google.common.collect.Lists;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,27 +20,24 @@ public class FightRole {
 	
 	Hero hero;
 	Soldier soldier;
-	PanelInfo heroPanel;
-	PanelInfo soldierPanel;
-	Land land;
+
+	Land land = Land.Flat;
 	Map<String, Boolean> userConditionChecked;
 	int enhance;
-	
 	int heroLeftLife;
 	int soldierLeftLife;
-
 	Map<String, Equip> equip;
-	
 	Boolean heroCriticalChecked;
 	Boolean soldierCriticalChecked;
-	
 	Action action;
 	
+	
+	PanelInfo heroPanel;
+	PanelInfo soldierPanel;
 	List<Buff> buffList;
 	List<Debuff> debuffList;
-	
-	List<Skill> skills;
-	List<UserCondition> userConditions;
+//	Map<String, UserCondition> userConditions;
+//	List<CheckedSkill> checkedSkills = Lists.newArrayList();
 	
 	int range;
 }

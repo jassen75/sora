@@ -1,7 +1,5 @@
 package cc.js.sora.fight.condition;
 
-import org.springframework.stereotype.Component;
-
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Hero;

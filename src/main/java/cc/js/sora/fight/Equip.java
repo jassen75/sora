@@ -37,8 +37,8 @@ public class Equip {
 	String name;
 	
 	int attackSkill;
-	int physicDefSkill;
-	int magicDefSkill;
+	int physicSkill;
+	int magicSkill;
 	int lifeSkill;
 	int intelSkill;
 	int techSkill;

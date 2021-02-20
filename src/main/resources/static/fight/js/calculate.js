@@ -1,6 +1,5 @@
 
 function calculate()
-
 {
 	var soldierToSoldier=0;
 	var soldierToHero=0;
@@ -81,7 +80,7 @@ function calculate()
 		var oneSoldierLife = fightInfo["defenderSoldierLife"] / 10;
 		if(preDamage)
 		{
-			if(fightInfo["defender"]["heroPanel"]["features"]("ImmuneToFixedDamage"])
+			if(fightInfo["defender"]["heroPanel"]["features"]["ImmuneToFixedDamage"])
 			{
 				fightDetails+="<p>"+fightInfo["defender"]["soldier"]["name"]+"免疫掉战前固伤</p>";
 			} else
@@ -215,35 +214,37 @@ function calculate()
 	
 	$("#defenderHeroBar").text(dl+"/"+fightInfo["defender"]["heroPanel"]["life"]);
 	
-	$("#defenderHeroBar").attr("style", "width:"+Math.ceil(dl/fightInfo[defender]["heroPanel"]["life"]*100)+"%");
+	$("#defenderHeroBar").attr("style", "width:"+Math.ceil(dl/fightInfo["defender"]["heroPanel"]["life"]*100)+"%");
 										
 	$("#fightDetails").html(fightDetails);
 }
 
-//function oneHit(coefficient, attack, enemyDef, damageInc, enemyDamageDec, criticalInc, criticalDec, critcal)
-//{
-//	var c = critcal ? (130 + criticalInc - criticalDec) / 100 : 1;
-//	return Math.floor(coefficient * (attack-enemyDef)*(1+(damageInc-enemyDamageDec)/100.0)*c /2) ;
-//}
-
-fucntion ontHit(coefficient, pannel1, panel2, critcal, isPhysics)
+function oneHit(coefficient, panel1, panel2, critcal, isPhysics)
 {
-	var c = critcal ? (130 + pannel1["criticalInc"] - pannel1["criticalDec"]) / 100 : 1;
+	if(!panel1 || !panel2)
+	{
+		return 0;
+	}
+	var c = critcal ? (130 + panel1["criticalInc"] - panel1["criticalDec"]) / 100 : 1;
 	if(isPhysics)
 	{
-		return Math.floor(coefficient * (pannel1["attack"]-pannel2["physics"])*(1+(pannel1["damageInc"]-pannel2["physicDamageInc"])/100.0)*c /2) ;
+		return Math.floor(coefficient * (panel1["attack"]-panel2["physics"])*(1+(panel1["damageInc"]-panel2["physicDamageInc"])/100.0)*c /2) ;
 	} else	
 	{
-		return Math.floor(coefficient * (pannel1["intel"]-pannel2["magic"])*(1+(pannel1["damageInc"]-pannel2["magicDamageInc"])/100.0)*c /2) ;
+		return Math.floor(coefficient * (panel1["intel"]-panel2["magic"])*(1+(panel1["damageInc"]-panel2["magicDamageInc"])/100.0)*c /2) ;
 	}
 }
 
 function criticalProb(panel1, panel2)
 {
-	var prob = panel["criticalProbInc"]+panel["tech"]/10;
+	if(!panel1 || !panel2)
+	{
+		return 0;
+	}
+	var prob = panel1["criticalProbInc"]+panel1["tech"]/10;
 	if(prob > 100)
 	{
 		prob = 100;
 	}
-	return Math.floor(prob * (100-panel["criticalProbDec"])/100)+"%";
+	return Math.floor(prob * (100-panel2["criticalProbDec"])/100)+"%";
 }

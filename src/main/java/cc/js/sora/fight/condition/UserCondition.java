@@ -24,13 +24,11 @@ public abstract class UserCondition implements Condition{
 	@Override
 	public boolean valid(FightInfo fightInfo, boolean isAttack) {
 		Map<String, Boolean> m = fightInfo.getRole(isAttack).getUserConditionChecked();
-		if(m.containsKey(this.getName()))
+		if(m!= null && m.containsKey(this.getName()))
 		{
 			return m.get(this.getName());
-		} else
-		{
-			return this.defaultValid();
 		}
+		return this.defaultValid();
 	}
 	
 }
