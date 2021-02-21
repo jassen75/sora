@@ -73,6 +73,7 @@ public class SkillService {
 		registerSkill(Skill.TowaTalent, new TowaTalent());
 		registerSkill(Skill.ZalrahdaTalent1, new ZalrahdaTalent1());
 		registerSkill(Skill.ZalrahdaTalent2, new ZalrahdaTalent2());
+		registerSkill(Skill.MarielTalent, new MarielTalent());
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
@@ -80,6 +81,9 @@ public class SkillService {
 		
 		registerSkill(Skill.Shimeng, new DreamAction());
 		registerSkill(Skill.Shixuemojian, new BloodSwordAction());
+		
+		registerSkill(Skill.Qinzhen, new QinZhenSKill());
+		registerSkill(Skill.Juebi, new JuebiSkill());
 		
 		registerSkill(Skill.SuperBuff, new SuperBuff());
 		skills.putAll(barrackSkills.getAllBarrackSkills());
@@ -123,7 +127,7 @@ public class SkillService {
 		if (!StringUtils.isEmpty(skillList)) {
 			String[] d = StringUtils.split(skillList, ",");
 			for (int i = 0; i < d.length; i++) {
-				long skillId = Longs.tryParse(d[i]);
+				long skillId = Longs.tryParse(d[i].trim());
 				if (this.skills.containsKey(skillId)) {
 					if(checkSkillType(this.getSkill(skillId).getSkillType(), isAttacker))
 					{

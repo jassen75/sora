@@ -52,13 +52,8 @@ public class ZalrahdaTalent2 extends Skill {
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.CriticalProbInc, 30), new Enhance(BuffType.CriticalDamageInc, 30), new Enhance(BuffType.DamageDec, 30));
-	}
-
-	@Override
-	public Scope getScope() {
-		// TODO Auto-generated method stub
-		return Scope.All;
+		return Lists.newArrayList(new Enhance(BuffType.CriticalProbInc, 30, Scope.All),
+				new Enhance(BuffType.CriticalDamageInc, 30, Scope.All), new Enhance(BuffType.DamageDec, 30, Scope.All));
 	}
 
 }

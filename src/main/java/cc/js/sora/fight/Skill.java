@@ -20,9 +20,6 @@ public abstract class Skill {
 	//public abstract List<Buff> getBuffs();
 	
 	public abstract List<Effect> getEffects();
-	
-	//1 hero 2 soldier 3 all 4 enemy hero 5 enemy soldier 6 enemy all
-	public abstract Scope getScope();
 
 //    public List<String> getEffects()
 //    {
@@ -80,7 +77,8 @@ public abstract class Skill {
 	public static final long PatyleTalent = 1;
 	public static final long TowaTalent = 2;
 	public static final long ZalrahdaTalent1 = 3;
-	public static final long ZalrahdaTalent2 = 4;
+	public static final long ZalrahdaTalent2 = 203;
+	public static final long MarielTalent = 10;
 
 	/**
 	 *   300-900 passive skill
@@ -107,6 +105,9 @@ public abstract class Skill {
 	public static final long Shixuemojian = 1602;
 	public static final long Youshidaji = 1603;
 	public static final long Ziyouzhiren = 1604;
+	
+	public static final long Qinzhen = 1605;
+	public static final long Juebi = 1606;
 	
 	/**
 	 * 2000-3000 soldier skill

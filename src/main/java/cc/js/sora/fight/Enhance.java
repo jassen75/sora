@@ -18,7 +18,10 @@ public class Enhance implements Effect{
 	
 	
 	BuffType buffType;
-	int number;
+	double number;
+	
+	//1 hero 2 soldier 3 all 4 enemy hero 5 enemy soldier 6 enemy all
+	Scope scope;
 	
 	public String getTitle()
 	{

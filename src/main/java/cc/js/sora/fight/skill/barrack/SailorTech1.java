@@ -32,12 +32,6 @@ public class SailorTech1  extends Skill {
 
 	@Override
 	public List<Effect> getEffects()  {
-		return Lists.newArrayList(new Enhance(BuffType.Attack, 20), new Enhance(BuffType.PhysicDef, 20));
+		return Lists.newArrayList(new Enhance(BuffType.Attack, 20, Scope.Soldier), new Enhance(BuffType.PhysicDef, 20, Scope.Soldier));
 	}
-
-	@Override
-	public Scope getScope() {
-		return Scope.Soldier;
-	}
-
 }

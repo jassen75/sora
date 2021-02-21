@@ -32,12 +32,7 @@ public class SorceressTech3 extends Skill {
 
 	@Override
 	public List<Effect> getEffects()  {
-		return Lists.newArrayList(new Enhance(BuffType.DamageDec, 30));
-	}
-
-	@Override
-	public Scope getScope() {
-		return Scope.Soldier;
+		return Lists.newArrayList(new Enhance(BuffType.DamageDec, 30, Scope.Soldier));
 	}
 
 }

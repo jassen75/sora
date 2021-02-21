@@ -36,13 +36,7 @@ public class BloodBattle extends Skill {
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.Attack,10) , new Enhance(BuffType.PhysicDef, 10));
-	}
-
-	@Override
-	public Scope getScope() {
-		// TODO Auto-generated method stub
-		return Scope.All;
+		return Lists.newArrayList(new Enhance(BuffType.Attack,10, Scope.All) , new Enhance(BuffType.PhysicDef, 10, Scope.All));
 	}
 
 }

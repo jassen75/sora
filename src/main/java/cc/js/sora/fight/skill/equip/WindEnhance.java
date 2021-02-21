@@ -35,13 +35,7 @@ public class WindEnhance extends Skill{
 	@Override
 	public List<Effect> getEffects()  {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.DamageInc, 10));
-	}
-
-	@Override
-	public Scope getScope() {
-		// TODO Auto-generated method stub
-		return Scope.Hero;
+		return Lists.newArrayList(new Enhance(BuffType.DamageInc, 10, Scope.Hero));
 	}
 
 }

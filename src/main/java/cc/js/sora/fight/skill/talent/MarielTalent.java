@@ -1,42 +1,41 @@
-package cc.js.sora.fight.skill.equip;
+package cc.js.sora.fight.skill.talent;
 
 import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import cc.js.sora.fight.Buff;
 import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.NoCondition;
-import cc.js.sora.fight.condition.UserCondition;
+import cc.js.sora.fight.condition.health.GreaterHealthCondition;
 
-public class FuriousEnhance extends Skill {
-
+public class MarielTalent extends Skill {
 
 	@Override
 	public long getId() {
 		// TODO Auto-generated method stub
-		return Skill.FuriousEnhance;
+		return Skill.MarielTalent;
 	}
 
 	@Override
 	public String getName() {
-		return "怒涛附魔";
+		// TODO Auto-generated method stub
+		return "玛丽埃尔天赋";
 	}
 
 	@Override
 	public Condition getCondition() {
-		return new NoCondition();
+		// TODO Auto-generated method stub
+		return new GreaterHealthCondition(50);
 	}
 
 	@Override
-	public List<Effect> getEffects()  {
+	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.Attack, 10, Scope.Hero), new Enhance(BuffType.DamageDec, 10, Scope.Hero));
+		return Lists.newArrayList(new Enhance(BuffType.Attack, 16, Scope.All), new Enhance(BuffType.DamageDec, 20, Scope.All));
 	}
 	
 	@Override
@@ -44,4 +43,5 @@ public class FuriousEnhance extends Skill {
 	{
 		return 1;
 	}
+
 }

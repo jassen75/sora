@@ -34,12 +34,6 @@ public class LastSuit extends Skill{
 
 	@Override
 	public List<Effect> getEffects()  {
-		return Lists.newArrayList(new Enhance(BuffType.DamageDec, 40));
+		return Lists.newArrayList(new Enhance(BuffType.DamageDec, 40, Scope.Hero));
 	}
-
-	@Override
-	public Scope getScope() {
-		return Scope.Hero;
-	}
-
 }

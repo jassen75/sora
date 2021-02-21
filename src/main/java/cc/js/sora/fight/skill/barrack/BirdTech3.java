@@ -49,12 +49,7 @@ public class BirdTech3 extends Skill {
 	@Override
 	public List<Effect> getEffects()  {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.DamageDec, 20));
-	}
-
-	@Override
-	public Scope getScope() {
-		return Scope.Soldier;
+		return Lists.newArrayList(new Enhance(BuffType.DamageDec, 20, Scope.Soldier));
 	}
 
 }

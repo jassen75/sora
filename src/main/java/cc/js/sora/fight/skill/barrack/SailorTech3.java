@@ -37,13 +37,7 @@ public class SailorTech3  extends Skill {
 	@Override
 	public List<Effect> getEffects()  {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.DamageInc, 30));
-	}
-
-	@Override
-	public Scope getScope() {
-		// TODO Auto-generated method stub
-		return Scope.Soldier;
+		return Lists.newArrayList(new Enhance(BuffType.DamageInc, 30, Scope.Soldier));
 	}
 	
 	//1 attack 2 defender 3 all

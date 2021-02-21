@@ -33,12 +33,7 @@ public class BirdTech2 extends Skill {
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Enhance(BuffType.Attack, 20), new Enhance(BuffType.PhysicDef, 20));
-	}
-
-	@Override
-	public Scope getScope() {
-		return Scope.Soldier;
+		return Lists.newArrayList(new Enhance(BuffType.Attack, 20, Scope.Soldier), new Enhance(BuffType.PhysicDef, 20, Scope.Soldier));
 	}
 	
 	public int getSkillType()

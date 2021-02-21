@@ -58,5 +58,5 @@ public class PanelInfo {
 	int magicJJC;
 	int techJJC;
 	
-	int preBattleDamage;
+	double preBattleDamage;
 }

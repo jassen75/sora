@@ -15,6 +15,7 @@ import cc.js.sora.fight.CheckedSkill;
 import cc.js.sora.fight.Debuff;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
+import cc.js.sora.fight.Feature;
 import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Hero;
 import cc.js.sora.fight.PanelInfo;
@@ -22,6 +23,7 @@ import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.Soldier;
 import cc.js.sora.fight.condition.CombinedCondition;
+import cc.js.sora.fight.condition.GroupedUserCondition;
 import cc.js.sora.fight.condition.UserCondition;
 import lombok.extern.slf4j.Slf4j;
 
@@ -36,7 +38,7 @@ public class FightService {
 		 Map<String, Object> result = Maps.newHashMap();
 		log.info(fightInfo.toString());
 		List<Skill> attackerSkills = skillService.getSkills(fightInfo.getAttacker().getHero(),
-				fightInfo.getAttacker().getSoldier(), fightInfo.getAttacker().getAction().getId(),
+				fightInfo.getAttacker().getSoldier(), fightInfo.getAttacker().getAction()==null ? 0 :fightInfo.getAttacker().getAction().getId(),
 				fightInfo.getAttacker().getEnhance(), fightInfo.getAttacker().getEquip(), true);
 
 
@@ -90,14 +92,48 @@ public class FightService {
 		
 //		fightInfo.getAttacker().setCheckedSkills(attackerCheckedSkills);
 //		fightInfo.getDefender().setCheckedSkills(defenderCheckedSkills);
-
-		result.put("attackerUserConditions", getUserConditionsFromSkill(attackerSkills));
-		result.put("defenderUserConditions", getUserConditionsFromSkill(defenderSkills));
 		
-		result.put("attackerSkills", attackerCheckedSkills);
-		result.put("defenderSkills", defenderCheckedSkills);
+		Map<String, UserCondition> attackerUserConditions = getUserConditionsFromSkill(attackerSkills);
+		Map<String, UserCondition> defenderUserConditions = getUserConditionsFromSkill(defenderSkills);
+		
+	    Map<String, Object> sessionInfo = Maps.newHashMap();
+	    
+	    Map<String, Object> attackerSessionInfo = Maps.newHashMap();
+	    Map<String, Object> defenderSessionInfo = Maps.newHashMap();
+	    
+	    
+	    attackerSessionInfo.put("userConditions", attackerUserConditions);
+	    defenderSessionInfo.put("userConditions", defenderUserConditions);
+		
+	    attackerSessionInfo.put("userConditionGroups", getUserConditionGroups(attackerUserConditions));
+	    defenderSessionInfo.put("userConditionGroups", getUserConditionGroups(defenderUserConditions));
+		
+		attackerSessionInfo.put("checkedSkills", attackerCheckedSkills);
+		defenderSessionInfo.put("checkedSkills", defenderCheckedSkills);
+		
+		sessionInfo.put("attacker", attackerSessionInfo);
+		sessionInfo.put("defender", defenderSessionInfo);
 
 		result.put("fightInfo", fightInfo);
+		result.put("sessionInfo", sessionInfo);
+		return result;
+	}
+	
+	private Map<String, List<String>> getUserConditionGroups(Map<String, UserCondition> userConditions)
+	{
+		Map<String, List<String>> result = Maps.newHashMap();
+		userConditions.forEach((k,v)->{
+			if(v instanceof GroupedUserCondition)
+			{
+				GroupedUserCondition gu = (GroupedUserCondition)v;
+				if(!result.containsKey(gu.getGroupName()))
+				{
+					result.put(gu.getGroupName(), Lists.newArrayList());
+				}
+				result.get(gu.getGroupName()).add(k);
+			}
+		});
+		
 		return result;
 	}
 	
@@ -142,18 +178,17 @@ public class FightService {
 		int pdd = 0;
 		int mdd = 0;
 		int si = 0;
-		int preBattleDamage = 0;
+		double preBattleDamage = 0;
 
-		List<Integer> counters = Lists.newArrayList();
-		List<Integer> pd_counters = Lists.newArrayList();
+		List<Double> counters = Lists.newArrayList();
+		List<Double> pd_counters = Lists.newArrayList();
 		Map<String, Buff> buffList = Maps.newHashMap();
 		Map<String, Debuff> debuffList = Maps.newHashMap();
 
 		if (skillList != null) {
 			for (int i = 0; i < skillList.size(); i++) {
 				CheckedSkill cs = skillList.get(i);
-				if (cs.isValid()
-						&& (cs.getSkill().getScope() == Scope.Hero || cs.getSkill().getScope() == Scope.All)) {
+				if (cs.isValid()) {
 					Skill skill = cs.getSkill();
 					for (int j = 0; j < skill.getEffects().size(); j++) {
 						Effect e = skill.getEffects().get(j);
@@ -176,7 +211,11 @@ public class FightService {
 							}
 						} else if (e instanceof Enhance) {
 							Enhance en = (Enhance) e;
-							int number = en.getNumber();
+							if (en.getScope() != Scope.Hero && en.getScope() != Scope.All)
+							{
+								continue;
+							}
+							double number = en.getNumber();
 							switch (en.getBuffType()) {
 							case Attack:
 								ai += number;
@@ -232,9 +271,13 @@ public class FightService {
 								break;
 							case PreBattleDamage:
 								preBattleDamage += number;
+								log.info("preBattleDamage==="+preBattleDamage);
 								break;
 							default:
 							}
+						} else if (e instanceof Feature) {
+							Feature f = (Feature)e;
+							panelInfo.getFeatures().putAll(f.getFeatures());
 						}
 					}
 				}
@@ -249,7 +292,7 @@ public class FightService {
 				Buff bu = buffs.get(k);
 				for (int m = 0; m < bu.getEnhanceList().size(); m++) {
 					Enhance ek = (Enhance) bu.getEnhanceList().get(m);
-					int number = ek.getNumber();
+					double number = ek.getNumber();
 					switch (ek.getBuffType()) {
 					case Attack:
 						ai += number;
@@ -309,7 +352,7 @@ public class FightService {
 
 			}
 		}
-
+		log.info("ai====="+ai+",jjc============="+panelInfo.getAttackJJC());
 		panelInfo.setAttack( Double.valueOf(Math.round(attack * (1 + ai / 100.0) + panelInfo.getAttackJJC())).intValue());
 		panelInfo.setIntel(Double.valueOf(Math.floor(intel * (1 + ii / 100.0) + panelInfo.getIntelJJC())).intValue());
 		panelInfo.setPhysic(Double.valueOf(Math.floor(physic * (1 + pi / 100.0) + panelInfo.getPhysicJJC())).intValue());
@@ -369,16 +412,15 @@ public class FightService {
 		log.info("soldier b mo=="+mi);
 		log.info("soldier b li=="+li);
 		
-		List<Integer> counters = Lists.newArrayList();
-		List<Integer> pd_counters = Lists.newArrayList();
+		List<Double> counters = Lists.newArrayList();
+		List<Double> pd_counters = Lists.newArrayList();
 		Map<String, Buff> buffList = Maps.newHashMap();
 		Map<String, Debuff> debuffList = Maps.newHashMap();
 
 		if (skillList != null) {
 			for (int i = 0; i < skillList.size(); i++) {
 				CheckedSkill cs = skillList.get(i);
-				if (cs.isValid()
-						&& (cs.getSkill().getScope() == Scope.Soldier || cs.getSkill().getScope() == Scope.All)) {
+				if (cs.isValid()) {
 					Skill skill = cs.getSkill();
 					for (int j = 0; j < skill.getEffects().size(); j++) {
 						Effect e = skill.getEffects().get(j);
@@ -401,7 +443,11 @@ public class FightService {
 							}
 						} else if (e instanceof Enhance) {
 							Enhance en = (Enhance) e;
-							int number = en.getNumber();
+							if (en.getScope() != Scope.Soldier && en.getScope() != Scope.All)
+							{
+								continue;
+							}
+							double number = en.getNumber();
 							switch (en.getBuffType()) {
 							case Attack:
 								ai += number;
@@ -448,6 +494,9 @@ public class FightService {
 								break;
 							default:
 							}
+						} else if (e instanceof Feature) {
+							Feature f = (Feature)e;
+							panelInfo.getFeatures().putAll(f.getFeatures());
 						}
 					}
 
@@ -462,7 +511,7 @@ public class FightService {
 				Buff bu = buffs.get(k);
 				for (int m = 0; m < bu.getEnhanceList().size(); m++) {
 					Enhance ek = (Enhance) bu.getEnhanceList().get(m);
-					int number = ek.getNumber();
+					double number = ek.getNumber();
 					switch (ek.getBuffType()) {
 					case Attack:
 						ai += number;
@@ -582,5 +631,7 @@ public class FightService {
 		return resultList;
 
 	}
+	
+	
 
 }

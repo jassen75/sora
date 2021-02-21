@@ -44,12 +44,7 @@ public class DreamAction extends Skill {
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.DamageInc, 20));
-	}
-
-	@Override
-	public Scope getScope() {
-		return Scope.All;
+		return Lists.newArrayList(new Enhance(BuffType.DamageInc, 20, Scope.All));
 	}
 
 }

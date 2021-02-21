@@ -23,6 +23,7 @@ public class FightRole {
 
 	Land land = Land.Flat;
 	Map<String, Boolean> userConditionChecked;
+	Map<String, Integer> buffCounts;
 	int enhance;
 	int heroLeftLife;
 	int soldierLeftLife;

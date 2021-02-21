@@ -32,12 +32,6 @@ public class Xunzhang extends Skill{
 		// TODO Auto-generated method stub
 		return new NoCondition();
 	}
-
-	@Override
-	public Scope getScope() {
-		// TODO Auto-generated method stub
-		return Scope.All;
-	}
 	
 	@Override
     public List<Effect> getEffects()

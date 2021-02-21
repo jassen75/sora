@@ -36,13 +36,7 @@ public class BloodSwordAction extends Skill {
 	@Override
 	public List<Effect> getEffects()  {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.DamageInc, 30));
-	}
-
-	@Override
-	public Scope getScope() {
-		// TODO Auto-generated method stub
-		return Scope.All;
+		return Lists.newArrayList(new Enhance(BuffType.DamageInc, 30, Scope.All));
 	}
 
 }

@@ -8,6 +8,7 @@ import cc.js.sora.fight.Buff;
 import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
+import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.health.SoldierGreaterHealthCondition;
@@ -31,12 +32,8 @@ public class GriffinSkill extends Skill{
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Buff(BuffType.Attack, 30), new Buff(BuffType.PhysicDef, 30));
+		return Lists.newArrayList(new Enhance(BuffType.Attack, 30, Scope.Soldier), new Enhance(BuffType.PhysicDef, 30, Scope.Soldier));
 	}
 
-	@Override
-	public Scope getScope() {
-		return Scope.Soldier;
-	}
 
 }

@@ -427,11 +427,8 @@ function sync(refresh)
 				fightInfo["defender"]["heroPanel"] = data["fightInfo"]["defender"]["heroPanel"];
 				fightInfo["attacker"]["soldierPanel"] = data["fightInfo"]["attacker"]["soldierPanel"];
 				fightInfo["defender"]["soldierPanel"] = data["fightInfo"]["defender"]["soldierPanel"];
-				sessionInfo["attacker"]["checkedSkills"] = data["attackerSkills"];
-				sessionInfo["defender"]["checkedSkills"] = data["defenderSkills"];
 				
-				sessionInfo["attacker"]["userConditions"] = data["attackerUserConditions"];
-				sessionInfo["defender"]["userConditions"] = data["defenderUserConditions"];	
+				sessionInfo = data["sessionInfo"];
 					
 				//alert(JSON.stringify(fightInfo));
 				syncComplete("attacker");
@@ -540,11 +537,28 @@ function buildUserCondition(role) {
 					$(this).removeClass("btn-default");
 					$(this).addClass("btn-success");
 					fightInfo[role]["userConditionChecked"][$(this).attr("uc-name")] = true;
+					checkUserConditionGroup(role, $(this).attr("uc-name"));
 				}
 				sync(false);
 			});
 			button.appendTo(buff);
 			buff.appendTo($("#"+role+"-user-condition-list"));
+		}
+	}
+}
+
+function checkUserConditionGroup(role, name)
+{
+	var userCondition = sessionInfo[role]["userConditions"][name];
+	if(userCondition && userCondition["groupName"] && sessionInfo[role]["userConditionGroups"][userCondition["groupName"]])
+	{
+		var g = sessionInfo[role]["userConditionGroups"][userCondition["groupName"]];
+		for(var i=0; i<g.length; i++)
+		{
+			if(g[i] != name)
+			{
+				fightInfo[role]["userConditionChecked"][g[i]] = false;
+			}
 		}
 	}
 }

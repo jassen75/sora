@@ -27,7 +27,7 @@ public class Buff implements Effect {
 	public Buff(BuffType bufftType, int number)
 	{
 		this.name = bufftType.name();
-		this.enhanceList = Lists.newArrayList(new Enhance(bufftType, number));
+		this.enhanceList = Lists.newArrayList(new Enhance(bufftType, number, Scope.All));
 		
 	}
 	List<Enhance> enhanceList;
