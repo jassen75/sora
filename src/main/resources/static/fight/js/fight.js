@@ -209,12 +209,13 @@ function loadComplete(role)
 	{
 		fightInfo[role]["heroPanel"][i] = heroInc[i];
 	}
+	fightInfo[role]["enhance"] = heroInc["fmSkill"];
 	displayHero(role);
 }
 
 function displayHero(role) {
 	if (role == "attacker") {
-		if (fightInfo["attacker"]["isPhysic"]) {
+		if (fightInfo["attacker"]["hero"]["isPhysic"]) {
 			$("#aa").show();
 			$("#ai").hide();
 
@@ -228,7 +229,7 @@ function displayHero(role) {
 			$("#dp").hide();
 		}
 	} else if(role == "defender") { 
-		if (fightInfo["defender"]["isPhysic"]) {
+		if (fightInfo["defender"]["hero"]["isPhysic"]) {
 			$("#da").show();
 			$("#di").hide();
 
@@ -462,7 +463,7 @@ function syncComplete(role)
 function buildHeroPanel(role) {
 	$("#"+role+"Attack").attr("value", fightInfo[role]["heroPanel"]["attack"]);
 	$("#"+role+"Intel").attr("value", fightInfo[role]["heroPanel"]["intel"]);
-	$("#"+role+"hysicDef").attr("value", fightInfo[role]["heroPanel"]["physic"]);
+	$("#"+role+"PhysicDef").attr("value", fightInfo[role]["heroPanel"]["physic"]);
 	$("#"+role+"MagicDef").attr("value", fightInfo[role]["heroPanel"]["magic"]);
 	$("#"+role+"Life").attr("value", fightInfo[role]["heroPanel"]["life"]);
 	var detail="<p>";
@@ -518,14 +519,14 @@ function buildSkill(role) {
 function buildUserCondition(role) {
 	$("#"+role+"-user-condition-list").children("li").remove();
 	if (sessionInfo[role]["userConditions"]) {
-		for (var name in sessionInfo[role]["userConditions"][role]) {
-			var checked = sessionInfo[role]["userConditions"][role][name];
+		for (var name in sessionInfo[role]["userConditions"]) {
+			var checked = fightInfo[role]["userConditionChecked"][name];
 			if (checked == undefined) {
-				checked = sessionInfo[role]["userConditions"][role][name]["defaultValid"];
+				checked = sessionInfo[role]["userConditions"][name]["defaultValid"];
 			}
 			var buttonClass = checked ? "btn-success" : "btn-default";
 			var buff = $("<li class=\"list-group-item\">"
-					+ userConditions[role][name]["desc"] + "</li>");
+					+ sessionInfo[role]["userConditions"][name]["desc"] + "</li>");
 			var button = $("<button type=\"button\" class=\"btn " + buttonClass
 					+ "\">选择</button>");
 			button.attr("uc-name", name);

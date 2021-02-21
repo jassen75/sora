@@ -2,6 +2,8 @@ package cc.js.sora.fight;
 
 import java.util.Map;
 
+import com.google.common.collect.Maps;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,7 +33,7 @@ public class PanelInfo {
 	int physicDamageDec;
 	int magicDamageDec;
 	
-	Map<String, Object> features;
+	Map<String, Object> features = Maps.newHashMap();
 	
 	
 	int lifeInc;

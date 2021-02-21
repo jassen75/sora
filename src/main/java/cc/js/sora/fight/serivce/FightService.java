@@ -2,6 +2,7 @@ package cc.js.sora.fight.serivce;
 
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,6 @@ public class FightService {
 				fightInfo.getDefender().getSoldier(), 0, fightInfo.getDefender().getEnhance(),
 				fightInfo.getDefender().getEquip(), false);
 
-
 		List<CheckedSkill> attackerCheckedSkills = Lists.newArrayList();
 		List<CheckedSkill> defenderCheckedSkills = Lists.newArrayList();
 
@@ -52,10 +52,17 @@ public class FightService {
 		defenderSkills.stream().filter(s -> s.getBattleType() == 0)
 				.forEach(s -> defenderCheckedSkills.add(checkSkill(fightInfo, s, false)));
 
+
 		attackerSkills.stream().filter(s -> s.getBattleType() == 1)
 				.forEach(s -> attackerCheckedSkills.add(checkSkill(fightInfo, s, true)));
 		defenderSkills.stream().filter(s -> s.getBattleType() == 1)
 				.forEach(s -> defenderCheckedSkills.add(checkSkill(fightInfo, s, false)));
+		
+		
+		fightInfo.getAttacker().setBuffs(getBuffList(attackerCheckedSkills));
+		fightInfo.getDefender().setBuffs(getBuffList(defenderCheckedSkills));
+		fightInfo.getAttacker().setDebuffs(getDebuffList(attackerCheckedSkills));
+		fightInfo.getDefender().setDebuffs(getDebuffList(defenderCheckedSkills));
 
 		attackerSkills.stream().filter(s -> s.getBattleType() == 2)
 				.forEach(s -> attackerCheckedSkills.add(checkSkill(fightInfo, s, true)));
@@ -71,11 +78,11 @@ public class FightService {
 		log.info("defender skill list size:"+defenderCheckedSkills.size());
 		fightInfo.getAttacker().setHeroPanel(this.calculate(fightInfo.getAttacker().getHero(),
 				fightInfo.getAttacker().getHeroPanel(), attackerCheckedSkills));
-		fightInfo.getAttacker().setSoldierPanel(this.calculate(fightInfo.getAttacker().getSoldier(),
+		fightInfo.getAttacker().setSoldierPanel(this.calculate(fightInfo.getAttacker().getSoldier(),fightInfo.getAttacker().getHero(),
 				fightInfo.getAttacker().getSoldierPanel(), attackerCheckedSkills));
 		fightInfo.getDefender().setHeroPanel(this.calculate(fightInfo.getDefender().getHero(),
 				fightInfo.getDefender().getHeroPanel(), defenderCheckedSkills));
-		fightInfo.getDefender().setSoldierPanel(this.calculate(fightInfo.getDefender().getSoldier(),
+		fightInfo.getDefender().setSoldierPanel(this.calculate(fightInfo.getDefender().getSoldier(),fightInfo.getDefender().getHero(),
 				fightInfo.getDefender().getSoldierPanel(), defenderCheckedSkills));
 		
 //		fightInfo.getAttacker().setUserConditions(getUserConditionsFromSkill(attackerSkills));
@@ -89,9 +96,27 @@ public class FightService {
 		
 		result.put("attackerSkills", attackerCheckedSkills);
 		result.put("defenderSkills", defenderCheckedSkills);
-		
+
 		result.put("fightInfo", fightInfo);
 		return result;
+	}
+	
+	public List<Debuff> getDebuffList(List<CheckedSkill> skillList)
+	{
+		List<Debuff> buffs = Lists.newArrayList();
+		skillList.stream().filter(cs->cs.isValid() && cs.getSkill().getEffects().stream().anyMatch(e->e instanceof Debuff)).forEach(cs->{
+			buffs.addAll(cs.getSkill().getEffects().stream().filter(e->e instanceof Debuff).map(e->(Debuff)e).collect(Collectors.toList()));
+		});
+		return buffs;
+	}
+	
+	public List<Buff> getBuffList(List<CheckedSkill> skillList)
+	{
+		List<Buff> buffs = Lists.newArrayList();
+		skillList.stream().filter(cs->cs.isValid() && cs.getSkill().getEffects().stream().anyMatch(e->e instanceof Buff)).forEach(cs->{
+			buffs.addAll(cs.getSkill().getEffects().stream().filter(e->e instanceof Buff).map(e->(Buff)e).collect(Collectors.toList()));
+		});
+		return buffs;
 	}
 
 	public PanelInfo calculate(Hero hero, PanelInfo panelInfo, List<CheckedSkill> skillList) {
@@ -118,13 +143,7 @@ public class FightService {
 		int mdd = 0;
 		int si = 0;
 		int preBattleDamage = 0;
-		
-		log.info("hero b ai=="+ai);
-		log.info("hero b ii=="+ii);
-		log.info("hero b pi=="+pi);
-		log.info("hero b mo=="+mi);
-		log.info("hero b ti=="+ti);
-		log.info("hero b li=="+li);
+
 		List<Integer> counters = Lists.newArrayList();
 		List<Integer> pd_counters = Lists.newArrayList();
 		Map<String, Buff> buffList = Maps.newHashMap();
@@ -174,6 +193,10 @@ public class FightService {
 							case DamageInc:
 								di += number;
 								break;
+							case DamageDec:
+								pdd += number;
+								mdd += number;
+								break;
 							case PhysicDamageDec:
 								pdd += number;
 								break;
@@ -219,6 +242,8 @@ public class FightService {
 		}
 
 		List<Buff> buffs = Lists.newArrayList(buffList.values());
+		
+		
 		if (buffs != null && buffs.size() > 0) {
 			for (int k = 0; k < buffs.size(); k++) {
 				Buff bu = buffs.get(k);
@@ -240,6 +265,10 @@ public class FightService {
 						break;
 					case DamageInc:
 						di += number;
+						break;
+					case DamageDec:
+						pdd += number;
+						mdd += number;
 						break;
 					case PhysicDamageDec:
 						pdd += number;
@@ -281,18 +310,12 @@ public class FightService {
 			}
 		}
 
-		log.info("hero a ai=="+ai);
-		log.info("hero a ii=="+ii);
-		log.info("hero a pi=="+pi);
-		log.info("hero a mo=="+mi);
-		log.info("hero a ti=="+ti);
-		log.info("hero a li=="+li);
-		panelInfo.setAttack(new Double(Math.floor(attack * (1 + ai / 100.0) + panelInfo.getAttackJJC())).intValue());
-		panelInfo.setIntel(new Double(Math.floor(intel * (1 + ii / 100.0) + panelInfo.getIntelJJC())).intValue());
-		panelInfo.setPhysic(new Double(Math.floor(physic * (1 + pi / 100.0) + panelInfo.getPhysicJJC())).intValue());
-		panelInfo.setMagic(new Double(Math.floor(magic * (1 + mi / 100.0) + panelInfo.getMagicJJC())).intValue());
-		panelInfo.setTech(new Double(Math.floor(tech * (1 + ti / 100.0) + panelInfo.getTechJJC())).intValue());
-		panelInfo.setLife(new Double(Math.floor(life * (1 + li / 100.0) + panelInfo.getLifeJJC())).intValue());
+		panelInfo.setAttack( Double.valueOf(Math.round(attack * (1 + ai / 100.0) + panelInfo.getAttackJJC())).intValue());
+		panelInfo.setIntel(Double.valueOf(Math.floor(intel * (1 + ii / 100.0) + panelInfo.getIntelJJC())).intValue());
+		panelInfo.setPhysic(Double.valueOf(Math.floor(physic * (1 + pi / 100.0) + panelInfo.getPhysicJJC())).intValue());
+		panelInfo.setMagic(Double.valueOf(Math.floor(magic * (1 + mi / 100.0) + panelInfo.getMagicJJC())).intValue());
+		panelInfo.setTech(Double.valueOf(Math.floor(tech * (1 + ti / 100.0) + panelInfo.getTechJJC())).intValue());
+		panelInfo.setLife(Double.valueOf(Math.floor(life * (1 + (li+40) / 100.0) + panelInfo.getLifeJJC())).intValue());
 
 		panelInfo.setDamageInc(di);
 		panelInfo.setPhysicDamageDec(pdd);
@@ -309,34 +332,34 @@ public class FightService {
 			if (hero.getPhysic() == 1) {
 
 				panelInfo.setAttack(
-						new Double(Math.floor(panelInfo.getAttack() * (1 + counters.get(i) / 100))).intValue());
+						Double.valueOf(Math.floor(panelInfo.getAttack() * (1 + counters.get(i) / 100))).intValue());
 			} else {
 				panelInfo.setIntel(
-						new Double(Math.floor(panelInfo.getIntel() * (1 + counters.get(i) / 100))).intValue());
+						Double.valueOf(Math.floor(panelInfo.getIntel() * (1 + counters.get(i) / 100))).intValue());
 			}
 		}
 		for (int i = 0; i < pd_counters.size(); i++) {
 			panelInfo.setPhysic(
-					new Double(Math.floor(panelInfo.getPhysic() * (1 + pd_counters.get(i) / 100))).intValue());
+					Double.valueOf(Math.floor(panelInfo.getPhysic() * (1 + pd_counters.get(i) / 100))).intValue());
 		}
 
 		return panelInfo;
 	}
 
-	public PanelInfo calculate(Soldier soldier, PanelInfo panelInfo, List<CheckedSkill> skillList) {
+	public PanelInfo calculate(Soldier soldier, Hero hero, PanelInfo panelInfo, List<CheckedSkill> skillList) {
 		int life = soldier.getLife();
 		int attack = soldier.getAttack();
 		int physic = soldier.getPhysic();
 		int magic = soldier.getMagic();
 
-		int ai = panelInfo.getAttackSkill();
-		int pi = panelInfo.getPhysicSkill();
-		int mi = panelInfo.getMagicSkill();
-		int li = panelInfo.getLifeSkill();
-		int cpi = panelInfo.getCriticalProbInc();
-		int cdi = panelInfo.getCriticalDamageInc();
-		int cpd = panelInfo.getCriticalProbDec();
-		int cdd = panelInfo.getCriticalDamageDec();
+		int ai = 0;
+		int pi = 0;
+		int mi = 0;
+		int li = 0;
+		int cpi = 0;
+		int cdi = 0;
+		int cpd = 0;
+		int cdd =0;
 		int di = 0;
 		int pdd = 0;
 		int mdd = 0;
@@ -392,6 +415,10 @@ public class FightService {
 							case DamageInc:
 								di += number;
 								break;
+							case DamageDec:
+								pdd += number;
+								mdd += number;
+								break;
 							case PhysicDamageDec:
 								pdd += number;
 								break;
@@ -449,6 +476,10 @@ public class FightService {
 					case DamageInc:
 						di += number;
 						break;
+					case DamageDec:
+						pdd += number;
+						mdd += number;
+						break;
 					case PhysicDamageDec:
 						pdd += number;
 						break;
@@ -488,10 +519,10 @@ public class FightService {
 		log.info("soldier a  mo=="+mi);
 		log.info("soldier a li=="+li);
 
-		panelInfo.setAttack(new Double(Math.floor(attack * (1 + ai / 100.0) + panelInfo.getAttackJJC())).intValue());
-		panelInfo.setPhysic(new Double(Math.floor(physic * (1 + pi / 100.0) + panelInfo.getPhysicJJC())).intValue());
-		panelInfo.setMagic(new Double(Math.floor(magic * (1 + mi / 100.0) + panelInfo.getMagicJJC())).intValue());
-		panelInfo.setLife(new Double(Math.floor(life * (1 + li / 100.0) + panelInfo.getLifeJJC())).intValue());
+		panelInfo.setAttack(Double.valueOf(Math.floor(attack * (1 + ai / 100.0) * (1+hero.getSoldierAttackInc() / 100.0))).intValue());
+		panelInfo.setPhysic(Double.valueOf(Math.floor(physic * (1 + pi / 100.0) * (1+hero.getSoldierPhysicInc() / 100.0))).intValue());
+		panelInfo.setMagic(Double.valueOf(Math.floor(magic * (1 + mi / 100.0)* (1+hero.getSoldierMagicInc() / 100.0))).intValue());
+		panelInfo.setLife(Double.valueOf(Math.floor(life * (1 + (li+40) / 100.0)*(1+hero.getSoldierLifeInc()/100.0) )).intValue()*10);
 
 		panelInfo.setDamageInc(di);
 		panelInfo.setPhysicDamageDec(pdd);
@@ -503,12 +534,12 @@ public class FightService {
 		panelInfo.setCriticalDamageDec(cdd);
 
 		for (int i = 0; i < counters.size(); i++) {
-			panelInfo.setAttack(new Double(Math.floor(panelInfo.getAttack() * (1 + counters.get(i) / 100))).intValue());
+			panelInfo.setAttack(Double.valueOf(Math.floor(panelInfo.getAttack() * (1 + counters.get(i) / 100))).intValue());
 
 		}
 		for (int i = 0; i < pd_counters.size(); i++) {
 			panelInfo.setPhysic(
-					new Double(Math.floor(panelInfo.getPhysic() * (1 + pd_counters.get(i) / 100))).intValue());
+					Double.valueOf(Math.floor(panelInfo.getPhysic() * (1 + pd_counters.get(i) / 100))).intValue());
 		}
 
 		return panelInfo;

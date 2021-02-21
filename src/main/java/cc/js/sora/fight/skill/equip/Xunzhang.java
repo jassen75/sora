@@ -8,7 +8,6 @@ import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Feature;
 import cc.js.sora.fight.Features;
-import cc.js.sora.fight.Fight;
 import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;

@@ -54,4 +54,8 @@ public class SuperBuff extends Skill {
 		return Scope.All;
 	}
 
+	@Override
+	public int getBattleType() {
+		return 0;
+	}
 }

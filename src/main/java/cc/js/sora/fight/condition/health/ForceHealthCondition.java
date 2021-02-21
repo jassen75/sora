@@ -18,15 +18,16 @@ public abstract class ForceHealthCondition implements Condition{
 		if(isAttack)
 		{
 			
-			return this.valid(attacker.getHero().getLife(), attacker.getSoldier().getLife(), attacker.getHeroLeftLife(), 
-					attacker.getSoldierLeftLife(), defender.getHero().getLife(), defender.getSoldier().getLife(),
+			return this.valid(attacker.getHeroPanel().getLife(), attacker.getSoldierPanel().getLife(), 
+					attacker.getHeroLeftLife(), attacker.getSoldierLeftLife(), 
+					defender.getHeroPanel().getLife(), defender.getSoldierPanel().getLife(),
 					defender.getHeroLeftLife(), defender.getSoldierLeftLife());
 		} else
 		{
 			
-			return this.valid(defender.getHero().getLife(), defender.getSoldier().getLife(),
-					defender.getHeroLeftLife(), defender.getSoldierLeftLife(), attacker.getHero().getLife(),
-					 attacker.getSoldier().getLife(), attacker.getHeroLeftLife(), 
+			return this.valid(defender.getHeroPanel().getLife(), defender.getSoldierPanel().getLife(),
+					defender.getHeroLeftLife(), defender.getSoldierLeftLife(), 
+					attacker.getHeroPanel().getLife(),attacker.getSoldierPanel().getLife(), attacker.getHeroLeftLife(), 
 					 attacker.getSoldierLeftLife());
 		}
 		

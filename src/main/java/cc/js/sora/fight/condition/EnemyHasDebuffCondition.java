@@ -13,7 +13,7 @@ public class EnemyHasDebuffCondition implements Condition {
 	@Override
 	public boolean valid(FightInfo fightInfo, boolean isAttack) {
 		
-		return fightInfo.getEnemyRole(isAttack).getDebuffList()!= null && fightInfo.getEnemyRole(isAttack).getDebuffList().size() > 0;
+		return fightInfo.getEnemyRole(isAttack).getDebuffs()!= null && fightInfo.getEnemyRole(isAttack).getDebuffs().size() > 0;
 	}
 
 }

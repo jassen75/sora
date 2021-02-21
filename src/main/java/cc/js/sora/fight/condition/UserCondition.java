@@ -6,7 +6,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.FightInfo;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public abstract class UserCondition implements Condition{
 
 
@@ -24,9 +26,10 @@ public abstract class UserCondition implements Condition{
 	@Override
 	public boolean valid(FightInfo fightInfo, boolean isAttack) {
 		Map<String, Boolean> m = fightInfo.getRole(isAttack).getUserConditionChecked();
-		if(m!= null && m.containsKey(this.getName()))
+		if(m!= null && m.containsKey(getName()))
 		{
-			return m.get(this.getName());
+			log.info(getName()+":"+m.get(getName()));
+			return m.get(getName());
 		}
 		return this.defaultValid();
 	}

@@ -8,6 +8,7 @@ import cc.js.sora.fight.Buff;
 import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
+import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.NoCondition;
@@ -35,7 +36,7 @@ public class FuriousEnhance extends Skill {
 	@Override
 	public List<Effect> getEffects()  {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Buff(BuffType.Attack, 10), new Buff(BuffType.DamageDec, 10));
+		return Lists.newArrayList(new Enhance(BuffType.Attack, 10), new Enhance(BuffType.DamageDec, 10));
 	}
 
 	@Override

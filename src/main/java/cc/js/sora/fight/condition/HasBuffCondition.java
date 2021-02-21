@@ -12,7 +12,7 @@ public class HasBuffCondition implements Condition {
 
 	@Override
 	public boolean valid(FightInfo fightInfo, boolean isAttack) {
-	    return fightInfo.getRole(isAttack).getDebuffList()!= null && fightInfo.getRole(isAttack).getDebuffList().size() > 0;
+	    return fightInfo.getRole(isAttack).getBuffs()!= null && fightInfo.getRole(isAttack).getBuffs().size() > 0;
 	}
 
 }
