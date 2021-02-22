@@ -31,7 +31,7 @@ function calculate()
 		soldierToHero = oneHit(1, 
 				fightInfo["attacker"]["soldierPanel"], fightInfo["defender"]["heroPanel"], 
 				attackerSoldierCriticalChecked, fightInfo["attacker"]["soldier"]["isPhysic"], 1,
-				getCounter(fightInfo["attacker"]["soldier"]["type"], fightInfo["defender"]["hero"]["type"]);
+				getCounter(fightInfo["attacker"]["soldier"]["type"], fightInfo["defender"]["hero"]["type"]));
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["attacker"]["soldierPanel"],fightInfo["defender"]["heroPanel"])+")";
 		fightDetails+="<p>"+fightInfo["attacker"]["soldier"]["name"]+"攻击"+fightInfo["defender"]["hero"]["name"]+"("+
 			(fightInfo["attacker"]["soldier"]["isPhysic"] ? "物理":"魔法")+")" +
@@ -45,7 +45,7 @@ function calculate()
 	{
 		heroToSoldier = oneHit(coefficient, fightInfo["attacker"]["heroPanel"], fightInfo["defender"]["soldierPanel"], 
 				attackerHeroCriticalChecked, isAttackerPhysic ,0,
-				getCounter(fightInfo["attacker"]["hero"]["type"], fightInfo["defender"]["soldier"]["type"]);
+				getCounter(fightInfo["attacker"]["hero"]["type"], fightInfo["defender"]["soldier"]["type"]));
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["attacker"]["heroPanel"], fightInfo["defender"]["soldierPanel"])+")";
 	    fightDetails+="<p>"+fightInfo["attacker"]["hero"]["name"]+"攻击"+fightInfo["defender"]["soldier"]["name"]+"("+
 	    	(isAttackerPhysic?"物理":"魔法")+")" +
@@ -56,7 +56,7 @@ function calculate()
 	{
 		heroToHero = oneHit(coefficient, fightInfo["attacker"]["heroPanel"], fightInfo["defender"]["heroPanel"], 
 				attackerHeroCriticalChecked, isAttackerPhysic , 0 ,
-				getCounter(fightInfo["attacker"]["hero"]["type"], fightInfo["defender"]["hero"]["type"]);
+				getCounter(fightInfo["attacker"]["hero"]["type"], fightInfo["defender"]["hero"]["type"]));
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["attacker"]["heroPanel"], fightInfo["defender"]["heroPanel"])+")";
 	    fightDetails+="<p>"+fightInfo["attacker"]["hero"]["name"]+"攻击"+fightInfo["defender"]["hero"]["name"]+"("+
 	    		(isAttackerPhysic?"物理":"魔法")+")" +
@@ -276,7 +276,7 @@ function calculateDefender()
 	{
 		soldierToSoldier =oneHit(1, fightInfo["defender"]["soldierPanel"], fightInfo["attacker"]["soldierPanel"], 
 				defenderSoldierCriticalChecked, fightInfo["defender"]["soldier"]["isPhysic"], 1,
-				getCounter(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["soldier"]["type"]);
+				getCounter(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["soldier"]["type"]));
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["defender"]["soldierPanel"],fightInfo["attacker"]["soldierPanel"])+")";
 														         
         fightDetails+="<p>"+fightInfo["defender"]["soldier"]["name"]+"攻击"+fightInfo["attacker"]["soldier"]["name"]+"("+
@@ -287,7 +287,7 @@ function calculateDefender()
 	{
 		soldierToHero = oneHit(1, fightInfo["defender"]["soldierPanel"], fightInfo["attacker"]["heroPanel"], 
 				defenderSoldierCriticalChecked, fightInfo["defender"]["soldier"]["isPhysic"], 1, 
-				getCounter(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["hero"]["type"]);
+				getCounter(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["hero"]["type"]));
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["defender"]["soldierPanel"],fightInfo["attacker"]["heroPanel"])+")";
 		fightDetails+="<p>"+fightInfo["defender"]["soldier"]["name"]+"攻击"+fightInfo["attacker"]["hero"]["name"]+"("+
 			(fightInfo["defender"]["soldier"]["isPhysic"] ? "物理":"魔法")+")" +
@@ -300,7 +300,7 @@ function calculateDefender()
 	{
 		heroToSoldier = oneHit(coefficient, fightInfo["defender"]["heroPanel"], fightInfo["attacker"]["soldierPanel"], 
 				defenderSoldierCriticalChecked, isAttackerPhysic ,0, 
-				getCounter(fightInfo["defender"]["hero"]["type"], fightInfo["attacker"]["soldier"]["type"]);
+				getCounter(fightInfo["defender"]["hero"]["type"], fightInfo["attacker"]["soldier"]["type"]));
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["defender"]["heroPanel"], fightInfo["attacker"]["soldierPanel"])+")";
 	    fightDetails+="<p>"+fightInfo["defender"]["hero"]["name"]+"攻击"+fightInfo["attacker"]["soldier"]["name"]+"("+
 	    	(isAttackerPhysic?"物理":"魔法")+")" +
@@ -311,7 +311,7 @@ function calculateDefender()
 	{
 		heroToHero = oneHit(coefficient, fightInfo["defender"]["heroPanel"], fightInfo["attacker"]["heroPanel"], 
 				defenderHeroCriticalChecked, isAttackerPhysic , 0, 
-				getCounter(fightInfo["defender"]["hero"]["type"], fightInfo["attacker"]["hero"]["type"]);
+				getCounter(fightInfo["defender"]["hero"]["type"], fightInfo["attacker"]["hero"]["type"]));
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["defender"]["heroPanel"], fightInfo["attacker"]["heroPanel"])+")";
 	    fightDetails+="<p>"+fightInfo["defender"]["hero"]["name"]+"攻击"+fightInfo["attacker"]["hero"]["name"]+"("+
 	    		(isAttackerPhysic?"物理":"魔法")+")" +

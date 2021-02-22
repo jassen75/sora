@@ -43,7 +43,7 @@ public class PatyleTalent extends Skill {
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Enhance(BuffType.AttackCounter, 25, Scope.All));
+		return Lists.newArrayList(new Enhance(BuffType.AttackCounter, 25, Scope.All), new Enhance(BuffType.DamageDec, 25, Scope.All));
 	}
 
 
