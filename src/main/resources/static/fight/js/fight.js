@@ -471,7 +471,7 @@ function buildHeroPanel(role) {
 		detail+="<b>"+fightInfo[role]["action"]["name"]+"</b>&nbsp;&nbsp;&nbsp;<b>"+fightInfo[role]["action"]["coefficient"]+"倍</b></p>";
 	} else
 	{
-		detail+="-----距离："+fightInfo["distance"]+"-----</p>";
+		detail+=("-----距离："+fightInfo["distance"]+"-----</p>");
 	}
 	
 	detail+="<p><b>增伤："+fightInfo[role]["heroPanel"]["damageInc"]+
