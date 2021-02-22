@@ -18,6 +18,7 @@ import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Feature;
 import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Hero;
+import cc.js.sora.fight.Land;
 import cc.js.sora.fight.PanelInfo;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
@@ -37,6 +38,7 @@ public class FightService {
 	public  Map<String, Object> calculatePanel(FightInfo fightInfo) {
 		 Map<String, Object> result = Maps.newHashMap();
 		log.info(fightInfo.toString());
+		log.info("****************** defender soldier left life:"+fightInfo.getDefender().getSoldierLeftLife());
 		List<Skill> attackerSkills = skillService.getSkills(fightInfo.getAttacker().getHero(),
 				fightInfo.getAttacker().getSoldier(), fightInfo.getAttacker().getAction()==null ? 0 :fightInfo.getAttacker().getAction().getId(),
 				fightInfo.getAttacker().getEnhance(), fightInfo.getAttacker().getEquip(), true);
@@ -79,13 +81,13 @@ public class FightService {
 		log.info("attacker skill list size:"+attackerCheckedSkills.size());
 		log.info("defender skill list size:"+defenderCheckedSkills.size());
 		fightInfo.getAttacker().setHeroPanel(this.calculate(fightInfo.getAttacker().getHero(),
-				fightInfo.getAttacker().getHeroPanel(), attackerCheckedSkills));
+				fightInfo.getAttacker().getHeroPanel(), attackerCheckedSkills, fightInfo.getAttacker().getLand()));
 		fightInfo.getAttacker().setSoldierPanel(this.calculate(fightInfo.getAttacker().getSoldier(),fightInfo.getAttacker().getHero(),
-				fightInfo.getAttacker().getSoldierPanel(), attackerCheckedSkills));
+				fightInfo.getAttacker().getSoldierPanel(), attackerCheckedSkills, fightInfo.getAttacker().getLand()));
 		fightInfo.getDefender().setHeroPanel(this.calculate(fightInfo.getDefender().getHero(),
-				fightInfo.getDefender().getHeroPanel(), defenderCheckedSkills));
+				fightInfo.getDefender().getHeroPanel(), defenderCheckedSkills, fightInfo.getDefender().getLand()));
 		fightInfo.getDefender().setSoldierPanel(this.calculate(fightInfo.getDefender().getSoldier(),fightInfo.getDefender().getHero(),
-				fightInfo.getDefender().getSoldierPanel(), defenderCheckedSkills));
+				fightInfo.getDefender().getSoldierPanel(), defenderCheckedSkills, fightInfo.getDefender().getLand()));
 		
 //		fightInfo.getAttacker().setUserConditions(getUserConditionsFromSkill(attackerSkills));
 //		fightInfo.getDefender().setUserConditions(getUserConditionsFromSkill(defenderSkills));
@@ -155,8 +157,9 @@ public class FightService {
 		return buffs;
 	}
 
-	public PanelInfo calculate(Hero hero, PanelInfo panelInfo, List<CheckedSkill> skillList) {
-
+	public PanelInfo calculate(Hero hero, PanelInfo panelInfo, List<CheckedSkill> skillList, Land land) {
+		
+		panelInfo.getFeatures().clear();
 		int life = hero.getLife() + panelInfo.getLifeInc();
 		int attack = hero.getAttack() + panelInfo.getAttackInc();
 		int intel = hero.getIntel() + panelInfo.getIntelInc();
@@ -182,6 +185,7 @@ public class FightService {
 
 		List<Double> counters = Lists.newArrayList();
 		List<Double> pd_counters = Lists.newArrayList();
+		List<Double> md_counters = Lists.newArrayList();
 		Map<String, Buff> buffList = Maps.newHashMap();
 		Map<String, Debuff> debuffList = Maps.newHashMap();
 
@@ -352,7 +356,30 @@ public class FightService {
 
 			}
 		}
-		log.info("ai====="+ai+",jjc============="+panelInfo.getAttackJJC());
+		
+		if(land == Land.Water && hero.getType() == 4)
+		{
+			pi+=30;
+		}
+
+		if(land == Land.Wood)
+		{
+			pd_counters.add(20.0);
+			md_counters.add(20.0);
+		}
+		
+		if(land == Land.Mountain)
+		{
+			pd_counters.add(10.0);
+			md_counters.add(10.0);
+		}
+		
+		if(land == Land.Wall)
+		{
+			pd_counters.add(30.0);
+			md_counters.add(30.0);
+		}
+		
 		panelInfo.setAttack( Double.valueOf(Math.round(attack * (1 + ai / 100.0) + panelInfo.getAttackJJC())).intValue());
 		panelInfo.setIntel(Double.valueOf(Math.floor(intel * (1 + ii / 100.0) + panelInfo.getIntelJJC())).intValue());
 		panelInfo.setPhysic(Double.valueOf(Math.floor(physic * (1 + pi / 100.0) + panelInfo.getPhysicJJC())).intValue());
@@ -385,11 +412,16 @@ public class FightService {
 			panelInfo.setPhysic(
 					Double.valueOf(Math.floor(panelInfo.getPhysic() * (1 + pd_counters.get(i) / 100))).intValue());
 		}
+		for (int i = 0; i < md_counters.size(); i++) {
+			panelInfo.setMagic(
+					Double.valueOf(Math.floor(panelInfo.getMagic() * (1 + md_counters.get(i) / 100))).intValue());
+		}
 
 		return panelInfo;
 	}
 
-	public PanelInfo calculate(Soldier soldier, Hero hero, PanelInfo panelInfo, List<CheckedSkill> skillList) {
+	public PanelInfo calculate(Soldier soldier, Hero hero, PanelInfo panelInfo, List<CheckedSkill> skillList, Land land) {
+		panelInfo.getFeatures().clear();
 		int life = soldier.getLife();
 		int attack = soldier.getAttack();
 		int physic = soldier.getPhysic();
@@ -414,6 +446,7 @@ public class FightService {
 		
 		List<Double> counters = Lists.newArrayList();
 		List<Double> pd_counters = Lists.newArrayList();
+		List<Double> md_counters = Lists.newArrayList();
 		Map<String, Buff> buffList = Maps.newHashMap();
 		Map<String, Debuff> debuffList = Maps.newHashMap();
 
@@ -563,6 +596,29 @@ public class FightService {
 			}
 		}
 		
+		if(land == Land.Water && (hero.getType() == 4 || soldier.getType() == 4))
+		{
+			pi+=30;
+		}
+		
+		if(land == Land.Wood)
+		{
+			pd_counters.add(20.0);
+			md_counters.add(20.0);
+		}
+		
+		if(land == Land.Mountain)
+		{
+			pd_counters.add(10.0);
+			md_counters.add(10.0);
+		}
+		
+		if(land == Land.Wall)
+		{
+			pd_counters.add(30.0);
+			md_counters.add(30.0);
+		}
+		
 		log.info("soldier a ai=="+ai);
 		log.info("soldier a pi=="+pi);
 		log.info("soldier a  mo=="+mi);
@@ -589,6 +645,10 @@ public class FightService {
 		for (int i = 0; i < pd_counters.size(); i++) {
 			panelInfo.setPhysic(
 					Double.valueOf(Math.floor(panelInfo.getPhysic() * (1 + pd_counters.get(i) / 100))).intValue());
+		}
+		for (int i = 0; i < md_counters.size(); i++) {
+			panelInfo.setMagic(
+					Double.valueOf(Math.floor(panelInfo.getMagic() * (1 + md_counters.get(i) / 100))).intValue());
 		}
 
 		return panelInfo;

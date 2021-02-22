@@ -47,6 +47,15 @@ public abstract class Skill {
 			sb.append(this.getName());
 		}
 		sb.append("]       ");
+		if(this.getSkillType() == 1)
+		{
+			sb.append("主动进攻时，");
+		}
+		
+		if(this.getSkillType() == 2)
+		{
+			sb.append("被攻击时，");
+		}
 		if(this.getCondition() != null)
 		{
 			sb.append(this.getCondition().getDesc());
@@ -108,6 +117,7 @@ public abstract class Skill {
 	
 	public static final long Qinzhen = 1605;
 	public static final long Juebi = 1606;
+	public static final long Qinzhen2 = 1607;
 	
 	/**
 	 * 2000-3000 soldier skill
@@ -119,7 +129,7 @@ public abstract class Skill {
 	
 	
 	/**
-	 * 3000-4000 barrack tech
+	 * 3000-3100 barrack tech
 	 */
 	public static final long SorceressTech1 = 3001;
 	public static final long SorceressTech2 = 3002;
@@ -151,6 +161,9 @@ public abstract class Skill {
 	public static final long HorseTech3 = 3023;
 	public static final long HorseTech4 = 3024;
 	
+	/**
+	 * 3200-4000 heart tech
+	 */
 	
 	/**
 	 * 4000-5000 global skill
@@ -167,6 +180,11 @@ public abstract class Skill {
 	public int getBattleType()
 	{
 		return 2;
+	}
+	
+	public List<Skill> childSkill()
+	{
+		return Lists.newArrayList();
 	}
 			
 }

@@ -192,15 +192,27 @@ public class SkillService {
 			if (this.skills.containsKey(i)) {
 				if(checkSkillType(this.getSkill(i).getSkillType(), isAttacker))
 				{
-					if(this.getSkill(i) != null)
-					{
-						result.add(this.getSkill(i));
-					}
+					result.add(this.getSkill(i));
 				}
 			}
 		});
 
+		List<Skill> childSkills = Lists.newArrayList();
 
+		result.forEach(s->{
+			s.childSkill().forEach(cs->{
+				if(checkSkillType(cs.getSkillType(), isAttacker))
+				{
+					childSkills.add(cs);
+				}
+				
+			});
+
+		});
+		if(childSkills.size() > 0 )
+		{
+			result.addAll(childSkills);
+		}
 		return result;
 	}
 

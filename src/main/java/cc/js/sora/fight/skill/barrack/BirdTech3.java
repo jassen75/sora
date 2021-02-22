@@ -4,14 +4,13 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
-import cc.js.sora.fight.Buff;
 import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.UserCondition;
+import cc.js.sora.fight.condition.DefLandCondition;
 
 public class BirdTech3 extends Skill {
 
@@ -28,22 +27,7 @@ public class BirdTech3 extends Skill {
 
 	@Override
 	public Condition getCondition() {
-		return new UserCondition() {
-
-			@Override
-			public String getDesc() {
-				return "身处防御地形";
-			}
-
-			@Override
-			public String getName() {
-				return "DefensiveTerrain";
-			}
-
-			@Override
-			public boolean defaultValid() {
-				return false;
-			}};
+		return new DefLandCondition();
 	}
 
 	@Override

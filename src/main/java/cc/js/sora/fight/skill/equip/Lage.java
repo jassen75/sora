@@ -14,7 +14,9 @@ import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.health.EnemyFullHealthCondition;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class Lage extends Skill {
 
 	@Override
@@ -59,9 +61,10 @@ public class Lage extends Skill {
 		{
 			if(!fightInfo.getDefender().getHeroPanel().getFeatures().containsKey(Features.ImmuneToFixedDamage))
 			{
-				fightInfo.getDefender().setHeroLeftLife(fightInfo.getDefender().getHeroLeftLife() - fightInfo.getAttacker().getHero().getAttack());
-				fightInfo.getDefender().setSoldierLeftLife(fightInfo.getDefender().getHeroLeftLife() - fightInfo.getAttacker().getHero().getAttack());		
+				fightInfo.getDefender().setHeroLeftLife(fightInfo.getDefender().getHeroLeftLife() - fightInfo.getAttacker().getHeroPanel().getAttack());
+				fightInfo.getDefender().setSoldierLeftLife(fightInfo.getDefender().getSoldierLeftLife() - fightInfo.getAttacker().getHeroPanel().getAttack());		
 			}
+			log.info("after lage:"+fightInfo.getDefender().getSoldierLeftLife()+", here attack:");
 		}
     }
 }

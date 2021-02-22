@@ -91,6 +91,7 @@ function buildHero(hero) {
 	if (isAttacker == 1) {
 		var role = "attacker";
 		isAttacker = 0;		
+		fightInfo["distance"]=hero["range"];
 	} else
 	{
 		var role = "defender";
@@ -104,6 +105,7 @@ function buildHero(hero) {
 	fightInfo[role]["heroPanel"] = {};
 	fightInfo[role]["soldierPanel"] = {};
 	fightInfo[role]["userConditionChecked"]={};
+	
 	loadWeapon(hero["id"], role);
 }
 
@@ -369,7 +371,7 @@ function displayHero(role) {
 		});
 		button.appendTo(buff);
 	}
-	buff.appendTo($("#defender-critical"));	
+	buff.appendTo($("#"+role+"-critical"));	
 	
 	if(!fightInfo[role]["land"])	
 	{
@@ -467,6 +469,9 @@ function buildHeroPanel(role) {
 	if(fightInfo[role]["action"])
 	{
 		detail+="<b>"+fightInfo[role]["action"]["name"]+"</b>&nbsp;&nbsp;&nbsp;<b>"+fightInfo[role]["action"]["coefficient"]+"倍</b></p>";
+	} else
+	{
+		detail+="-----距离："+fightInfo["distance"]+"-----</p>";
 	}
 	
 	detail+="<p><b>增伤："+fightInfo[role]["heroPanel"]["damageInc"]+

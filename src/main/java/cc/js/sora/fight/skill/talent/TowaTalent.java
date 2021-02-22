@@ -12,6 +12,8 @@ import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.HasBuffCondition;
+import cc.js.sora.fight.skill.heart.TowaHeart1;
+import cc.js.sora.fight.skill.heart.TowaHeart2;
 
 public class TowaTalent extends Skill  {
 
@@ -34,5 +36,12 @@ public class TowaTalent extends Skill  {
 	public List<Effect> getEffects() {
 		return Lists.newArrayList(new Enhance(BuffType.Attack, 20, Scope.All), new Enhance(BuffType.PhysicDef, 20, Scope.All));
 	}
+	
+	public List<Skill> childSkill()
+	{
+		return Lists.newArrayList(new TowaHeart1(), new TowaHeart2());
+	}
+	
+
 
 }

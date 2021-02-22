@@ -30,7 +30,7 @@ public class Enhance implements Effect{
 			return printBufferType() + number+ "倍伤害";
 		}else
 		{
-			return printBufferType()+"+"+number+"%";		
+			return printBufferType()+"+"+Double.valueOf(number).intValue()+"%";		
 		}
 	}
 	
