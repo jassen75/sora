@@ -63,6 +63,7 @@ public class SkillService {
 		registerSkill(Skill.Zuihouzhifu, new LastSuit());
 		registerSkill(Skill.Lage, new Lage());
 		registerSkill(Skill.Xunzhang, new Xunzhang());
+		registerSkill(Skill.Yuguan, new Yuguan());
 		
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());

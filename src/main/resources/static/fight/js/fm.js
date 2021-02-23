@@ -260,10 +260,10 @@ function generateHeroInc(hero, equip)
 	heroInc["physicSkill"] = 0;
 	heroInc["magicSkill"] = 0;
 	heroInc["techSkill"] = 0;
-	heroInc["criticalProbInc"]=0;
-	heroInc["criticalDamageInc"]=0;
-	heroInc["criticalProbDec"]=0;
-	heroInc["criticalDamageDec"]=0;
+	heroInc["criticalProbIncSkill"]=0;
+	heroInc["criticalDamageIncSkill"]=0;
+	heroInc["criticalProbDecSkill"]=0;
+	heroInc["criticalDamageDecSkill"]=0;
 	var lifep = 0;  // percent 
 	var lifes = 0;  // static
 	var attackp = 0;
@@ -346,7 +346,7 @@ function generateHeroInc(hero, equip)
 		
 		if(fmInfo["criticalInc"])
 		{
-			heroInc["criticalProbInc"] += fmInfo["criticalInc"];
+			heroInc["criticalProbIncSkill"] += fmInfo["criticalInc"];
 		}
 
 		if(equip[i])
@@ -413,7 +413,7 @@ function generateHeroInc(hero, equip)
 		}
 		if(i>=6 && i<=7 && fmTypeCount[i]>=2)
 		{
-			heroInc["criticalProbInc"]+=7;
+			heroInc["criticalProbIncSkill"]+=7;
 		}
 		if(i>=8 && i<=10 && fmTypeCount[i]>=2)
 		{
@@ -448,10 +448,10 @@ function generateHeroInc(hero, equip)
 	heroInc["magicJJC"] = jjc["magic"];
 	heroInc["techJJC"] = jjc["tech"];
 	
-	heroInc["criticalProbInc"] += jjc["criticalProbInc"];
-	heroInc["criticalDamageInc"] += jjc["criticalDamageInc"];
-	heroInc["criticalProbDec"] += jjc["criticalProbDec"];
-	heroInc["criticalDamageDec"] += jjc["criticalDamageDec"];
+	heroInc["criticalProbIncSkill"] += jjc["criticalProbInc"];
+	heroInc["criticalDamageIncSkill"] += jjc["criticalDamageInc"];
+	heroInc["criticalProbDecSkill"] += jjc["criticalProbDec"];
+	heroInc["criticalDamageDecSkill"] += jjc["criticalDamageDec"];
 
 	return heroInc;
 }
@@ -490,10 +490,10 @@ function defaultHeroInc(hero)
 	heroInc["magicJJC"] = 0;
 	heroInc["techJJC"] = 0;
 	
-	heroInc["criticalProbInc"] = 0;
-	heroInc["criticalDamageInc"] = 0;
-	heroInc["criticalProbDec"] = 20;
-	heroInc["criticalDamageDec"] = 30;
+	heroInc["criticalProbIncSkill"] = 0;
+	heroInc["criticalDamageIncSkill"] = 0;
+	heroInc["criticalProbDecSkill"] = 20;
+	heroInc["criticalDamageDecSkill"] = 30;
 
 	return heroInc;
 }

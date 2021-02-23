@@ -3,6 +3,7 @@ package cc.js.sora.fight;
 import java.util.List;
 import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.collect.Lists;
 
 import lombok.AllArgsConstructor;
@@ -41,4 +42,10 @@ public class FightRole {
 //	List<CheckedSkill> checkedSkills = Lists.newArrayList();
 	
 	int range;
+	
+	@JsonIgnore
+	public double getLifePercent()
+	{
+		return (Double.valueOf(heroLeftLife)+Double.valueOf(soldierLeftLife))/(Double.valueOf(heroPanel.getLife())+Double.valueOf(soldierPanel.getLife()));
+	}
 }

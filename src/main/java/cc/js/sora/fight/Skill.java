@@ -11,7 +11,9 @@ import cc.js.sora.fight.condition.NoCondition;
 
 public abstract class Skill {
 	
-	public abstract long getId();
+	public long getId() {
+		return 0;
+	}
 	
 	public abstract String getName();
 
@@ -106,7 +108,7 @@ public abstract class Skill {
 	public static final long Zuihouzhifu = 1001;
 	public static final long Lage = 1002;
 	public static final long Xunzhang = 1003;
-	
+	public static final long Yuguan = 1004;
 	/**
 	 * 1600-2000 action
 	 */

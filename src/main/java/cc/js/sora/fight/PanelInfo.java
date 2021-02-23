@@ -49,6 +49,10 @@ public class PanelInfo {
 	int physicSkill;
 	int magicSkill;
 	int techSkill;
+	int criticalProbIncSkill;
+	int criticalProbDecSkill;
+	int criticalDamageIncSkill;
+	int criticalDamageDecSkill;
 	
 	int lifeJJC;
 	int attackJJC;

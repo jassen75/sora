@@ -34,6 +34,5 @@ public class FightInfo {
 	{
 		return isAttack ? defender : attacker;
 	}
-	
 
 }

@@ -173,10 +173,11 @@ public class FightService {
 		int mi = panelInfo.getMagicSkill();
 		int li = panelInfo.getLifeSkill();
 		int ti = panelInfo.getTechSkill();
-		int cpi = panelInfo.getCriticalProbInc();
-		int cdi = panelInfo.getCriticalDamageInc();
-		int cpd = panelInfo.getCriticalProbDec();
-		int cdd = panelInfo.getCriticalDamageDec();
+		int cpi = panelInfo.getCriticalProbIncSkill();
+		int cdi = panelInfo.getCriticalDamageIncSkill();
+		int cpd = panelInfo.getCriticalProbDecSkill();
+		int cdd = panelInfo.getCriticalDamageDecSkill();
+		log.info("cpi=="+cpi+",cdi=="+cdi+",cpd==="+cpd+",cdd===="+cdd);
 		int di = 0;
 		int pdd = 0;
 		int mdd = 0;
