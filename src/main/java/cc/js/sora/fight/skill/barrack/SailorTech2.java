@@ -16,11 +16,6 @@ import cc.js.sora.fight.condition.UserCondition;
 public class SailorTech2  extends Skill {
 
 	@Override
-	public long getId() {
-		return Skill.SailorTech2;
-	}
-
-	@Override
 	public String getName() {
 		return "水兵科技：空海奇袭";
 	}

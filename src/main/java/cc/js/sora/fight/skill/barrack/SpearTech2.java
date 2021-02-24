@@ -17,7 +17,7 @@ public class SpearTech2 extends Skill {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "作战续行";
+		return "枪兵科技：作战续行";
 	}
 
 	@Override

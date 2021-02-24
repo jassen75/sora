@@ -243,9 +243,17 @@ function oneHit(coefficient, panel1, panel2, critcal, isPhysics, isSoldier, coun
 	
 	if(isPhysics)
 	{
+		if(panel1["attack"]*(1+counter/100.0) <= panel2["physic"])
+		{
+			return 1;
+		}
 		return Math.floor(coefficient * (panel1["attack"]*(1+counter/100.0)-panel2["physic"])*(1+(panel1["damageInc"]-panel2["physicDamageDec"])/100.0)*c /2) ;
 	} else	
 	{
+		if((isSoldier?panel1["attack"]:panel1["intel"])<=panel2["magic"])
+		{
+			return 1;
+		}
 		//alert("c=="+c+",coefficient=="+coefficient+",attack:"+(isSoldier?panel1["attack"]:panel1["intel"])+",magic:"+panel2["magic"]+",di="+panel1["damageInc"]+",mdd:"+panel2["magicDamageDec"]);
 		return Math.floor(coefficient * ((isSoldier?panel1["attack"]:panel1["intel"])-panel2["magic"])*(1+(panel1["damageInc"]-panel2["magicDamageDec"])/100.0)*c /2) ;
 	}

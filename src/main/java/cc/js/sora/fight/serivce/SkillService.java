@@ -80,6 +80,22 @@ public class SkillService {
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
 		registerSkill(Skill.LongxiajushouSkill, new LobsterSkill());
 		
+		registerSkill(Skill.Gangyiyongshi, new Gangyiyongshi());
+		registerSkill(Skill.Dujiaoshou, new Dujiaoshou());
+		registerSkill(Skill.Fangzhenliebing, new Gangyiyongshi());
+		registerSkill(Skill.Gaodiyongshi, new Gangyiyongshi());
+		
+		registerSkill(Skill.Huangjiaqibing, new Gangyiyongshi());
+		registerSkill(Skill.Jixieqishi, new Gangyiyongshi());
+		registerSkill(Skill.Kuangrezhe, new Gangyiyongshi());
+		registerSkill(Skill.Senlinjisi, new Gangyiyongshi());
+		registerSkill(Skill.Shixianggui, new Gangyiyongshi());
+		registerSkill(Skill.Tianshi, new Gangyiyongshi());
+		registerSkill(Skill.Wumianzhe, new Gangyiyongshi());
+		registerSkill(Skill.Xiyidaoke, new Gangyiyongshi());
+		registerSkill(Skill.Xizuizhe, new Gangyiyongshi());
+		registerSkill(Skill.Xuanfengyouqibing, new Gangyiyongshi());
+		
 		registerSkill(Skill.Shimeng, new DreamAction());
 		registerSkill(Skill.Shixuemojian, new BloodSwordAction());
 		
@@ -112,25 +128,32 @@ public class SkillService {
 
 	}
 
-	private boolean checkSkillType(int skillType,  boolean isAttacker)
+	private boolean checkSkillType(int skillType,  int roleType)
 	{
-		if(isAttacker)
+		if(roleType == 1)
 		{
-			return skillType==1 || skillType==3;
-		} else
+			return skillType==1 || skillType==3 || skillType ==4 || skillType==9;
+		} else if(roleType == 2)
 		{
-			return skillType==2 || skillType==3;
+			return skillType==2 || skillType==3 || skillType == 5 || skillType==9;
+		} else if(roleType == 3)
+		{
+			return skillType==1 || skillType==8 || skillType == 6 || skillType==9;
+		} else if(roleType == 4)
+		{
+			return skillType==2 || skillType==8 || skillType == 7 || skillType==9;
 		}
+		return false;
 	}
 	
-	private void loadSkill(String skillList, List<Skill> result, boolean isAttacker)
+	private void loadSkill(String skillList, List<Skill> result, int roleType)
 	{
 		if (!StringUtils.isEmpty(skillList)) {
 			String[] d = StringUtils.split(skillList, ",");
 			for (int i = 0; i < d.length; i++) {
 				long skillId = Longs.tryParse(d[i].trim());
 				if (this.skills.containsKey(skillId)) {
-					if(checkSkillType(this.getSkill(skillId).getSkillType(), isAttacker))
+					if(checkSkillType(this.getSkill(skillId).getSkillType(), roleType))
 					{
 						if(this.getSkill(skillId) != null)
 						{
@@ -142,18 +165,18 @@ public class SkillService {
 		}
 	}
 	
-	public List<Skill> getSkills(Hero hero, Soldier soldier, long actionId, int enhance, Map<String, Equip> equips,  boolean isAttacker) {
+	public List<Skill> getSkills(Hero hero, Soldier soldier, long actionId, int enhance, Map<String, Equip> equips,  int roleType) {
 		List<Skill> result = new ArrayList<Skill>();
 		if(hero != null)
 		{
-			loadSkill(hero.getSkills(), result, isAttacker);
+			loadSkill(hero.getSkills(), result, roleType);
 		}
 		
 		if(equips != null)
 		{
 			equips.values().stream().forEach(e->{
 				
-				loadSkill(e.getSkills(), result, isAttacker);
+				loadSkill(e.getSkills(), result, roleType);
 				
 			});
 		}
@@ -172,12 +195,12 @@ public class SkillService {
 		
 		if(soldier != null) 
 		{
-			loadSkill(soldier.getSkills(), result, isAttacker);
+			loadSkill(soldier.getSkills(), result, roleType);
 
 			int soldierType = soldier.getType();
 			if(barrackSkills.getSkills(soldierType) != null)
 			{
-				result.addAll(barrackSkills.getSkills(soldierType).stream().filter(s->checkSkillType(s.getSkillType(), isAttacker)).collect(Collectors.toList()));
+				result.addAll(barrackSkills.getSkills(soldierType).stream().filter(s->checkSkillType(s.getSkillType(), roleType)).collect(Collectors.toList()));
 			}
 			
 		}
@@ -185,13 +208,13 @@ public class SkillService {
 		if(actionId > 0)
 		{
 			Action action = actionRepository.getOne(actionId);
-			loadSkill(action.getSkills(), result, isAttacker);
+			loadSkill(action.getSkills(), result, roleType);
 			
 		}
 		
 		globalSkills.forEach(i->{
 			if (this.skills.containsKey(i)) {
-				if(checkSkillType(this.getSkill(i).getSkillType(), isAttacker))
+				if(checkSkillType(this.getSkill(i).getSkillType(), roleType))
 				{
 					result.add(this.getSkill(i));
 				}
@@ -202,7 +225,7 @@ public class SkillService {
 
 		result.forEach(s->{
 			s.childSkill().forEach(cs->{
-				if(checkSkillType(cs.getSkillType(), isAttacker))
+				if(checkSkillType(cs.getSkillType(), roleType))
 				{
 					childSkills.add(cs);
 				}

@@ -16,10 +16,6 @@ import cc.js.sora.fight.condition.health.EnemyFullHealthCondition;
 
 public class BirdTech2 extends Skill {
 
-	@Override
-	public long getId() {
-		return Skill.BirdTech2;
-	}
 
 	@Override
 	public String getName() {

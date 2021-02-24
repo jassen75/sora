@@ -43,6 +43,9 @@ public class FightRole {
 	
 	int range;
 	
+	// 1 battle attacker 2 battle defender 3 aoe attacker 4 aoe defender
+	int roleType;
+	
 	@JsonIgnore
 	public double getLifePercent()
 	{

@@ -14,12 +14,7 @@ import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.EnemyHasDebuffCondition;
 
 public class SorceressTech2 extends Skill {
-
-	@Override
-	public long getId() {
-		return Skill.SorceressTech2;
-	}
-
+	
 	@Override
 	public String getName() {
 		return "法师科技：法力虚空";

@@ -16,11 +16,6 @@ import cc.js.sora.fight.condition.health.GreaterHealthCondition;
 public class SailorTech1  extends Skill {
 
 	@Override
-	public long getId() {
-		return Skill.SailorTech1;
-	}
-
-	@Override
 	public String getName() {
 		return "水兵科技：先制打击";
 	}

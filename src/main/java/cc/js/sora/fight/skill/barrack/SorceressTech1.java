@@ -17,12 +17,6 @@ import cc.js.sora.fight.condition.UserCondition;
 public class SorceressTech1 extends Skill {
 
 	@Override
-	public long getId() {
-		// TODO Auto-generated method stub
-		return Skill.SorceressTech1;
-	}
-
-	@Override
 	public String getName() {
 		return "法师科技：自我暗示";
 	}

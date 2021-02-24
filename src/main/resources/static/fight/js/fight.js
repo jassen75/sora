@@ -90,11 +90,13 @@ function chooseHero(id) {
 function buildHero(hero) {
 	if (isAttacker == 1) {
 		var role = "attacker";
+		var roleType = 1;
 		isAttacker = 0;		
 		fightInfo["distance"]=hero["range"];
 	} else
 	{
 		var role = "defender";
+		var roleType = 2;
 		isAttacker = 1;
 	}
 	fightInfo[role]={};
@@ -105,6 +107,7 @@ function buildHero(hero) {
 	fightInfo[role]["heroPanel"] = {};
 	fightInfo[role]["soldierPanel"] = {};
 	fightInfo[role]["userConditionChecked"]={};
+	fightInfo[role]["roleType"] = roleType;
 	
 	loadWeapon(hero["id"], role);
 }

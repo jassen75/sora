@@ -18,12 +18,6 @@ import cc.js.sora.fight.condition.SpecialLandCondition;
 public class SailorTech4  extends Skill {
 
 	@Override
-	public long getId() {
-		// TODO Auto-generated method stub
-		return Skill.SailorTech4;
-	}
-
-	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return "水兵科技：水灵加护";

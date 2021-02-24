@@ -8,44 +8,39 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
+import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.UserCondition;
 
-public class HorseTech5  extends Skill {
+public class BowTech5 extends Skill {
 
 	@Override
 	public String getName() {
-		return "骑兵科技";
+		return "弓箭科技：密林游侠";
 	}
 
 	@Override
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
-		return new UserCondition() {
-
-			@Override
-			public boolean defaultValid() {
-				// TODO Auto-generated method stub
-				return true;
-			}
+		return new Condition() {
 
 			@Override
 			public String getDesc() {
 				// TODO Auto-generated method stub
-				return "攻击被护卫";
+				return "对方是飞兵";
+			}
+
+			@Override
+			public boolean valid(FightInfo fightInfo, boolean isAttack) {
+				// TODO Auto-generated method stub
+				return fightInfo.getEnemyRole(isAttack).getSoldier().getType()==5;
 			}};
 	}
 
 	@Override
 	public List<Effect> getEffects() {
-		// TODO Auto-generated method stub
-	    return Lists.newArrayList(new Enhance(BuffType.Attack, 20, Scope.Soldier), new Enhance(BuffType.PhysicDef, 20, Scope.Soldier));
+		return Lists.newArrayList(new Enhance(BuffType.PhysicDef, 30, Scope.Soldier));
 	}
-	
-	public int getSkillType()
-	{
-		return 1;
-	}
+
 
 }

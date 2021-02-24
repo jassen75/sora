@@ -17,7 +17,10 @@ public abstract class Skill {
 	
 	public abstract String getName();
 
-	public abstract Condition getCondition();
+	public Condition getCondition() {
+		// TODO Auto-generated method stub
+		return new NoCondition();
+	}
 
 	//public abstract List<Buff> getBuffs();
 	
@@ -128,57 +131,47 @@ public abstract class Skill {
 	public static final long MojingshushiSkill = 2002;
 	public static final long HuangjiashijiuSkill = 2003;
 	public static final long LongxiajushouSkill = 2004;
+	public static final long HuoyankulougongshouSkill = 2005;
+	public static final long DijingqishiSkill = 2006;
+	public static final long Shuijingsuxingzhe = 2007;
+	public static final long Jixieqishi = 2008;
+	public static final long Gaodiyongshi = 2009;
+	public static final long Wunv = 2010;
+	public static final long Kuangrezhe = 2011;
+	public static final long Senlinjisi = 2012;
+	public static final long Gangyiyongshi = 2013;
+	public static final long Tianshi = 2014;
+	public static final long Dujiaoshou = 2015;
+	public static final long Shixianggui = 2016;
+	public static final long Gangzonglangren = 2017;
+	public static final long Xiyidaoke = 2018;
+	public static final long Yingshi = 2019;
+	public static final long Yaojinggongqibing = 2020;
+	public static final long Wumianzhe = 2021;
+	public static final long Huangjiaqibing = 2022;
+	public static final long Xuanfengyouqibing = 2023;
+	public static final long Xizuizhe = 2024;
+	public static final long Fangzhenliebing = 2025;
+
 	
-	
-	/**
-	 * 3000-3100 barrack tech
-	 */
-	public static final long SorceressTech1 = 3001;
-	public static final long SorceressTech2 = 3002;
-	public static final long SorceressTech3 = 3003;
-	public static final long SorceressTech4 = 3004;
-	
-	public static final long BirdTech1 = 3005;
-	public static final long BirdTech2 = 3006;
-	public static final long BirdTech3 = 3007;
-	public static final long BirdTech4 = 3008;
-	
-	public static final long SailorTech1 = 3009;
-	public static final long SailorTech2 = 3010;
-	public static final long SailorTech3 = 3011;
-	public static final long SailorTech4 = 3012;
-	
-	public static final long FootTech1 = 3013;
-	public static final long FootTech2 = 3014;
-	public static final long FootTech3 = 3015;
-	public static final long FootTech4 = 3016;
-	
-	public static final long PikeTech1 = 3017;
-	public static final long PikeTech2 = 3018;
-	public static final long PikeTech3 = 3019;
-	public static final long PikeTech4 = 3020;
-	
-	public static final long HorseTech1 = 3021;
-	public static final long HorseTech2 = 3022;
-	public static final long HorseTech3 = 3023;
-	public static final long HorseTech4 = 3024;
-	
-	/**
-	 * 3200-4000 heart tech
-	 */
 	
 	/**
 	 * 4000-5000 global skill
 	 */
 	public static final long SuperBuff = 4001;
 	
-	//1 attack 2 defender 3 all
+	//1 battle/aoe attack 
+	//2 battle/aoe defender 3 battle all
+	// 4 battle attack 5 battle defender 
+	// 6 aoe attacker 7 aoe defender
+	// 8 aoe all
+	// 9 all
 	public int getSkillType()
 	{
-		return 3;
+		return 9;
 	}
 	
-	// 0 effect  1 pre battle 2 battle 3 post battle
+	// 0 effect  1 pre battle 2 battle 3 post battle 4
 	public int getBattleType()
 	{
 		return 2;

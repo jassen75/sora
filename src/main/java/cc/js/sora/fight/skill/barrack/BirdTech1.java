@@ -16,11 +16,6 @@ import cc.js.sora.fight.condition.health.GreaterHealthCondition;
 public class BirdTech1 extends Skill {
 
 	@Override
-	public long getId() {
-		return Skill.BirdTech1;
-	}
-
-	@Override
 	public String getName() {
 		return "飞兵科技：先制打击";
 	}

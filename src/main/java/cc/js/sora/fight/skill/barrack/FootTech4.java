@@ -30,5 +30,10 @@ public class FootTech4 extends Skill {
 	public List<Effect> getEffects() {
 		return Lists.newArrayList(new Enhance(BuffType.MagicDef, 20, Scope.Soldier), new Enhance(BuffType.PhysicDef, 20, Scope.Soldier));
 	}
+	
+	public int getSkillType()
+	{
+		return 4;
+	}
 
 }

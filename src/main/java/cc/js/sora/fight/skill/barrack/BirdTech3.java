@@ -15,11 +15,6 @@ import cc.js.sora.fight.condition.DefLandCondition;
 public class BirdTech3 extends Skill {
 
 	@Override
-	public long getId() {
-		return Skill.BirdTech3;
-	}
-
-	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return "飞兵科技：特技飞行";

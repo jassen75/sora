@@ -16,11 +16,6 @@ import cc.js.sora.fight.condition.health.LessHealthCondition;
 public class SorceressTech4 extends Skill {
 
 	@Override
-	public long getId() {
-		return Skill.SorceressTech4;
-	}
-
-	@Override
 	public String getName() {
 		return "法师科技：聚精会神";
 	}

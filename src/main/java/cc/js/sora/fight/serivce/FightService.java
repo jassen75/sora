@@ -41,12 +41,12 @@ public class FightService {
 		log.info("****************** defender soldier left life:"+fightInfo.getDefender().getSoldierLeftLife());
 		List<Skill> attackerSkills = skillService.getSkills(fightInfo.getAttacker().getHero(),
 				fightInfo.getAttacker().getSoldier(), fightInfo.getAttacker().getAction()==null ? 0 :fightInfo.getAttacker().getAction().getId(),
-				fightInfo.getAttacker().getEnhance(), fightInfo.getAttacker().getEquip(), true);
+				fightInfo.getAttacker().getEnhance(), fightInfo.getAttacker().getEquip(), fightInfo.getAttacker().getRoleType());
 
 
 		List<Skill> defenderSkills = skillService.getSkills(fightInfo.getDefender().getHero(),
 				fightInfo.getDefender().getSoldier(), 0, fightInfo.getDefender().getEnhance(),
-				fightInfo.getDefender().getEquip(), false);
+				fightInfo.getDefender().getEquip(), fightInfo.getDefender().getRoleType());
 
 		List<CheckedSkill> attackerCheckedSkills = Lists.newArrayList();
 		List<CheckedSkill> defenderCheckedSkills = Lists.newArrayList();
