@@ -75,6 +75,8 @@ public class SkillService {
 		registerSkill(Skill.ZalrahdaTalent1, new ZalrahdaTalent1());
 		registerSkill(Skill.ZalrahdaTalent2, new ZalrahdaTalent2());
 		registerSkill(Skill.MarielTalent, new MarielTalent());
+		registerSkill(Skill.LandiusTalent, new LandiusTalent());
+		registerSkill(Skill.LedynTalent, new LedynTalent());
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
@@ -85,16 +87,18 @@ public class SkillService {
 		registerSkill(Skill.Fangzhenliebing, new Gangyiyongshi());
 		registerSkill(Skill.Gaodiyongshi, new Gangyiyongshi());
 		
-		registerSkill(Skill.Huangjiaqibing, new Gangyiyongshi());
-		registerSkill(Skill.Jixieqishi, new Gangyiyongshi());
-		registerSkill(Skill.Kuangrezhe, new Gangyiyongshi());
-		registerSkill(Skill.Senlinjisi, new Gangyiyongshi());
-		registerSkill(Skill.Shixianggui, new Gangyiyongshi());
-		registerSkill(Skill.Tianshi, new Gangyiyongshi());
-		registerSkill(Skill.Wumianzhe, new Gangyiyongshi());
-		registerSkill(Skill.Xiyidaoke, new Gangyiyongshi());
-		registerSkill(Skill.Xizuizhe, new Gangyiyongshi());
-		registerSkill(Skill.Xuanfengyouqibing, new Gangyiyongshi());
+		registerSkill(Skill.Huangjiaqibing, new Huangjiaqibing());
+		registerSkill(Skill.Jixieqishi, new Jixieqishi());
+		registerSkill(Skill.Kuangrezhe, new Kuangrezhe());
+		registerSkill(Skill.Senlinjisi, new Senlinjisi());
+		registerSkill(Skill.Shixianggui, new Shixianggui());
+		registerSkill(Skill.Tianshi, new Tianshi());
+		registerSkill(Skill.Wumianzhe, new Wumianzhe());
+		registerSkill(Skill.Xiyidaoke, new Xiyidaoke());
+		registerSkill(Skill.Xizuizhe, new Xizuizhe());
+		registerSkill(Skill.Xuanfengyouqibing, new Xuanfengyouqibing());
+		registerSkill(Skill.Shurenshouwei, new Shurenshouwei());
+		registerSkill(Skill.Jiamiannvpu, new Jiamiannvpu());
 		
 		registerSkill(Skill.Shimeng, new DreamAction());
 		registerSkill(Skill.Shixuemojian, new BloodSwordAction());

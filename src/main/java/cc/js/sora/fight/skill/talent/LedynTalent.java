@@ -1,44 +1,31 @@
-package cc.js.sora.fight.skill.soldier;
+package cc.js.sora.fight.skill.talent;
 
 import java.util.List;
 
 import com.google.common.collect.Lists;
 
 import cc.js.sora.fight.BuffType;
-import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.NoCondition;
 
-public class Jixieqishi extends Skill {
+public class LedynTalent extends Skill{
 
 	public long getId() {
-		return Skill.Jixieqishi;
+		return Skill.LedynTalent;
 	}
 	
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "机械骑士技能";
-	}
-
-	@Override
-	public Condition getCondition() {
-		// TODO Auto-generated method stub
-		return new NoCondition();
+		return "雷丁天赋";
 	}
 
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.Attack, 30, Scope.Soldier));
-	}
-	
-	public int getSkillType()
-	{
-		return 4;
+		return Lists.newArrayList(new Enhance(BuffType.DamageDec, 15, Scope.All));
 	}
 	
 	public List<Skill> childSkill()
@@ -48,25 +35,40 @@ public class Jixieqishi extends Skill {
 			@Override
 			public String getName() {
 				// TODO Auto-generated method stub
-				return "机械骑士技能";
+				return "雷丁*王者大心";
 			}
 
 			@Override
-			public Condition getCondition() {
+			public List<Effect> getEffects() {
 				// TODO Auto-generated method stub
-				return new NoCondition();
+				return Lists.newArrayList(new Enhance(BuffType.DamageInc, 10, Scope.All));
+			}
+			
+			public int getSkillType()
+			{
+				return 4;
+			}
+			
+		}, new Skill() {
+
+			@Override
+			public String getName() {
+				// TODO Auto-generated method stub
+				return "雷丁*王者大心";
+			}
+
+			@Override
+			public List<Effect> getEffects() {
+				// TODO Auto-generated method stub
+				return Lists.newArrayList(new Enhance(BuffType.PhysicDamageDec, 10, Scope.All));
 			}
 			
 			public int getSkillType()
 			{
 				return 5;
 			}
-
-			@Override
-			public List<Effect> getEffects() {
-				return Lists.newArrayList(new Enhance(BuffType.PhysicDef, 30, Scope.Soldier));
-			}});
+			
+		});
 	}
-	
 
 }

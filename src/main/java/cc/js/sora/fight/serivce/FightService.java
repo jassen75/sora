@@ -12,6 +12,7 @@ import com.google.common.collect.Maps;
 
 import cc.js.sora.fight.Buff;
 import cc.js.sora.fight.CheckedSkill;
+import cc.js.sora.fight.Counter;
 import cc.js.sora.fight.Debuff;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
@@ -160,6 +161,7 @@ public class FightService {
 	public PanelInfo calculate(Hero hero, PanelInfo panelInfo, List<CheckedSkill> skillList, Land land) {
 		
 		panelInfo.getFeatures().clear();
+		panelInfo.getCounters().clear();
 		int life = hero.getLife() + panelInfo.getLifeInc();
 		int attack = hero.getAttack() + panelInfo.getAttackInc();
 		int intel = hero.getIntel() + panelInfo.getIntelInc();
@@ -283,6 +285,10 @@ public class FightService {
 						} else if (e instanceof Feature) {
 							Feature f = (Feature)e;
 							panelInfo.getFeatures().putAll(f.getFeatures());
+						} else if (e instanceof Counter) {
+							
+							Counter c = (Counter)e;
+							panelInfo.getCounters().add(c);
 						}
 					}
 				}
@@ -422,6 +428,7 @@ public class FightService {
 	}
 
 	public PanelInfo calculate(Soldier soldier, Hero hero, PanelInfo panelInfo, List<CheckedSkill> skillList, Land land) {
+		panelInfo.getCounters().clear();
 		panelInfo.getFeatures().clear();
 		int life = soldier.getLife();
 		int attack = soldier.getAttack();
@@ -531,6 +538,10 @@ public class FightService {
 						} else if (e instanceof Feature) {
 							Feature f = (Feature)e;
 							panelInfo.getFeatures().putAll(f.getFeatures());
+						} else if (e instanceof Counter) {
+							
+							Counter c = (Counter)e;
+							panelInfo.getCounters().add(c);
 						}
 					}
 

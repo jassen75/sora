@@ -93,6 +93,8 @@ public abstract class Skill {
 	public static final long ZalrahdaTalent1 = 3;
 	public static final long ZalrahdaTalent2 = 203;
 	public static final long MarielTalent = 10;
+	public static final long LandiusTalent = 58;
+	public static final long LedynTalent = 78;
 
 	/**
 	 *   300-900 passive skill
@@ -152,6 +154,9 @@ public abstract class Skill {
 	public static final long Xuanfengyouqibing = 2023;
 	public static final long Xizuizhe = 2024;
 	public static final long Fangzhenliebing = 2025;
+	public static final long Shurenshouwei = 2027;
+	public static final long Jiamiannvpu = 2026;
+	
 
 	
 	

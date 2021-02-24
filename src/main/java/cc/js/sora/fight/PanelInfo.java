@@ -1,7 +1,9 @@
 package cc.js.sora.fight;
 
+import java.util.List;
 import java.util.Map;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import lombok.AllArgsConstructor;
@@ -34,7 +36,7 @@ public class PanelInfo {
 	int magicDamageDec;
 	
 	Map<String, Object> features = Maps.newHashMap();
-	
+	List<Counter> counters = Lists.newArrayList();
 	
 	int lifeInc;
 	int attackInc;

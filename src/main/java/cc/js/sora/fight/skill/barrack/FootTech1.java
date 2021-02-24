@@ -34,7 +34,8 @@ public class FootTech1 extends Skill{
 			@Override
 			public boolean valid(FightInfo fightInfo, boolean isAttack) {
 				// TODO Auto-generated method stub
-				return fightInfo.getEnemyRole(isAttack).getSoldier().getType()==2;
+				//return fightInfo.getEnemyRole(isAttack).getSoldier().getType()==2;
+				return false;
 			}};
 	}
 

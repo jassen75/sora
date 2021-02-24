@@ -31,6 +31,7 @@ public class Buff implements Effect {
 		
 	}
 	List<Enhance> enhanceList;
+	Map<String, Object> features;
 	String name;
 	@Override
 	public EffectType getEffectType() {
@@ -39,8 +40,7 @@ public class Buff implements Effect {
 	}
 	@Override
 	public Map<String, Object> getFeatures() {
-		// TODO Auto-generated method stub
-		return Maps.newHashMap();
+		return features;
 	}
 	
 	public String toString()
