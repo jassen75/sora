@@ -162,6 +162,7 @@ public class FightService {
 		
 		panelInfo.getFeatures().clear();
 		panelInfo.getCounters().clear();
+		panelInfo.setIsSoldier(0);
 		int life = hero.getLife() + panelInfo.getLifeInc();
 		int attack = hero.getAttack() + panelInfo.getAttackInc();
 		int intel = hero.getIntel() + panelInfo.getIntelInc();
@@ -288,7 +289,10 @@ public class FightService {
 						} else if (e instanceof Counter) {
 							
 							Counter c = (Counter)e;
-							panelInfo.getCounters().add(c);
+							if(c.getScope() == Scope.All || c.getScope() == Scope.Hero)
+							{
+								panelInfo.getCounters().add(c);
+							}
 						}
 					}
 				}
@@ -430,6 +434,7 @@ public class FightService {
 	public PanelInfo calculate(Soldier soldier, Hero hero, PanelInfo panelInfo, List<CheckedSkill> skillList, Land land) {
 		panelInfo.getCounters().clear();
 		panelInfo.getFeatures().clear();
+		panelInfo.setIsSoldier(1);
 		int life = soldier.getLife();
 		int attack = soldier.getAttack();
 		int physic = soldier.getPhysic();
@@ -541,7 +546,10 @@ public class FightService {
 						} else if (e instanceof Counter) {
 							
 							Counter c = (Counter)e;
-							panelInfo.getCounters().add(c);
+							if(c.getScope() == Scope.All || c.getScope() == Scope.Soldier)
+							{
+								panelInfo.getCounters().add(c);
+							}
 						}
 					}
 

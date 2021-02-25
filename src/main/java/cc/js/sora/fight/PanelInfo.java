@@ -65,4 +65,5 @@ public class PanelInfo {
 	int techJJC;
 	
 	double preBattleDamage;
+	int isSoldier;
 }

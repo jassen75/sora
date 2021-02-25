@@ -33,7 +33,7 @@ public class FootTech4 extends Skill {
 	
 	public int getSkillType()
 	{
-		return 4;
+		return 5;
 	}
 
 }
