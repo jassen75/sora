@@ -33,16 +33,16 @@ public class FootTech1 extends Skill {
 			@Override
 			public boolean valid(FightInfo fightInfo, boolean isAttack) {
 				// TODO Auto-generated method stub
-				return fightInfo.getEnemyRole(isAttack).getSoldier().getType() == 2
-						|| fightInfo.getEnemyRole(isAttack).getHero().getType() == 2;
+				return fightInfo.getEnemyRole(isAttack).getSoldier().getType() == 2;
+						//|| fightInfo.getEnemyRole(isAttack).getHero().getType() == 2;
 			}
 		};
 	}
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Counter(BuffType.Attack, 30, 2, Scope.Soldier),
-				new Counter(BuffType.Physic, 30, 2, Scope.Soldier));
+		return Lists.newArrayList(new Counter(BuffType.Attack, 30, 2, Scope.Soldier, true),
+				new Counter(BuffType.Physic, 30, 2, Scope.Soldier, true));
 	}
 
 }

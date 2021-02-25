@@ -7,12 +7,16 @@ function calculate()
 	var heroToHero=0;
 	var fightDetails= "";
 	var coefficient = 1;
+	var battleType = 1;
+	var actionName = "";
 	var attackerSoldierCriticalChecked = fightInfo["attacker"]["soldierCriticalChecked"];
 	var attackerHeroCriticalChecked = fightInfo["attacker"]["heroCriticalChecked"];
 	var action = fightInfo["attacker"]["action"];
 	if(action)
 	{
 		coefficient = action["coefficient"];
+		battleType = action["battleType"];
+		actionName = action["name"];
 	}
 	
 	if( fightInfo["attacker"]["soldier"] && fightInfo["defender"]["soldier"])
@@ -47,6 +51,7 @@ function calculate()
 	if(fightInfo["attacker"]["hero"] && fightInfo["defender"]["soldier"])
 	{
 		var counter = getCounter("attacker", "hero", "soldier");
+		//alert(JSON.stringify(counter));
 		heroToSoldier = oneHit(coefficient, fightInfo["attacker"]["heroPanel"], fightInfo["defender"]["soldierPanel"], 
 				attackerHeroCriticalChecked, isAttackerPhysic ,counter);
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["attacker"]["heroPanel"], fightInfo["defender"]["soldierPanel"])+
@@ -68,6 +73,20 @@ function calculate()
 	    		"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+heroToHero+"</b>"+c+"</p>";
 	}
 	fightDetails+="<p>-------------------------------------------------------------------------------------------</p>";
+
+	if(battleType == 1)
+	{
+		battle(soldierToSoldier, soldierToHero, heroToSoldier, heroToHero, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, fightDetails);
+	} 
+	
+	if(battleType == 2)
+	{
+		aoe(actionName, heroToSoldier, heroToHero, attackerHeroCriticalChecked, fightDetails);
+	}
+}
+
+function battle(soldierToSoldier, soldierToHero, heroToSoldier,heroToHero, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, fightDetails)
+{
 	var soldierCount = fightInfo["attacker"]["soldier"] ? 20 : 0;
 	var heroCount = fightInfo["attacker"]["hero"] ? 20 : 0;
 	var soldierLeftCount = soldierCount;
@@ -238,6 +257,30 @@ function calculate()
 	calculateDefender();
 }
 
+function aoe(actionName, heroToSoldier,heroToHero, attackerHeroCriticalChecked, fightDetails)
+{
+	var dl = fightInfo["defender"]["hero"] ? fightInfo["defender"]["heroLeftLife"] : 0;
+	var dsl = fightInfo["defender"]["soldier"] ? fightInfo["defender"]["soldierLeftLife"] : 0;
+	
+	dl -= 20*heroToHero;
+	dsl -= 20*heroToSoldier;
+	
+	var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
+	fightDetails+="<p"+c+">"+fightInfo["attacker"]["hero"]["name"]+"用"+actionName+"对"+fightInfo["defender"]["hero"]["name"]+"造成<b>"+20*heroToHero+"</b>伤害</p>";
+	fightDetails+="<p"+c+">"+fightInfo["attacker"]["hero"]["name"]+"用"+actionName+"对"+fightInfo["defender"]["soldier"]["name"]+"造成<b>"+20*heroToSoldier+"</b>伤害</p>";
+	
+	$("#defenderSoldierBar").text(dsl+"/"+fightInfo["defender"]["soldierPanel"]["life"]);
+	
+	$("#defenderSoldierBar").attr("style", "width:"+Math.ceil(dsl/fightInfo["defender"]["soldierPanel"]["life"]*100)+"%");
+	
+	$("#defenderHeroBar").text(dl+"/"+fightInfo["defender"]["heroPanel"]["life"]);
+	
+	$("#defenderHeroBar").attr("style", "width:"+Math.ceil(dl/fightInfo["defender"]["heroPanel"]["life"]*100)+"%");
+										
+	$("#attackerFightDetails").html(fightDetails);
+	
+}
+
 function oneHit(coefficient, panel1, panel2, critcal, isPhysics, counter)
 {
 	var c = critcal ? (130 + panel1["criticalDamageInc"] - panel2["criticalDamageDec"]) / 100 : 1;
@@ -259,7 +302,7 @@ function oneHit(coefficient, panel1, panel2, critcal, isPhysics, counter)
 		{
 			return 1;
 		}
-		return Math.floor(coefficient * (attack*(1+counter["attack"])/100.0-panel2["magic"]*(1+cm/100.0))*
+		return Math.floor(coefficient * (attack*(1+counter["attack"]/100.0)-panel2["magic"]*(1+cm/100.0))*
 			(1+(panel1["damageInc"]-panel2["magicDamageDec"])/100.0)* c /2) ;
 	}
 }
@@ -284,6 +327,7 @@ function getCounter(attackerRole, attackerKind, defenderKind)
 	var defenderPanel = fightInfo[defenderRole][defenderKind+"Panel"];
 	var attackerCounters = attackerPanel["counters"];
 	var defenderCounters = defenderPanel["counters"];
+	
 	var result = {};
 	result["attack"]=0;
 	result["physic"]=0;
@@ -293,7 +337,7 @@ function getCounter(attackerRole, attackerKind, defenderKind)
 		var counter = attackerCounters[i];
 		if(counter["buffType"]=="Attack")
 		{
-			if(counter[attackerKind] && counter["enemyType"] == defenderType)
+			if(counter[attackerKind] && counter["enemyType"] == defenderType || counter["enemyType"] == 0)
 			{
 				result["attack"]+=counter["number"];
 			}
@@ -307,14 +351,14 @@ function getCounter(attackerRole, attackerKind, defenderKind)
 		var counter = defenderCounters[i];
 		if(counter["buffType"]=="Physic")
 		{
-			if(counter[defenderKind] && counter["enemyType"] == attackerType)
+			if(counter[defenderKind] && counter["enemyType"] == attackerType || counter["enemyType"] == 0)
 			{
 				result["physic"]+=counter["number"];
 			}
 		}
 		if(counter["buffType"]=="Magic" )
 		{
-			if(counter[defenderKind] && counter["enemyType"] == attackerType)
+			if(counter[defenderKind] && counter["enemyType"] == attackerType || counter["enemyType"] == 0)
 			{
 				result["magic"]+=counter["number"];
 			}
@@ -393,7 +437,7 @@ function calculateDefender()
 	var coefficient = 1;
 	var defenderSoldierCriticalChecked = fightInfo["defender"]["soldierCriticalChecked"];
 	var defenderHeroCriticalChecked = fightInfo["defender"]["heroCriticalChecked"];
-	if( fightInfo["defender"]["soldier"] && fightInfo["defender"]["soldier"])
+	if( fightInfo["defender"]["soldier"] && fightInfo["attacker"]["soldier"])
 	{
 		var counter = getCounter("defender", "soldier", "soldier");
 		soldierToSoldier =oneHit(1, fightInfo["defender"]["soldierPanel"], fightInfo["attacker"]["soldierPanel"], 

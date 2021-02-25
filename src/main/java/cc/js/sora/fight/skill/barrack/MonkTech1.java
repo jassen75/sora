@@ -22,8 +22,8 @@ public class MonkTech1 extends Skill {
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Counter(BuffType.Attack, 30, 9, Scope.Soldier),
-				new Counter(BuffType.Physic, 30, 9, Scope.Soldier));
+		return Lists.newArrayList(new Counter(BuffType.Attack, 30, 9, Scope.Soldier, true),
+				new Counter(BuffType.Physic, 30, 9, Scope.Soldier, true));
 	}
 	
 	@Override
@@ -33,14 +33,14 @@ public class MonkTech1 extends Skill {
 			@Override
 			public String getDesc() {
 				// TODO Auto-generated method stub
-				return "对方部队是枪兵";
+				return "对方士兵是魔物";
 			}
 
 			@Override
 			public boolean valid(FightInfo fightInfo, boolean isAttack) {
 				// TODO Auto-generated method stub
-				return fightInfo.getEnemyRole(isAttack).getSoldier().getType() == 9
-						|| fightInfo.getEnemyRole(isAttack).getHero().getType() == 9;
+				return fightInfo.getEnemyRole(isAttack).getSoldier().getType() == 9;
+						//|| fightInfo.getEnemyRole(isAttack).getHero().getType() == 9;
 			}
 		};
 	}

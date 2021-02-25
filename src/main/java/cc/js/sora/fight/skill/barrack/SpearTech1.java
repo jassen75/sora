@@ -22,8 +22,8 @@ public class SpearTech1 extends Skill {
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Counter(BuffType.Attack, 30, 3, Scope.Soldier),
-				new Counter(BuffType.Physic, 30, 3, Scope.Soldier));
+		return Lists.newArrayList(new Counter(BuffType.Attack, 30, 3, Scope.Soldier, true),
+				new Counter(BuffType.Physic, 30, 3, Scope.Soldier, true));
 	}
 	
 	@Override
@@ -39,8 +39,8 @@ public class SpearTech1 extends Skill {
 			@Override
 			public boolean valid(FightInfo fightInfo, boolean isAttack) {
 				// TODO Auto-generated method stub
-				return fightInfo.getEnemyRole(isAttack).getSoldier().getType() == 3
-						|| fightInfo.getEnemyRole(isAttack).getHero().getType() == 3;
+				return fightInfo.getEnemyRole(isAttack).getSoldier().getType() == 3;
+						//|| fightInfo.getEnemyRole(isAttack).getHero().getType() == 3;
 			}
 		};
 	}

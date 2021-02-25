@@ -64,6 +64,7 @@ public class SkillService {
 		registerSkill(Skill.Lage, new Lage());
 		registerSkill(Skill.Xunzhang, new Xunzhang());
 		registerSkill(Skill.Yuguan, new Yuguan());
+		registerSkill(Skill.Erzhui, new Erzhui());
 		
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
@@ -77,6 +78,7 @@ public class SkillService {
 		registerSkill(Skill.MarielTalent, new MarielTalent());
 		registerSkill(Skill.LandiusTalent, new LandiusTalent());
 		registerSkill(Skill.LedynTalent, new LedynTalent());
+		registerSkill(Skill.HimikoTalent, new HimikoTalent());
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());

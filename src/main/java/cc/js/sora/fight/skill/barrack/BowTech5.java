@@ -21,8 +21,8 @@ public class BowTech5 extends Skill {
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Counter(BuffType.Attack, 30, 5, Scope.Soldier),
-				new Counter(BuffType.Physic, 30, 8, Scope.Soldier));
+		return Lists.newArrayList(new Counter(BuffType.Attack, 30, 5, Scope.Soldier, true),
+				new Counter(BuffType.Physic, 30, 5, Scope.Soldier, true));
 	}
 	
 	@Override
@@ -38,8 +38,8 @@ public class BowTech5 extends Skill {
 			@Override
 			public boolean valid(FightInfo fightInfo, boolean isAttack) {
 				// TODO Auto-generated method stub
-				return fightInfo.getEnemyRole(isAttack).getSoldier().getType() == 5
-						|| fightInfo.getEnemyRole(isAttack).getHero().getType() == 5;
+				return fightInfo.getEnemyRole(isAttack).getSoldier().getType() == 5;
+					//	|| fightInfo.getEnemyRole(isAttack).getHero().getType() == 5;
 			}
 		};
 	}

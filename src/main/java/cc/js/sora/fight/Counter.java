@@ -18,13 +18,13 @@ import lombok.ToString;
 @ToString
 public class Counter implements Effect{
 	
-	public Counter(BuffType buffType, int number, int enemyType, boolean soldier, boolean hero, Scope scope)
+	public Counter(BuffType buffType, int number, int enemyType, Scope scope, boolean onlySoldier)
 	{
 		this.buffType = buffType;
 		this.number = number;
 		this.enemyType = enemyType;
-		this.soldier = soldier;
-		this.hero = hero;
+		this.soldier = true;
+		this.hero = false;
 		this.scope = scope;
 		
 	}
@@ -63,7 +63,7 @@ public class Counter implements Effect{
 	
 	public String toString()
 	{
-		return "对"+printBufferType()+printCharType()+"增强"+this.getNumber();
+		return "对"+printBufferType()+printCharType()+"增强"+this.getNumber()+"%";
 	}
 	public String printBufferType()
 	{
@@ -89,10 +89,12 @@ public class Counter implements Effect{
 			return "魔物";
 		case 10:
 			return "僧侣";
+		case 0:
+			return "所有兵种";
 		default:
-			
+			return "未知兵种";
 		}
-		return "所有兵种";
+		
 	}
 	
 	public String printCharType()

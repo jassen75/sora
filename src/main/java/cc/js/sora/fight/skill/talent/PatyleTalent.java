@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 import cc.js.sora.fight.Buff;
 import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
+import cc.js.sora.fight.Counter;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Hero;
@@ -43,7 +44,8 @@ public class PatyleTalent extends Skill {
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Enhance(BuffType.AttackCounter, 25, Scope.All), new Enhance(BuffType.DamageDec, 25, Scope.All));
+		//return Lists.newArrayList(new Enhance(BuffType.AttackCounter, 25, Scope.All), new Enhance(BuffType.DamageDec, 25, Scope.All));
+		return Lists.newArrayList(new Counter(BuffType.Attack, 25, 0, Scope.All), new Enhance(BuffType.DamageDec, 25, Scope.All));
 	}
 
 

@@ -91,6 +91,7 @@ public abstract class Skill {
 	public static final long PatyleTalent = 1;
 	public static final long TowaTalent = 2;
 	public static final long ZalrahdaTalent1 = 3;
+	public static final long HimikoTalent = 5;
 	public static final long ZalrahdaTalent2 = 203;
 	public static final long MarielTalent = 10;
 	public static final long LandiusTalent = 58;
@@ -111,9 +112,10 @@ public abstract class Skill {
 	 * 1000-1600 equip
 	 */
 	public static final long Zuihouzhifu = 1001;
-	public static final long Lage = 1002;
-	public static final long Xunzhang = 1003;
-	public static final long Yuguan = 1004;
+	public static final long Lage = 1005;
+	public static final long Xunzhang = 1010;
+	public static final long Yuguan = 1003;
+	public static final long Erzhui = 1004;
 	/**
 	 * 1600-2000 action
 	 */
