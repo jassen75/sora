@@ -31,7 +31,7 @@ public class WizardSkill extends Skill {
 
 	@Override
 	public List<Effect> getEffects()  {
-		return Lists.newArrayList(new Enhance(BuffType.Attack, 45, Scope.Soldier), new Enhance(BuffType.MagicDef, 45, Scope.Soldier));
+		return Lists.newArrayList(new Enhance(BuffType.Attack, 45, Scope.Soldier), new Enhance(BuffType.Magic, 45, Scope.Soldier));
 	}
 
 }

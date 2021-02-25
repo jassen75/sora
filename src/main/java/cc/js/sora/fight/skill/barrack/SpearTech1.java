@@ -40,7 +40,7 @@ public class SpearTech1 extends Skill {
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Enhance(BuffType.PhysicDef, 30, Scope.Soldier));
+		return Lists.newArrayList(new Enhance(BuffType.Physic, 30, Scope.Soldier));
 	}
 
 }

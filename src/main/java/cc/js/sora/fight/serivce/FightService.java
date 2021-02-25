@@ -230,10 +230,10 @@ public class FightService {
 							case Intel:
 								ii += number;
 								break;
-							case PhysicDef:
+							case Physic:
 								pi += number;
 								break;
-							case MagicDef:
+							case Magic:
 								mi += number;
 								break;
 							case DamageInc:
@@ -311,10 +311,10 @@ public class FightService {
 					case Intel:
 						ii += number;
 						break;
-					case PhysicDef:
+					case Physic:
 						pi += number;
 						break;
-					case MagicDef:
+					case Magic:
 						mi += number;
 						break;
 					case DamageInc:
@@ -493,10 +493,10 @@ public class FightService {
 							case Attack:
 								ai += number;
 								break;
-							case PhysicDef:
+							case Physic:
 								pi += number;
 								break;
-							case MagicDef:
+							case Magic:
 								mi += number;
 								break;
 							case DamageInc:
@@ -561,10 +561,10 @@ public class FightService {
 					case Attack:
 						ai += number;
 						break;
-					case PhysicDef:
+					case Physic:
 						pi += number;
 						break;
-					case MagicDef:
+					case Magic:
 						mi += number;
 						break;
 					case DamageInc:

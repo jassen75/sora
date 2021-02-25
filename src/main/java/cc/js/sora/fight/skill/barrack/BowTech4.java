@@ -28,7 +28,7 @@ public class BowTech4 extends Skill {
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Enhance(BuffType.MagicDef, 20, Scope.Soldier), new Enhance(BuffType.PhysicDef, 20, Scope.Soldier));
+		return Lists.newArrayList(new Enhance(BuffType.Magic, 20, Scope.Soldier), new Enhance(BuffType.Physic, 20, Scope.Soldier));
 	}
 	
 	

@@ -42,9 +42,9 @@ public class Enhance implements Effect{
 			return "攻击";
 		case Intel:
 			return "智力";
-		case PhysicDef:
+		case Physic:
 			return "防御";
-		case MagicDef:
+		case Magic:
 			return "魔防";
 		case DamageInc:
 			return "增伤";

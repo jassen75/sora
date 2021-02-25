@@ -26,7 +26,7 @@ public class Jiamiannvpu extends Skill{
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
 		return Lists.newArrayList(new Enhance(BuffType.Attack, 45, Scope.Soldier),
-				new Enhance(BuffType.PhysicDef, 45, Scope.Soldier), new Enhance(BuffType.MagicDef, 45, Scope.Soldier));
+				new Enhance(BuffType.Physic, 45, Scope.Soldier), new Enhance(BuffType.Magic, 45, Scope.Soldier));
 	}
 
 }

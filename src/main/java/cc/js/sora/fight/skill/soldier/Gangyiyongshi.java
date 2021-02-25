@@ -54,7 +54,7 @@ public class Gangyiyongshi extends Skill{
 			@Override
 			public List<Effect> getEffects() {
 				// TODO Auto-generated method stub
-				return Lists.newArrayList(new Enhance(BuffType.MagicDef, 30, Scope.Soldier), new Enhance(BuffType.PhysicDef, 30, Scope.Soldier));
+				return Lists.newArrayList(new Enhance(BuffType.Magic, 30, Scope.Soldier), new Enhance(BuffType.Physic, 30, Scope.Soldier));
 			}});
 	}
 	

@@ -34,7 +34,7 @@ public class TowaTalent extends Skill  {
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Enhance(BuffType.Attack, 20, Scope.All), new Enhance(BuffType.PhysicDef, 20, Scope.All));
+		return Lists.newArrayList(new Enhance(BuffType.Attack, 20, Scope.All), new Enhance(BuffType.Physic, 20, Scope.All));
 	}
 	
 	public List<Skill> childSkill()

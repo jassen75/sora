@@ -47,8 +47,8 @@ public class Yuguan extends Skill {
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Enhance(BuffType.PhysicDef, 15, Scope.Hero),
-				new Enhance(BuffType.MagicDef, 15, Scope.Hero));
+		return Lists.newArrayList(new Enhance(BuffType.Physic, 15, Scope.Hero),
+				new Enhance(BuffType.Magic, 15, Scope.Hero));
 	}
 
 }

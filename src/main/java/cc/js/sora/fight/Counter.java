@@ -18,10 +18,11 @@ import lombok.ToString;
 @ToString
 public class Counter implements Effect{
 	
+	BuffType buffType;
 	int enemyType;
 	boolean soldier;
 	boolean hero;
-	int number;
+	int number;	
 	Scope scope;
 	Map<String, Object> features;
 	

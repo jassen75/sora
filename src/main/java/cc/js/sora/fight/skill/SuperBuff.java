@@ -48,7 +48,7 @@ public class SuperBuff extends Skill {
 	public List<Effect> getEffects() {
 		return Lists.newArrayList(new Buff(BuffType.Attack, 20), 
 				new Buff(BuffType.Intel, 20), 
-				new Buff(BuffType.PhysicDef,20), new Buff(BuffType.MagicDef,30));
+				new Buff(BuffType.Physic,20), new Buff(BuffType.Magic,30));
 	}
 
 

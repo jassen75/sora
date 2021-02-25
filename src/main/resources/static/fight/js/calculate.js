@@ -9,7 +9,6 @@ function calculate()
 	var coefficient = 1;
 	var attackerSoldierCriticalChecked = fightInfo["attacker"]["soldierCriticalChecked"];
 	var attackerHeroCriticalChecked = fightInfo["attacker"]["heroCriticalChecked"];
-	var counters = fightInfo["attacker"]["panelInfo"]["counters"];
 	var action = fightInfo["attacker"]["action"];
 	if(action)
 	{
@@ -18,16 +17,13 @@ function calculate()
 	
 	if( fightInfo["attacker"]["soldier"] && fightInfo["defender"]["soldier"])
 	{
-		ca = getAttackCounter(fightInfo["attacker"]["soldier"]["type"], fightInfo["defender"]["soldier"]["type"], true);
-		da = getDefendCounter(fightInfo["attacker"]["soldier"]["type"], fightInfo["defender"]["soldier"]["type"], true);
+		var counter = Counter("attacker", "soldier", "soldier");
 		
 		soldierToSoldier =oneHit(1, 
 				fightInfo["attacker"]["soldierPanel"], fightInfo["defender"]["soldierPanel"], 
-				attackerSoldierCriticalChecked, fightInfo["attacker"]["soldier"]["isPhysic"], 1, 
-				ca, da);
+				attackerSoldierCriticalChecked, fightInfo["attacker"]["soldier"]["isPhysic"], 1, counter);
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["attacker"]["soldierPanel"],fightInfo["defender"]["soldierPanel"])+
-			"，攻击克制：" +getAttackCounterXS(fightInfo["attacker"]["soldier"]["type"], fightInfo["defender"]["soldier"]["type"], true)+
-			"，防御克制：" +getDefendCounterXS(fightInfo["attacker"]["soldier"]["type"], fightInfo["defender"]["soldier"]["type"], true)+")";
+			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
 														         
         fightDetails+="<p>"+fightInfo["attacker"]["soldier"]["name"]+"攻击"+fightInfo["defender"]["soldier"]["name"]+"("+
         	(fightInfo["attacker"]["hero"]["isPhysic"] ? "物理":"魔法")+")&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+soldierToSoldier+"</b>"+c+"</p>";
@@ -35,14 +31,12 @@ function calculate()
 	
 	if(fightInfo["attacker"]["soldier"] && fightInfo["defender"]["hero"])
 	{
+		var c = Counter("attacker", "soldier", "hero");
 		soldierToHero = oneHit(1, 
 				fightInfo["attacker"]["soldierPanel"], fightInfo["defender"]["heroPanel"], 
-				attackerSoldierCriticalChecked, fightInfo["attacker"]["soldier"]["isPhysic"], 1,
-				getAttackCounter(fightInfo["attacker"]["soldier"]["type"], fightInfo["defender"]["hero"]["type"]),
-				getDefendCounter(fightInfo["attacker"]["soldier"]["type"], fightInfo["defender"]["hero"]["type"]));
+				attackerSoldierCriticalChecked, fightInfo["attacker"]["soldier"]["isPhysic"], 1, c);
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["attacker"]["soldierPanel"],fightInfo["defender"]["heroPanel"])+
-			"，攻击克制：" +getAttackCounterXS(fightInfo["attacker"]["soldier"]["type"], fightInfo["defender"]["hero"]["type"])+
-			"，防御克制：" +getDefendCounterXS(fightInfo["attacker"]["soldier"]["type"], fightInfo["defender"]["hero"]["type"])+")";
+			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
 		fightDetails+="<p>"+fightInfo["attacker"]["soldier"]["name"]+"攻击"+fightInfo["defender"]["hero"]["name"]+"("+
 			(fightInfo["attacker"]["soldier"]["isPhysic"] ? "物理":"魔法")+")" +
 				"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+soldierToHero+"</b>"+c+"</p>";
@@ -58,8 +52,7 @@ function calculate()
 				getAttackCounter(fightInfo["attacker"]["hero"]["type"], fightInfo["defender"]["soldier"]["type"]),
 				getDefendCounter(fightInfo["attacker"]["hero"]["type"], fightInfo["defender"]["soldier"]["type"]));
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["attacker"]["heroPanel"], fightInfo["defender"]["soldierPanel"])+
-			"，攻击克制：" +getAttackCounterXS(fightInfo["attacker"]["hero"]["type"], fightInfo["defender"]["soldier"]["type"])+
-			"，防御克制：" +getDefendCounterXS(fightInfo["attacker"]["hero"]["type"], fightInfo["defender"]["soldier"]["type"])+")";
+			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
 	    fightDetails+="<p>"+fightInfo["attacker"]["hero"]["name"]+"攻击"+fightInfo["defender"]["soldier"]["name"]+"("+
 	    	(isAttackerPhysic?"物理":"魔法")+")" +
 	    		"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+heroToSoldier+"</b>"+c+"</p>";
@@ -72,8 +65,7 @@ function calculate()
 				getAttackCounter(fightInfo["attacker"]["hero"]["type"], fightInfo["defender"]["hero"]["type"]),
 				getDefendCounter(fightInfo["attacker"]["hero"]["type"], fightInfo["defender"]["soldier"]["type"]));
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["attacker"]["heroPanel"], fightInfo["defender"]["heroPanel"])+
-			"，攻击克制：" +getAttackCounterXS(fightInfo["attacker"]["hero"]["type"], fightInfo["defender"]["hero"]["type"])+
-			"，防御克制：" +getDefendCounterXS(fightInfo["attacker"]["hero"]["type"], fightInfo["defender"]["hero"]["type"])+")";
+			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
 	    fightDetails+="<p>"+fightInfo["attacker"]["hero"]["name"]+"攻击"+fightInfo["defender"]["hero"]["name"]+"("+
 	    		(isAttackerPhysic?"物理":"魔法")+")" +
 	    		"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+heroToHero+"</b>"+c+"</p>";
@@ -282,59 +274,58 @@ function criticalProb(panel1, panel2)
 	return Math.floor(prob * (100-panel2["criticalProbDec"])/100)+"%";
 }
 
-function getDefendCounterXS(attackerType, defenderType, solderToSoldier)
+function getCounter(attackerRole, attackerKind, defenderKind)
 {
-	return (100+getDefendCounter(attackerType, defenderType, solderToSoldier))/100;
+	var defenderRole = attackerRole=="attacker" ? "defender":"attacker";
+	var attackerType=fightInfo[attackerRole][attackerKind];
+	var defenderType=fightInfo[defenderRole][defenderKind];
+
+	var attackerPanel = fightInfo[attackRole][attackerKind+"Panel"];
+	var defenderPanel = fightInfo[defenderRole][defenderKind+"Panel"];
+	var attackerCounters = attackerPanel["counters"];
+	var defenderCounters = defenderPanel["counters"];
+	var result = {};
+	result["attack"]=0;
+	result["physic"]=0;
+	result["magic"]=0;
+	for(var i=0; i<attackerCounters.length; i++)
+	{
+		var counter = attackerCounters[i];
+		if(counter["buffType"]=="attack")
+		{
+			if(counter[defender] && counter["enemyType"] == defenderType)
+			{
+				result[buffType]+=counter["number"];
+			}
+		}
+	}
+	result["attack"]+=getDefaultCounter(attackerType, defenderType);
+	
+	for(var i=0; i<defenderCounters.length; i++)
+	{
+		var counter = defenderCounters[i];
+		if(counter["buffType"]=="physic" || counter["buffType"]=="magic" )
+		{
+			if(counter[defender] && counter["enemyType"] == attackerType)
+			{
+				result[buffType]+=counter["number"];
+			}
+		}
+	}
+	return result;
 }
 
-function getDefendCounter(attackerType, defenderType, solderToSoldier)
+function getCounterXS(counter)
 {
-		// 步克制枪
-	if(attackerType==2 && defenderType==1)
-	{
-		return (solderToSoldier?30:0);
-	}
-	if(attackerType==3 && defenderType==2)
-	{
-		return (solderToSoldier?30:0);
-	}
-	if(attackerType==1 && defenderType==3)
-	{
-		return (solderToSoldier?30:0);
-	}
-	if(attackerType==5 && defenderType==6)
-	{
-		return (solderToSoldier?30:0);
-	}
-	
-	if(attackerType==8 && defenderType==7)
-	{
-		return (solderToSoldier?30:0);
-	}
-	
-	if(attackerType==10 && defenderType==7)
-	{
-		return (solderToSoldier?30:0);
-	}
-	
-	if(attackerType==9 && defenderType==10)
-	{
-		return (solderToSoldier?30:0);
-	}
-	return 0;
+	return (100.0+counter)/100;
 }
 
-function getAttackCounterXS(attackerType, defenderType, solderToSoldier)
-{
-	return (100+getAttackCounter(attackerType, defenderType, solderToSoldier))/100;
-}
-
-function getAttackCounter(attackerType, defenderType, solderToSoldier)
+function getDefaultCounter(attackerType, defenderType)
 {
 	// 步克制枪
 	if(attackerType==1 && defenderType==2)
 	{
-		return 40+(solderToSoldier?30:0);
+		return 40;
 	}
 	// 步被骑克
 	if(attackerType==1 && defenderType==3)
@@ -349,13 +340,13 @@ function getAttackCounter(attackerType, defenderType, solderToSoldier)
 	// 枪克制骑
 	if(attackerType==2 && defenderType==3)
 	{
-		return 30+(solderToSoldier?30:0);
+		return 30;
 	}
 	
 	// 骑克制步
 	if(attackerType==3 && defenderType==1)
 	{
-		return 20+(solderToSoldier?30:0);
+		return 20;
 	}
 	
 	// 骑被枪克
@@ -366,7 +357,7 @@ function getAttackCounter(attackerType, defenderType, solderToSoldier)
 	// 弓克制飞
 	if(attackerType==6 && defenderType==5)
 	{
-		return 30+(solderToSoldier?30:0);
+		return 30;
 	}
 	
 	// 僧克制魔
@@ -402,8 +393,7 @@ function calculateDefender()
 				getAttackCounter(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["soldier"]["type"], true),
 				getDefendCounter(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["soldier"]["type"], true));
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["defender"]["soldierPanel"],fightInfo["attacker"]["soldierPanel"])+
-			"，攻击克制：" +getAttackCounterXS(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["soldier"]["type"], true)+
-			"，防御克制：" +getDefendCounterXS(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["soldier"]["type"], true)+")";
+			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
 														         
         fightDetails+="<p>"+fightInfo["defender"]["soldier"]["name"]+"攻击"+fightInfo["attacker"]["soldier"]["name"]+"("+
         	(fightInfo["defender"]["hero"]["isPhysic"] ? "物理":"魔法")+")&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+soldierToSoldier+"</b>"+c+"</p>";
@@ -416,8 +406,7 @@ function calculateDefender()
 				getAttackCounter(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["hero"]["type"]),
 				getDefendCounter(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["hero"]["type"]));
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["defender"]["soldierPanel"],fightInfo["attacker"]["heroPanel"])+
-			"，攻击克制：" +getAttackCounterXS(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["hero"]["type"])+
-			"，防御克制：" +getDefendCounterXS(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["hero"]["type"])+")";
+			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
 		fightDetails+="<p>"+fightInfo["defender"]["soldier"]["name"]+"攻击"+fightInfo["attacker"]["hero"]["name"]+"("+
 			(fightInfo["defender"]["soldier"]["isPhysic"] ? "物理":"魔法")+")" +
 				"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+soldierToHero+"</b>"+c+"</p>";
@@ -432,8 +421,7 @@ function calculateDefender()
 				getAttackCounter(fightInfo["defender"]["hero"]["type"], fightInfo["attacker"]["soldier"]["type"]),
 				getDefendCounter(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["hero"]["type"]));
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["defender"]["heroPanel"], fightInfo["attacker"]["soldierPanel"])+
-			"，攻击克制：" +getAttackCounterXS(fightInfo["defender"]["hero"]["type"], fightInfo["attacker"]["soldier"]["type"])+
-			"，防御克制：" +getDefendCounterXS(fightInfo["defender"]["hero"]["type"], fightInfo["attacker"]["soldier"]["type"])+")";
+				"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
 	    fightDetails+="<p>"+fightInfo["defender"]["hero"]["name"]+"攻击"+fightInfo["attacker"]["soldier"]["name"]+"("+
 	    	(isAttackerPhysic?"物理":"魔法")+")" +
 	    		"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+heroToSoldier+"</b>"+c+"</p>";
@@ -446,8 +434,7 @@ function calculateDefender()
 				getAttackCounter(fightInfo["defender"]["hero"]["type"], fightInfo["attacker"]["hero"]["type"]),
 				getDefendCounter(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["hero"]["type"]));
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["defender"]["heroPanel"], fightInfo["attacker"]["heroPanel"])+
-			"，攻击克制：" +getAttackCounterXS(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["soldier"]["type"])+
-			"，防御克制：：" +getDefendCounterXS(fightInfo["defender"]["soldier"]["type"], fightInfo["attacker"]["soldier"]["type"])+")";
+			    "，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
 	    fightDetails+="<p>"+fightInfo["defender"]["hero"]["name"]+"攻击"+fightInfo["attacker"]["hero"]["name"]+"("+
 	    		(isAttackerPhysic?"物理":"魔法")+")" +
 	    		"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+heroToHero+"</b>"+c+"</p>";

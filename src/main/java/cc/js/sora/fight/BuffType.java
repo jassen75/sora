@@ -2,7 +2,7 @@ package cc.js.sora.fight;
 
 public enum BuffType {
 	
-	Attack, Intel, PhysicDef, MagicDef, 
+	Attack, Intel, Physic, Magic, 
 	DamageInc, PhysicDamageDec, MagicDamageDec, DamageDec, 
 	SkillDamage, 
 	AttackCounter, PhysicDefCounter, MagicDefCounter, 
