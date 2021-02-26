@@ -66,4 +66,5 @@ public class PanelInfo {
 	
 	double preBattleDamage;
 	int isSoldier;
+	int range;
 }

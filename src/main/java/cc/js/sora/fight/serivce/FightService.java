@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import cc.js.sora.fight.Action;
 import cc.js.sora.fight.Buff;
 import cc.js.sora.fight.CheckedSkill;
 import cc.js.sora.fight.Counter;
@@ -82,11 +83,11 @@ public class FightService {
 		log.info("attacker skill list size:"+attackerCheckedSkills.size());
 		log.info("defender skill list size:"+defenderCheckedSkills.size());
 		fightInfo.getAttacker().setHeroPanel(this.calculate(fightInfo.getAttacker().getHero(),
-				fightInfo.getAttacker().getHeroPanel(), attackerCheckedSkills, fightInfo.getAttacker().getLand()));
+				fightInfo.getAttacker().getHeroPanel(), attackerCheckedSkills, fightInfo.getAttacker().getLand(), fightInfo.getAttacker().getAction()));
 		fightInfo.getAttacker().setSoldierPanel(this.calculate(fightInfo.getAttacker().getSoldier(),fightInfo.getAttacker().getHero(),
 				fightInfo.getAttacker().getSoldierPanel(), attackerCheckedSkills, fightInfo.getAttacker().getLand()));
 		fightInfo.getDefender().setHeroPanel(this.calculate(fightInfo.getDefender().getHero(),
-				fightInfo.getDefender().getHeroPanel(), defenderCheckedSkills, fightInfo.getDefender().getLand()));
+				fightInfo.getDefender().getHeroPanel(), defenderCheckedSkills, fightInfo.getDefender().getLand(), null));
 		fightInfo.getDefender().setSoldierPanel(this.calculate(fightInfo.getDefender().getSoldier(),fightInfo.getDefender().getHero(),
 				fightInfo.getDefender().getSoldierPanel(), defenderCheckedSkills, fightInfo.getDefender().getLand()));
 		
@@ -158,7 +159,16 @@ public class FightService {
 		return buffs;
 	}
 
-	public PanelInfo calculate(Hero hero, PanelInfo panelInfo, List<CheckedSkill> skillList, Land land) {
+	public int getRange(Hero hero, Action action)
+	{
+		if(action != null)
+		{
+			return action.getRange();
+		}
+		return hero.getRange();
+	}
+	
+	public PanelInfo calculate(Hero hero, PanelInfo panelInfo, List<CheckedSkill> skillList, Land land, Action action) {
 		
 		panelInfo.getFeatures().clear();
 		panelInfo.getCounters().clear();
@@ -180,6 +190,7 @@ public class FightService {
 		int cdi = panelInfo.getCriticalDamageIncSkill();
 		int cpd = panelInfo.getCriticalProbDecSkill();
 		int cdd = panelInfo.getCriticalDamageDecSkill();
+		int range = getRange(hero, action);
 		log.info("cpi=="+cpi+",cdi=="+cdi+",cpd==="+cpd+",cdd===="+cdd);
 		int di = 0;
 		int pdd = 0;
@@ -281,11 +292,17 @@ public class FightService {
 								preBattleDamage += number;
 								log.info("preBattleDamage==="+preBattleDamage);
 								break;
+							case Range:
+								range += number;
+								break;
 							default:
 							}
 						} else if (e instanceof Feature) {
 							Feature f = (Feature)e;
-							panelInfo.getFeatures().putAll(f.getFeatures());
+							if(f.getScope() == Scope.All || f.getScope() == Scope.Hero)
+							{
+								panelInfo.getFeatures().putAll(f.getFeatures());
+							}
 						} else if (e instanceof Counter) {
 							
 							Counter c = (Counter)e;
@@ -361,6 +378,9 @@ public class FightService {
 					case CriticalDamageDec:
 						cdd += number;
 						break;
+					case Range:
+						range += number;
+						break;
 					default:
 					}
 				}
@@ -408,6 +428,7 @@ public class FightService {
 		panelInfo.setCriticalDamageDec(cdd);
 
 		panelInfo.setPreBattleDamage(preBattleDamage);
+		panelInfo.setRange(range);
 
 		for (int i = 0; i < counters.size(); i++) {
 			if (hero.getPhysic() == 1) {
@@ -451,7 +472,7 @@ public class FightService {
 		int di = 0;
 		int pdd = 0;
 		int mdd = 0;
-		
+		int range = getRange(hero, null);
 		log.info("soldier b ai=="+ai);
 		log.info("soldier b pi=="+pi);
 		log.info("soldier b mo=="+mi);
@@ -538,11 +559,17 @@ public class FightService {
 							case CriticalDamageDec:
 								cdd += number;
 								break;
+							case Range:
+								range += number;
+								break;
 							default:
 							}
 						} else if (e instanceof Feature) {
 							Feature f = (Feature)e;
-							panelInfo.getFeatures().putAll(f.getFeatures());
+							if(f.getScope() == Scope.All || f.getScope() == Scope.Soldier)
+							{
+								panelInfo.getFeatures().putAll(f.getFeatures());
+							}
 						} else if (e instanceof Counter) {
 							
 							Counter c = (Counter)e;
@@ -609,6 +636,9 @@ public class FightService {
 					case CriticalDamageDec:
 						cdd += number;
 						break;
+					case Range:
+						range += number;
+						break;
 					default:
 					}
 				}
@@ -657,6 +687,7 @@ public class FightService {
 		panelInfo.setCriticalProbDec(cpd);
 		panelInfo.setCriticalDamageInc(cdi);
 		panelInfo.setCriticalDamageDec(cdd);
+		panelInfo.setRange(range);
 
 		for (int i = 0; i < counters.size(); i++) {
 			panelInfo.setAttack(Double.valueOf(Math.floor(panelInfo.getAttack() * (1 + counters.get(i) / 100))).intValue());

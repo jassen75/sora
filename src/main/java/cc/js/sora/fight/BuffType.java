@@ -8,5 +8,6 @@ public enum BuffType {
 	AttackCounter, PhysicDefCounter, MagicDefCounter, 
 	Life, Tech,
 	CriticalProbInc, CriticalDamageInc, CriticalProbDec, CriticalDamageDec,
-	PreBattleDamage, PostBattleDamage 
+	PreBattleDamage, PostBattleDamage,
+	Range
 }

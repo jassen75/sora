@@ -6,18 +6,24 @@ import java.util.Map;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Feature implements Effect{
 
 	public final static String ImmuneToFixedDamage = "ImmuneToFixedDamage";
+	public final static String ImmuneToMeleeDamageReduce = "ImmuneToMeleeDamageReduce";
 	String featureName;
 	Object value;
 	String desc;
-	public Feature(String featureName, Object value, String desc)
-	{
-		this.featureName = featureName;
-		this.value = value;
-		this.desc = desc;
-	}
+	Scope scope;
+
 	@Override
 	public EffectType getEffectType() {
 		return EffectType.Feature;

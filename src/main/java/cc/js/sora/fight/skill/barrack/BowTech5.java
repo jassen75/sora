@@ -21,7 +21,7 @@ public class BowTech5 extends Skill {
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Counter(BuffType.Attack, 30, 5, Scope.Soldier, true),
+		return Lists.newArrayList(new Counter(BuffType.Attack, 30, 5, Scope.All, true),
 				new Counter(BuffType.Physic, 30, 5, Scope.Soldier, true));
 	}
 	

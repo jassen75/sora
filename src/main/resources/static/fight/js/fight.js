@@ -7,6 +7,7 @@ var soldierLife = 1;
 
 // game data
 var userData = {};
+
 var lands = {
 	"Flat" : "平地",
 	"Water" : "水",
@@ -90,8 +91,7 @@ function buildHero(hero) {
 		var role = "attacker";
 		var roleType = 1;
 		isAttacker = 0;
-		fightInfo["distance"] = hero["range"];
-
+		fightInfo["distance"]=hero["range"];
 		if (hero["isPhysic"]) {
 
 			hero["actions"].push({
@@ -108,10 +108,11 @@ function buildHero(hero) {
 				"name" : "魔法普攻",
 				"coefficient" : 1,
 				"range" : hero["range"],
-				"isPhysic" : 1,
+				"isPhysic" : 0,
 				"battleType" : 1
 			});
 		}
+	
 		$("#attackerFightDetails").html("");
 		$("#attackerHeroBar").attr("style", "width:100%");
 		$("#attackerSoldierBar").attr("style", "width:100%");
@@ -138,7 +139,7 @@ function buildHero(hero) {
 	fightInfo[role]["soldierPanel"] = {};
 	fightInfo[role]["userConditionChecked"] = {};
 	fightInfo[role]["roleType"] = roleType;
-
+	
 	loadWeapon(hero["id"], role);
 }
 
@@ -350,6 +351,7 @@ function displayHero(role) {
 	if (!fightInfo[role]["land"]) {
 		fightInfo[role]["land"] = "Flat";
 	}
+	
 	$("#" + role + "-land-information").html(
 			"<p><b>地形:" + lands[fightInfo[role]["land"]] + "</b></p>");
 
@@ -436,6 +438,7 @@ function syncComplete(role) {
 	buildHeroPanel(role);
 	buildSoldierPanel(role);
 	buildCriticalPanel(role);
+	buildDistanceList();
 }
 
 function buildHeroPanel(role) {
@@ -623,3 +626,29 @@ function buildCriticalPanel(role) {
 	}
 	buff.appendTo($("#" + role + "-critical"));
 }
+
+function buildDistanceList()
+{
+	$("#distance-list").children("li").remove();
+	
+	var range = fightInfo["attacker"]["heroPanel"]["range"];
+	
+	if(range)
+	{
+		for(var i=1; i<=range; i++)
+		{
+			var buff = $("<li class=\"list-group-item\">"+i+"格</li>");
+			buff.attr("r", i);
+			
+			buff.appendTo($("#distance-list"));
+			buff.click(function(event) {
+				var r = $(this).attr("r");
+				fightInfo["distance"] = r;
+				
+				sync(false);
+
+			})
+		}
+	}
+}
+

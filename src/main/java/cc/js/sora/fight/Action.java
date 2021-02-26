@@ -23,35 +23,39 @@ import lombok.ToString;
 @NoArgsConstructor
 @ToString
 public class Action {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	long id;
-	
-	@Column(name="name")
+
+	@Column(name = "name")
 	String name;
-	
+
 	// 系数
-	@Column(name="coefficient")
+	@Column(name = "coefficient")
 	double coefficient;
-	
+
 	// 直击本体
-	@Column(name="direct")
+	@Column(name = "direct")
 	boolean direct;
 
-	@Column(name="skills")
+	@Column(name = "skills")
 	String skills;
 
-	@Column(name="range")
+	@Column(name = "range")
 	int range;
-	
-	@Column(name="hitTime")
+
+	@Column(name = "hitTime")
 	int hitTime;
 
 	@JsonProperty("isPhysic")
-	@Column(name="is_physic")
+	@Column(name = "is_physic")
 	boolean isPhysic;
-	
-	//1 battle 2 aoe 3 fix damage
+
+	// 1 battle 2 aoe 3 fix damage
 	int battleType;
+
+	public boolean isSimpleAttack() {
+		return this.id == 10001L || this.id == 10002L;
+	}
 }

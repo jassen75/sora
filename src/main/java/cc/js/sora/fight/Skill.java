@@ -10,11 +10,11 @@ import com.google.common.collect.Lists;
 import cc.js.sora.fight.condition.NoCondition;
 
 public abstract class Skill {
-	
+
 	public long getId() {
 		return 0;
 	}
-	
+
 	public abstract String getName();
 
 	public Condition getCondition() {
@@ -22,63 +22,72 @@ public abstract class Skill {
 		return new NoCondition();
 	}
 
-	//public abstract List<Buff> getBuffs();
-	
+	// public abstract List<Buff> getBuffs();
+
 	public abstract List<Effect> getEffects();
 
 //    public List<String> getEffects()
 //    {
 //    	return Lists.newArrayList();
 //    }
-    
-    public void process(FightInfo fight, boolean isAttack)
-    {
-    	// do nothing
-    }
 
-    
-    public String description()
-    {
-    	return "";
-    }
-	
+	public void process(FightInfo fight, boolean isAttack) {
+		// do nothing
+	}
+
+	public String description() {
+		return "";
+	}
+
+	public String printSkillType() {
+		switch (this.getSkillType()) {
+		case 1:
+			return "主动进攻时，";
+		case 2:
+			return "被攻击时，";
+		case 3:
+			return "进入战斗时，";
+		case 4:
+			return "主动攻击进入战斗时，";
+		case 5:
+			return "被攻击进入战斗时，";
+		case 6:
+			return "使用范围技能时，";
+
+		case 7:
+			return "被范围技能攻击时，";
+		case 8:
+			return "";
+		case 9:
+			return "";
+		default:
+			return "不确定的情况";
+		}
+	}
+
 	@JsonProperty("desc")
-	public String toString()
-	{
+	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
-		if(this.getName() != null)
-		{
+		if (this.getName() != null) {
 			sb.append(this.getName());
 		}
 		sb.append("]       ");
-		if(this.getSkillType() == 1)
-		{
-			sb.append("主动进攻时，");
-		}
-		
-		if(this.getSkillType() == 2)
-		{
-			sb.append("被攻击时，");
-		}
-		if(this.getCondition() != null)
-		{
+		sb.append(printSkillType());
+		if (this.getCondition() != null) {
 			sb.append(this.getCondition().getDesc());
-			
-			if(!(this.getCondition() instanceof NoCondition))
-			{
+
+			if (!(this.getCondition() instanceof NoCondition)) {
 				sb.append("，");
 			}
 		}
-		
-		if(this.getEffects().size()>0)
-		{
-			//this.getBuffs().stream().forEach(buff->sb.append(","+buff.getTitle()));
-			sb.append(StringUtils.join(this.getEffects().stream().map(b->b.toString()).toArray(), "，"));
+
+		if (this.getEffects().size() > 0) {
+			// this.getBuffs().stream().forEach(buff->sb.append(","+buff.getTitle()));
+			sb.append(StringUtils.join(this.getEffects().stream().map(b -> b.toString()).toArray(), "，"));
 		}
-		
-		if(StringUtils.isNotEmpty(description()))
-		{
+
+		if (StringUtils.isNotEmpty(description())) {
 			sb.append(";");
 			sb.append(description());
 		}
@@ -86,7 +95,7 @@ public abstract class Skill {
 	}
 
 	/**
-	 * 1-300  talent
+	 * 1-300 talent
 	 */
 	public static final long PatyleTalent = 1;
 	public static final long TowaTalent = 2;
@@ -98,24 +107,31 @@ public abstract class Skill {
 	public static final long LedynTalent = 78;
 
 	/**
-	 *   300-900 passive skill
+	 * 300-900 passive skill
 	 */
 	public static final long BloodBattle = 301;
-	
+
 	/**
 	 * 900-1000 enhance
 	 */
 	public static final long WindEnhance = 901;
 	public static final long FuriousEnhance = 905;
-	
+
 	/**
 	 * 1000-1600 equip
 	 */
 	public static final long Zuihouzhifu = 1001;
-	public static final long Lage = 1005;
-	public static final long Xunzhang = 1010;
+	public static final long Yicai = 1002;
 	public static final long Yuguan = 1003;
 	public static final long Erzhui = 1004;
+	public static final long Lage = 1005;
+	public static final long Shenyi = 1006;
+	public static final long Jixianmogong = 1007;
+
+	public static final long Shenpan = 1009;
+	public static final long Xunzhang = 1010;
+	public static final long Tulong = 1012;
+
 	/**
 	 * 1600-2000 action
 	 */
@@ -123,11 +139,11 @@ public abstract class Skill {
 	public static final long Shixuemojian = 1602;
 	public static final long Youshidaji = 1603;
 	public static final long Ziyouzhiren = 1604;
-	
+
 	public static final long Qinzhen = 1605;
 	public static final long Juebi = 1606;
 	public static final long Qinzhen2 = 1607;
-	
+
 	/**
 	 * 2000-3000 soldier skill
 	 */
@@ -158,35 +174,29 @@ public abstract class Skill {
 	public static final long Fangzhenliebing = 2025;
 	public static final long Shurenshouwei = 2027;
 	public static final long Jiamiannvpu = 2026;
-	
 
-	
-	
 	/**
 	 * 4000-5000 global skill
 	 */
 	public static final long SuperBuff = 4001;
-	
-	//1 battle/aoe attack 
-	//2 battle/aoe defender 3 battle all
-	// 4 battle attack 5 battle defender 
+
+	// 1 battle/aoe attack
+	// 2 battle/aoe defender 3 battle all
+	// 4 battle attack 5 battle defender
 	// 6 aoe attacker 7 aoe defender
 	// 8 aoe all
 	// 9 all
-	public int getSkillType()
-	{
+	public int getSkillType() {
 		return 9;
 	}
-	
-	// 0 effect  1 pre battle 2 battle 3 post battle 4
-	public int getBattleType()
-	{
+
+	// 0 effect 1 pre battle 2 battle 3 post battle 4
+	public int getBattleType() {
 		return 2;
 	}
-	
-	public List<Skill> childSkill()
-	{
+
+	public List<Skill> childSkill() {
 		return Lists.newArrayList();
 	}
-			
+
 }

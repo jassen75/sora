@@ -26,8 +26,14 @@ function calculate()
 		
 		soldierToSoldier =oneHit(1, fightInfo["attacker"]["soldierPanel"], fightInfo["defender"]["soldierPanel"], 
 				attackerSoldierCriticalChecked, fightInfo["attacker"]["soldier"]["isPhysic"], counter);
+		var mdr = getMeleeDamageReduce("attacker", "soldier");
+		if(mdr)
+		{
+			soldierToSoldier = Math.ceil(0.3 * soldierToSoldier);
+		}
+		
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["attacker"]["soldierPanel"],fightInfo["defender"]["soldierPanel"])+
-			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
+			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+(mdr?"，近战惩罚":"")+")";
 														         
         fightDetails+="<p>"+fightInfo["attacker"]["soldier"]["name"]+"攻击"+fightInfo["defender"]["soldier"]["name"]+"("+
         	(fightInfo["attacker"]["hero"]["isPhysic"] ? "物理":"魔法")+")&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+soldierToSoldier+"</b>"+c+"</p>";
@@ -38,8 +44,14 @@ function calculate()
 		var counter = getCounter("attacker", "soldier", "hero");
 		soldierToHero = oneHit(1, fightInfo["attacker"]["soldierPanel"], fightInfo["defender"]["heroPanel"], 
 				attackerSoldierCriticalChecked, fightInfo["attacker"]["soldier"]["isPhysic"], counter);
+		var mdr = getMeleeDamageReduce("attacker", "soldier");
+		if(mdr)
+		{
+			soldierToHero = Math.ceil(0.3 * soldierToHero);
+		}
+		
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["attacker"]["soldierPanel"],fightInfo["defender"]["heroPanel"])+
-			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
+			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+(mdr?"，近战惩罚":"")+")";
 		fightDetails+="<p>"+fightInfo["attacker"]["soldier"]["name"]+"攻击"+fightInfo["defender"]["hero"]["name"]+"("+
 			(fightInfo["attacker"]["soldier"]["isPhysic"] ? "物理":"魔法")+")" +
 				"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+soldierToHero+"</b>"+c+"</p>";
@@ -54,8 +66,13 @@ function calculate()
 		//alert(JSON.stringify(counter));
 		heroToSoldier = oneHit(coefficient, fightInfo["attacker"]["heroPanel"], fightInfo["defender"]["soldierPanel"], 
 				attackerHeroCriticalChecked, isAttackerPhysic ,counter);
+		var mdr = getMeleeDamageReduce("attacker", "hero");
+		if(mdr)
+		{
+			heroToSoldier = Math.ceil(0.3 * heroToSoldier);
+		}
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["attacker"]["heroPanel"], fightInfo["defender"]["soldierPanel"])+
-			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
+			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+(mdr?"，近战惩罚":"")+")";
 	    fightDetails+="<p>"+fightInfo["attacker"]["hero"]["name"]+"攻击"+fightInfo["defender"]["soldier"]["name"]+"("+
 	    	(isAttackerPhysic?"物理":"魔法")+")" +
 	    		"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+heroToSoldier+"</b>"+c+"</p>";
@@ -66,8 +83,13 @@ function calculate()
 		var counter = getCounter("attacker", "hero", "hero");
 		heroToHero = oneHit(coefficient, fightInfo["attacker"]["heroPanel"], fightInfo["defender"]["heroPanel"], 
 				attackerHeroCriticalChecked, isAttackerPhysic , counter);
+		var mdr = getMeleeDamageReduce("attacker", "hero");
+		if(mdr)
+		{
+			heroToHero = Math.ceil(0.3 * heroToHero);
+		}
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["attacker"]["heroPanel"], fightInfo["defender"]["heroPanel"])+
-			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
+			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+(mdr?"，近战惩罚":"")+")";
 	    fightDetails+="<p>"+fightInfo["attacker"]["hero"]["name"]+"攻击"+fightInfo["defender"]["hero"]["name"]+"("+
 	    		(isAttackerPhysic?"物理":"魔法")+")" +
 	    		"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+heroToHero+"</b>"+c+"</p>";
@@ -85,8 +107,32 @@ function calculate()
 	}
 }
 
+function getRange(role, kind)
+{
+	return fightInfo[role][kind+"Panel"]["range"];
+}
+
+function getMeleeDamageReduce(role, kind)
+{
+	if(fightInfo["distance"] == 1)
+	{
+		if(fightInfo[role][kind]["range"]>1)
+		{
+			if(fightInfo[role][kind+"Panel"]["features"]["ImmuneToMeleeDamageReduce"])
+			{
+				return false;
+			}
+			
+			return true;
+		}		
+		return false;
+	}
+	return false;
+}
+
 function battle(soldierToSoldier, soldierToHero, heroToSoldier,heroToHero, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, fightDetails)
 {
+	var distance = fightInfo["distance"];
 	var soldierCount = fightInfo["attacker"]["soldier"] ? 20 : 0;
 	var heroCount = fightInfo["attacker"]["hero"] ? 20 : 0;
 	var soldierLeftCount = soldierCount;
@@ -110,6 +156,17 @@ function battle(soldierToSoldier, soldierToHero, heroToSoldier,heroToHero, attac
 			}
 		}
 	} 
+	if(getRange("attacker", "soldier")< distance)
+	{
+		soldierLeftCount = 0;
+		fightDetails+="<p>"+fightInfo["attacker"]["soldier"]["name"]+"射程不够，无法出手</p>";
+	}
+	if(getRange("attacker", "hero")< distance)
+	{
+		heroLeftCount = 0;
+		fightDetails+="<p>"+fightInfo["attacker"]["hero"]["name"]+"射程不够，无法出手</p>";
+	}
+	
 	if(fightInfo["defender"]["soldier"] && !direct) 
 	{
 		
@@ -128,6 +185,7 @@ function battle(soldierToSoldier, soldierToHero, heroToSoldier,heroToHero, attac
 				//fightDetails+="<p>dsl=="+dsl+"</p>";
 			}
 		}
+
 		if(soldierLeftCount > 0)
 		{
 			var hit = Math.ceil(oneSoldierLife / soldierToSoldier);
@@ -429,6 +487,7 @@ function getDefaultCounter(attackerType, defenderType)
 
 function calculateDefender()
 {
+	var distance = fightInfo["distance"];
 	var soldierToSoldier=0;
 	var soldierToHero=0;
 	var heroToSoldier=0;
@@ -442,8 +501,13 @@ function calculateDefender()
 		var counter = getCounter("defender", "soldier", "soldier");
 		soldierToSoldier =oneHit(1, fightInfo["defender"]["soldierPanel"], fightInfo["attacker"]["soldierPanel"], 
 				defenderSoldierCriticalChecked, fightInfo["defender"]["soldier"]["isPhysic"], counter);
+		var mdr = getMeleeDamageReduce("defender", "soldier");
+		if(mdr)
+		{
+			soldierToSoldier = Math.ceil(0.3 * soldierToSoldier);
+		}
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["defender"]["soldierPanel"],fightInfo["attacker"]["soldierPanel"])+
-			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
+			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+(mdr?"，近战惩罚":"")+")";
 														         
         fightDetails+="<p>"+fightInfo["defender"]["soldier"]["name"]+"攻击"+fightInfo["attacker"]["soldier"]["name"]+"("+
         	(fightInfo["defender"]["hero"]["isPhysic"] ? "物理":"魔法")+")&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+soldierToSoldier+"</b>"+c+"</p>";
@@ -454,8 +518,13 @@ function calculateDefender()
 		var counter = getCounter("defender", "soldier", "hero");
 		soldierToHero = oneHit(1, fightInfo["defender"]["soldierPanel"], fightInfo["attacker"]["heroPanel"], 
 				defenderSoldierCriticalChecked, fightInfo["defender"]["soldier"]["isPhysic"], counter);
+		var mdr = getMeleeDamageReduce("defender", "soldier");
+		if(mdr)
+		{
+			soldierToHero = Math.ceil(0.3 * soldierToHero);
+		}
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["defender"]["soldierPanel"],fightInfo["attacker"]["heroPanel"])+
-			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
+			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+(mdr?"，近战惩罚":"")+")";
 		fightDetails+="<p>"+fightInfo["defender"]["soldier"]["name"]+"攻击"+fightInfo["attacker"]["hero"]["name"]+"("+
 			(fightInfo["defender"]["soldier"]["isPhysic"] ? "物理":"魔法")+")" +
 				"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+soldierToHero+"</b>"+c+"</p>";
@@ -468,8 +537,13 @@ function calculateDefender()
 		var counter = getCounter("defender", "hero", "soldier");
 		heroToSoldier = oneHit(coefficient, fightInfo["defender"]["heroPanel"], fightInfo["attacker"]["soldierPanel"], 
 				defenderSoldierCriticalChecked, isAttackerPhysic ,counter);
+		var mdr = getMeleeDamageReduce("defender", "hero");
+		if(mdr)
+		{
+			heroToSoldier = Math.ceil(0.3 * heroToSoldier);
+		}
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["defender"]["heroPanel"], fightInfo["attacker"]["soldierPanel"])+
-				"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
+				"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+(mdr?"，近战惩罚":"")+")";
 	    fightDetails+="<p>"+fightInfo["defender"]["hero"]["name"]+"攻击"+fightInfo["attacker"]["soldier"]["name"]+"("+
 	    	(isAttackerPhysic?"物理":"魔法")+")" +
 	    		"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+heroToSoldier+"</b>"+c+"</p>";
@@ -480,8 +554,13 @@ function calculateDefender()
 		var counter = getCounter("defender", "hero", "hero");
 		heroToHero = oneHit(coefficient, fightInfo["defender"]["heroPanel"], fightInfo["attacker"]["heroPanel"], 
 				defenderHeroCriticalChecked, isAttackerPhysic , counter);
+		var mdr = getMeleeDamageReduce("defender", "hero");
+		if(mdr)
+		{
+			heroToHero = Math.ceil(0.3 * heroToHero);
+		}
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo["defender"]["heroPanel"], fightInfo["attacker"]["heroPanel"])+
-			    "，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+")";
+			    "，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+(mdr?"，近战惩罚":"")+")";
 	    fightDetails+="<p>"+fightInfo["defender"]["hero"]["name"]+"攻击"+fightInfo["attacker"]["hero"]["name"]+"("+
 	    		(isAttackerPhysic?"物理":"魔法")+")" +
 	    		"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+heroToHero+"</b>"+c+"</p>";
@@ -510,6 +589,17 @@ function calculateDefender()
 			}
 		}
 	} 
+	if(getRange("defender", "soldier")< distance)
+	{
+		soldierLeftCount = 0;
+		fightDetails+="<p>"+fightInfo["defender"]["soldier"]["name"]+"射程不够，无法出手</p>";
+	}
+	if(getRange("defender", "hero")< distance)
+	{
+		heroLeftCount = 0;
+		fightDetails+="<p>"+fightInfo["defender"]["hero"]["name"]+"射程不够，无法出手</p>";
+	}
+	
 	if(fightInfo["attacker"]["soldier"] && !direct) 
 	{
 		

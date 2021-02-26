@@ -22,7 +22,7 @@ public class MonkTech1 extends Skill {
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Counter(BuffType.Attack, 30, 9, Scope.Soldier, true),
+		return Lists.newArrayList(new Counter(BuffType.Attack, 30, 9, Scope.All, true),
 				new Counter(BuffType.Physic, 30, 9, Scope.Soldier, true));
 	}
 	

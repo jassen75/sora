@@ -28,10 +28,17 @@ public class Enhance implements Effect{
 		if(buffType == BuffType.PreBattleDamage || buffType == BuffType.PostBattleDamage)
 		{
 			return printBufferType() + number+ "倍伤害";
-		}else
+		}
+		
+		else if(buffType == BuffType.Range)
+		{
+			return printBufferType() + number;
+		}
+		else
 		{
 			return printBufferType()+"+"+Double.valueOf(number).intValue()+"%";		
 		}
+		
 	}
 	
 	public String printBufferType()
@@ -79,6 +86,8 @@ public class Enhance implements Effect{
 			return "战前造成";
 		case PostBattleDamage:
 			return "战后造成";
+		case Range:
+			return "射程增加";
 		}
 		return "";
 	}

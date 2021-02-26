@@ -65,6 +65,11 @@ public class SkillService {
 		registerSkill(Skill.Xunzhang, new Xunzhang());
 		registerSkill(Skill.Yuguan, new Yuguan());
 		registerSkill(Skill.Erzhui, new Erzhui());
+		registerSkill(Skill.Shenpan, new Shenpan());
+		registerSkill(Skill.Tulong, new Tulong());
+		registerSkill(Skill.Shenyi, new Shenyi());
+		registerSkill(Skill.Yicai, new Yicai());
+		registerSkill(Skill.Jixianmogong, new Jixianmogong());
 		
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());

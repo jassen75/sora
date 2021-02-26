@@ -15,7 +15,6 @@ import lombok.ToString;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 public class Counter implements Effect{
 	
 	public Counter(BuffType buffType, int number, int enemyType, Scope scope, boolean onlySoldier)
