@@ -101,10 +101,13 @@ public abstract class Skill {
 	public static final long TowaTalent = 2;
 	public static final long ZalrahdaTalent1 = 3;
 	public static final long HimikoTalent = 5;
+	public static final long MagusOfTheTreeTalent = 18;
 	public static final long ZalrahdaTalent2 = 203;
 	public static final long MarielTalent = 10;
 	public static final long LandiusTalent = 58;
 	public static final long LedynTalent = 78;
+	
+	
 
 	/**
 	 * 300-900 passive skill

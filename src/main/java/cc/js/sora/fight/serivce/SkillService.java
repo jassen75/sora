@@ -84,6 +84,7 @@ public class SkillService {
 		registerSkill(Skill.LandiusTalent, new LandiusTalent());
 		registerSkill(Skill.LedynTalent, new LedynTalent());
 		registerSkill(Skill.HimikoTalent, new HimikoTalent());
+		registerSkill(Skill.MagusOfTheTreeTalent, new MagusOfTheTreeTalent());
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());

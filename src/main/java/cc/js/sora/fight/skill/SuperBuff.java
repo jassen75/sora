@@ -37,11 +37,7 @@ public class SuperBuff extends Skill {
 			public boolean defaultValid() {
 				return true;
 			}
-
-			@Override
-			public String getName() {
-				return "superbuff";
-			}};
+		};
 	}
 
 	@Override
