@@ -33,7 +33,6 @@ public class FightRole {
 	Boolean soldierCriticalChecked;
 	Action action;
 	
-	
 	PanelInfo heroPanel;
 	PanelInfo soldierPanel;
 	List<Buff> buffs;

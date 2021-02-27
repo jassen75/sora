@@ -22,16 +22,33 @@ public abstract class UserCondition implements Condition{
 
 	@Override
 	abstract public String getDesc();
+	
+	public boolean needCheck()
+	{
+		return false;
+	}
+	
+	public boolean check(FightInfo fightInfo, boolean isAttack) {
+		return true;
+	}
 
 	@Override
 	public boolean valid(FightInfo fightInfo, boolean isAttack) {
+		boolean result = false;
 		Map<String, Boolean> m = fightInfo.getRole(isAttack).getUserConditionChecked();
 		if(m!= null && m.containsKey(getName()))
 		{
 			log.info(getName()+":"+m.get(getName()));
-			return m.get(getName());
+			result =  m.get(getName());
+		} else
+		{
+			result = this.defaultValid();
 		}
-		return this.defaultValid();
+		if(result && needCheck())
+		{
+			return check(fightInfo, isAttack);
+		}
+		return result;
 	}
 	
 }

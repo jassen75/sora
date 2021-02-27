@@ -138,6 +138,7 @@ function buildHero(hero) {
 	fightInfo[role]["heroPanel"] = {};
 	fightInfo[role]["soldierPanel"] = {};
 	fightInfo[role]["userConditionChecked"] = {};
+	fightInfo[role]["buffCounts"] = {};
 	fightInfo[role]["roleType"] = roleType;
 	
 	loadWeapon(hero["id"], role);
@@ -434,11 +435,12 @@ function syncComplete(role) {
 	fightInfo[role]["soldierLeftLife"] = Math
 			.ceil(fightInfo[role]["soldierPanel"]["life"] * soldierLife);
 	buildSkill(role);
-	buildUserCondition(role);
+	buildUserCondition(role); 
 	buildHeroPanel(role);
 	buildSoldierPanel(role);
 	buildCriticalPanel(role);
 	buildDistanceList();
+	buildSupportSkills(role);
 }
 
 function buildHeroPanel(role) {
@@ -520,6 +522,34 @@ function buildSkill(role) {
 	}
 }
 
+function buildCounter(role, name, max, def)
+{
+	if(!fightInfo[role]["buffCounts"][name])
+	{
+		fightInfo[role]["buffCounts"][name] = def;
+	}
+	
+	var counter = $("<div id=\"counter_"+name+"\" class=\"dropdown\">" +
+			"<button class=\"btn btn-default dropdown-toggle\" type=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"true\">" +
+			"当前层数："+fightInfo[role]["buffCounts"][name]+"层"+
+			"<span class=\"caret\"></span></button>" +
+			"</div>");
+	var ul = $("<ul class=\"dropdown-menu\" aria-labelledby=\"counter_"+name+"\"></ul>");
+	for(var i=1; i<=max; i++)
+	{
+		var item= $("<li class=\"list-group-item\">"+i+"层</li>");
+		item.attr("buff_count", i);
+		item.click(function(e){
+			fightInfo[role]["buffCounts"][name]=$(this).attr("buff_count");
+			$("#counter_"+name+" > button").text("当前层数："+fightInfo[role]["buffCounts"][name]+"层");
+			sync(false);
+		});
+		item.appendTo(ul);
+	}
+	ul.appendTo(counter);
+	return counter;
+}
+
 function buildUserCondition(role) {
 	$("#" + role + "-user-condition-list").children("li").remove();
 	if (sessionInfo[role]["userConditions"]) {
@@ -528,10 +558,20 @@ function buildUserCondition(role) {
 			if (checked == undefined) {
 				checked = sessionInfo[role]["userConditions"][name]["defaultValid"];
 			}
-			var buttonClass = checked ? "btn-success" : "btn-default";
+
+			
 			var buff = $("<li class=\"list-group-item\">"
 					+ sessionInfo[role]["userConditions"][name]["desc"]
 					+ "</li>");
+
+			if(sessionInfo[role]["userConditions"][name]["maxCount"])
+			{
+				var counter = "";
+				counter = buildCounter(role, name, sessionInfo[role]["userConditions"][name]["maxCount"], sessionInfo[role]["userConditions"][name]["defaultCount"]);
+				counter.appendTo(buff);				
+			}
+			
+			var buttonClass = checked ? "btn-success" : "btn-default";
 			var button = $("<button type=\"button\" class=\"btn " + buttonClass
 					+ "\">选择</button>");
 			button.attr("uc-name", name);
@@ -650,5 +690,30 @@ function buildDistanceList()
 			})
 		}
 	}
+}
+
+function buildSupportSkills(role)
+{
+	$("#"+role+"-support-list").children("li").remove();
+	if (sessionInfo[role]["supportSkills"]) {
+		for (var i = 0; i < sessionInfo[role]["supportSkills"].length; i++) {
+			var skill = sessionInfo[role]["supportSkills"][i];
+			var name = skill["condition"]["name"];
+			var valid = fightInfo[role]["userConditionChecked"][name] ? "valid-skill"
+					: "not-valid-skill";
+			var buff = $("<li class=\"list-group-item " + valid + "\">" 
+				+ "<img src=\"/fight/image/action_" + skill["id"]
+				+ ".png\" alt=\"\" width=\"40\" height=\"40\"></img>"
+					+ skill["desc"]
+					+ "</li>");
+			buff.click(function(e){
+				fightInfo[role]["userConditionChecked"][name] = true;
+				sync(false);
+			});
+			buff.appendTo($("#"+role+"-support-list"));
+		}
+
+	}
+	
 }
 

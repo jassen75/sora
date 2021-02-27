@@ -1,6 +1,7 @@
 package cc.js.sora.fight;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -8,6 +9,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
 
 import cc.js.sora.fight.condition.NoCondition;
+import cc.js.sora.fight.condition.UserCondition;
 
 public abstract class Skill {
 
@@ -25,7 +27,49 @@ public abstract class Skill {
 	// public abstract List<Buff> getBuffs();
 
 	public abstract List<Effect> getEffects();
+	
+	public List<Effect> getEffects(int count)
+	{
+		return getEffects();
+	}
 
+	public boolean filterSupportSkill(Map<String, Boolean> userConditionChecked)
+	{
+		if(isSupportSkill())
+		{
+			if(this.getCondition() instanceof UserCondition)
+			{
+				String name = ((UserCondition)this.getCondition()).getName();
+				if(userConditionChecked.containsKey(name))
+				{
+					return userConditionChecked.get(name); 
+				} else
+				{
+					return false;
+				}
+			}
+		}
+		return true;
+	}
+	
+	public boolean isSupportSkill()
+	{
+		return false;
+	}
+	
+	public List<Effect> getEffects(Map<String, Integer> buffCounts)
+	{
+		if(this.getCondition() instanceof CounterCondition)
+		{
+			CounterCondition cc = (CounterCondition)this.getCondition();
+			if(buffCounts != null && buffCounts.containsKey(cc.getName()))
+			{
+				return this.getEffects(buffCounts.get(cc.getName()));
+			}
+		}
+		return getEffects();
+		//return Lists.newArrayList();
+	}
 //    public List<String> getEffects()
 //    {
 //    	return Lists.newArrayList();
@@ -102,10 +146,12 @@ public abstract class Skill {
 	public static final long ZalrahdaTalent1 = 3;
 	public static final long HimikoTalent = 5;
 	public static final long MagusOfTheTreeTalent = 18;
+	public static final long ReanTalent = 22;
 	public static final long ZalrahdaTalent2 = 203;
 	public static final long MarielTalent = 10;
 	public static final long LandiusTalent = 58;
 	public static final long LedynTalent = 78;
+	
 	
 	
 
@@ -177,11 +223,14 @@ public abstract class Skill {
 	public static final long Fangzhenliebing = 2025;
 	public static final long Shurenshouwei = 2027;
 	public static final long Jiamiannvpu = 2026;
+	public static final long Longqi = 2028;
+	
 
 	/**
-	 * 4000-5000 global skill
+	 * 4000-5000 support skill
 	 */
 	public static final long SuperBuff = 4001;
+	public static final long ZillagodSuper = 4002;
 
 	// 1 battle/aoe attack
 	// 2 battle/aoe defender 3 battle all
