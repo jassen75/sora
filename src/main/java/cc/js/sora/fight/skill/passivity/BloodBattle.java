@@ -12,6 +12,7 @@ import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.NoCondition;
+import cc.js.sora.fight.condition.PassiveCondition;
 
 public class BloodBattle extends Skill {
 
@@ -30,7 +31,19 @@ public class BloodBattle extends Skill {
 	@Override
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
-		return new NoCondition();
+		return new PassiveCondition() {
+
+			@Override
+			public boolean defaultValid() {
+				// TODO Auto-generated method stub
+				return true;
+			}
+
+			@Override
+			public String getDesc() {
+				// TODO Auto-generated method stub
+				return "装备血战技能";
+			}};
 	}
 
 	@Override

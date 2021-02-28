@@ -12,13 +12,12 @@ import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.UserCondition;
 import cc.js.sora.fight.condition.GroupedUserCondition;
 
-public class ZillagodSuper extends Skill {
 
+public class ElwinSuper extends Skill {
 	public long getId() {
-		return Skill.ZillagodSuper;
+		return Skill.ElwinSuper;
 	}
 
 	public Condition getCondition() {
@@ -30,7 +29,7 @@ public class ZillagodSuper extends Skill {
 			}
 
 			public boolean check(FightInfo fightInfo, boolean isAttack) {
-				return fightInfo.getRole(isAttack).getLifePercent() > fightInfo.getEnemyRole(isAttack).getLifePercent();
+				return fightInfo.getRole(isAttack).getLifePercent() > 80;
 			}
 
 			@Override
@@ -42,7 +41,7 @@ public class ZillagodSuper extends Skill {
 			@Override
 			public String getDesc() {
 				// TODO Auto-generated method stub
-				return "光之起源队友，生命百分比高于对面";
+				return "光辉军团队友，生命百分比超过80%";
 			}
 
 			@Override
@@ -62,7 +61,7 @@ public class ZillagodSuper extends Skill {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "古巨拉超绝";
+		return "不灭的辉光";
 	}
 
 	@Override
@@ -73,7 +72,7 @@ public class ZillagodSuper extends Skill {
 	}
 
 	public int getSkillType() {
-		return 4;
+		return 3;
 	}
 	
 	@Override
@@ -81,4 +80,5 @@ public class ZillagodSuper extends Skill {
 	{
 		return 0;
 	}
+
 }

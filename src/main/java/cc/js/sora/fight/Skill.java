@@ -126,9 +126,19 @@ public abstract class Skill {
 			}
 		}
 
-		if (this.getEffects().size() > 0) {
-			// this.getBuffs().stream().forEach(buff->sb.append(","+buff.getTitle()));
-			sb.append(StringUtils.join(this.getEffects().stream().map(b -> b.toString()).toArray(), "，"));
+		if(this.getCondition() instanceof CounterCondition) {
+			if (this.getEffects(1).size() > 0) {
+				// this.getBuffs().stream().forEach(buff->sb.append(","+buff.getTitle()));
+				sb.append(StringUtils.join(this.getEffects(1).stream().map(b -> b.toString()).toArray(), "，"));
+			}
+			sb.append("，最高"+((CounterCondition)this.getCondition()).getMaxCount()+"层");
+			
+		} else
+		{
+			if (this.getEffects().size() > 0) {
+				// this.getBuffs().stream().forEach(buff->sb.append(","+buff.getTitle()));
+				sb.append(StringUtils.join(this.getEffects().stream().map(b -> b.toString()).toArray(), "，"));
+			}
 		}
 
 		if (StringUtils.isNotEmpty(description())) {
@@ -145,15 +155,14 @@ public abstract class Skill {
 	public static final long TowaTalent = 2;
 	public static final long ZalrahdaTalent1 = 3;
 	public static final long HimikoTalent = 5;
-	public static final long MagusOfTheTreeTalent = 18;
-	public static final long ReanTalent = 22;
-	public static final long ZalrahdaTalent2 = 203;
 	public static final long MarielTalent = 10;
+	public static final long MagusOfTheTreeTalent = 18;
+	public static final long RozaliaTalent = 21;
+	public static final long ReanTalent = 22;
+	public static final long AresTalent = 28;
+	public static final long ZalrahdaTalent2 = 203;
 	public static final long LandiusTalent = 58;
 	public static final long LedynTalent = 78;
-	
-	
-	
 
 	/**
 	 * 300-900 passive skill
@@ -188,10 +197,12 @@ public abstract class Skill {
 	public static final long Shixuemojian = 1602;
 	public static final long Youshidaji = 1603;
 	public static final long Ziyouzhiren = 1604;
+	public static final long Weifengchongzhen = 1606;
+	
 
-	public static final long Qinzhen = 1605;
-	public static final long Juebi = 1606;
-	public static final long Qinzhen2 = 1607;
+	public static final long Qinzhen = 1805;
+	public static final long Juebi = 1806;
+	public static final long Qinzhen2 = 1807;
 
 	/**
 	 * 2000-3000 soldier skill
@@ -231,6 +242,8 @@ public abstract class Skill {
 	 */
 	public static final long SuperBuff = 4001;
 	public static final long ZillagodSuper = 4002;
+	public static final long ElwinSuper = 4003;
+	
 
 	// 1 battle/aoe attack
 	// 2 battle/aoe defender 3 battle all

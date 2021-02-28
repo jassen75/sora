@@ -86,6 +86,13 @@
   	top:2px;
 }
 
+#attacker-user-condition-list li div {
+	position:absolute;
+  	right:80px;
+  	top:2px;
+	
+}
+
 #defender-user-condition-list li div {
 	position:absolute;
   	right:80px;

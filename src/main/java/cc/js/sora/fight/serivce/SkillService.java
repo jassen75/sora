@@ -27,6 +27,7 @@ import cc.js.sora.fight.skill.action.*;
 import cc.js.sora.fight.skill.equip.*;
 import cc.js.sora.fight.skill.passivity.*;
 import cc.js.sora.fight.skill.soldier.*;
+import cc.js.sora.fight.skill.support.ElwinSuper;
 import cc.js.sora.fight.skill.support.ZillagodSuper;
 import cc.js.sora.fight.skill.talent.*;
 
@@ -87,8 +88,8 @@ public class SkillService {
 		registerSkill(Skill.HimikoTalent, new HimikoTalent());
 		registerSkill(Skill.MagusOfTheTreeTalent, new MagusOfTheTreeTalent());
 		registerSkill(Skill.ReanTalent, new ReanTalent());
-		
-		
+		registerSkill(Skill.AresTalent, new AresTalent());
+		registerSkill(Skill.RozaliaTalent, new RozaliaTalent());
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
@@ -116,11 +117,13 @@ public class SkillService {
 		
 		registerSkill(Skill.Shimeng, new DreamAction());
 		registerSkill(Skill.Shixuemojian, new BloodSwordAction());
+		registerSkill(Skill.Weifengchongzhen, new Weifengchongzhen());
 		
 		registerSkill(Skill.Qinzhen, new QinZhenSKill());
 		registerSkill(Skill.Juebi, new JuebiSkill());
 		
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
+		registerSkill(Skill.ElwinSuper, new ElwinSuper());
 		
 		registerSkill(Skill.SuperBuff, new SuperBuff());
 		skills.putAll(barrackSkills.getAllBarrackSkills());
