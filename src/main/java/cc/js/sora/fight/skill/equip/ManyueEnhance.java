@@ -1,4 +1,4 @@
-package cc.js.sora.fight.skill.passivity;
+package cc.js.sora.fight.skill.equip;
 
 import java.util.List;
 
@@ -6,37 +6,31 @@ import com.google.common.collect.Lists;
 
 import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
-import cc.js.sora.fight.CounterUserCondition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.MoveDistanceCondition;
+import cc.js.sora.fight.condition.health.GreaterHealthCondition;
 
-public class Chengfeng extends Skill {
+public class ManyueEnhance extends Skill {
 
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "乘风";
+		return "满月附魔";
 	}
-
+	
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
-		return new MoveDistanceCondition(4, 5);
+		return new GreaterHealthCondition(80);
 	}
 
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return getEffects(4);
+		return Lists.newArrayList(new Enhance(BuffType.Attack, 10, Scope.Hero),
+				new Enhance(BuffType.Physic, 10, Scope.Hero), new Enhance(BuffType.Intel, 10, Scope.Hero),
+				new Enhance(BuffType.Magic, 10, Scope.Hero));
 	}
-	
-	@Override
-	public List<Effect> getEffects(int count) {
-		return Lists.newArrayList(new Enhance(BuffType.DamageInc, count*5, Scope.All));
-	}
-		
-
 
 }

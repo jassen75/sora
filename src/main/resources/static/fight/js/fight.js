@@ -353,8 +353,6 @@ function displayHero(role) {
 		fightInfo[role]["land"] = "Flat";
 	}
 	
-	$("#" + role + "-land-information").html(
-			"<p><b>地形:" + lands[fightInfo[role]["land"]] + "</b></p>");
 
 	displayAttackerAction();
 
@@ -477,6 +475,9 @@ function buildHeroPanel(role) {
 			+ "&nbsp;&nbsp;&nbsp;减爆伤："
 			+ fightInfo[role]["heroPanel"]["criticalDamageDec"] + "</p>";
 	$("#" + role + "Detail").html(detail);
+	
+	$("#" + role + "-land-information").html(
+			"<p><b>地形:" + lands[fightInfo[role]["land"]] + "</b></p>");
 
 }
 

@@ -50,7 +50,7 @@ public class SkillService {
 	
 	List<Long> globalSkills = Lists.newArrayList(Skill.SuperBuff);
 	
-	List<Long> ehanceSkills = Lists.newArrayList(0L, Skill.WindEnhance, 0L, 0L, 0L, Skill.FuriousEnhance, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+	List<Long> ehanceSkills = Lists.newArrayList(0L, Skill.WindEnhance, Skill.ManyueEnhance, 0L, 0L, Skill.FuriousEnhance, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
 	
 	public Map<Long, Skill> skills = Maps.newHashMap();
 
@@ -75,6 +75,8 @@ public class SkillService {
 		
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
+		registerSkill(Skill.ManyueEnhance, new ManyueEnhance());
+		
 		
 		registerSkill(Skill.BloodBattle, new BloodBattle());
 		
@@ -90,6 +92,8 @@ public class SkillService {
 		registerSkill(Skill.ReanTalent, new ReanTalent());
 		registerSkill(Skill.AresTalent, new AresTalent());
 		registerSkill(Skill.RozaliaTalent, new RozaliaTalent());
+		registerSkill(Skill.ElwinTalent, new ElwinTalent());
+		registerSkill(Skill.ZillagodTalent, new ZillagodTalent());
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());

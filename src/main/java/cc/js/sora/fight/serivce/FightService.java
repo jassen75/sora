@@ -219,7 +219,7 @@ public class FightService {
 				CheckedSkill cs = skillList.get(i);
 				if (cs.isValid()) {
 					Skill skill = cs.getSkill();
-					List<Effect> effects = skill.getEffects(buffCounts);
+					List<Effect> effects = skill.getEffects(role);
 					for (int j = 0; j < effects.size(); j++) {
 						Effect e = effects.get(j);
 						if (e instanceof Buff) {
@@ -496,7 +496,7 @@ public class FightService {
 				CheckedSkill cs = skillList.get(i);
 				if (cs.isValid()) {
 					Skill skill = cs.getSkill();
-					List<Effect> effects = skill.getEffects(buffCounts);
+					List<Effect> effects = skill.getEffects(role);
 					for (int j = 0; j < effects.size(); j++) {
 						Effect e = effects.get(j);
 						if (e instanceof Buff) {

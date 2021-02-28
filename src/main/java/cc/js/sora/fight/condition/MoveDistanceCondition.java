@@ -1,8 +1,8 @@
 package cc.js.sora.fight.condition;
 
-import cc.js.sora.fight.CounterCondition;
+import cc.js.sora.fight.CounterUserCondition;
 
-public class MoveDistanceCondition extends CounterCondition {
+public class MoveDistanceCondition extends CounterUserCondition {
 	
 	int defaultDistance;
 	int maxCount; 

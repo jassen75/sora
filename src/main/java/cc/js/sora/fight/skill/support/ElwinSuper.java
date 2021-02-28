@@ -29,7 +29,8 @@ public class ElwinSuper extends Skill {
 			}
 
 			public boolean check(FightInfo fightInfo, boolean isAttack) {
-				return fightInfo.getRole(isAttack).getLifePercent() > 80;
+				return fightInfo.getRole(isAttack).getLifePercent() > 0.8;
+				
 			}
 
 			@Override

@@ -6,7 +6,7 @@ import com.google.common.collect.Lists;
 
 import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
-import cc.js.sora.fight.CounterCondition;
+import cc.js.sora.fight.CounterUserCondition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.FightInfo;
@@ -83,7 +83,7 @@ public class RozaliaTalent extends Skill {
 		}, new Skill() {
 
 			public Condition getCondition() {
-				return new CounterCondition() {
+				return new CounterUserCondition() {
 	
 					public String getName()
 					{

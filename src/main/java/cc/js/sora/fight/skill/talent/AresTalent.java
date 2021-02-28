@@ -7,7 +7,7 @@ import com.google.common.collect.Lists;
 import cc.js.sora.fight.Buff;
 import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
-import cc.js.sora.fight.CounterCondition;
+import cc.js.sora.fight.CounterUserCondition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.FightInfo;
@@ -25,7 +25,7 @@ public class AresTalent extends Skill {
 	
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
-		return new CounterCondition() {
+		return new CounterUserCondition() {
 
 			public String getName()
 			{

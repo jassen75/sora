@@ -8,6 +8,7 @@ import org.apache.commons.lang3.StringUtils;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.common.collect.Lists;
 
+import cc.js.sora.fight.condition.CounterCondition;
 import cc.js.sora.fight.condition.NoCondition;
 import cc.js.sora.fight.condition.UserCondition;
 
@@ -32,6 +33,18 @@ public abstract class Skill {
 	{
 		return getEffects();
 	}
+	
+	public List<Effect> getEffects(FightRole role)
+	{
+		if(this.getCondition() instanceof CounterCondition)
+		{
+			CounterCondition cc = (CounterCondition)this.getCondition();
+
+			return this.getEffects(cc.getCount(role));
+		}
+		return getEffects();
+	}
+
 
 	public boolean filterSupportSkill(Map<String, Boolean> userConditionChecked)
 	{
@@ -57,19 +70,19 @@ public abstract class Skill {
 		return false;
 	}
 	
-	public List<Effect> getEffects(Map<String, Integer> buffCounts)
-	{
-		if(this.getCondition() instanceof CounterCondition)
-		{
-			CounterCondition cc = (CounterCondition)this.getCondition();
-			if(buffCounts != null && buffCounts.containsKey(cc.getName()))
-			{
-				return this.getEffects(buffCounts.get(cc.getName()));
-			}
-		}
-		return getEffects();
-		//return Lists.newArrayList();
-	}
+//	public List<Effect> getEffects(Map<String, Integer> buffCounts)
+//	{
+//		if(this.getCondition() instanceof CounterCondition)
+//		{
+//			CounterCondition cc = (CounterCondition)this.getCondition();
+//			if(buffCounts != null && buffCounts.containsKey(cc.getName()))
+//			{
+//				return this.getEffects(buffCounts.get(cc.getName()));
+//			}
+//		}
+//		return getEffects();
+//		//return Lists.newArrayList();
+//	}
 //    public List<String> getEffects()
 //    {
 //    	return Lists.newArrayList();
@@ -126,12 +139,12 @@ public abstract class Skill {
 			}
 		}
 
-		if(this.getCondition() instanceof CounterCondition) {
+		if(this.getCondition() instanceof CounterUserCondition) {
 			if (this.getEffects(1).size() > 0) {
 				// this.getBuffs().stream().forEach(buff->sb.append(","+buff.getTitle()));
 				sb.append(StringUtils.join(this.getEffects(1).stream().map(b -> b.toString()).toArray(), "，"));
 			}
-			sb.append("，最高"+((CounterCondition)this.getCondition()).getMaxCount()+"层");
+			sb.append("，最高"+((CounterUserCondition)this.getCondition()).getMaxCount()+"层");
 			
 		} else
 		{
@@ -162,6 +175,8 @@ public abstract class Skill {
 	public static final long AresTalent = 28;
 	public static final long ZalrahdaTalent2 = 203;
 	public static final long LandiusTalent = 58;
+	public static final long ZillagodTalent = 63;
+	public static final long ElwinTalent = 76;
 	public static final long LedynTalent = 78;
 
 	/**
@@ -174,7 +189,8 @@ public abstract class Skill {
 	 */
 	public static final long WindEnhance = 901;
 	public static final long FuriousEnhance = 905;
-
+	public static final long ManyueEnhance = 902;
+	
 	/**
 	 * 1000-1600 equip
 	 */

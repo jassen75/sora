@@ -36,7 +36,7 @@ function calculate()
 			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+(mdr?"，近战惩罚":"")+")";
 														         
         fightDetails+="<p>"+fightInfo["attacker"]["soldier"]["name"]+"攻击"+fightInfo["defender"]["soldier"]["name"]+"("+
-        	(fightInfo["attacker"]["hero"]["isPhysic"] ? "物理":"魔法")+")&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+soldierToSoldier+"</b>"+c+"</p>";
+        	(fightInfo["attacker"]["soldier"]["isPhysic"] ? "物理":"魔法")+")&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+soldierToSoldier+"</b>"+c+"</p>";
 	}
 	
 	if(fightInfo["attacker"]["soldier"] && fightInfo["defender"]["hero"])
