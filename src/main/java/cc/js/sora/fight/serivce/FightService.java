@@ -711,6 +711,11 @@ public class FightService {
 
 		CheckedSkill result = new CheckedSkill();
 		result.setSkill(skill);
+		if(skill.getCondition() == null)
+		{
+			log.info("skill:"+skill.getClass().getName()+"is null");
+			return null;
+		}
 		boolean valid = skill.getCondition().valid(fightInfo, isAttack);
 		if (valid) {
 			skill.process(fightInfo, isAttack);
