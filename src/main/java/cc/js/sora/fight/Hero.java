@@ -98,10 +98,10 @@ public class Hero {
 	boolean isWoman;
 	
 	//1 步兵 2 枪兵 3 骑兵 4 水兵 5 飞兵 6 弓箭手 7 刺客 8 法师 9 魔物 10 僧兵 11 龙
-	@Column(name="type")
+	@Column(name="hero_type")
 	int type;
 	
-	
+	@Column(name="rang")
 	int range;
 
 	

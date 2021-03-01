@@ -42,7 +42,7 @@ public class Action {
 	@Column(name = "skills")
 	String skills;
 
-	@Column(name = "range")
+	@Column(name = "rang")
 	int range;
 
 	@Column(name = "hitTime")
