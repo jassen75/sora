@@ -194,6 +194,7 @@ public abstract class Skill {
 	public static final long WindEnhance = 901;
 	public static final long FuriousEnhance = 905;
 	public static final long ManyueEnhance = 902;
+	public static final long MoshuEnhance = 903;
 	
 	/**
 	 * 1000-1600 equip
@@ -205,11 +206,10 @@ public abstract class Skill {
 	public static final long Lage = 1005;
 	public static final long Shenyi = 1006;
 	public static final long Jixianmogong = 1007;
-
 	public static final long Shenpan = 1009;
 	public static final long Xunzhang = 1010;
 	public static final long Tulong = 1012;
-
+	public static final long Tier = 1018;
 	/**
 	 * 1600-2000 action
 	 */

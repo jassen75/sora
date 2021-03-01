@@ -2,22 +2,29 @@
 
 # in local
 
+mysql -h 127.0.0.1 -uroot -psora -e 'source /home/jassen/workspace/sora/src/main/resources/database/create_tables.sql'
+
 git push
 
 gradle clean build
 
 bash build.sh
 
-bash publish.sh 1.0
+bash publish.sh 1.05
+
+
 
 # in cloud
 
+cd /home/sora
 
 git pull
 
+docker rmi jassen75/sora:1.05 (if needed)
+
 bash stop.sh
 
-bash start.sh 1.0
+bash start.sh 1.05
 
 
 

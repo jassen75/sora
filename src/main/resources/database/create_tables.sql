@@ -117,7 +117,7 @@ create table action (
 	 magic_skill integer not null, 
 	 physic_skill integer not null,
 	 tech_skill integer not null, 
-	 equip_type varchar(64), 
+	 equip_type bigint, 
 	 skills varchar(255),
 	 owner bigint
  );
@@ -308,7 +308,7 @@ INSERT INTO equip(id, name, life_skill, attack_skill, intel_skill, physic_skill,
 (15,'血之盟约',15,0,0,0,0,0,   24,0,''),
 (16,'封印守护者',0,10,0,5,0,0,   2,0,''),
 (17,'风王战甲',5,0,0,5,0,0,   10,0,''),
-(18,'提尔之怒',0,0,0,10,0,0,   13,0,''),
+(18,'提尔之怒',0,0,0,10,0,0,   13,0,'1018'),
 (19,'晨昏之星',0,5,5,0,0,0,   21,0,''),
 (20,'红色之月',5,10,0,0,0,0,   1,0,''),
 (21,'天女雨衣',10,0,0,0,0,0,   11,0,''),

@@ -17,7 +17,14 @@ function calculate()
 		coefficient = action["coefficient"];
 		battleType = action["battleType"];
 		actionName = action["name"];
+		
+		if(!action["simpleAttack"] && fightInfo["attacker"]["heroPanel"]["skillDamage"])
+		{
+			coefficient = coefficient*(1+fightInfo["attacker"]["heroPanel"]["skillDamage"]/100.0);
+		}
 	}
+	
+	
 	
 	if( fightInfo["attacker"]["soldier"] && fightInfo["defender"]["soldier"])
 	{

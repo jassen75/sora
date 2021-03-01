@@ -507,6 +507,8 @@ public class FightService {
 
 		panelInfo.setPreBattleDamage(preBattleDamage);
 		panelInfo.setRange(range);
+		
+		panelInfo.setSkillDamage(si);
 
 		for (int i = 0; i < counters.size(); i++) {
 			if (hero.getPhysic() == 1) {

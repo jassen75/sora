@@ -51,7 +51,7 @@ public class SkillService {
 
 	List<Long> globalSkills = Lists.newArrayList(Skill.SuperBuff);
 
-	List<Long> ehanceSkills = Lists.newArrayList(0L, Skill.WindEnhance, Skill.ManyueEnhance, 0L, 0L,
+	List<Long> ehanceSkills = Lists.newArrayList(0L, Skill.WindEnhance, Skill.ManyueEnhance, Skill.MoshuEnhance, 0L,
 			Skill.FuriousEnhance, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
 
 	public Map<Long, Skill> skills = Maps.newHashMap();
@@ -74,10 +74,12 @@ public class SkillService {
 		registerSkill(Skill.Shenyi, new Shenyi());
 		registerSkill(Skill.Yicai, new Yicai());
 		registerSkill(Skill.Jixianmogong, new Jixianmogong());
+		registerSkill(Skill.Tier, new Tier());
 
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
 		registerSkill(Skill.ManyueEnhance, new ManyueEnhance());
+		registerSkill(Skill.MoshuEnhance, new MoshuEnhance());
 
 		registerSkill(Skill.BloodBattle, new BloodBattle());
 
@@ -100,33 +102,29 @@ public class SkillService {
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
 		registerSkill(Skill.LongxiajushouSkill, new LobsterSkill());
-
 		registerSkill(Skill.Gangyiyongshi, new Gangyiyongshi());
+		registerSkill(Skill.Gangzonglangren, new Gangzonglangren());
+		registerSkill(Skill.Gaodiyongshi, new Gaodiyongshi());
 		registerSkill(Skill.Dujiaoshou, new Dujiaoshou());
-		registerSkill(Skill.Fangzhenliebing, new Gangyiyongshi());
-		registerSkill(Skill.Gaodiyongshi, new Gangyiyongshi());
-
+		registerSkill(Skill.Fangzhenliebing, new Fangzhenliebing());
 		registerSkill(Skill.Huangjiaqibing, new Huangjiaqibing());
+		registerSkill(Skill.Jiamiannvpu, new Jiamiannvpu());
 		registerSkill(Skill.Jixieqishi, new Jixieqishi());
 		registerSkill(Skill.Kuangrezhe, new Kuangrezhe());
+		registerSkill(Skill.Longqi, new Longqi());
 		registerSkill(Skill.Senlinjisi, new Senlinjisi());
 		registerSkill(Skill.Shixianggui, new Shixianggui());
+		registerSkill(Skill.Shurenshouwei, new Shurenshouwei());	
 		registerSkill(Skill.Tianshi, new Tianshi());
 		registerSkill(Skill.Wumianzhe, new Wumianzhe());
 		registerSkill(Skill.Xiyidaoke, new Xiyidaoke());
 		registerSkill(Skill.Xizuizhe, new Xizuizhe());
 		registerSkill(Skill.Xuanfengyouqibing, new Xuanfengyouqibing());
-		registerSkill(Skill.Shurenshouwei, new Shurenshouwei());
-		registerSkill(Skill.Jiamiannvpu, new Jiamiannvpu());
-		registerSkill(Skill.Fangzhenliebing, new Fangzhenliebing());
-		registerSkill(Skill.Longqi, new Longqi());
+		registerSkill(Skill.Wunv, new Wunv());
 
 		registerSkill(Skill.Shimeng, new DreamAction());
 		registerSkill(Skill.Shixuemojian, new BloodSwordAction());
 		registerSkill(Skill.Weifengchongzhen, new Weifengchongzhen());
-
-		registerSkill(Skill.Qinzhen, new QinZhenSKill());
-		registerSkill(Skill.Juebi, new JuebiSkill());
 
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());
