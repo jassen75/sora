@@ -10,9 +10,10 @@ import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
+import cc.js.sora.fight.condition.DefaultCounterUserCondition;
 
-public class Kuangrezhe extends Skill{
-	
+public class Kuangrezhe extends Skill {
+
 	public long getId() {
 		return Skill.Kuangrezhe;
 	}
@@ -26,13 +27,14 @@ public class Kuangrezhe extends Skill{
 	@Override
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
-		return null;
+		return new DefaultCounterUserCondition(3, 3, "拥有强化效果");
 	}
 
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.Attack, 15, Scope.Soldier),new Enhance(BuffType.DamageDec, 15, Scope.Soldier));
+		return Lists.newArrayList(new Enhance(BuffType.Attack, 15, Scope.Soldier),
+				new Enhance(BuffType.Physic, 15, Scope.Soldier), new Enhance(BuffType.Magic, 15, Scope.Soldier));
 	}
 
 }

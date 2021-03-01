@@ -24,12 +24,6 @@ public class Gaodiyongshi extends Skill {
 	}
 
 	@Override
-	public Condition getCondition() {
-		// TODO Auto-generated method stub
-		return new NoCondition();
-	}
-
-	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
 		return Lists.newArrayList(new Enhance(BuffType.Attack, 15, Scope.Soldier),new Enhance(BuffType.DamageDec, 15, Scope.Soldier));

@@ -23,16 +23,11 @@ public class Senlinjisi extends Skill{
 		return "森林祭祀技能";
 	}
 
-	@Override
-	public Condition getCondition() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.Attack, 15, Scope.Soldier),new Enhance(BuffType.DamageDec, 15, Scope.Soldier));
+		return Lists.newArrayList();
 	}
 
 }

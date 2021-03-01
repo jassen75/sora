@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 
 import lombok.AllArgsConstructor;
@@ -25,13 +26,21 @@ public class Debuff implements Effect{
 		this.enhanceList = enhanceList;
 		
 	}
+	
+	public Debuff(BuffType bufftType, int number)
+	{
+		this.name = bufftType.name();
+		this.enhanceList = Lists.newArrayList(new Enhance(bufftType, number, Scope.All));
+		
+	}
+	
 	List<Enhance> enhanceList;
 	String name;
 
 	@Override
 	public EffectType getEffectType() {
 		// TODO Auto-generated method stub
-		return EffectType.Buff;
+		return EffectType.Debuff;
 	}
 
 

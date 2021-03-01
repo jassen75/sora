@@ -12,6 +12,9 @@ import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.HasBuffCondition;
+import cc.js.sora.fight.skill.action.JuebiSkill;
+import cc.js.sora.fight.skill.action.QinZhenSKill;
+import cc.js.sora.fight.skill.action.QinzhenSkill2;
 import cc.js.sora.fight.skill.heart.TowaHeart1;
 import cc.js.sora.fight.skill.heart.TowaHeart2;
 
@@ -39,7 +42,7 @@ public class TowaTalent extends Skill  {
 	
 	public List<Skill> childSkill()
 	{
-		return Lists.newArrayList(new TowaHeart1(), new TowaHeart2());
+		return Lists.newArrayList(new TowaHeart1(), new TowaHeart2(), new QinZhenSKill(), new JuebiSkill());
 	}
 	
 

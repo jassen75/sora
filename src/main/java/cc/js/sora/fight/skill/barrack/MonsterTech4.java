@@ -34,7 +34,7 @@ public class MonsterTech4 extends Skill {
 			@Override
 			public boolean valid(FightInfo fightInfo, boolean isAttack) {
 				// TODO Auto-generated method stub
-				return fightInfo.getRole(isAttack).getDebuffs().size() > 0;
+				return fightInfo.getEnemyRole(isAttack).getDebuffs().size() > 0;
 			}};
 	}
 

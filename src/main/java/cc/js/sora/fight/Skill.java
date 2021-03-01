@@ -45,6 +45,14 @@ public abstract class Skill {
 		return getEffects();
 	}
 
+	public boolean isSupportSkill()
+	{
+		if(this.getCondition() instanceof UserCondition)
+		{
+			return ((UserCondition) this.getCondition()).getSupport();
+		}
+		return false;
+	}
 
 	public boolean filterSupportSkill(Map<String, Boolean> userConditionChecked)
 	{
@@ -63,11 +71,6 @@ public abstract class Skill {
 			}
 		}
 		return true;
-	}
-	
-	public boolean isSupportSkill()
-	{
-		return false;
 	}
 	
 //	public List<Effect> getEffects(Map<String, Integer> buffCounts)
@@ -176,6 +179,7 @@ public abstract class Skill {
 	public static final long ZalrahdaTalent2 = 203;
 	public static final long LandiusTalent = 58;
 	public static final long ZillagodTalent = 63;
+	public static final long BernhardtTalent = 74;
 	public static final long ElwinTalent = 76;
 	public static final long LedynTalent = 78;
 
@@ -259,6 +263,7 @@ public abstract class Skill {
 	public static final long SuperBuff = 4001;
 	public static final long ZillagodSuper = 4002;
 	public static final long ElwinSuper = 4003;
+	public static final long BernhardtSuper = 4004;
 	
 
 	// 1 battle/aoe attack

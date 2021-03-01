@@ -77,6 +77,8 @@ public class FightService {
 		fightInfo.getAttacker().setDebuffs(getDebuffList(attackerCheckedSkills));
 		fightInfo.getDefender().setDebuffs(getDebuffList(defenderCheckedSkills));
 
+		log.info("attacker debuffs:"+fightInfo.getAttacker().getDebuffs());
+		log.info("defender debuffs:"+fightInfo.getDefender().getDebuffs());
 		attackerSkills.stream().filter(s -> s.getBattleType() == 2).filter(s->s.filterSupportSkill(fightInfo.getAttacker().getUserConditionChecked()))
 				.forEach(s -> attackerCheckedSkills.add(checkSkill(fightInfo, s, true)));
 		defenderSkills.stream().filter(s -> s.getBattleType() == 2).filter(s->s.filterSupportSkill(fightInfo.getDefender().getUserConditionChecked()))
@@ -89,10 +91,10 @@ public class FightService {
 
 		log.info("attacker skill list size:" + attackerCheckedSkills.size());
 		log.info("defender skill list size:" + defenderCheckedSkills.size());
-		fightInfo.getAttacker().setHeroPanel(calculateHero(fightInfo.getAttacker(), attackerCheckedSkills));
-		fightInfo.getAttacker().setSoldierPanel(calculateSoldier(fightInfo.getAttacker(), attackerCheckedSkills));
-		fightInfo.getDefender().setHeroPanel(calculateHero(fightInfo.getDefender(), defenderCheckedSkills));
-		fightInfo.getDefender().setSoldierPanel(calculateSoldier(fightInfo.getDefender(), defenderCheckedSkills));
+		fightInfo.getAttacker().setHeroPanel(calculateHero(fightInfo.getAttacker(), attackerCheckedSkills, fightInfo.getDefender().getDebuffs()));
+		fightInfo.getAttacker().setSoldierPanel(calculateSoldier(fightInfo.getAttacker(), attackerCheckedSkills, fightInfo.getDefender().getDebuffs()));
+		fightInfo.getDefender().setHeroPanel(calculateHero(fightInfo.getDefender(), defenderCheckedSkills, fightInfo.getAttacker().getDebuffs()));
+		fightInfo.getDefender().setSoldierPanel(calculateSoldier(fightInfo.getDefender(), defenderCheckedSkills, fightInfo.getAttacker().getDebuffs()));
 
 //		fightInfo.getAttacker().setUserConditions(getUserConditionsFromSkill(attackerSkills));
 //		fightInfo.getDefender().setUserConditions(getUserConditionsFromSkill(defenderSkills));
@@ -113,8 +115,9 @@ public class FightService {
 		attackerSessionInfo.put("userConditions", attackerUserConditions);
 		defenderSessionInfo.put("userConditions", defenderUserConditions);
 
-		attackerSessionInfo.put("userConditionGroups", getUserConditionGroups(attackerUserConditions));
-		defenderSessionInfo.put("userConditionGroups", getUserConditionGroups(defenderUserConditions));
+
+		attackerSessionInfo.put("userConditionGroups", getUserConditionGroups(attackerSkills));
+		defenderSessionInfo.put("userConditionGroups", getUserConditionGroups(defenderSkills));
 
 		attackerSessionInfo.put("checkedSkills", attackerCheckedSkills);
 		defenderSessionInfo.put("checkedSkills", defenderCheckedSkills);
@@ -130,16 +133,17 @@ public class FightService {
 		return result;
 	}
 
-	private Map<String, List<String>> getUserConditionGroups(Map<String, UserCondition> userConditions) {
+	private Map<String, List<String>> getUserConditionGroups(List<Skill> skills) {
 		Map<String, List<String>> result = Maps.newHashMap();
-		userConditions.forEach((k, v) -> {
-			if (v instanceof GroupedUserCondition) {
-				GroupedUserCondition gu = (GroupedUserCondition) v;
+		skills.forEach(s -> {
+			if (s.getCondition() instanceof GroupedUserCondition) {
+				GroupedUserCondition gu = (GroupedUserCondition) s.getCondition() ;
 				if (!result.containsKey(gu.getGroupName())) {
 					result.put(gu.getGroupName(), Lists.newArrayList());
 				}
-				result.get(gu.getGroupName()).add(k);
+				result.get(gu.getGroupName()).add(gu.getName());
 			}
+
 		});
 
 		return result;
@@ -154,6 +158,13 @@ public class FightService {
 							.map(e -> (Debuff) e).collect(Collectors.toList()));
 				});
 		return buffs;
+	}
+	
+	public Map<String, Debuff> getDebuffMap(List<Debuff> debuffList) {
+		Map<String, Debuff> result = Maps.newHashMap();
+	    debuffList.stream().forEach(d->result.put(d.getName(), d));
+	    return result;
+		
 	}
 
 	public List<Buff> getBuffList(List<CheckedSkill> skillList) {
@@ -174,12 +185,11 @@ public class FightService {
 		return hero.getRange();
 	}
 
-	public PanelInfo calculateHero(FightRole role, List<CheckedSkill> skillList) {
+	public PanelInfo calculateHero(FightRole role, List<CheckedSkill> skillList, List<Debuff> debuffList) {
 		Hero hero = role.getHero();
 		PanelInfo panelInfo = role.getHeroPanel();
 		Land land = role.getLand();
 		Action action = role.getAction();
-		Map<String, Integer> buffCounts = role.getBuffCounts();
 
 		panelInfo.getFeatures().clear();
 		panelInfo.getCounters().clear();
@@ -212,7 +222,7 @@ public class FightService {
 		List<Double> pd_counters = Lists.newArrayList();
 		List<Double> md_counters = Lists.newArrayList();
 		Map<String, Buff> buffList = Maps.newHashMap();
-		Map<String, Debuff> debuffList = Maps.newHashMap();
+		Map<String, Debuff> debuffs = getDebuffMap(debuffList);
 
 		if (skillList != null) {
 			for (int i = 0; i < skillList.size(); i++) {
@@ -394,6 +404,68 @@ public class FightService {
 
 			}
 		}
+		
+		List<Debuff> dbs = Lists.newArrayList(debuffs.values());
+		log.info("debuffs:"+dbs);
+		if (dbs != null && dbs.size() > 0) {
+			for (int k = 0; k < dbs.size(); k++) {
+				Debuff bu = dbs.get(k);
+				for (int m = 0; m < bu.getEnhanceList().size(); m++) {
+					Enhance ek = (Enhance) bu.getEnhanceList().get(m);
+					double number = ek.getNumber();
+					switch (ek.getBuffType()) {
+					case Attack:
+						ai += number;
+						break;
+					case Physic:
+						pi += number;
+						break;
+					case Magic:
+						mi += number;
+						break;
+					case DamageInc:
+						di += number;
+						break;
+					case DamageDec:
+						pdd += number;
+						mdd += number;
+						break;
+					case PhysicDamageDec:
+						pdd += number;
+						break;
+					case MagicDamageDec:
+						mdd += number;
+						break;
+					case AttackCounter:
+						counters.add(number);
+						break;
+					case PhysicDefCounter:
+						pd_counters.add(number);
+						break;
+					case Life:
+						li += number;
+						break;
+					case CriticalProbInc:
+						cpi += number;
+						break;
+					case CriticalDamageInc:
+						cdi += number;
+						break;
+					case CriticalProbDec:
+						cpd += number;
+						break;
+					case CriticalDamageDec:
+						cdd += number;
+						break;
+					case Range:
+						range += number;
+						break;
+					default:
+					}
+				}
+
+			}
+		}
 
 		if (land == Land.Water && hero.getType() == 4) {
 			pi += 30;
@@ -458,7 +530,7 @@ public class FightService {
 		return panelInfo;
 	}
 
-	public PanelInfo calculateSoldier(FightRole role, List<CheckedSkill> skillList) {
+	public PanelInfo calculateSoldier(FightRole role, List<CheckedSkill> skillList, List<Debuff> debuffList) {
 		Soldier soldier = role.getSoldier();
 		Hero hero = role.getHero();
 		PanelInfo panelInfo = role.getSoldierPanel();
@@ -489,7 +561,7 @@ public class FightService {
 		List<Double> pd_counters = Lists.newArrayList();
 		List<Double> md_counters = Lists.newArrayList();
 		Map<String, Buff> buffList = Maps.newHashMap();
-		Map<String, Debuff> debuffList = Maps.newHashMap();
+		Map<String, Debuff> debuffs =  getDebuffMap(debuffList);
 
 		if (skillList != null) {
 			for (int i = 0; i < skillList.size(); i++) {
@@ -650,6 +722,67 @@ public class FightService {
 
 			}
 		}
+		
+		List<Debuff> dbs = Lists.newArrayList(debuffs.values());
+		if (buffs != null && dbs.size() > 0) {
+			for (int k = 0; k < dbs.size(); k++) {
+				Debuff bu = dbs.get(k);
+				for (int m = 0; m < bu.getEnhanceList().size(); m++) {
+					Enhance ek = (Enhance) bu.getEnhanceList().get(m);
+					double number = ek.getNumber();
+					switch (ek.getBuffType()) {
+					case Attack:
+						ai += number;
+						break;
+					case Physic:
+						pi += number;
+						break;
+					case Magic:
+						mi += number;
+						break;
+					case DamageInc:
+						di += number;
+						break;
+					case DamageDec:
+						pdd += number;
+						mdd += number;
+						break;
+					case PhysicDamageDec:
+						pdd += number;
+						break;
+					case MagicDamageDec:
+						mdd += number;
+						break;
+					case AttackCounter:
+						counters.add(number);
+						break;
+					case PhysicDefCounter:
+						pd_counters.add(number);
+						break;
+					case Life:
+						li += number;
+						break;
+					case CriticalProbInc:
+						cpi += number;
+						break;
+					case CriticalDamageInc:
+						cdi += number;
+						break;
+					case CriticalProbDec:
+						cpd += number;
+						break;
+					case CriticalDamageDec:
+						cdd += number;
+						break;
+					case Range:
+						range += number;
+						break;
+					default:
+					}
+				}
+
+			}
+		}
 
 		if (land == Land.Water && (hero.getType() == 4 || soldier.getType() == 4)) {
 			pi += 30;
@@ -736,13 +869,8 @@ public class FightService {
 			skills.stream().forEach(skill -> {
 				if (skill.getCondition() instanceof UserCondition) {
 					String name = ((UserCondition) skill.getCondition()).getName();
-					if (skill.isSupportSkill()) {
-						if (ucc.containsKey(name) && ucc.get(name)) {
-							resultList.put(name, (UserCondition) skill.getCondition());
-						}
-					} else {
-						resultList.put(name, (UserCondition) skill.getCondition());
-					}
+					resultList.put(name, (UserCondition) skill.getCondition());
+				
 				}
 				if (skill.getCondition() instanceof CombinedCondition) {
 					((CombinedCondition) skill.getCondition()).getConditions().stream().forEach(c -> {

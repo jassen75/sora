@@ -36,9 +36,20 @@ public class Enhance implements Effect{
 		}
 		else
 		{
-			return printBufferType()+"+"+Double.valueOf(number).intValue()+"%";		
+			return printBufferType()+printValue();		
 		}
 		
+	}
+	
+	public String printValue()
+	{
+		if(number > 0)
+		{
+			return "+"+Double.valueOf(number).intValue()+"%";
+		} else
+		{
+			return Double.valueOf(number).intValue()+"%";
+		}
 	}
 	
 	public String printBufferType()

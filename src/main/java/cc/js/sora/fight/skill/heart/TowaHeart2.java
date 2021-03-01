@@ -11,7 +11,7 @@ import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.DistanceCondition;
-import cc.js.sora.fight.condition.DistanceLessThanCondition;
+import cc.js.sora.fight.condition.DistanceLessEqualCondition;
 
 public class TowaHeart2 extends Skill{
 

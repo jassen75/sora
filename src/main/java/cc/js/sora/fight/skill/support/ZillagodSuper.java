@@ -24,6 +24,17 @@ public class ZillagodSuper extends Skill {
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
 		return new GroupedUserCondition() {
+			
+			@Override
+			public boolean getSupport()
+			{
+				return true;
+			}
+			
+			public String getName() 
+			{
+				return "ZillagodSuper";
+			}
 
 			public boolean needCheck() {
 				return true;
@@ -54,11 +65,6 @@ public class ZillagodSuper extends Skill {
 		};
 	}
 	
-	public boolean isSupportSkill()
-	{
-		return true;
-	}
-
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub

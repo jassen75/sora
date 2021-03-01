@@ -50,4 +50,16 @@ public class FightRole {
 	{
 		return (Double.valueOf(heroLeftLife)+Double.valueOf(soldierLeftLife))/(Double.valueOf(heroPanel.getLife())+Double.valueOf(soldierPanel.getLife()));
 	}
+	
+	@JsonIgnore
+	public double getSoldierLifePercent()
+	{
+		return Double.valueOf(soldierLeftLife)/Double.valueOf(soldierPanel.getLife());
+	}
+	
+	@JsonIgnore
+	public double getHeroLifePercent()
+	{
+		return Double.valueOf(heroLeftLife)/Double.valueOf(heroPanel.getLife());
+	}
 }

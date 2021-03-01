@@ -31,7 +31,12 @@ public abstract class UserCondition implements Condition{
 	public boolean check(FightInfo fightInfo, boolean isAttack) {
 		return true;
 	}
-
+	
+	public boolean getSupport()
+	{
+		return false;
+	}
+	
 	@Override
 	public boolean valid(FightInfo fightInfo, boolean isAttack) {
 		boolean result = false;

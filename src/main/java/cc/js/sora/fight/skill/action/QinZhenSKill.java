@@ -69,9 +69,8 @@ public class QinZhenSKill extends Skill {
 		return 0;
 	}
 	
-	@Override
 	public List<Skill> childSkill()
 	{
-		return Lists.newArrayList(new QinzhenSkill2());
+		return Lists.newArrayList(new QinzhenSkill2());	
 	}
 }

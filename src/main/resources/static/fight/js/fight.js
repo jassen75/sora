@@ -556,11 +556,15 @@ function buildUserCondition(role) {
 	if (sessionInfo[role]["userConditions"]) {
 		for ( var name in sessionInfo[role]["userConditions"]) {
 			var checked = fightInfo[role]["userConditionChecked"][name];
+			var condition = sessionInfo[role]["userConditions"][name];
+			if(condition["support"] && !checked)
+			{
+				continue;
+			}
+			
 			if (checked == undefined) {
 				checked = sessionInfo[role]["userConditions"][name]["defaultValid"];
 			}
-
-			
 			var buff = $("<li class=\"list-group-item\">"
 					+ sessionInfo[role]["userConditions"][name]["desc"]
 					+ "</li>");
@@ -600,13 +604,18 @@ function buildUserCondition(role) {
 
 function checkUserConditionGroup(role, name) {
 	var userCondition = sessionInfo[role]["userConditions"][name];
+	//alert("userCondition: "+userCondition);
 	if (userCondition
 			&& userCondition["groupName"]
 			&& sessionInfo[role]["userConditionGroups"][userCondition["groupName"]]) {
 		var g = sessionInfo[role]["userConditionGroups"][userCondition["groupName"]];
 		for (var i = 0; i < g.length; i++) {
 			if (g[i] != name) {
+				//alert("canceled "+g[i]);
 				fightInfo[role]["userConditionChecked"][g[i]] = false;
+			} else
+			{
+				//alert(g[i]+" is ok");
 			}
 		}
 	}
@@ -707,8 +716,10 @@ function buildSupportSkills(role)
 				+ ".png\" alt=\"\" width=\"40\" height=\"40\"></img>"
 					+ skill["desc"]
 					+ "</li>");
+			buff.attr("name", name);
 			buff.click(function(e){
-				fightInfo[role]["userConditionChecked"][name] = true;
+				fightInfo[role]["userConditionChecked"][$(this).attr("name")] = true;
+				checkUserConditionGroup(role, $(this).attr("name"));
 				sync(false);
 			});
 			buff.appendTo($("#"+role+"-support-list"));
