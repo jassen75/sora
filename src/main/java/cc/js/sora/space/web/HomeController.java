@@ -21,4 +21,9 @@ public class HomeController {
 	public String lyb() {
 		return "forward:/match/kkb.html";
 	}
+    
+    @RequestMapping(value= {"/fight"})
+	public String fight() {
+		return "forward:/fight/index.html";
+	}
 }

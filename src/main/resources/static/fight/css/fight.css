@@ -1,0 +1,176 @@
+
+/*************************************************************************************************************************
+
+								dashboard page
+
+*************************************************************************************************************************/
+
+#pict {
+	position: relative;
+	left: 210px;
+	width:225px;
+	height: 300px;
+	background-image: url('/match/image/peo.png');
+}
+
+
+/*************************************************************************************************************************
+
+								admin pages
+
+*************************************************************************************************************************/
+
+#hero_pics {
+	
+}
+
+.hero_pic {
+	 display: inline-block;
+}
+
+#information {
+	padding: 10px;
+}
+
+#attackerPic {
+	padding: 10px;
+}
+
+#defenderPic {
+	padding: 10px;
+}
+
+.dropdown {
+	padding: 10px;
+	
+}
+
+#attacker-soldier-information {
+	color:green;
+}
+
+#defender-soldier-information {
+	color:green;
+}
+
+#attacker-info {
+	color:brown;
+	font: bold;
+}
+
+#defender-info {
+	color:brown;
+	font: bold;
+}
+
+
+#attacker-buf-list {
+	min-height:40px;
+}
+
+#defender-buf-list {
+	min-height:40px;
+}
+
+.valid-skill {
+	color: green;
+}
+
+.not-valid-skill {
+	color: gray;
+}
+
+#attacker-user-condition-list li button {
+	position:absolute;
+  	right:5px;
+  	top:2px;
+}
+
+#attacker-user-condition-list li div {
+	position:absolute;
+  	right:80px;
+  	top:2px;
+	
+}
+
+#defender-user-condition-list li div {
+	position:absolute;
+  	right:80px;
+  	top:2px;
+	
+}
+
+#defender-user-condition-list li button {
+	position:absolute;
+  	right:5px;
+  	top:2px;
+}
+
+#attacker-critical li button {
+	position:absolute;
+  	right:5px;
+  	top:2px;
+}
+
+#defender-critical li button {
+	position:absolute;
+  	right:5px;
+  	top:2px;
+}
+
+#fightDetails {
+	color:brown;
+}
+
+.critical {
+	color:orange;
+}
+
+#csvFileInput{
+    position: absolute;
+    right: 0px;
+    opacity: 0;
+}
+
+#import_fm {
+	margin-top:50px;
+	margin-bottom:20px;
+}
+
+#fm {
+	min-height:500px;
+}
+
+.fm_type_red {
+	color: red;
+}
+
+.fm_type_yellow {
+	color: yellow;
+}
+
+.fm_type_green {
+	color: green;
+}
+
+.fm_type_blue {
+	color: blue;
+}
+
+#defender-sel-action {
+	height:54px;
+}
+
+#information {
+	padding:10px;
+}
+
+#defender-land-information {
+	color:orange;
+}
+
+#attacker-land-information {
+	color:orange;
+}
+
+

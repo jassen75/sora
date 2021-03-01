@@ -1,0 +1,33 @@
+gamedata  (fm, jt, jjc, default equip)         fm=> fightInfo["attacker"]skill
+gamedata (hero  > equip,soldier,action)
+
+
+choose hero(id)
+
+     equip list  (game data)  -> choose -> (fightInfo["attacker"]["equip"])
+     
+attacker/defender(FightRole?)
+---> hero basic information (game data)
+    
+     soldier list (game data) -> choose -> (fightInfo["attacker"]["soldier"])
+     land list                -> choose -> (fightInfo["attacker"]["land"])
+     
+---> load validated skill   
+
+attacker/defender 
+     hero skill-list first time      useConditionChecked  -> (fightInfo["attacker"]["useConditionChecked"])
+     
+---> caculate buffs                  hero panel               (fightInfo["attacker"])
+                                     
+     
+     
+     
+     
+      hero skill-list  second time 
+---> caculate buffs                  hero panel               (fightInfo["attacker"])      
+     
+     
+     
+--->     action list (game data)  -> choose ->                (fightInfo["attacker"]["action"])
+         critical                    heroCriticalChecked       fightInfo["attacker"]["heroCriticalChecked"]
+                                     soldierCriticalChecked    fightInfo["attacker"]["soldierCriticalChecked"]
