@@ -175,10 +175,8 @@ public class SkillService {
 			for (int i = 0; i < d.length; i++) {
 				long skillId = Longs.tryParse(d[i].trim());
 				if (this.skills.containsKey(skillId)) {
-					if (checkSkillType(this.getSkill(skillId).getSkillType(), roleType)) {
-						if (this.getSkill(skillId) != null) {
-							result.add(this.getSkill(skillId));
-						}
+					if (this.getSkill(skillId) != null) {
+						result.add(this.getSkill(skillId));
 					}
 				}
 			}
@@ -187,6 +185,7 @@ public class SkillService {
 
 	public List<Skill> getSkills(Hero hero, Soldier soldier, long actionId, int enhance, Map<String, Equip> equips,
 			int roleType) {
+		log.info("get skills for roleType:"+roleType);
 		//List<Skill> result = new ArrayList<Skill>();
 		List<Skill> result = Lists.newCopyOnWriteArrayList();
 		if (hero != null) {
@@ -215,8 +214,7 @@ public class SkillService {
 
 			int soldierType = soldier.getType();
 			if (barrackSkills.getSkills(soldierType) != null) {
-				result.addAll(barrackSkills.getSkills(soldierType).stream()
-						.filter(s -> checkSkillType(s.getSkillType(), roleType)).collect(Collectors.toList()));
+				result.addAll(barrackSkills.getSkills(soldierType));
 			}
 
 		}
@@ -229,33 +227,25 @@ public class SkillService {
 
 		globalSkills.forEach(i -> {
 			if (this.skills.containsKey(i)) {
-				if (checkSkillType(this.getSkill(i).getSkillType(), roleType)) {
-					result.add(this.getSkill(i));
-				}
+				result.add(this.getSkill(i));
 			}
 		});
 
 		result.forEach(s -> {
-			checkChild(s, result, roleType);
+			checkChild(s, result);
 		});
 
-		return result;
+		return result.stream().filter(s->checkSkillType(s.getSkillType(), roleType)).collect(Collectors.toList());
 	}
 	
-	private void checkChild(Skill skill, List<Skill> result, int roleType)
+	private void checkChild(Skill skill, List<Skill> result)
 	{
-		List<Skill> childSkills = Lists.newArrayList();
+		log.info("check child for skill:"+skill.getName());
 		skill.childSkill().forEach(cs -> {
-			if (checkSkillType(cs.getSkillType(), roleType)) {
-				childSkills.add(cs);
-			}
-
+			result.add(cs);
+			checkChild(cs, result);
 		});
-		if (childSkills.size() > 0) {
-			result.addAll(childSkills);
-			childSkills.stream().forEach(s->checkChild(s, result, roleType));
-		}
-		
+
 		
 	}
 

@@ -15,7 +15,7 @@ public class Tier extends Skill {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "提尔之怒";
+		return "T2";
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class Tier extends Skill {
 			@Override
 			public String getName() {
 				// TODO Auto-generated method stub
-				return "提尔之怒";
+				return "Tier-1";
 			}
 			
 			public int getSkillType() {
