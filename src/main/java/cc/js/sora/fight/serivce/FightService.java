@@ -216,6 +216,7 @@ public class FightService {
 		int pdd = 0;
 		int mdd = 0;
 		int si = 0;
+		int igd = 0;
 		double preBattleDamage = 0;
 
 		List<Double> counters = Lists.newArrayList();
@@ -315,6 +316,9 @@ public class FightService {
 							case Range:
 								range += number;
 								break;
+							case IgnoreDef:
+								igd += number;
+								break;
 							default:
 							}
 						} else if (e instanceof Feature) {
@@ -398,6 +402,9 @@ public class FightService {
 					case Range:
 						range += number;
 						break;
+					case IgnoreDef:
+						igd += number;
+						break;
 					default:
 					}
 				}
@@ -460,6 +467,9 @@ public class FightService {
 					case Range:
 						range += number;
 						break;
+					case IgnoreDef:
+						igd += number;
+						break;
 					default:
 					}
 				}
@@ -509,6 +519,7 @@ public class FightService {
 		panelInfo.setRange(range);
 		
 		panelInfo.setSkillDamage(si);
+		panelInfo.setIgnoreDef(igd);
 
 		for (int i = 0; i < counters.size(); i++) {
 			if (hero.getPhysic() == 1) {
@@ -557,6 +568,7 @@ public class FightService {
 		int di = 0;
 		int pdd = 0;
 		int mdd = 0;
+		int igd = 0;
 		int range = getRange(hero, null);
 
 		List<Double> counters = Lists.newArrayList();
@@ -643,6 +655,9 @@ public class FightService {
 							case Range:
 								range += number;
 								break;
+							case IgnoreDef:
+								igd += number;
+								break;
 							default:
 							}
 						} else if (e instanceof Feature) {
@@ -718,6 +733,9 @@ public class FightService {
 					case Range:
 						range += number;
 						break;
+					case IgnoreDef:
+						igd += number;
+						break;
 					default:
 					}
 				}
@@ -779,6 +797,9 @@ public class FightService {
 					case Range:
 						range += number;
 						break;
+					case IgnoreDef:
+						igd += number;
+						break;
 					default:
 					}
 				}
@@ -824,6 +845,7 @@ public class FightService {
 		panelInfo.setCriticalDamageInc(cdi);
 		panelInfo.setCriticalDamageDec(cdd);
 		panelInfo.setRange(range);
+		panelInfo.setIgnoreDef(igd);
 
 		for (int i = 0; i < counters.size(); i++) {
 			panelInfo.setAttack(

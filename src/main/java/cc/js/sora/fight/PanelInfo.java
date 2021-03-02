@@ -69,4 +69,5 @@ public class PanelInfo {
 	int range;
 	
 	int skillDamage;
+	int ignoreDef;
 }

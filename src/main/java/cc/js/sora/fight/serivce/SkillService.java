@@ -75,6 +75,8 @@ public class SkillService {
 		registerSkill(Skill.Yicai, new Yicai());
 		registerSkill(Skill.Jixianmogong, new Jixianmogong());
 		registerSkill(Skill.Tier, new Tier());
+		registerSkill(Skill.Shijieshu, new Shijieshu());
+		registerSkill(Skill.Shuijingfengci, new Shuijingfengci());
 
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());

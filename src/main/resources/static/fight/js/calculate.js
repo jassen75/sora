@@ -103,9 +103,35 @@ function calculate()
 	}
 	fightDetails+="<p>-------------------------------------------------------------------------------------------</p>";
 
+	var attackerHeroLeftLife = fightInfo["attacker"]["hero"] ? fightInfo["attacker"]["heroLeftLife"] : 0;
+	var attackerSoldierLeftLife = fightInfo["attacker"]["soldier"] ? fightInfo["attacker"]["soldierLeftLife"] : 0;
+	var defenderHeroLeftLife = fightInfo["defender"]["hero"] ? fightInfo["defender"]["heroLeftLife"] : 0;
+	var defenderSoldierLeftLife = fightInfo["defender"]["soldier"] ? fightInfo["defender"]["soldierLeftLife"] : 0;
+	
 	if(battleType == 1)
 	{
-		battle(soldierToSoldier, soldierToHero, heroToSoldier, heroToHero, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, fightDetails);
+		
+		if(fightInfo["attacker"]["heroPanel"]["features"]["FirstAttack"] && !fightInfo["defender"]["heroPanel"]["features"]["FirstAttack"])
+		{
+			// a first
+			battle(soldierToSoldier, soldierToHero, heroToSoldier, heroToHero, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, fightDetails,
+					attackerHeroLeftLife, attackerSoldierLeftLife, defenderHeroLeftLife, defenderSoldierLeftLife);
+			calculateDefender(defenderHeroLeftLife, defenderSoldierLeftLife, attackerHeroLeftLife, attackerSoldierLeftLife);
+		}
+		else if(!fightInfo["attacker"]["heroPanel"]["features"]["FirstAttack"] && fightInfo["defender"]["heroPanel"]["features"]["FirstAttack"]) 
+		{
+			// d first
+			calculateDefender(defenderHeroLeftLife, defenderSoldierLeftLife, attackerHeroLeftLife, attackerSoldierLeftLife);
+			battle(soldierToSoldier, soldierToHero, heroToSoldier, heroToHero, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, fightDetails,
+					attackerHeroLeftLife, attackerSoldierLeftLife, defenderHeroLeftLife, defenderSoldierLeftLife);
+			
+		} else
+		{
+			battle(soldierToSoldier, soldierToHero, heroToSoldier, heroToHero, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, fightDetails,
+					attackerHeroLeftLife, attackerSoldierLeftLife, defenderHeroLeftLife, defenderSoldierLeftLife);
+			calculateDefender(defenderHeroLeftLife, defenderSoldierLeftLife, attackerHeroLeftLife, attackerSoldierLeftLife);
+		}
+		
 	} 
 	
 	if(battleType == 2)
@@ -137,15 +163,16 @@ function getMeleeDamageReduce(role, kind)
 	return false;
 }
 
-function battle(soldierToSoldier, soldierToHero, heroToSoldier,heroToHero, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, fightDetails)
+function battle(soldierToSoldier, soldierToHero, heroToSoldier,heroToHero, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, fightDetails, al, asl,  dl, dsl)
 {
 	var distance = fightInfo["distance"];
-	var soldierCount = fightInfo["attacker"]["soldier"] ? 20 : 0;
-	var heroCount = fightInfo["attacker"]["hero"] ? 20 : 0;
+	var soldierCount = Math.ceil(asl / fightInfo["attacker"]["soldierPanel"]["life"]);
+	//var soldierCount = fightInfo["attacker"]["soldier"] ? 20 : 0;
+	var heroCount = al > 0  ? 20 : 0;
 	var soldierLeftCount = soldierCount;
 	var heroLeftCount = heroCount;
-	var dl = fightInfo["defender"]["hero"] ? fightInfo["defender"]["heroLeftLife"] : 0;
-	var dsl = fightInfo["defender"]["soldier"] ? fightInfo["defender"]["soldierLeftLife"] : 0;
+	//var dl = fightInfo["defender"]["hero"] ? fightInfo["defender"]["heroLeftLife"] : 0;
+	//var dsl = fightInfo["defender"]["soldier"] ? fightInfo["defender"]["soldierLeftLife"] : 0;
 	var direct = fightInfo["attacker"]["action"] ? fightInfo["attacker"]["action"]["direct"] : 0;
 	
 	if(fightInfo["attacker"]["heroPanel"]["preBattleDamage"] > 0)
@@ -318,8 +345,6 @@ function battle(soldierToSoldier, soldierToHero, heroToSoldier,heroToHero, attac
 	$("#defenderHeroBar").attr("style", "width:"+Math.ceil(dl/fightInfo["defender"]["heroPanel"]["life"]*100)+"%");
 										
 	$("#attackerFightDetails").html(fightDetails);
-	
-	calculateDefender();
 }
 
 function aoe(actionName, heroToSoldier,heroToHero, attackerHeroCriticalChecked, fightDetails)
@@ -352,22 +377,27 @@ function oneHit(coefficient, panel1, panel2, critcal, isPhysics, counter)
 	var ca = counter["attack"];
 	var cp = counter["physic"];
 	var cm = counter["magic"];
+	var igd = panel1["ignoreDef"];
+	
 	if(isPhysics)
 	{
-		if(panel1["attack"]*(1+ca/100.0) <= panel2["physic"]*(1+cp/100.0))
+		var realAttack = panel1["attack"]*(1+ca/100.0);
+		var realDef = panel2["physic"]*(1+cp/100.0) * (1-igd/100.0);
+		if(realAttack <= realDef)
 		{
 			return 1;
 		}
-		return Math.floor(coefficient * (panel1["attack"]*(1+ca/100.0)-panel2["physic"]*(1+cp/100.0))*
-			(1+(panel1["damageInc"]-panel2["physicDamageDec"])/100.0)*c /2) ;
+		return Math.floor(coefficient * (realAttack - realDef) * (1+(panel1["damageInc"]-panel2["physicDamageDec"])/100.0)*c /2) ;
 	} else	
 	{
 		var attack = panel1["isSoldier"] ? panel1["attack"]:panel1["intel"];
-		if(attack*(1+counter["attack"]/100.0)<=panel2["magic"]*(1+cm/100.0))
+		var realAttack = attack*(1+counter["attack"]/100.0);
+		var realDef = panel2["magic"]*(1+cm/100.0) * (1-igd/100.0);
+		if(realAttack <= realDef)
 		{
 			return 1;
 		}
-		return Math.floor(coefficient * (attack*(1+counter["attack"]/100.0)-panel2["magic"]*(1+cm/100.0))*
+		return Math.floor(coefficient * (realAttack- realDef)*
 			(1+(panel1["damageInc"]-panel2["magicDamageDec"])/100.0)* c /2) ;
 	}
 }
@@ -467,7 +497,7 @@ function getDefaultCounter(attackerType, defenderType)
 	}
 	
 	// 骑被枪克
-	if(attackerType==3 && defenderType==1)
+	if(attackerType==3 && defenderType==2)
 	{
 		return -30;
 	}
@@ -492,7 +522,7 @@ function getDefaultCounter(attackerType, defenderType)
 	return 0;
 }
 
-function calculateDefender()
+function calculateDefender(al, asl, dl, dsl)
 {
 	var distance = fightInfo["distance"];
 	var soldierToSoldier=0;
@@ -573,12 +603,13 @@ function calculateDefender()
 	    		"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+heroToHero+"</b>"+c+"</p>";
 	}
 	fightDetails+="<p>-------------------------------------------------------------------------------------------</p>";
-	var soldierCount = fightInfo["defender"]["soldier"] ? 20 : 0;
-	var heroCount = fightInfo["defender"]["hero"] ? 20 : 0;
+	//var soldierCount = fightInfo["defender"]["soldier"] ? 20 : 0;
+	var heroCount = al > 0  ? 20 : 0;
+	var soldierCount = Math.ceil(asl / fightInfo["defender"]["soldierPanel"]["life"]);
 	var soldierLeftCount = soldierCount;
 	var heroLeftCount = heroCount;
-	var dl = fightInfo["attacker"]["hero"] ? fightInfo["attacker"]["heroLeftLife"] : 0;
-	var dsl = fightInfo["attacker"]["soldier"] ? fightInfo["attacker"]["soldierLeftLife"] : 0;
+	//var dl = fightInfo["attacker"]["hero"] ? fightInfo["attacker"]["heroLeftLife"] : 0;
+	//var dsl = fightInfo["attacker"]["soldier"] ? fightInfo["attacker"]["soldierLeftLife"] : 0;
 	var direct = 0;
 	
 	if(fightInfo["defender"]["heroPanel"]["preBattleDamage"] > 0)

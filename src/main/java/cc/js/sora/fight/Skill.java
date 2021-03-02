@@ -18,6 +18,25 @@ public abstract class Skill {
 		return 0;
 	}
 
+	// 1 battle/aoe attack
+	// 2 battle/aoe defender 3 battle all
+	// 4 battle attack 5 battle defender
+	// 6 aoe attacker 7 aoe defender
+	// 8 aoe all
+	// 9 all
+	public int getSkillType() {
+		return 9;
+	}
+
+	// 0 effect 1 pre battle 2 battle 3 post battle 4
+	public int getBattleType() {
+		return 2;
+	}
+
+	public List<Skill> childSkill() {
+		return Lists.newArrayList();
+	}
+
 	public abstract String getName();
 
 	public Condition getCondition() {
@@ -210,6 +229,9 @@ public abstract class Skill {
 	public static final long Xunzhang = 1010;
 	public static final long Tulong = 1012;
 	public static final long Tier = 1018;
+	public static final long Shijieshu = 1059;
+	public static final long Shuijingfengci = 1049;
+	
 	/**
 	 * 1600-2000 action
 	 */
@@ -266,23 +288,5 @@ public abstract class Skill {
 	public static final long BernhardtSuper = 4004;
 	
 
-	// 1 battle/aoe attack
-	// 2 battle/aoe defender 3 battle all
-	// 4 battle attack 5 battle defender
-	// 6 aoe attacker 7 aoe defender
-	// 8 aoe all
-	// 9 all
-	public int getSkillType() {
-		return 9;
-	}
-
-	// 0 effect 1 pre battle 2 battle 3 post battle 4
-	public int getBattleType() {
-		return 2;
-	}
-
-	public List<Skill> childSkill() {
-		return Lists.newArrayList();
-	}
 
 }

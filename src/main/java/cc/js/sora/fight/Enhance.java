@@ -99,6 +99,8 @@ public class Enhance implements Effect{
 			return "战后造成";
 		case Range:
 			return "射程增加";
+		case IgnoreDef:
+			return "无视防御";
 		}
 		return "";
 	}
