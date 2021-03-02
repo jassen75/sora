@@ -52,6 +52,7 @@ function calculate()
 		aoe(actionName, heroToSoldier, heroToHero, attackerHeroCriticalChecked, fightDetails);
 	}
 	
+	
 		
 	$("#defenderSoldierBar").text(defenderResult["dsl"]+"/"+fightInfo["defender"]["soldierPanel"]["life"]);
 	$("#defenderSoldierBar").attr("style", "width:"+Math.ceil(defenderResult["dsl"]/fightInfo["defender"]["soldierPanel"]["life"]*100)+"%");
