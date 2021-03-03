@@ -123,7 +123,8 @@ public class SkillService {
 		registerSkill(Skill.Xizuizhe, new Xizuizhe());
 		registerSkill(Skill.Xuanfengyouqibing, new Xuanfengyouqibing());
 		registerSkill(Skill.Wunv, new Wunv());
-
+		registerSkill(Skill.Yanshi, new Yanshi());
+		
 		registerSkill(Skill.Shimeng, new DreamAction());
 		registerSkill(Skill.Shixuemojian, new BloodSwordAction());
 		registerSkill(Skill.Weifengchongzhen, new Weifengchongzhen());

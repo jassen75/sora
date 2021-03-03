@@ -280,6 +280,7 @@ public abstract class Skill {
 	public static final long Shurenshouwei = 2027;
 	public static final long Jiamiannvpu = 2026;
 	public static final long Longqi = 2028;
+	public static final long Yanshi = 2030;
 	
 
 	/**

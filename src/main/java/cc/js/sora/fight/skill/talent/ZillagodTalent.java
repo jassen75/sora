@@ -101,7 +101,7 @@ public class ZillagodTalent extends Skill {
 			}
 
 			public Condition getCondition() {
-				return new DistanceCondition(10);
+				return new DistanceCondition(1);
 			}
 
 			public int getSkillType() {

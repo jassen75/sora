@@ -39,6 +39,19 @@ $(document).ready(function() {
 	$("#calculate").click(function() {
 		calculate();
 	});
+	
+	$("#reset").click(function() {
+		if(stage==2)
+		{
+			fightInfo["attacker"]["heroLeftLife"] = fightInfo["attacker"]["heroPanel"]["life"];
+			fightInfo["attacker"]["soldierLeftLife"] = fightInfo["attacker"]["soldierPanel"]["life"];
+			fightInfo["defender"]["heroLeftLife"] = fightInfo["defender"]["heroPanel"]["life"];
+			fightInfo["defender"]["soldierLeftLife"] = fightInfo["defender"]["soldierPanel"]["life"];
+			refreshLife("attacker");
+			refreshLife("defender");
+			sync(false);
+		}
+	});
 
 	$("#import_fm").click(function() {
 		importFm();
@@ -216,10 +229,7 @@ function buildHero(hero) {
 	fightInfo[role]["buffCounts"] = {};
 	fightInfo[role]["roleType"] = roleType;
 	
-	if(stage==0)
-	{
-		stage = 1;
-	}
+	stage = 1;
 	
 	loadWeapon(hero["id"], role);
 }
