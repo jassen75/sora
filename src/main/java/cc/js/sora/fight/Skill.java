@@ -144,7 +144,10 @@ public abstract class Skill {
 		}
 	}
 
-	@JsonProperty("desc")
+	public String getDesc() {
+		return this.toString();
+	}
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");

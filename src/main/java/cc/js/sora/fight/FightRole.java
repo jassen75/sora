@@ -40,7 +40,7 @@ public class FightRole {
 //	Map<String, UserCondition> userConditions;
 //	List<CheckedSkill> checkedSkills = Lists.newArrayList();
 	
-	int range;
+	//int range;
 	
 	// 1 battle attacker 2 battle defender 3 aoe attacker 4 aoe defender
 	int roleType;

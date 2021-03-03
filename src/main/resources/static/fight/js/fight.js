@@ -8,6 +8,8 @@ var soldierLife = 1;
 // game data
 var userData = {};
 
+var stage = 0;
+
 var lands = {
 	"Flat" : "平地",
 	"Water" : "水",
@@ -42,12 +44,85 @@ $(document).ready(function() {
 		importFm();
 
 	});
+	
+	$("#attackerHeroBar_c").click(function(e) {
+		if(stage==2)
+		{
+			if(event.offsetX && event.offsetX < $(this).width())
+			{
+				fightInfo["attacker"]["heroLeftLife"] = Math.floor(fightInfo["attacker"]["heroPanel"]["life"] * smooth(event.offsetX / $(this).width()));
+			}
+			refreshLife("attacker");
+			refreshLife("defender");
+			sync(false);
+		}
+	});
 
+	$("#attackerSoldierBar_c").click(function(e) {
+		if(stage==2)
+		{
+			if(event.offsetX && event.offsetX < $(this).width())
+			{
+				fightInfo["attacker"]["soldierLeftLife"] = Math.floor(fightInfo["attacker"]["soldierPanel"]["life"] * smooth(event.offsetX / $(this).width()));
+			}
+			refreshLife("attacker");
+			refreshLife("defender");
+			sync(false);
+		}
+	});
+	
+	$("#defenderHeroBar_c").click(function(e) {
+		if(stage==2)
+		{
+			
+			if(event.offsetX && event.offsetX < $(this).width())
+			{
+				fightInfo["defender"]["heroLeftLife"] = Math.floor(fightInfo["defender"]["heroPanel"]["life"] * smooth(event.offsetX / $(this).width()));
+			}
+			refreshLife("attacker");
+			refreshLife("defender");
+			sync(false);
+		}
+	});
+	
+	$("#defenderSoldierBar_c").click(function(e) {
+		if(stage==2)
+		{
+			if(event.offsetX && event.offsetX < $(this).width())
+			{
+				fightInfo["defender"]["soldierLeftLife"] = Math.floor(fightInfo["defender"]["soldierPanel"]["life"] * smooth(event.offsetX / $(this).width()));
+			}
+			refreshLife("attacker");
+			refreshLife("defender");
+			sync(false);
+		}
+	});
 	$.get("/fight/fm.csv", function(data) {
 		parseCSV(data);
 	});
 
 });
+
+function smooth(c)
+{
+	if(c>0.98)
+	{
+		return 1;
+	}
+	if(c<0.02)
+	{
+		return 0;
+	}
+	return c;
+}
+
+function refreshLife(role)
+{
+	$("#"+role+"SoldierBar").text(fightInfo[role]["soldierLeftLife"]+"/"+fightInfo[role]["soldierPanel"]["life"]);
+	$("#"+role+"SoldierBar").attr("style", "width:"+Math.ceil(fightInfo[role]["soldierLeftLife"]/fightInfo[role]["soldierPanel"]["life"]*100)+"%");
+	$("#"+role+"HeroBar").text(fightInfo[role]["heroLeftLife"]+"/"+fightInfo[role]["heroPanel"]["life"]);
+	$("#"+role+"HeroBar").attr("style", "width:"+Math.ceil(fightInfo[role]["heroLeftLife"]/fightInfo[role]["heroPanel"]["life"]*100)+"%");							
+}
 
 function loadHeroData() {
 	$.ajax({
@@ -140,6 +215,11 @@ function buildHero(hero) {
 	fightInfo[role]["userConditionChecked"] = {};
 	fightInfo[role]["buffCounts"] = {};
 	fightInfo[role]["roleType"] = roleType;
+	
+	if(stage==0)
+	{
+		stage = 1;
+	}
 	
 	loadWeapon(hero["id"], role);
 }
@@ -419,6 +499,12 @@ function sync(refresh) {
 
 						if (refresh) {
 							sync(false);
+							
+							
+							if(stage==1)
+							{
+								stage=2;
+							}
 						}
 					},
 					error : function(jqXHR) {
@@ -428,10 +514,10 @@ function sync(refresh) {
 }
 
 function syncComplete(role) {
-	fightInfo[role]["heroLeftLife"] = Math
-			.ceil(fightInfo[role]["heroPanel"]["life"] * heroLife);
-	fightInfo[role]["soldierLeftLife"] = Math
-			.ceil(fightInfo[role]["soldierPanel"]["life"] * soldierLife);
+//	fightInfo[role]["heroLeftLife"] = Math
+//			.ceil(fightInfo[role]["heroPanel"]["life"] * heroLife);
+//	fightInfo[role]["soldierLeftLife"] = Math
+//			.ceil(fightInfo[role]["soldierPanel"]["life"] * soldierLife);
 	buildSkill(role);
 	buildUserCondition(role); 
 	buildHeroPanel(role);
@@ -439,6 +525,15 @@ function syncComplete(role) {
 	buildCriticalPanel(role);
 	buildDistanceList();
 	buildSupportSkills(role);
+
+	
+	if(stage==1)
+	{
+		fightInfo[role]["heroLeftLife"] = fightInfo[role]["heroPanel"]["life"];
+		fightInfo[role]["soldierLeftLife"] = fightInfo[role]["soldierPanel"]["life"];
+		refreshLife(role);
+	}
+
 }
 
 function buildHeroPanel(role) {
