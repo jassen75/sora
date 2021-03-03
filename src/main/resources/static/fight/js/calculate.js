@@ -53,23 +53,30 @@ function calculate()
 	
 	if(battleType == 2)
 	{
-		aoe(actionName, heroToSoldier, heroToHero, attackerHeroCriticalChecked, fightDetails);
+		var isAttackerPhysic = fightInfo["attacker"]["action"] ? fightInfo["attacker"]["action"]["isPhysic"] : fightInfo["attacker"]["hero"]["isPhysic"] ;
+		var heroToSoldier = htoS("attacker", "defender", attackerHeroCriticalChecked,  isAttackerPhysic, coefficient);
+		var heroToHero = htoH("attacker", "defender", attackerHeroCriticalChecked,  isAttackerPhysic, coefficient);
+		var defenderResult = aoe(actionName, heroToSoldier, heroToHero, attackerHeroCriticalChecked);
 	}
 	
 	
-		
-	$("#defenderSoldierBar").text(defenderResult["dsl"]+"/"+fightInfo["defender"]["soldierPanel"]["life"]);
-	$("#defenderSoldierBar").attr("style", "width:"+Math.ceil(defenderResult["dsl"]/fightInfo["defender"]["soldierPanel"]["life"]*100)+"%");
-	$("#defenderHeroBar").text(defenderResult["dl"]+"/"+fightInfo["defender"]["heroPanel"]["life"]);
-	$("#defenderHeroBar").attr("style", "width:"+Math.ceil(defenderResult["dl"]/fightInfo["defender"]["heroPanel"]["life"]*100)+"%");							
-	$("#attackerFightDetails").html(defenderResult["fightDetails"]);
+	if(defenderResult)	
+	{
+		$("#defenderSoldierBar").text(defenderResult["dsl"]+"/"+fightInfo["defender"]["soldierPanel"]["life"]);
+		$("#defenderSoldierBar").attr("style", "width:"+Math.ceil(defenderResult["dsl"]/fightInfo["defender"]["soldierPanel"]["life"]*100)+"%");
+		$("#defenderHeroBar").text(defenderResult["dl"]+"/"+fightInfo["defender"]["heroPanel"]["life"]);
+		$("#defenderHeroBar").attr("style", "width:"+Math.ceil(defenderResult["dl"]/fightInfo["defender"]["heroPanel"]["life"]*100)+"%");							
+		$("#attackerFightDetails").html(defenderResult["fightDetails"]);
+	}
 	
-		
-	$("#attackerSoldierBar").text(attackerResult["dsl"]+"/"+fightInfo["attacker"]["soldierPanel"]["life"]);
-	$("#attackerSoldierBar").attr("style", "width:"+Math.ceil(attackerResult["dsl"]/fightInfo["attacker"]["soldierPanel"]["life"]*100)+"%");
-	$("#attackerHeroBar").text(attackerResult["dl"]+"/"+fightInfo["attacker"]["heroPanel"]["life"]);
-	$("#attackerHeroBar").attr("style", "width:"+Math.ceil(attackerResult["dl"]/fightInfo["attacker"]["heroPanel"]["life"]*100)+"%");							
-	$("#defenderFightDetails").html(attackerResult["fightDetails"]);
+	if(attackerResult)
+	{
+		$("#attackerSoldierBar").text(attackerResult["dsl"]+"/"+fightInfo["attacker"]["soldierPanel"]["life"]);
+		$("#attackerSoldierBar").attr("style", "width:"+Math.ceil(attackerResult["dsl"]/fightInfo["attacker"]["soldierPanel"]["life"]*100)+"%");
+		$("#attackerHeroBar").text(attackerResult["dl"]+"/"+fightInfo["attacker"]["heroPanel"]["life"]);
+		$("#attackerHeroBar").attr("style", "width:"+Math.ceil(attackerResult["dl"]/fightInfo["attacker"]["heroPanel"]["life"]*100)+"%");							
+		$("#defenderFightDetails").html(attackerResult["fightDetails"]);
+	}
 }
 
 function getRange(role, kind)
@@ -94,6 +101,42 @@ function getMeleeDamageReduce(role, kind)
 	}
 	return false;
 }
+
+function htoS(attackerRole, defenderRole, attackerHeroCriticalChecked, isAttackerPhysic, coefficient)
+{
+		
+	if(fightInfo[attackerRole]["hero"] && fightInfo[defenderRole]["soldier"])
+	{
+		var counter = getCounter(attackerRole, "hero", "soldier");
+		//alert(JSON.stringify(counter));
+		heroToSoldier = oneHit(coefficient, fightInfo[attackerRole]["heroPanel"], fightInfo[defenderRole]["soldierPanel"], 
+				attackerHeroCriticalChecked, isAttackerPhysic ,counter);
+		var mdr = getMeleeDamageReduce(attackerRole, "hero");
+		if(mdr)
+		{
+			heroToSoldier = Math.ceil(0.3 * heroToSoldier);
+		}
+		return heroToSoldier;
+	}
+	
+}
+
+function htoH(attackerRole, defenderRole, attackerHeroCriticalChecked, isAttackerPhysic, coefficient)
+{
+	if(fightInfo[attackerRole]["hero"] && fightInfo[defenderRole]["hero"])
+	{
+		var counter = getCounter(attackerRole, "hero", "hero");
+		heroToHero = oneHit(coefficient, fightInfo[attackerRole]["heroPanel"], fightInfo[defenderRole]["heroPanel"], 
+				attackerHeroCriticalChecked, isAttackerPhysic , counter);
+		var mdr = getMeleeDamageReduce(attackerRole, "hero");
+		if(mdr)
+		{
+			heroToHero = Math.ceil(0.3 * heroToHero);
+		}
+	}
+	return heroToHero;
+}
+
 
 function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, attackerHeroLife, attackerSoldierLife)
 {
@@ -345,8 +388,9 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 }
 
 
-function aoe(actionName, heroToSoldier,heroToHero, attackerHeroCriticalChecked, fightDetails)
+function aoe(actionName, heroToSoldier,heroToHero, attackerHeroCriticalChecked)
 {
+	var fightDetails = "";
 	var dl = fightInfo["defender"]["hero"] ? fightInfo["defender"]["heroLeftLife"] : 0;
 	var dsl = fightInfo["defender"]["soldier"] ? fightInfo["defender"]["soldierLeftLife"] : 0;
 	
@@ -356,12 +400,13 @@ function aoe(actionName, heroToSoldier,heroToHero, attackerHeroCriticalChecked, 
 	var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
 	fightDetails+="<p"+c+">"+fightInfo["attacker"]["hero"]["name"]+"用"+actionName+"对"+fightInfo["defender"]["hero"]["name"]+"造成<b>"+20*heroToHero+"</b>伤害</p>";
 	fightDetails+="<p"+c+">"+fightInfo["attacker"]["hero"]["name"]+"用"+actionName+"对"+fightInfo["defender"]["soldier"]["name"]+"造成<b>"+20*heroToSoldier+"</b>伤害</p>";
-	
-	$("#"+defenderRole+"SoldierBar").text(dsl+"/"+fightInfo[defenderRole]["soldierPanel"]["life"]);
-	$("#"+defenderRole+"SoldierBar").attr("style", "width:"+Math.ceil(dsl/fightInfo[defenderRole]["soldierPanel"]["life"]*100)+"%");
-	$("#"+defenderRole+"HeroBar").text(dl+"/"+fightInfo[defenderRole]["heroPanel"]["life"]);
-	$("#"+defenderRole+"HeroBar").attr("style", "width:"+Math.ceil(dl/fightInfo["defender"]["heroPanel"]["life"]*100)+"%");							
-	$("#"+attackerRole+"FightDetails").html(fightDetails);
+
+	return  {"dsl":dsl, "dl":dl, "fightDetails":fightDetails };
+//	$("#defenderSoldierBar").text(dsl+"/"+fightInfo["defender"]["soldierPanel"]["life"]);
+//	$("#defenderSoldierBar").attr("style", "width:"+Math.ceil(dsl/fightInfo["defender"]["soldierPanel"]["life"]*100)+"%");
+//	$("#defenderHeroBar").text(dl+"/"+fightInfo["defender"]["heroPanel"]["life"]);
+//	$("#defenderHeroBar").attr("style", "width:"+Math.ceil(dl/fightInfo["defender"]["heroPanel"]["life"]*100)+"%");							
+//	$("#attackerFightDetails").html(fightDetails);
 	
 }
 
