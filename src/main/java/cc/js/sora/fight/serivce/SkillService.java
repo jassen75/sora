@@ -87,8 +87,7 @@ public class SkillService {
 
 		registerSkill(Skill.PatyleTalent, new PatyleTalent());
 		registerSkill(Skill.TowaTalent, new TowaTalent());
-		registerSkill(Skill.ZalrahdaTalent1, new ZalrahdaTalent1());
-		registerSkill(Skill.ZalrahdaTalent2, new ZalrahdaTalent2());
+		registerSkill(Skill.ZalrahdaTalent, new ZalrahdaTalent());
 		registerSkill(Skill.MarielTalent, new MarielTalent());
 		registerSkill(Skill.LandiusTalent, new LandiusTalent());
 		registerSkill(Skill.LedynTalent, new LedynTalent());
@@ -126,9 +125,9 @@ public class SkillService {
 		registerSkill(Skill.Yanshi, new Yanshi());
 		
 		registerSkill(Skill.Shimeng, new DreamAction());
-		registerSkill(Skill.Shixuemojian, new BloodSwordAction());
 		registerSkill(Skill.Weifengchongzhen, new Weifengchongzhen());
-
+		registerSkill(Skill.Juemingyiji, new Juemingyiji());
+		
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());
 		registerSkill(Skill.BernhardtSuper, new BernhardtSuper());

@@ -460,8 +460,11 @@ function displayAttackerAction() {
 		action.attr("actionid", actions[i]["id"]);
 		action.appendTo($("#attacker-action-list"));
 
-		if (actions[i]["id"] == 10001 || actions[i]["id"] == 10002) {
-			fightInfo["attacker"]["action"] = actions[i];
+		if(!fightInfo["attacker"]["action"])
+		{
+			if (actions[i]["id"] == 10001 || actions[i]["id"] == 10002) {
+				fightInfo["attacker"]["action"] = actions[i];
+			}
 		}
 		action.click(function(event) {
 			var find = $(this).attr("actionid");
@@ -487,8 +490,7 @@ function displayAttackerAction() {
 
 function sync(refresh) {
 	if (fightInfo["attacker"] && fightInfo["defender"]) {
-		$
-				.ajax({
+		$.ajax({
 					type : "POST",
 					url : "/fight/sync",
 					data : JSON.stringify(fightInfo),

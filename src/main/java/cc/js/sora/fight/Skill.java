@@ -191,15 +191,14 @@ public abstract class Skill {
 	 */
 	public static final long PatyleTalent = 1;
 	public static final long TowaTalent = 2;
-	public static final long ZalrahdaTalent1 = 3;
 	public static final long HimikoTalent = 5;
 	public static final long MarielTalent = 10;
 	public static final long MagusOfTheTreeTalent = 18;
 	public static final long RozaliaTalent = 21;
 	public static final long ReanTalent = 22;
 	public static final long AresTalent = 28;
-	public static final long ZalrahdaTalent2 = 203;
 	public static final long LandiusTalent = 58;
+	public static final long ZalrahdaTalent = 62;
 	public static final long ZillagodTalent = 63;
 	public static final long BernhardtTalent = 74;
 	public static final long ElwinTalent = 76;
@@ -239,10 +238,12 @@ public abstract class Skill {
 	 * 1600-2000 action
 	 */
 	public static final long Shimeng = 1601;
-	public static final long Shixuemojian = 1602;
+	//public static final long Shixuemojian = 1602;
 	public static final long Youshidaji = 1603;
 	public static final long Ziyouzhiren = 1604;
 	public static final long Weifengchongzhen = 1606;
+	public static final long Juemingyiji = 1602;
+	
 	
 
 	public static final long Qinzhen = 1805;

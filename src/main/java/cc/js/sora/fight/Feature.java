@@ -20,6 +20,9 @@ public class Feature implements Effect{
 	public final static String ImmuneToFixedDamage = "ImmuneToFixedDamage";
 	public final static String ImmuneToMeleeDamageReduce = "ImmuneToMeleeDamageReduce";
 	public final static String FirstAttack = "FirstAttack";
+	public final static String FixDamageToSelf = "FixDamageToSelf";
+	public final static String DirectToHero = "DirectToHero";
+	
 	String featureName;
 	Object value;
 	String desc;

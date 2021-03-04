@@ -35,9 +35,9 @@ public class Action {
 	@Column(name = "coefficient")
 	double coefficient;
 
-	// 直击本体
-	@Column(name = "direct")
-	boolean direct;
+//	// 直击本体
+//	@Column(name = "direct")
+//	boolean direct;
 
 	@Column(name = "skills")
 	String skills;
@@ -45,7 +45,7 @@ public class Action {
 	@Column(name = "rang")
 	int range;
 
-	@Column(name = "hitTime")
+	@Column(name = "hit_time")
 	int hitTime;
 
 	@JsonProperty("isPhysic")

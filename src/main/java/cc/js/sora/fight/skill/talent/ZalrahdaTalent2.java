@@ -16,11 +16,6 @@ import cc.js.sora.fight.condition.UserCondition;
 public class ZalrahdaTalent2 extends Skill {
 
 	@Override
-	public long getId() {
-		return Skill.ZalrahdaTalent2;
-	}
-
-	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
 		return "白毛捉迷藏";
