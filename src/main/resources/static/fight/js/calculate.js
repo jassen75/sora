@@ -114,7 +114,8 @@ function getMeleeDamageReduce(role, kind)
 	return false;
 }
 
-function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, attackerHeroLife, attackerSoldierLife, fastAttack)
+function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, attackerHeroLife, 
+		attackerSoldierLife, fastAttack)
 {
 	//alert("attackerHeroLife=="+attackerHeroLife+", attackerSoldierLife==="+attackerSoldierLife);
 	var fightDetails= "";
@@ -227,7 +228,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	{
 		var damage = Math.ceil(asl*fightInfo[attackerRole]["soldierPanel"]["features"]["FixDamageToSelf"]/100.0);
 		fightDetails+="<p>"+fightInfo[attackerRole]["soldier"]["name"]+"自损"+damage+"</p>";
-		asl = Math.ceil(asl - damage);
+		asl = asl - damage;
 	}
 	
 	if(fightInfo[defenderRole]["soldierPanel"]["features"]["FixDamageToSelf"])
@@ -236,7 +237,8 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 		dsl = dsl - damage;
 	}
 	
-	var soldierCount = Math.ceil(asl*20 / fightInfo[attackerRole]["soldierPanel"]["life"]);
+	var soldierCount = 2*Math.ceil(asl*10 / fightInfo[attackerRole]["soldierPanel"]["life"]);
+	//alert("asl===="+asl+",soldierCount=="+soldierCount+",life=="+fightInfo[attackerRole]["soldierPanel"]["life"]);
 	var heroCount = al > 0  ? 20 : 0;
 	
 	if(getRange(attackerRole, "soldier")< distance)
@@ -262,6 +264,10 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	var heroLeftCount = heroCount;
 	var fl = dl;
 	var fsl = dsl;
+	if(!fastAttack)
+	{
+		fastAttack = 0;
+	}
 	var fastCount = fastAttack;
 	
 	if(fightInfo[defenderRole]["soldier"]) 
@@ -301,10 +307,13 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 				
 				if(fastCount > Math.ceil(dsl/heroToSoldier))
 				{
-					fastCount -= Math.ceil((oneSoldierLife-dsl)/heroToSoldier);
-					heroLeftCount -= Math.ceil((oneSoldierLife-dsl)/heroToSoldier);
-					heroKillSoldier++;
-					dsl =0;
+					if(dsl > 0)
+					{
+						fastCount -= Math.ceil(dsl/heroToSoldier);
+						heroLeftCount -= Math.ceil(dsl/heroToSoldier);
+						heroKillSoldier++;
+						dsl =0;
+					}
 					var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
 					fightDetails+="<p"+c+">"+fightInfo[attackerRole]["hero"]["name"]+"出手较快，用 <b>"+(heroCount-heroLeftCount)+
 						"</b> hit 干掉 <b>"+heroKillSoldier+"</b>"+fightInfo[defenderRole]["soldier"]["name"]+"</p>";
@@ -336,10 +345,12 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 
 			if(soldierLeftCount > Math.ceil(dsl/soldierToSoldier))
 			{
-								// soldier to hero
-				soldierLeftCount -= Math.ceil(dsl/soldierToSoldier);
-				soldierKillSoldier++;
-				dsl = 0;
+				if(dsl > 0)
+				{
+					soldierLeftCount -= Math.ceil(dsl/soldierToSoldier);
+					soldierKillSoldier++;
+					dsl = 0;
+				}
 				var c = attackerSoldierCriticalChecked?" class=\"critical\"":"";
 				fightDetails+="<p"+c+">"+fightInfo[attackerRole]["soldier"]["name"]+"用 <b>"+(soldierCount-soldierLeftCount)+
 					"</b> hit 干掉 <b>"+soldierKillSoldier+"</b> "+fightInfo[defenderRole]["soldier"]["name"]+"</p>";	
@@ -372,9 +383,12 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 				
 				if(heroLeftCount > Math.ceil(dsl/heroToSoldier))
 				{
-					heroLeftCount -= Math.ceil((oneSoldierLife-dsl)/heroToSoldier);
-					heroKillSoldier++;
-					dsl =0;
+					if(dsl > 0)
+					{
+						heroLeftCount -= Math.ceil(dsl/heroToSoldier);
+						heroKillSoldier++;
+						dsl =0;
+					}
 					var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
 					fightDetails+="<p"+c+">"+fightInfo[attackerRole]["hero"]["name"]+"用 <b>"+(heroCount-heroLeftCount-fastAttack)+
 						"</b> hit 干掉 <b>"+heroKillSoldier+"</b>"+fightInfo[defenderRole]["soldier"]["name"]+"</p>";

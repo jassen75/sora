@@ -389,6 +389,7 @@ function displayHero(role) {
 			fightInfo[role]["hero"]["soldiers"].forEach(function(e) {
 				if (e["id"] == find) {
 					fightInfo[role]["soldier"] = e;
+					stage = 1;
 					sync(false);
 				}
 			})
@@ -560,8 +561,12 @@ function buildHeroPanel(role) {
 	$("#" + role + "Life").attr("value", fightInfo[role]["heroPanel"]["life"]);
 	var detail = "<p>";
 	if (fightInfo[role]["action"]) {
-		var co =  fightInfo[role]["action"]["coefficient"]*(1+fightInfo["attacker"]["heroPanel"]["skillDamage"]/100.0);
-		co = co.toFixed(2);
+		var co =  fightInfo[role]["action"]["coefficient"];
+		if(!fightInfo[role]["action"]["simpleAttack"])
+		{
+			co =  fightInfo[role]["action"]["coefficient"]*(1+fightInfo["attacker"]["heroPanel"]["skillDamage"]/100.0);
+			co = co.toFixed(2);
+		}
 		detail += "<b>" + fightInfo[role]["action"]["name"]
 				+ "</b>&nbsp;&nbsp;&nbsp;<b>"
 				+co + "倍</b></p>";
