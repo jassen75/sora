@@ -47,7 +47,45 @@ public class ZalrahdaTalent extends Skill {
 	}
 
 	public List<Skill> childSkill() {
-		return Lists.newArrayList(new ZalrahdaTalent2(), new BloodSwordAction(), new BloodBattle(), new Skill() {
+		return Lists.newArrayList(new Skill() {
+
+			@Override
+			public String getName() {
+				// TODO Auto-generated method stub
+				return "白毛捉迷藏";
+			}
+
+			@Override
+			public Condition getCondition() {
+				// TODO Auto-generated method stub
+				return new UserCondition() {
+
+					@Override
+					public String getDesc() {
+						return "处于[危险范围]外";
+					}
+
+					@Override
+					public String getName() {
+						// TODO Auto-generated method stub
+						return "zhuomicang";
+					}
+
+					@Override
+					public boolean defaultValid() {
+						// TODO Auto-generated method stub
+						return true;
+					}};
+			}
+
+			@Override
+			public List<Effect> getEffects() {
+				// TODO Auto-generated method stub
+				return Lists.newArrayList(new Enhance(BuffType.CriticalProbInc, 30, Scope.All),
+						new Enhance(BuffType.CriticalDamageInc, 30, Scope.All), new Enhance(BuffType.DamageDec, 30, Scope.All));
+			}
+
+		}, new BloodSwordAction(), new BloodBattle(), new Skill() {
 
 			@Override
 			public String getName() {
