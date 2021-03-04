@@ -1,5 +1,6 @@
 package cc.js.sora.fight.serivce;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -324,7 +325,18 @@ public class FightService {
 						} else if (e instanceof Feature) {
 							Feature f = (Feature) e;
 							if (f.getScope() == Scope.All || f.getScope() == Scope.Hero) {
-								panelInfo.getFeatures().putAll(f.getFeatures());
+								//panelInfo.getFeatures().putAll(f.getFeatures());
+								if(f.isAggregate())
+								{
+									if(!panelInfo.getFeatures().containsKey(f.getFeatureName()))
+									{
+										panelInfo.getFeatures().put(f.getFeatureName(), Lists.newArrayList());
+									}
+									((List)panelInfo.getFeatures().get(f.getFeatureName())).add(f.getValue());
+								} else
+								{
+									panelInfo.getFeatures().putAll(f.getFeatures());
+								}
 							}
 						} else if (e instanceof Counter) {
 
@@ -663,7 +675,17 @@ public class FightService {
 						} else if (e instanceof Feature) {
 							Feature f = (Feature) e;
 							if (f.getScope() == Scope.All || f.getScope() == Scope.Soldier) {
-								panelInfo.getFeatures().putAll(f.getFeatures());
+								if(f.isAggregate())
+								{
+									if(!panelInfo.getFeatures().containsKey(f.getFeatureName()))
+									{
+										panelInfo.getFeatures().put(f.getFeatureName(), Lists.newArrayList());
+									}
+									((List)panelInfo.getFeatures().get(f.getFeatureName())).add(f.getValue());
+								} else
+								{
+									panelInfo.getFeatures().putAll(f.getFeatures());
+								}
 							}
 						} else if (e instanceof Counter) {
 

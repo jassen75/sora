@@ -117,7 +117,7 @@ public class ElwinTalent extends Skill {
 			
 			@Override
 			public List<Effect> getEffects(int count) {
-				return Lists.newArrayList(new Feature(Feature.FirstAttack, true, "先于敌人攻击", Scope.All));
+				return Lists.newArrayList(new Feature(Feature.FirstAttack, true, "先于敌人攻击", Scope.All, false));
 
 			}
 				

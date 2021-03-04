@@ -54,7 +54,7 @@ public class BloodSwordAction extends Skill {
 	public List<Effect> getEffects() {
 		return Lists.newArrayList(
 				new Buff("Shixuemojian", Lists.newArrayList(new Enhance(BuffType.DamageInc, 30, Scope.All))),
-				new Feature("FixDamageToSelf", 100, "献祭所有士兵", Scope.Soldier));
+				new Feature("UnImuFixDamageToSelf", 100, "献祭所有士兵", Scope.Soldier, true));
 	}
 
 }

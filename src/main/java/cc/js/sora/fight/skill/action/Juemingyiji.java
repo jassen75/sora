@@ -38,7 +38,7 @@ public class Juemingyiji extends Skill {
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Feature("DirectToHero", true, "直击本体", Scope.Hero));
+		return Lists.newArrayList(new Feature("DirectToHero", true, "直击本体", Scope.Hero, false));
 	}
 
 }

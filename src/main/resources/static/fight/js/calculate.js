@@ -203,38 +203,87 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	var dsl = fightInfo[defenderRole]["soldier"] ? fightInfo[defenderRole]["soldierLeftLife"] : 0;
 	var distance = fightInfo["distance"];
 	
-	if(fightInfo[attackerRole]["heroPanel"]["preBattleDamage"] > 0)
+	if(fightInfo[attackerRole]["heroPanel"]["features"]["PreFixDamageAttack"])
 	{
-		var preDamage = fightInfo[attackerRole]["heroPanel"]["preBattleDamage"]*fightInfo[attackerRole]["heroPanel"]["attack"];
-		if(fightInfo[defenderRole]["hero"])
+		if(fightInfo[defenderRole]["heroPanel"]["features"]["ImmuneToFixedDamage"])
 		{
-			if(fightInfo[defenderRole]["heroPanel"]["features"]["ImmuneToFixedDamage"])
+			fightDetails+="<p>"+fightInfo[defenderRole]["hero"]["name"]+"免疫掉战前固伤</p>";
+		} else
+		{
+			var list = fightInfo[attackerRole]["heroPanel"]["features"]["PreFixDamageAttack"];
+			for(var i in list)
 			{
-				fightDetails+="<p>"+fightInfo[defenderRole]["hero"]["name"]+"免疫掉战前固伤</p>";
-			} else
-			{
-				dl  -= preDamage;
-				fightDetails+="<p>"+fightInfo[attackerRole]["hero"]["name"]+"战前对"+fightInfo[defenderRole]["hero"]["name"]+"造成<b>"+preDamage+"</b>伤害</p>";
+				var damage = Math.ceil(list[i]*fightInfo[attackerRole]["heroPanel"]["attack"]);
+				dl  -= damage;
+				dsl -= damage;
+				fightDetails+="<p>"+fightInfo[attackerRole]["hero"]["name"]+"战前对"+fightInfo[defenderRole]["hero"]["name"]+"及士兵各造成<b>"+damage+"</b>伤害</p>";
 			}
 		}
 	}
 	
-	if(fightInfo[defenderRole]["heroPanel"]["preBattleDamage"] > 0)
+	if(fightInfo[defenderRole]["heroPanel"]["features"]["PreFixDamageAttack"])
 	{
+		if(!fightInfo[attackerRole]["heroPanel"]["features"]["ImmuneToFixedDamage"])
+		{
+			var list = fightInfo[attackerRole]["heroPanel"]["features"]["PreFixDamageAttack"];
+			for(var i in list)
+			{
+				var damage = Math.ceil(list[i]*fightInfo[attackerRole]["heroPanel"]["attack"]);
+				asl  -= damage;
+				al -= damage;
+			}
+		}
 	}
-	
 	
 	if(fightInfo[attackerRole]["soldierPanel"]["features"]["FixDamageToSelf"])
 	{
-		var damage = Math.ceil(asl*fightInfo[attackerRole]["soldierPanel"]["features"]["FixDamageToSelf"]/100.0);
-		fightDetails+="<p>"+fightInfo[attackerRole]["soldier"]["name"]+"自损"+damage+"</p>";
-		asl = asl - damage;
+		if(!fightInfo[attackerRole]["heroPanel"]["features"]["ImmuneToFixedDamage"])
+		{
+			var list = fightInfo[attackerRole]["soldierPanel"]["features"]["FixDamageToSelf"];
+			for(var i in list)
+			{
+				var damage = Math.ceil(asl*list[i]/100.0);
+				fightDetails+="<p>"+fightInfo[attackerRole]["soldier"]["name"]+"自损"+damage+"</p>";
+				asl = asl - damage;
+			}
+		} else
+		{
+			fightDetails+="<p>"+fightInfo[defenderRole]["hero"]["name"]+"免疫自损</p>";
+		}
 	}
 	
 	if(fightInfo[defenderRole]["soldierPanel"]["features"]["FixDamageToSelf"])
 	{
-		var damage = Math.ceil(dsl*fightInfo[defenderRole]["soldierPanel"]["features"]["FixDamageToSelf"]/100.0);
-		dsl = dsl - damage;
+		if(!fightInfo[defenderRole]["heroPanel"]["features"]["ImmuneToFixedDamage"])
+		{
+			var list = fightInfo[defenderRole]["soldierPanel"]["features"]["FixDamageToSelf"];
+			for(var i in list)
+			{
+				var damage = Math.ceil(dsl*list[i]/100.0);
+				dsl = dsl - damage;
+			}
+		}
+	}
+	
+	if(fightInfo[attackerRole]["soldierPanel"]["features"]["UnImuFixDamageToSelf"])
+	{
+		var list = fightInfo[attackerRole]["soldierPanel"]["features"]["UnImuFixDamageToSelf"];
+		for(var i in list)
+		{
+			var damage = Math.ceil(asl*list[i]/100.0);
+			fightDetails+="<p>"+fightInfo[attackerRole]["soldier"]["name"]+"自损"+damage+"</p>";
+			asl = asl - damage;
+		}
+	}
+	
+	if(fightInfo[defenderRole]["soldierPanel"]["features"]["UnImuFixDamageToSelf"])
+	{
+		var list = fightInfo[defenderRole]["soldierPanel"]["features"]["UnImuFixDamageToSelf"];
+		for(var i in list)
+		{
+			var damage = Math.ceil(dsl*list[i]/100.0);
+			dsl = dsl - damage;
+		}
 	}
 	
 	var soldierCount = 2*Math.ceil(asl*10 / fightInfo[attackerRole]["soldierPanel"]["life"]);
@@ -273,20 +322,6 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	if(fightInfo[defenderRole]["soldier"]) 
 	{
 		var oneSoldierLife = fightInfo[defenderRole]["soldierPanel"]["life"] / 10;
-		if(preDamage)
-		{
-			if(fightInfo[defenderRole]["soldierPanel"]["features"]["ImmuneToFixedDamage"])
-			{
-				fightDetails+="<p>"+fightInfo[defenderRole]["soldier"]["name"]+"免疫掉战前固伤</p>";
-			} else
-			{
-				dsl -= preDamage;
-				var count = Math.floor(preDamage/oneSoldierLife);
-				fightDetails+="<p>"+fightInfo[attackerRole]["hero"]["name"]+"战前对士兵造成<b>"+preDamage+"</b>伤害, 杀死<b>"+count+"</b>"+
-							fightInfo[defenderRole]["soldier"]["name"]+"</p>";
-				//fightDetails+="<p>dsl=="+dsl+"</p>";
-			}
-		}
 
 		if(dsl > 0)
 		{

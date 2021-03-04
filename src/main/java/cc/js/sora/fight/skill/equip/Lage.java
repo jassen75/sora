@@ -9,6 +9,7 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
+import cc.js.sora.fight.Feature;
 import cc.js.sora.fight.Features;
 import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Scope;
@@ -39,7 +40,7 @@ public class Lage extends Skill {
 	@Override
 	public List<Effect> getEffects()  {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.PreBattleDamage, 1, Scope.Hero));
+		return Lists.newArrayList(new Feature(Feature.PreFixDamageAttack, 1, "战前1倍攻击伤害", Scope.Hero, true));
 	}
 
 	

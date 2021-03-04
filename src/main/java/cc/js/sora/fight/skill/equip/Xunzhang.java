@@ -36,7 +36,7 @@ public class Xunzhang extends Skill{
 	@Override
     public List<Effect> getEffects()
     {
-    	return Lists.newArrayList(new Feature(Features.ImmuneToFixedDamage, true, "免疫固伤", Scope.All));
+    	return Lists.newArrayList(new Feature(Features.ImmuneToFixedDamage, true, "免疫固伤", Scope.All, false));
     }
 	
 	@Override
