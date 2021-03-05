@@ -113,6 +113,32 @@ $(document).ready(function() {
 	$.get("/fight/fm.csv", function(data) {
 		parseCSV(data);
 	});
+	
+	$('#equip-editor').on('show.bs.modal', function (event) {
+		 var button = $(event.relatedTarget) // Button that triggered the modal
+  		var equipPart = button.data('equip');
+  		var role = button.data('role');
+  		//alert("equip:"+equipPart+", role=="+role);
+  		if(equipPart!="jewlry")
+  		{
+  			$("#fm-edit-critical").hide();
+  		} else
+  		{
+  			$("#fm-edit-critical").show();
+  		}
+  		var heroId = fightInfo[role]["hero"]["id"];
+  		var fmInfo = userData["fm"][heroId][equipPart];
+  		//alert(JSON.stringify(fmInfo));
+  		if(fmInfo)
+  		{
+  			$("#equip-editor").find(":text").attr("value", "");
+  			for(var i in fmInfo["fm_info"])
+  			{
+  				//alert("i=="+i+", fminfo=="+fmInfo["fm_info"][i]);
+  				$("#fm-edit-"+i).attr("value", fmInfo["fm_info"][i]);
+  			}
+  		}
+	});
 
 });
 
@@ -429,7 +455,7 @@ function displayHero(role) {
 			var part = equipPart[i];
 			$("#" + role + "-" + equipPart[i]).children("div").remove();
 			if (fightInfo[role]["equip"][part]) {
-				var pic = $("<div><img src=\"/fight/image/equip_"
+				var pic = $("<div data-toggle=\"modal\" data-target=\"#equip-editor\" data-equip=\""+part+"\" data-role=\""+role+"\"><img src=\"/fight/image/equip_"
 						+ fightInfo[role]["equip"][equipPart[i]]["id"]
 						+ ".png\" alt=\"\" width=\"60\" height=\"60\"></img><p>"
 						+ fightInfo[role]["equip"][equipPart[i]]["name"]

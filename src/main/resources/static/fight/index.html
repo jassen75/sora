@@ -20,6 +20,103 @@
 <script src="/fight/js/fm.js"></script>
 </head>
 <body>
+	<div class="modal fade" id="equip-editor" tabindex="-1" role="dialog" aria-labelledby="editorLable">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+     			 <div class="modal-header">
+     			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+     			    <h4 class="modal-title" id="editor-title">编辑附魔</h4>    
+     			 </div>
+     			 <div class="modal-body">
+  			        <form>
+  			        	<div class="row">
+	  			        	<div class="col-md-4 form-group">
+								<label for="fm-edit-life-percent">生命百分比</label> <input type="text"
+									class="form-control" id="fm-edit-lifeInc" placeholder="">
+							</div>
+							<div class="col-md-4 form-group">
+								<label for="fm-edit-life">生命</label> <input type="text"
+									class="form-control" id="fm-edit-life" placeholder="">
+							</div>
+							<div class="col-md-4">
+								<div class="dropdown">
+								  <button id="fm-edit-type" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+								    附魔类型
+								    <span class="caret"></span>
+								  </button>
+								  <ul class="dropdown-menu" aria-labelledby="dLabel">
+									<li data-fm-type="1">轻风</li>
+									<li data-fm-type="2">满月</li>
+									<li data-fm-type="3">魔术</li>
+									<li data-fm-type="4">怒涛</li>
+									<li data-fm-type="5">时钟</li>
+									<li data-fm-type="6">烈日</li>
+									<li data-fm-type="7">流星</li>
+									<li data-fm-type="8">顽石</li>
+									<li data-fm-type="9">水晶</li>
+									<li data-fm-type="10">寒冰</li>
+									<li data-fm-type="11">大树</li>
+									<li data-fm-type="12">荆棘</li>
+									<li data-fm-type="13">钢铁</li>
+								  </ul>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 form-group">
+								<label for="fm-edit-attackInx">攻击百分比</label> <input type="text"
+									class="form-control" id="fm-edit-attackInc" placeholder="">
+							</div>
+							<div class="col-md-4 form-group">
+								<label for="fm-edit-attack">攻击</label> <input type="text"
+									class="form-control" id="fm-edit-attack" placeholder="">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 form-group">
+								<label for="fm-edit-intelInc">智力百分比</label> <input type="text"
+									class="form-control" id="fm-edit-intelInc" placeholder="">
+							</div>
+							<div class="col-md-4 form-group">
+								<label for="fm-edit-intel">智力</label> <input type="text"
+									class="form-control" id="fm-edit-intel" placeholder="">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 form-group">
+								<label for="fm-edit-physicInc">防御百分比</label> <input type="text"
+									class="form-control" id="fm-edit-physicInc" placeholder="">
+							</div>
+							<div class="col-md-4 form-group">
+								<label for="fm-edit-physic">防御</label> <input type="text"
+									class="form-control" id="fm-edit-physic" placeholder="">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-4 form-group">
+								<label for="attackerMagicDef">魔防百分比</label> <input type="text"
+									class="form-control" id="fm-edit-magicInc" placeholder="">
+							</div>
+							<div class="col-md-4 form-group">
+								<label for="fm-edit-magic">魔防</label> <input type="text"
+									class="form-control" id="fm-edit-magic" placeholder="">
+							</div>
+						</div>
+						<div class="row">
+							<div id="fm-edit-critical" class="col-md-4 form-group">
+								<label for="fm-edit-critical-text">暴击概率</label> <input type="text" id="fm-edit-criticalInc" 
+									class="form-control" placeholder="">
+							</div>
+						</div>
+					</form>
+				</div>
+		        <div class="modal-footer">
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		       		<button type="button" class="btn btn-primary">保存修改</button>
+		        </div>
+     		</div>
+		</div>
+	</div>
 	<nav id="header" class="navbar">
 		<div class="container">
 			<h2 class="navbar-header">梦战战斗计算器</h2>
