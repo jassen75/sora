@@ -281,7 +281,7 @@ function calculatePanel()
 						
 			for(var i=0; i<counters.length; i++)
 			{
-				if(attacker["isPhysic"]) 
+				if(attacker["attackType"]) 
 				{
 					fightInfo["attackerAttack"] = Math.floor(fightInfo["attackerAttack"]*(1+counters[i]/100));
 				} else 
@@ -533,7 +533,7 @@ function calculatePanel()
 			
 			for(var i=0; i<counters.length; i++)
 			{
-				if(defender["isPhysic"]) 
+				if(defender["attackType"]) 
 				{
 					fightInfo["defenderAttack"] = Math.floor(fightInfo["defenderAttack"]*(1+counters[i]/100));
 				} else 

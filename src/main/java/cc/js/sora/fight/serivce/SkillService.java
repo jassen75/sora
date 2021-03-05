@@ -124,10 +124,16 @@ public class SkillService {
 		registerSkill(Skill.Xuanfengyouqibing, new Xuanfengyouqibing());
 		registerSkill(Skill.Wunv, new Wunv());
 		registerSkill(Skill.Yanshi, new Yanshi());
+		registerSkill(Skill.Tiankongsheshou, new Tiankongsheshou());
+		registerSkill(Skill.Anjingling, new Anjingling());
+		registerSkill(Skill.Feiwunvshi, new Feiwunvshi());
 		
 		registerSkill(Skill.Shimeng, new DreamAction());
 		registerSkill(Skill.Weifengchongzhen, new Weifengchongzhen());
 		registerSkill(Skill.Juemingyiji, new Juemingyiji());
+		registerSkill(Skill.Huoqiu, new Huoqiu());
+		registerSkill(Skill.Anlian, new Anlian());
+		registerSkill(Skill.Leiji, new Leiji());
 		
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());

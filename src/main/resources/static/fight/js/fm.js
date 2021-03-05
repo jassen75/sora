@@ -460,7 +460,7 @@ function defaultHeroInc(hero)
 {
 	var heroInc = {};
 	heroInc["lifeInc"]=Math.round(hero["life"]*0.25)+700+2000;
-	if(hero["isPhysic"])
+	if(hero["attackType"])
 	{
 		heroInc["attackInc"]=Math.ceil(hero["attack"]*0.38)+80+182;
 		heroInc["attackJJC"] = 60;

@@ -243,8 +243,9 @@ public abstract class Skill {
 	public static final long Ziyouzhiren = 1604;
 	public static final long Weifengchongzhen = 1606;
 	public static final long Juemingyiji = 1602;
-	
-	
+	public static final long Huoqiu = 1608;
+	public static final long Leiji = 1610;
+	public static final long Anlian = 1611;
 
 	public static final long Qinzhen = 1805;
 	public static final long Juebi = 1806;
@@ -282,8 +283,9 @@ public abstract class Skill {
 	public static final long Jiamiannvpu = 2026;
 	public static final long Longqi = 2028;
 	public static final long Yanshi = 2030;
-	
-
+	public static final long Tiankongsheshou = 2031;
+	public static final long Anjingling = 2032;
+	public static final long Feiwunvshi = 2033;
 	/**
 	 * 4000-5000 support skill
 	 */

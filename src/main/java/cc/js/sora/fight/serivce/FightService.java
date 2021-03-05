@@ -192,12 +192,24 @@ public class FightService {
 		}
 		return hero.getRange();
 	}
+	
+	public int getRange(Soldier soldier) {
+		return soldier.getRange();
+	}
 
 	public PanelInfo calculateHero(FightRole role, List<CheckedSkill> skillList, List<Debuff> debuffList) {
 		Hero hero = role.getHero();
 		PanelInfo panelInfo = role.getHeroPanel();
 		Land land = role.getLand();
 		Action action = role.getAction();
+		
+		if(action != null)
+		{
+			panelInfo.setAttackType(action.getAttackType());
+		} else
+		{
+			panelInfo.setAttackType(hero.getAttackType());
+		}
 
 		panelInfo.getFeatures().clear();
 		panelInfo.getCounters().clear();
@@ -568,6 +580,7 @@ public class FightService {
 		panelInfo.getCounters().clear();
 		panelInfo.getFeatures().clear();
 		panelInfo.setIsSoldier(1);
+		panelInfo.setAttackType(soldier.getAttackType());
 		int life = soldier.getLife();
 		int attack = soldier.getAttack();
 		int physic = soldier.getPhysic();
@@ -585,7 +598,7 @@ public class FightService {
 		int pdd = 0;
 		int mdd = 0;
 		int igd = 0;
-		int range = getRange(hero, null);
+		int range = getRange(soldier);
 
 		List<Double> counters = Lists.newArrayList();
 		List<Double> pd_counters = Lists.newArrayList();

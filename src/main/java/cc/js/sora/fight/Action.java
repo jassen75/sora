@@ -48,9 +48,8 @@ public class Action {
 	@Column(name = "hit_time")
 	int hitTime;
 
-	@JsonProperty("isPhysic")
 	@Column(name = "is_physic")
-	boolean isPhysic;
+	int attackType;
 
 	// 1 battle 2 aoe 3 fix damage
 	int battleType;

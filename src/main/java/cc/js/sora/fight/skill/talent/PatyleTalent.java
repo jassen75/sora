@@ -47,7 +47,7 @@ public class PatyleTalent extends Skill {
 	@Override
 	public List<Effect> getEffects() {
 		//return Lists.newArrayList(new Enhance(BuffType.AttackCounter, 25, Scope.All), new Enhance(BuffType.DamageDec, 25, Scope.All));
-		return Lists.newArrayList(new Counter(BuffType.Attack, 30, 0, Scope.All), new Enhance(BuffType.DamageDec, 30, Scope.All));
+		return Lists.newArrayList(new Counter(BuffType.Intel, 30, 0, Scope.All), new Enhance(BuffType.DamageDec, 30, Scope.All));
 	}
 	
 	public List<Skill> childSkill() {

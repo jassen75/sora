@@ -180,14 +180,14 @@ function buildHero(hero) {
 		var roleType = 1;
 		isAttacker = 0;
 		fightInfo["distance"]=hero["range"];
-		if (hero["isPhysic"]) {
+		if (hero["attackType"]) {
 
 			hero["actions"].push({
 				"id" : 10001,
 				"name" : "物理普攻",
 				"coefficient" : 1,
 				"range" : hero["range"],
-				"isPhysic" : 1,
+				"attackType" : 1,
 				"battleType" : 1
 			});
 		} else {
@@ -196,7 +196,7 @@ function buildHero(hero) {
 				"name" : "魔法普攻",
 				"coefficient" : 1,
 				"range" : hero["range"],
-				"isPhysic" : 0,
+				"attackType" : 0,
 				"battleType" : 1
 			});
 		}
@@ -336,7 +336,7 @@ function loadComplete(role) {
 
 function displayHero(role) {
 	if (role == "attacker") {
-		if (fightInfo["attacker"]["hero"]["isPhysic"]) {
+		if (fightInfo["attacker"]["hero"]["attackType"]) {
 			$("#aa").show();
 			$("#ai").hide();
 
@@ -350,7 +350,7 @@ function displayHero(role) {
 			$("#dp").hide();
 		}
 	} else if (role == "defender") {
-		if (fightInfo["defender"]["hero"]["isPhysic"]) {
+		if (fightInfo["defender"]["hero"]["attackType"]) {
 			$("#da").show();
 			$("#di").hide();
 

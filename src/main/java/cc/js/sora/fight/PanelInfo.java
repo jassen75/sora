@@ -70,4 +70,5 @@ public class PanelInfo {
 	
 	int skillDamage;
 	int ignoreDef;
+	int attackType;  // 1 physic,  2 magic
 }

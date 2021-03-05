@@ -18,8 +18,8 @@ function calculate()
 	var actionName = "";
 	var attackerSoldierCriticalChecked = fightInfo["attacker"]["soldierCriticalChecked"];
 	var attackerHeroCriticalChecked = fightInfo["attacker"]["heroCriticalChecked"];
-	var defenderSoldierCriticalChecked = fightInfo["attacker"]["soldierCriticalChecked"];
-	var defenderHeroCriticalChecked = fightInfo["attacker"]["heroCriticalChecked"];
+	var defenderSoldierCriticalChecked = fightInfo["defender"]["soldierCriticalChecked"];
+	var defenderHeroCriticalChecked = fightInfo["defender"]["heroCriticalChecked"];
 	var action = fightInfo["attacker"]["action"];
 	var fastAttack = 0;
 	if(action)
@@ -125,7 +125,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 		//alert(JSON.stringify(counter));
 		
 		soldierToSoldier =oneHit(1, fightInfo[attackerRole]["soldierPanel"], fightInfo[defenderRole]["soldierPanel"], 
-				attackerSoldierCriticalChecked, fightInfo[attackerRole]["soldier"]["isPhysic"], counter);
+				attackerSoldierCriticalChecked, fightInfo[attackerRole]["soldier"]["attackType"], counter);
 		var mdr = getMeleeDamageReduce(attackerRole, "soldier");
 		if(mdr)
 		{
@@ -135,7 +135,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 				"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+(mdr?"，近战惩罚":"")+")";
 															         
 	    fightDetails+="<p>"+fightInfo[attackerRole]["soldier"]["name"]+"攻击"+fightInfo[defenderRole]["soldier"]["name"]+"("+
-	        	(fightInfo[attackerRole]["soldier"]["isPhysic"] ? "物理":"魔法")+")&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+soldierToSoldier+"</b>"+c+"</p>";	
+	        	(fightInfo[attackerRole]["soldier"]["attackType"] ? "物理":"魔法")+")&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+soldierToSoldier+"</b>"+c+"</p>";	
 
 	}
 	
@@ -143,7 +143,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	{
 		var counter = getCounter(attackerRole, "soldier", "hero");
 		soldierToHero = oneHit(1, fightInfo[attackerRole]["soldierPanel"], fightInfo[defenderRole]["heroPanel"], 
-				attackerSoldierCriticalChecked, fightInfo[attackerRole]["soldier"]["isPhysic"], counter);
+				attackerSoldierCriticalChecked, fightInfo[attackerRole]["soldier"]["attackType"], counter);
 		var mdr = getMeleeDamageReduce(attackerRole, "soldier");
 		if(mdr)
 		{
@@ -152,12 +152,12 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 		var c = "&nbsp;&nbsp;&nbsp;(暴击概率："+ criticalProb(fightInfo[attackerRole]["soldierPanel"],fightInfo[defenderRole]["heroPanel"])+
 			"，攻击克制：" +getCounterXS(counter["attack"])+ "，防御克制：" +getCounterXS(counter["physic"])+(mdr?"，近战惩罚":"")+")";
 		fightDetails+="<p>"+fightInfo[attackerRole]["soldier"]["name"]+"攻击"+fightInfo[defenderRole]["hero"]["name"]+"("+
-			(fightInfo[attackerRole]["soldier"]["isPhysic"] ? "物理":"魔法")+")" +
+			(fightInfo[attackerRole]["soldier"]["attackType"] ? "物理":"魔法")+")" +
 				"&nbsp;&nbsp;&nbsp;,&nbsp;1hit:<b>"+soldierToHero+"</b>"+c+"</p>";
 
 	}
 	
-	var isAttackerPhysic = fightInfo[attackerRole]["action"] ? fightInfo[attackerRole]["action"]["isPhysic"] : fightInfo[attackerRole]["hero"]["isPhysic"] ;
+	var isAttackerPhysic = fightInfo[attackerRole]["action"] ? fightInfo[attackerRole]["action"]["attackType"] : fightInfo[attackerRole]["hero"]["attackType"] ;
 
 	
 	if(fightInfo[attackerRole]["hero"] && fightInfo[defenderRole]["soldier"])
@@ -319,6 +319,8 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	}
 	var fastCount = fastAttack;
 	
+	var soldierDamage = 0;
+	var heroDamage = 0;
 	if(fightInfo[defenderRole]["soldier"]) 
 	{
 		var oneSoldierLife = fightInfo[defenderRole]["soldierPanel"]["life"] / 10;
@@ -337,6 +339,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 					heroKillSoldier++;
 					fastCount -= hit;
 					heroLeftCount -= hit;
+					heroDamage += hit*heroToSoldier;
 					//fightDetails+="<p>dsl=="+dsl+"   heroKillSoldier=="+heroKillSoldier+"</p>";
 				}
 				
@@ -346,6 +349,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 					{
 						fastCount -= Math.ceil(dsl/heroToSoldier);
 						heroLeftCount -= Math.ceil(dsl/heroToSoldier);
+						heroDamage += Math.ceil(dsl/heroToSoldier) * heroToSoldier;
 						heroKillSoldier++;
 						dsl =0;
 					}
@@ -356,6 +360,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 				else if (fastAttack > 0)
 				{
 					dsl -= heroToSoldier * fastCount;
+					heroDamage += heroToSoldier * fastCount;
 					heroLeftCount -= fastCount;
 					fastCount = 0;
 					var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
@@ -375,6 +380,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 				dsl -= oneSoldierLife;
 				soldierKillSoldier++;
 				soldierLeftCount -= hit;
+				soldierDamage += hit*soldierToSoldier;
 				//fightDetails+="<p>dsl=="+dsl+"   soldierKillSoldier=="+soldierKillSoldier+"</p>";
 			}
 
@@ -383,6 +389,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 				if(dsl > 0)
 				{
 					soldierLeftCount -= Math.ceil(dsl/soldierToSoldier);
+					soldierDamage += Math.ceil(dsl/soldierToSoldier) * soldierToSoldier;
 					soldierKillSoldier++;
 					dsl = 0;
 				}
@@ -393,6 +400,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 			} else if(soldierCount > 0 )  
 			{
 				dsl -= soldierToSoldier * soldierLeftCount;
+				soldierDamage += soldierToSoldier * soldierLeftCount;
 				soldierLeftCount = 0;
 				var c = attackerSoldierCriticalChecked?" class=\"critical\"":"";
 				fightDetails+="<p"+c+">"+fightInfo[attackerRole]["soldier"]["name"]+" 用 <b>"+soldierCount+
@@ -413,6 +421,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 					dsl -= oneSoldierLife;
 					heroKillSoldier++;
 					heroLeftCount -= hit;
+					heroDamage += hit * heroToSoldier;
 					//fightDetails+="<p>dsl=="+dsl+"   heroKillSoldier=="+heroKillSoldier+"</p>";
 				}
 				
@@ -421,6 +430,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 					if(dsl > 0)
 					{
 						heroLeftCount -= Math.ceil(dsl/heroToSoldier);
+						heroDamage += Math.ceil(dsl/heroToSoldier) * heroToSoldier;
 						heroKillSoldier++;
 						dsl =0;
 					}
@@ -431,6 +441,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 				else if (heroCount > 0)
 				{
 					dsl -= heroToSoldier * heroLeftCount;
+					heroDamage +=  heroToSoldier * heroLeftCount;
 					heroLeftCount = 0;
 					var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
 					fightDetails+="<p"+c+">"+fightInfo[attackerRole]["hero"]["name"]+"用 <b>"+(heroCount-fastAttack)+"</b> hit 干掉 <b>"+heroKillSoldier+"</b>"+fightInfo[defenderRole]["soldier"]["name"]+"</p>";
@@ -444,6 +455,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 		if(fastCount > 0 )
 		{
 			var htohDamage = heroToHero* fastCount;
+			heroDamage+= heroToHero* fastCount;
 			if(dl > htohDamage ) 
 			{
 				dl -= htohDamage;
@@ -461,6 +473,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 		if(soldierLeftCount >0)
 		{
 			var stohDamage = soldierToHero* soldierLeftCount;
+			soldierDamage += soldierToHero* soldierLeftCount;
 			if(dl > stohDamage ) 
 			{
 				dl -= stohDamage;
@@ -474,6 +487,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 		if(heroLeftCount > 0)
 		{
 			var htohDamage = heroToHero* heroLeftCount;
+			heroDamage += heroToHero* heroLeftCount;
 			if(dl > htohDamage ) 
 			{
 				dl -= htohDamage;
@@ -491,7 +505,9 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	{
 		fightDetails+="<p>"+fightInfo[defenderRole]["hero"]["name"]+"死亡</p>";
 	}
-	
+	fightDetails+="<p>-------------------------------------------------------------------------------------------</p>";
+	fightDetails+="<p>"+fightInfo[attackerRole]["hero"]["name"]+"造成伤害<b>"+heroDamage+"</b></p>";
+	fightDetails+="<p>"+fightInfo[attackerRole]["soldier"]["name"]+"造成伤害<b>"+soldierDamage+"</b></p>";
 	return {"dsl":dsl, "dl":dl, "fl":fl, "fsl":fsl, "fightDetails":fightDetails };
 }
 
@@ -501,7 +517,7 @@ function aoe(coefficient, attackerHeroCriticalChecked)
 	var fightDetails = "";
 	var attackerRole = "attacker";
 	var defenderRole = "defender";
-	var isAttackerPhysic = fightInfo[attackerRole]["action"]["isPhysic"];
+	var isAttackerPhysic = fightInfo[attackerRole]["action"]["attackType"];
 	var actionName =  fightInfo[attackerRole]["action"]["name"];
 	if(fightInfo[attackerRole]["hero"] && fightInfo[defenderRole]["soldier"])
 	{
@@ -561,7 +577,7 @@ function aoe(coefficient, attackerHeroCriticalChecked)
 	
 }
 
-function oneHit(coefficient, panel1, panel2, critcal, isPhysics, counter)
+function oneHit(coefficient, panel1, panel2, critcal, attackType, counter)
 {
 	var c = critcal ? (130 + panel1["criticalDamageInc"] - panel2["criticalDamageDec"]) / 100 : 1;
 	var ca = counter["attack"];
@@ -569,7 +585,7 @@ function oneHit(coefficient, panel1, panel2, critcal, isPhysics, counter)
 	var cm = counter["magic"];
 	var igd = panel1["ignoreDef"];
 	
-	if(isPhysics)
+	if(attackType)
 	{
 		var realAttack = panel1["attack"]*(1+ca/100.0);
 		var realDef = panel2["physic"]*(1+cp/100.0) * (1-igd/100.0);
@@ -622,9 +638,27 @@ function getCounter(attackerRole, attackerKind, defenderKind)
 		var counter = attackerCounters[i];
 		if(counter["buffType"]=="Attack")
 		{
-			if(counter[attackerKind] && counter["enemyType"] == defenderType || counter["enemyType"] == 0)
+			if(attackerPanel["attackType"])
 			{
-				result["attack"]+=counter["number"];
+				if(counter[attackerKind] && counter["enemyType"] == defenderType || counter["enemyType"] == 0)
+				{
+					result["attack"]+=counter["number"];
+				}
+			}
+			else
+			{
+				//alert("it is not physic");
+			}
+		}
+		
+		if(counter["buffType"]=="Intel")
+		{
+			if(!attackerPanel["isPhyisc"])
+			{
+				if(counter[attackerKind] && counter["enemyType"] == defenderType || counter["enemyType"] == 0)
+				{
+					result["attack"]+=counter["number"];
+				}
 			}
 		}
 	}

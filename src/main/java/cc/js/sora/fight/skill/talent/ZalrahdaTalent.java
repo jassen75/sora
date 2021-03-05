@@ -122,7 +122,7 @@ public class ZalrahdaTalent extends Skill {
 
 					@Override
 					public boolean valid(FightInfo fightInfo, boolean isAttack) {
-						return !fightInfo.getEnemyRole(isAttack).getAction().isPhysic();
+						return fightInfo.getEnemyRole(isAttack).getAction().getAttackType()==0;
 					}
 
 				};

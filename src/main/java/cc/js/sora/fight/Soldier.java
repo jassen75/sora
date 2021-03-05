@@ -53,8 +53,7 @@ public class Soldier {
 	@Column(name="soldier_type")
 	int type;
 	
-	@JsonProperty("isPhysic")
 	@Column(name="is_physic")
-	boolean isPhysic;
+	int attackType;
 
 }
