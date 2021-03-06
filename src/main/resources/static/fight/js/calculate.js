@@ -584,7 +584,7 @@ function oneHit(coefficient, panel1, panel2, critcal, attackType, counter)
 	var cp = counter["physic"];
 	var cm = counter["magic"];
 	var igd = panel1["ignoreDef"];
-	
+
 	if(attackType)
 	{
 		var realAttack = panel1["attack"]*(1+ca/100.0);
@@ -633,6 +633,11 @@ function getCounter(attackerRole, attackerKind, defenderKind)
 	result["attack"]=0;
 	result["physic"]=0;
 	result["magic"]=0;
+	
+	if(attackerPanel["features"]["ImmuenToCounter"] || defenderPanel["features"]["ImmuenToCounter"])
+	{
+		return result;
+	}
 	for(var i=0; i<attackerCounters.length; i++)
 	{
 		var counter = attackerCounters[i];

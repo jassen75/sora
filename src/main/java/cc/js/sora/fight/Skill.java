@@ -198,6 +198,7 @@ public abstract class Skill {
 	public static final long ReanTalent = 22;
 	public static final long AresTalent = 28;
 	public static final long LandiusTalent = 58;
+	public static final long ListellTalent = 61;
 	public static final long ZalrahdaTalent = 62;
 	public static final long ZillagodTalent = 63;
 	public static final long BernhardtTalent = 74;

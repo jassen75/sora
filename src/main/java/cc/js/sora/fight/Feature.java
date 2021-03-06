@@ -26,6 +26,7 @@ public class Feature implements Effect{
 	public final static String PreFixDamageAttack = "PreFixDamageAttack";
 	public final static String PreUnImuFixDamageAttack = "PreUnImuFixDamageAttack";
 	public final static String PostFixDamagePercent = "PostFixDamagePercent";
+	public final static String ImmuenToCounter = "ImmuenToCounter";
 	
 	String featureName;
 	Object value;

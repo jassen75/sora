@@ -100,6 +100,7 @@ public class SkillService {
 		registerSkill(Skill.ElwinTalent, new ElwinTalent());
 		registerSkill(Skill.ZillagodTalent, new ZillagodTalent());
 		registerSkill(Skill.BernhardtTalent, new BernhardtTalent());
+		registerSkill(Skill.ListellTalent, new ListellTalent());
 
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());

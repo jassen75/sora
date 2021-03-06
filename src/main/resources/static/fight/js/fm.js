@@ -6,13 +6,90 @@ function importFm() {
 	$("#csvFileInput").click();
 }
 
+function exportFm() {
+    var aEle = document.createElement("a");// 创建a标签
+    aEle.download = "test.csv";
+    var text = createFmData();
+    var uri = 'data:text/csv;charset=utf-8,\ufeff' + encodeURI(text);
+    aEle.href = uri;
+    aEle.click();
+}
+
+function createFmData()
+{
+	var fm = userData["fm"]
+	var result = "";
+	for(var i in fm)
+	{
+		result+=i;
+		result+=",";
+		result+=fm[i]["name"];
+		result+=",";
+		for(var e in parts)
+		{
+			if(fm[i][parts[e]])
+			{
+				result+=fm[i][parts[e]]["fm_type"];
+				result+=",";
+				result+=printFm(fm[i][parts[e]]["fm_info"]);
+				result+=",";
+			}
+		}
+		result+=userData["jt"][i]["life"]+"|";
+		result+=userData["jt"][i]["attack"]+"|";
+		result+=userData["jt"][i]["intel"]+"|";
+		result+=userData["jt"][i]["physic"]+"|";
+		result+=userData["jt"][i]["magic"]+"|";
+		result+=userData["jt"][i]["tech"]+",";
+		
+		result+=userData["jjc"][i]["life"]+"|";
+		result+=userData["jjc"][i]["attack"]+"|";
+		result+=userData["jjc"][i]["intel"]+"|";
+		result+=userData["jjc"][i]["physic"]+"|";
+		result+=userData["jjc"][i]["magic"]+"|";
+		result+=userData["jjc"][i]["tech"]+",";
+		
+		result+=userData["jjc"][i]["criticalProbInc"]+"|";
+		result+=userData["jjc"][i]["criticalDamageInc"]+"|";
+		result+=userData["jjc"][i]["criticalProbDec"]+"|";
+		result+=userData["jjc"][i]["criticalDamageDec"]+",";
+		
+		var j=0;
+		for(var e in parts)
+		{
+			result+=userData["equip"][i][parts[e]];
+			j++;
+			if(j!=parts.length)
+			{
+				result+=",";
+			}
+		}
+		result+="\n";
+			
+	}
+	
+	return result;
+}
+
+function printFm(fm)
+{
+	var result = [];
+	var i=0;
+	for(var key in fm)
+	{
+		result[i]=key+"="+fm[key];
+		i++;
+	}
+	return result.join(";");
+}
+
 function readCSVFile(obj) {
 	var reader = new FileReader();
 	reader.readAsText(obj.files[0]);
 	reader.onload = function() {
 
 		var data = this.result;
-		parseCSV(data);// data为csv转换后的对象
+		parseCSV(data);
 	}
 
 }
@@ -401,7 +478,6 @@ function generateHeroInc(hero, equip)
 			}
 		}
 	}
-	
 	for(var i=1; i<=13; i++)
 	{
 		if(i>=1 && i<=5 && fmTypeCount[i]>=2)
@@ -434,6 +510,7 @@ function generateHeroInc(hero, equip)
 			heroInc["fmSkill"] = i;
 		}
 	}
+	//alert("lifep=="+lifep);
 	heroInc["lifeInc"]=Math.round(hero["life"]*lifep/100)+lifes+jt["life"];
 	heroInc["attackInc"]=Math.ceil(hero["attack"]*attackp/100)+attacks+jt["attack"];
 	heroInc["intelInc"]=Math.ceil(hero["intel"]*intelp/100)+intels+jt["intel"];

@@ -9,6 +9,8 @@ var soldierLife = 1;
 var userData = {};
 
 var stage = 0;
+var editingRole;
+var editingEquipPart;
 
 var lands = {
 	"Flat" : "平地",
@@ -55,6 +57,11 @@ $(document).ready(function() {
 
 	$("#import_fm").click(function() {
 		importFm();
+
+	});
+	
+	$("#export_fm").click(function() {
+		exportFm();
 
 	});
 	
@@ -113,21 +120,21 @@ $(document).ready(function() {
 	$.get("/fight/fm.csv", function(data) {
 		parseCSV(data);
 	});
-	
+
 	$('#equip-editor').on('show.bs.modal', function (event) {
-		 var button = $(event.relatedTarget) // Button that triggered the modal
-  		var equipPart = button.data('equip');
-  		var role = button.data('role');
+		var button = $(event.relatedTarget) // Button that triggered the modal
+  		editingEquipPart = button.data('equip');
+  		editingRole = button.data('role');
   		//alert("equip:"+equipPart+", role=="+role);
-  		if(equipPart!="jewlry")
+  		if(editingEquipPart!="jewelry")
   		{
   			$("#fm-edit-critical").hide();
   		} else
   		{
   			$("#fm-edit-critical").show();
   		}
-  		var heroId = fightInfo[role]["hero"]["id"];
-  		var fmInfo = userData["fm"][heroId][equipPart];
+  		var heroId = fightInfo[editingRole]["hero"]["id"];
+  		var fmInfo = userData["fm"][heroId][editingEquipPart];
   		//alert(JSON.stringify(fmInfo));
   		if(fmInfo)
   		{
@@ -138,10 +145,48 @@ $(document).ready(function() {
   				$("#fm-edit-"+i).attr("value", fmInfo["fm_info"][i]);
   			}
   		}
+  		$("#fm-edit-desc").html(displayFM(fmInfo));
+  		$("#fm-edit-type").attr("value", fmInfo["fm_type"]);
+  		$("#fm-edit-type").text(fm_type[fmInfo["fm_type"]]);
+  		
+	});
+	
+	$("#saveFm").click(function(event) {
+		var fm = {};
+		var t = ["attackInc", "attack", "lifeInc","life","intelInc","intel","physicInc","physic","magicInc","magic","criticalInc"];
+		for(var i in t)
+		{
+			//var value = $("#fm-edit-"+t[i]).attr("value");
+			
+			var value = $("#fm-edit-"+t[i]).val();
+			if(value)
+			{
+				fm[t[i]] = parseInt(value);
+			} else
+			{
+				if(fm[t[i]])
+				{
+					delete fm[t[i]];
+				}
+			}
+		}
+		var heroId = fightInfo[editingRole]["hero"]["id"];
+		userData["fm"][heroId][editingEquipPart]["fm_info"] = fm;
+		userData["fm"][heroId][editingEquipPart]["fm_type"] = $("#fm-edit-type").attr("value");
+		$("#fm-edit-desc").html(displayFM(userData["fm"][heroId][editingEquipPart]));
+		loadComplete(editingRole);
+		refreshTable();
+	});
+	$("#fm-edit-type-list > li").click(function (e) {
+ 		//alert("show"+$(this).attr("data-fm-type"));
+		var t = $(this).attr("data-fm-type");
+		$("#fm-edit-type").attr("value", t);
+  		$("#fm-edit-type").text(fm_type[t]);
+  		var heroId = fightInfo[editingRole]["hero"]["id"];
+		
 	});
 
 });
-
 function smooth(c)
 {
 	if(c>0.98)
