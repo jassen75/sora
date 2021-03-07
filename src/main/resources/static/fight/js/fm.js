@@ -574,3 +574,110 @@ function defaultHeroInc(hero)
 
 	return heroInc;
 }
+
+function showFmEditor()
+{
+  	if(editingEquipPart!="jewelry")
+	{
+		$("#fm-edit-critical").hide();
+	} else
+	{
+		$("#fm-edit-critical").show();
+	}
+	var heroId = fightInfo[editingRole]["hero"]["id"];
+	var fmInfo = userData["fm"][heroId][editingEquipPart];
+	//alert(JSON.stringify(fmInfo));
+	if(fmInfo)
+	{
+		$("#equip-editor").find(":text").attr("value", "");
+		for(var i in fmInfo["fm_info"])
+		{
+			//alert("i=="+i+", fminfo=="+fmInfo["fm_info"][i]);
+			$("#fm-edit-"+i).attr("value", fmInfo["fm_info"][i]);
+		}
+	}
+	$("#fm-edit-desc").html(displayFM(fmInfo));
+	$("#fm-edit-type").attr("value", fmInfo["fm_type"]);
+	$("#fm-edit-type").text(fm_type[fmInfo["fm_type"]]);
+	
+}
+
+function showJtEditor()
+{
+	var heroId = fightInfo[editingRole]["hero"]["id"];
+	var jt = userData["jt"][heroId];
+	var jjc = userData["jjc"][heroId];
+	
+	for(var i in jt)
+	{
+		$("#jt-edit-"+i).attr("value", jt[i]);
+	}
+	
+	for(var i in jjc)
+	{
+		$("#jjc-edit-"+i).attr("value", jjc[i]);
+	}
+}
+
+function fmEditorSave()
+{
+	var fm = {};
+	var t = ["attackInc", "attack", "lifeInc","life","intelInc","intel","physicInc","physic","magicInc","magic","criticalInc"];
+	for(var i in t)
+	{
+		//var value = $("#fm-edit-"+t[i]).attr("value");
+		
+		var value = $("#fm-edit-"+t[i]).val();
+		if(value)
+		{
+			fm[t[i]] = parseInt(value);
+		} else
+		{
+			if(fm[t[i]])
+			{
+				delete fm[t[i]];
+			}
+		}
+	}
+	var heroId = fightInfo[editingRole]["hero"]["id"];
+	userData["fm"][heroId][editingEquipPart]["fm_info"] = fm;
+	userData["fm"][heroId][editingEquipPart]["fm_type"] = $("#fm-edit-type").attr("value");
+	$("#fm-edit-desc").html(displayFM(userData["fm"][heroId][editingEquipPart]));
+	loadComplete(editingRole);
+	refreshTable();
+}
+
+
+function jtEditorSave()
+{
+	var jtKey = ["life", "attack", "intel","physic","magic","tech"];
+	var jjcKey = ["life", "attack", "intel","physic","magic","tech","criticalProbInc","criticalDamageInc","criticalProbDec","criticalDamageDec"];
+
+	var heroId = fightInfo[editingRole]["hero"]["id"];
+	for(var i in jtKey)
+	{
+		var value = $("#jt-edit-"+jtKey[i]).val();
+		if(value)
+		{
+			userData["jt"][heroId][jtKey[i]] = parseInt(value);
+		} 
+	}
+	for(var i in jjcKey)
+	{
+		var value = $("#jjc-edit-"+jjcKey[i]).val();
+		if(value)
+		{
+			userData["jjc"][heroId][jjcKey[i]] = parseInt(value);
+		} 
+	}
+	loadComplete(editingRole);
+	refreshTable();
+}
+
+
+
+
+
+
+
+

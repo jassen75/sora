@@ -20,12 +20,93 @@
 <script src="/fight/js/fm.js"></script>
 </head>
 <body>
+	<div class="modal fade" id="hero-editor" tabindex="-1" role="dialog" aria-labelledby="editorLable">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+				 	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+     			    <h4 class="modal-title">编辑精通</h4>    
+				</div>
+				 <div class="modal-body">
+				 	<h3>精通</h3>
+				 	<div class="row">
+					 	<div class="col-md-4 form-group">
+					 		<label for="jt-edit-life">生命</label> <input type="text" class="form-control" id="jt-edit-life" placeholder="">
+					 	</div>
+					 	<div class="col-md-4 form-group">
+					 		<label for="jt-edit-attack">攻击</label> <input type="text" class="form-control" id="jt-edit-attack" placeholder="">
+					 	</div>
+					 	<div class="col-md-4 form-group">
+					 		<label for="jt-edit-intel">智力</label> <input type="text" class="form-control" id="jt-edit-intel" placeholder="">
+					 	</div>
+				 	</div>
+				 	
+				 	<div class="row">
+				 		<div class="col-md-4 form-group">
+				 			<label for="jt-edit-physic">防御</label> <input type="text" class="form-control" id="jt-edit-physic" placeholder="">
+					 	</div>
+					 	<div class="col-md-4 form-group">
+					 		<label for="jt-edit-magic">魔防</label> <input type="text" class="form-control" id="jt-edit-magic" placeholder="">
+					 	</div>
+					 	<div class="col-md-4 form-group">
+					 		<label for="jt-edit-tech">技巧</label> <input type="text" class="form-control" id="jt-edit-tech" placeholder="">
+					 	</div>
+				 	</div>
+				 	<h3>竞技场精通</h3>
+				 	<div class="row">
+				 		<div class="col-md-4 form-group">
+				 			<label for="jjc-edit-life">生命</label> <input type="text" class="form-control" id="jjc-edit-life" placeholder="">
+					 	</div>
+					 	<div class="col-md-4 form-group">
+					 		<label for="jjc-edit-attack">攻击</label> <input type="text" class="form-control" id="jjc-edit-attack" placeholder="">
+					 	</div>
+					 	<div class="col-md-4 form-group">
+					 		<label for="jjc-edit-intel">智力</label> <input type="text" class="form-control" id="jjc-edit-intel" placeholder="">
+					 	</div>
+				 	</div>
+				 	
+				 	<div class="row">
+				 		<div class="col-md-4 form-group">
+				 			<label for="jjc-edit-physic">防御</label> <input type="text" class="form-control" id="jjc-edit-physic" placeholder="">
+					 	</div>
+					 	<div class="col-md-4 form-group">
+					 		<label for="jjc-edit-magic">魔防</label> <input type="text" class="form-control" id="jjc-edit-magic" placeholder="">
+					 	</div>
+					 	<div class="col-md-4 form-group">
+					 		<label for="jjc-edit-tech">技巧</label> <input type="text" class="form-control" id="jjc-edit-tech" placeholder="">
+					 	</div>
+				 	</div>
+				 	<div class="row">
+				 		<div class="col-md-4 form-group">
+				 			<label for="jjc-edit-criticalProbInc">暴击</label> <input type="text" class="form-control" id="jjc-edit-criticalProbInc" placeholder="">
+					 	</div>
+					 	<div class="col-md-4 form-group">
+					 		<label for="jjc-edit-criticalDamageInc">爆伤</label> <input type="text" class="form-control" id="jjc-edit-criticalDamageInc" placeholder="">
+					 	</div>
+				 	</div>
+				 	
+				 	<div class="row">
+				 		<div class="col-md-4 form-group">
+				 			<label for="jjc-edit-criticalProbDec">降爆</label> <input type="text" class="form-control" id="jjc-edit-criticalProbDec" placeholder="">
+					 	</div>
+					 	<div class="col-md-4 form-group">
+					 		<label for="jjc-edit-criticalDamageDec">减爆伤</label> <input type="text" class="form-control" id="jjc-edit-criticalDamageDec" placeholder="">
+					 	</div>
+				 	</div>
+				 </div>
+				 <div class="modal-footer">
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+		       		<button id="saveJt" type="button" class="btn btn-primary">保存修改</button>
+		        </div>
+			</div>
+		</div>
+	</div>
 	<div class="modal fade" id="equip-editor" tabindex="-1" role="dialog" aria-labelledby="editorLable">
 		<div class="modal-dialog" role="document">
 			<div class="modal-content">
      			 <div class="modal-header">
      			    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-     			    <h4 class="modal-title" id="editor-title">编辑附魔</h4>    
+     			    <h4 class="modal-title">编辑附魔</h4>    
      			 </div>
      			 <div class="modal-body">
   			        <form>
@@ -113,7 +194,7 @@
 					</form>
 				</div>
 		        <div class="modal-footer">
-		        	<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		        	<button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
 		       		<button id="saveFm" type="button" class="btn btn-primary">保存修改</button>
 		        </div>
      		</div>
