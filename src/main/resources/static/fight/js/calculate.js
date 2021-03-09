@@ -205,33 +205,25 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	
 	if(fightInfo[attackerRole]["heroPanel"]["features"]["PreFixDamageAttack"])
 	{
-		if(fightInfo[defenderRole]["heroPanel"]["features"]["ImmuneToFixedDamage"])
+		var list = fightInfo[attackerRole]["heroPanel"]["features"]["PreFixDamageAttack"];
+		for(var i in list)
 		{
-			fightDetails+="<p>"+fightInfo[defenderRole]["hero"]["name"]+"免疫掉战前固伤</p>";
-		} else
-		{
-			var list = fightInfo[attackerRole]["heroPanel"]["features"]["PreFixDamageAttack"];
-			for(var i in list)
-			{
-				var damage = Math.ceil(list[i]*fightInfo[attackerRole]["heroPanel"]["attack"]);
-				dl  -= damage;
-				dsl -= damage;
-				fightDetails+="<p>"+fightInfo[attackerRole]["hero"]["name"]+"战前对"+fightInfo[defenderRole]["hero"]["name"]+"及士兵各造成<b>"+damage+"</b>伤害</p>";
-			}
+			var damage = Math.ceil(list[i]*fightInfo[attackerRole]["heroPanel"]["attack"]);
+			dl  -= damage;
+			dsl -= damage;
+			fightDetails+="<p>"+fightInfo[attackerRole]["hero"]["name"]+"战前对"+fightInfo[defenderRole]["hero"]["name"]+"及士兵各造成<b>"+damage+"</b>伤害</p>";
 		}
+	
 	}
 	
 	if(fightInfo[defenderRole]["heroPanel"]["features"]["PreFixDamageAttack"])
 	{
-		if(!fightInfo[attackerRole]["heroPanel"]["features"]["ImmuneToFixedDamage"])
+		var list = fightInfo[attackerRole]["heroPanel"]["features"]["PreFixDamageAttack"];
+		for(var i in list)
 		{
-			var list = fightInfo[attackerRole]["heroPanel"]["features"]["PreFixDamageAttack"];
-			for(var i in list)
-			{
-				var damage = Math.ceil(list[i]*fightInfo[attackerRole]["heroPanel"]["attack"]);
-				asl  -= damage;
-				al -= damage;
-			}
+			var damage = Math.ceil(list[i]*fightInfo[attackerRole]["heroPanel"]["attack"]);
+			asl  -= damage;
+			al -= damage;
 		}
 	}
 	

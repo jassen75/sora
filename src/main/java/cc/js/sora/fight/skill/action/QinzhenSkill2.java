@@ -32,8 +32,30 @@ public class QinzhenSkill2 extends Skill {
 
 	@Override
 	public Condition getCondition() {
+		return new Condition() {
+
+			@Override
+			public String getDesc() {
+				// TODO Auto-generated method stub
+				return null;
+			}
+
+			@Override
+			public boolean valid(FightInfo fightInfo, boolean isAttack) {
+				if(!isAttack)
+				{
+					return false;
+				}
+				if(QinZhenSKill.QinZhenCondition.valid(fightInfo, isAttack))
+				{
+					return !fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures().containsKey("ImmuneToFixedDamage");
+				}
+				return false;
+			}
+			
+		};
 		// TODO Auto-generated method stub
-		return QinZhenSKill.QinZhenCondition;
+		
 	}
 
 	@Override
@@ -49,18 +71,12 @@ public class QinzhenSkill2 extends Skill {
 	@Override
     public void process(FightInfo fightInfo, boolean isAttack)
     {
-		if(isAttack)
+		if(this.getCondition().valid(fightInfo, isAttack))
 		{
-			if(!fightInfo.getDefender().getHeroPanel().getFeatures().containsKey(Features.ImmuneToFixedDamage))
-			{
-				
 				fightInfo.getDefender().setHeroLeftLife(Double.valueOf(Math.floor(fightInfo.getDefender().getHeroLeftLife() -
 						0.5*fightInfo.getAttacker().getHeroPanel().getAttack())).intValue());
 				fightInfo.getDefender().setSoldierLeftLife(Double.valueOf(Math.floor(fightInfo.getDefender().getSoldierLeftLife() - 
 						0.5*fightInfo.getAttacker().getHeroPanel().getAttack())).intValue());		
-			}
-			
-			log.info("after qinzhen:"+fightInfo.getDefender().getSoldierLeftLife());
 		}
     }
 

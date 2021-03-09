@@ -41,7 +41,10 @@ public class Chenhun extends Skill {
 
 			@Override
 			public boolean valid(FightInfo fightInfo, boolean isAttack) {
-				// TODO Auto-generated method stub
+				if(!isAttack)
+				{
+					return false;
+				}
 				if(fightInfo.getEnemyRole(isAttack).isMix())
 				{
 					return true;

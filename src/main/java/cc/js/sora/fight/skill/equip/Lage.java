@@ -34,7 +34,28 @@ public class Lage extends Skill {
 	@Override
 	public Condition getCondition() {
 		
-		return new EnemyFullHealthCondition();
+		//return new EnemyFullHealthCondition();
+		return new Condition() {
+
+			@Override
+			public String getDesc() {
+				// TODO Auto-generated method stub
+				return "敌人满血且不免疫固伤";
+			}
+
+			@Override
+			public boolean valid(FightInfo fightInfo, boolean isAttack) {
+				if(!isAttack)
+				{
+					return false;
+				}
+				if(fightInfo.getEnemyRole(isAttack).getLifePercent() == 1) 
+				{
+					return !fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures().containsKey("ImmuneToFixedDamage");
+				}
+				return false;
+			}
+		};
 	}
 
 	@Override
@@ -58,14 +79,10 @@ public class Lage extends Skill {
 	@Override
     public void process(FightInfo fightInfo, boolean isAttack)
     {
-		if(isAttack)
+		if(this.getCondition().valid(fightInfo, isAttack))
 		{
-			if(!fightInfo.getDefender().getHeroPanel().getFeatures().containsKey(Features.ImmuneToFixedDamage))
-			{
-				fightInfo.getDefender().setHeroLeftLife(fightInfo.getDefender().getHeroLeftLife() - fightInfo.getAttacker().getHeroPanel().getAttack());
-				fightInfo.getDefender().setSoldierLeftLife(fightInfo.getDefender().getSoldierLeftLife() - fightInfo.getAttacker().getHeroPanel().getAttack());		
-			}
-			log.info("after lage:"+fightInfo.getDefender().getSoldierLeftLife()+", here attack:");
+			fightInfo.getDefender().setHeroLeftLife(fightInfo.getDefender().getHeroLeftLife() - fightInfo.getAttacker().getHeroPanel().getAttack());
+			fightInfo.getDefender().setSoldierLeftLife(fightInfo.getDefender().getSoldierLeftLife() - fightInfo.getAttacker().getHeroPanel().getAttack());		
 		}
     }
 }
