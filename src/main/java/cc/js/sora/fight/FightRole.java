@@ -62,4 +62,9 @@ public class FightRole {
 	{
 		return Double.valueOf(heroLeftLife)/Double.valueOf(heroPanel.getLife());
 	}
+	@JsonIgnore
+	public boolean isMix()
+	{
+		return this.hero.getType() != this.soldier.getType();
+	}
 }

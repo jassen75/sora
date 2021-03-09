@@ -24,7 +24,8 @@ public class Feature implements Effect{
 	public final static String FixDamageToSelf = "FixDamageToSelf";
 	public final static String UnImuFixDamageToSelf = "UnImuFixDamageToSelf";
 	public final static String PreFixDamageAttack = "PreFixDamageAttack";
-	public final static String PreUnImuFixDamageAttack = "PreUnImuFixDamageAttack";
+	public final static String PreFixDamageChenhun = "PreFixDamageChenhun";
+	public final static String PreUnImuFixDamageAttackIntel = "PreUnImuFixDamageAttackIntel";
 	public final static String PostFixDamagePercent = "PostFixDamagePercent";
 	public final static String ImmuenToCounter = "ImmuenToCounter";
 	

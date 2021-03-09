@@ -29,6 +29,7 @@ import cc.js.sora.fight.skill.action.Juemingyiji;
 import cc.js.sora.fight.skill.action.Lanxingzhan;
 import cc.js.sora.fight.skill.action.Leiji;
 import cc.js.sora.fight.skill.action.Weifengchongzhen;
+import cc.js.sora.fight.skill.equip.Chenhun;
 import cc.js.sora.fight.skill.equip.Erzhui;
 import cc.js.sora.fight.skill.equip.FuriousEnhance;
 import cc.js.sora.fight.skill.equip.Jixianmogong;
@@ -48,6 +49,7 @@ import cc.js.sora.fight.skill.equip.Yicai;
 import cc.js.sora.fight.skill.equip.Yuguan;
 import cc.js.sora.fight.skill.equip.Zhenshizijia;
 import cc.js.sora.fight.skill.passivity.BloodBattle;
+import cc.js.sora.fight.skill.passivity.Xinyang;
 import cc.js.sora.fight.skill.soldier.Anjingling;
 import cc.js.sora.fight.skill.soldier.Dujiaoshou;
 import cc.js.sora.fight.skill.soldier.Fangzhenliebing;
@@ -141,6 +143,7 @@ public class SkillService {
 		registerSkill(Skill.Shijieshu, new Shijieshu());
 		registerSkill(Skill.Shuijingfengci, new Shuijingfengci());
 		registerSkill(Skill.Zhenshizijia, new Zhenshizijia());
+		registerSkill(Skill.Chenhun, new Chenhun());
 
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
@@ -148,6 +151,7 @@ public class SkillService {
 		registerSkill(Skill.MoshuEnhance, new MoshuEnhance());
 
 		registerSkill(Skill.BloodBattle, new BloodBattle());
+		registerSkill(Skill.Xinyang, new Xinyang());
 
 		registerSkill(Skill.PatyleTalent, new PatyleTalent());
 		registerSkill(Skill.TowaTalent, new TowaTalent());

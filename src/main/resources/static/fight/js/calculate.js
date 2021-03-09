@@ -235,6 +235,21 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 		}
 	}
 	
+	if(fightInfo[attackerRole]["heroPanel"]["features"]["PreFixDamageChenhun"])
+	{
+		var damage = Math.min(fightInfo[attackerRole]["heroPanel"]["attack"],fightInfo[attackerRole]["heroPanel"]["intel"]);
+		dsl  -= damage;
+		dl -= damage;
+		fightDetails+="<p>"+fightInfo[attackerRole]["hero"]["name"]+"战前对"+fightInfo[defenderRole]["hero"]["name"]+"及士兵各造成<b>"+damage+"</b>伤害</p>";
+	}
+	
+	if(fightInfo[defenderRole]["heroPanel"]["features"]["PreFixDamageChenhun"])
+	{
+		var damage = Math.min(fightInfo[defenderRole]["heroPanel"]["attack"],fightInfo[defenderRole]["heroPanel"]["intel"]);
+		asl  -= damage;
+		al -= damage;
+	}
+	
 	if(fightInfo[attackerRole]["soldierPanel"]["features"]["FixDamageToSelf"])
 	{
 		if(!fightInfo[attackerRole]["heroPanel"]["features"]["ImmuneToFixedDamage"])

@@ -235,6 +235,7 @@ public abstract class Skill {
 	public static final long Xunzhang = 1010;
 	public static final long Tulong = 1012;
 	public static final long Tier = 1018;
+	public static final long Chenhun = 1019;
 	public static final long Shijieshu = 1059;
 	public static final long Shuijingfengci = 1049;
 	public static final long Zhenshizijia = 1062;
