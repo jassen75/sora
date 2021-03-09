@@ -364,6 +364,7 @@ function displayEquip(id, type, equips, role) {
 }
 
 function loadComplete(role) {
+	stage = 1;
 	var heroInc = generateHeroInc(fightInfo[role]["hero"],
 			fightInfo[role]["equip"]);
 	for ( var i in heroInc) {

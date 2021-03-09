@@ -81,6 +81,7 @@ public class Lage extends Skill {
     {
 		if(this.getCondition().valid(fightInfo, isAttack))
 		{
+			log.info("lage is true");
 			fightInfo.getDefender().setHeroLeftLife(fightInfo.getDefender().getHeroLeftLife() - fightInfo.getAttacker().getHeroPanel().getAttack());
 			fightInfo.getDefender().setSoldierLeftLife(fightInfo.getDefender().getSoldierLeftLife() - fightInfo.getAttacker().getHeroPanel().getAttack());		
 		}

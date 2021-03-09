@@ -37,7 +37,7 @@ public class QinzhenSkill2 extends Skill {
 			@Override
 			public String getDesc() {
 				// TODO Auto-generated method stub
-				return null;
+				return QinZhenSKill.QinZhenCondition.getDesc();
 			}
 
 			@Override
@@ -73,6 +73,8 @@ public class QinzhenSkill2 extends Skill {
     {
 		if(this.getCondition().valid(fightInfo, isAttack))
 		{
+			log.info("qinzhen is true");
+			log.info(fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures().toString());
 				fightInfo.getDefender().setHeroLeftLife(Double.valueOf(Math.floor(fightInfo.getDefender().getHeroLeftLife() -
 						0.5*fightInfo.getAttacker().getHeroPanel().getAttack())).intValue());
 				fightInfo.getDefender().setSoldierLeftLife(Double.valueOf(Math.floor(fightInfo.getDefender().getSoldierLeftLife() - 

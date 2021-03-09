@@ -321,7 +321,7 @@ public class SkillService {
 	
 	private void checkChild(Skill skill, List<Skill> result)
 	{
-		log.info("check child for skill:"+skill.getName());
+		//log.info("check child for skill:"+skill.getName());
 		skill.childSkill().forEach(cs -> {
 			result.add(cs);
 			checkChild(cs, result);
