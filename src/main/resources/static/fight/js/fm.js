@@ -98,8 +98,8 @@ var fm_type = [];
 fm_type[1]="轻风"; 
 fm_type[2]="满月"; 
 fm_type[3]="魔术"; 
-fm_type[5]="怒涛"; 
 fm_type[4]="时钟"; 
+fm_type[5]="怒涛"; 
 fm_type[6]="烈日"; 
 fm_type[7]="流星"; 
 fm_type[8]="顽石"; 
@@ -234,11 +234,14 @@ function refreshTable()
 	$("#fm_info > tbody").children("tr").remove();
 	
 	for(var i in userData["fm"]){
-		
-		var tr = $("<tr><td>"+userData["fm"][i]["name"]+"</td><td><div><img src=\"/fight/image/equip_"+userData["equip"][i]["weapon"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
-							displayFM(userData["fm"][i]["weapon"])+"</div></td><td><div><img src=\"/fight/image/equip_"+userData["equip"][i]["armor"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
-							displayFM(userData["fm"][i]["armor"])+"</div></td><td><div><img src=\"/fight/image/equip_"+userData["equip"][i]["helmet"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
-							displayFM(userData["fm"][i]["helmet"])+"</div></td><td><div><img src=\"/fight/image/equip_"+userData["equip"][i]["jewelry"]+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
+		var weapon = userData["equip"][i]["weapon"] ? userData["equip"][i]["weapon"] : 0 ;
+		var armor = userData["equip"][i]["armor"] ? userData["equip"][i]["armor"] : 0 ;
+		var helmet = userData["equip"][i]["helmet"] ? userData["equip"][i]["helmet"] : 0 ;
+		var jewelry = userData["equip"][i]["jewelry"] ? userData["equip"][i]["jewelry"] : 0 ;
+		var tr = $("<tr><td>"+userData["fm"][i]["name"]+"</td><td><div><img src=\"/fight/image/equip_"+weapon+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
+							displayFM(userData["fm"][i]["weapon"])+"</div></td><td><div><img src=\"/fight/image/equip_"+armor+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
+							displayFM(userData["fm"][i]["armor"])+"</div></td><td><div><img src=\"/fight/image/equip_"+helmet+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
+							displayFM(userData["fm"][i]["helmet"])+"</div></td><td><div><img src=\"/fight/image/equip_"+jewelry+".png\" alt=\"\" width=\"40\" height=\"40\"></img>"+
 							displayFM(userData["fm"][i]["jewelry"])+"</div></td></tr>");
 		
 	  	tr.appendTo($("#fm_info > tbody"));
@@ -272,24 +275,25 @@ function refreshTable()
 
 function fmClass(fmType)
 {
+	fmType = parseInt(fmType);
 	switch(fmType)
 	{		
-		case "1":
-		case "2":
-		case "3":
-		case "4":
-		case "5":
+		case 1:
+		case 2:
+		case 3:
+		case 4:
+		case 5:
 			return "fm_type_red";
-		case "6":
-		case "7":
+		case 6:
+		case 7:
 			return "fm_type_yellow";
-		case "8":
-		case "9":	
-		case "10":
+		case 8:
+		case 9:	
+		case 10:
 			return "fm_type_blue";
-		case "11":
-		case "12":
-		case "13":
+		case 11:
+		case 12:
+		case 13:
 			return "fm_type_green";
 	}
 }
@@ -297,6 +301,10 @@ function fmClass(fmType)
 function displayFM(fm)
 {
 	var result = "";
+	if(!fm || !fm["fm_type"] || !fm["fm_info"])
+	{
+		return result;
+	}
 	var fm_class = fmClass(fm["fm_type"]);
 	result += "<div class=\""+fm_class+"\">" +fm_type[fm["fm_type"]]+"</div>";
 	for(var i in fm["fm_info"])
@@ -327,10 +335,6 @@ function generateHeroInc(hero, equip)
 	var jt = userData["jt"][id];
 	var jjc = userData["jjc"][id];
 	
-	if(!fm || !jt)
-	{
-		return defaultHeroInc(hero);
-	}
 	heroInc["lifeSkill"] = 0;
 	heroInc["attackSkill"] = 0;
 	heroInc["intelSkill"] = 0;
@@ -363,6 +367,62 @@ function generateHeroInc(hero, equip)
 	for(var j in parts)
 	{
 		var i = parts[j];
+		if(equip[i])
+		{
+			if(equip[i]["equipType"]["life"])
+			{
+				lifes+=equip[i]["equipType"]["life"];
+			}
+			if(equip[i]["equipType"]["attack"])
+			{
+				attacks+=equip[i]["equipType"]["attack"];
+			}
+			if(equip[i]["equipType"]["intel"])
+			{
+				intels+=equip[i]["equipType"]["intel"];
+			}
+			if(equip[i]["equipType"]["physic"])
+			{
+				physics+=equip[i]["equipType"]["physic"];
+			}
+			if(equip[i]["equipType"]["magic"])
+			{
+				magics+=equip[i]["equipType"]["magic"];
+			}
+			if(equip[i]["equipType"]["tech"])
+			{
+				techs+=equip[i]["equipType"]["tech"];
+			}
+			if(equip[i]["lifeSkill"])
+			{
+				heroInc["lifeSkill"] += equip[i]["lifeSkill"];
+			}
+			if(equip[i]["attackSkill"])
+			{
+				heroInc["attackSkill"] += equip[i]["attackSkill"];
+			}
+			if(equip[i]["intelSkill"])
+			{
+				heroInc["intelSkill"] += equip[i]["intelSkill"];
+			}
+			if(equip[i]["physicSkill"])
+			{
+				heroInc["physicSkill"] += equip[i]["physicSkill"];
+			}
+			if(equip[i]["magicSkill"])
+			{
+				heroInc["magicSkill"] += equip[i]["magicSkill"];
+			}
+			if(equip[i]["techSkill"])
+			{
+				heroInc["techSkill"] += equip[i]["techSkill"];
+			}
+		}
+		
+		if(!fm || !fm[i])
+		{
+			continue;
+		}
 		var fmType = fm[i]["fm_type"];
 		var fmInfo = fm[i]["fm_info"];
 		
@@ -426,57 +486,7 @@ function generateHeroInc(hero, equip)
 			heroInc["criticalProbIncSkill"] += fmInfo["criticalInc"];
 		}
 
-		if(equip[i])
-		{
-			if(equip[i]["equipType"]["life"])
-			{
-				lifes+=equip[i]["equipType"]["life"];
-			}
-			if(equip[i]["equipType"]["attack"])
-			{
-				attacks+=equip[i]["equipType"]["attack"];
-			}
-			if(equip[i]["equipType"]["intel"])
-			{
-				intels+=equip[i]["equipType"]["intel"];
-			}
-			if(equip[i]["equipType"]["physic"])
-			{
-				physics+=equip[i]["equipType"]["physic"];
-			}
-			if(equip[i]["equipType"]["magic"])
-			{
-				magics+=equip[i]["equipType"]["magic"];
-			}
-			if(equip[i]["equipType"]["tech"])
-			{
-				techs+=equip[i]["equipType"]["tech"];
-			}
-			if(equip[i]["lifeSkill"])
-			{
-				heroInc["lifeSkill"] += equip[i]["lifeSkill"];
-			}
-			if(equip[i]["attackSkill"])
-			{
-				heroInc["attackSkill"] += equip[i]["attackSkill"];
-			}
-			if(equip[i]["intelSkill"])
-			{
-				heroInc["intelSkill"] += equip[i]["intelSkill"];
-			}
-			if(equip[i]["physicSkill"])
-			{
-				heroInc["physicSkill"] += equip[i]["physicSkill"];
-			}
-			if(equip[i]["magicSkill"])
-			{
-				heroInc["magicSkill"] += equip[i]["magicSkill"];
-			}
-			if(equip[i]["techSkill"])
-			{
-				heroInc["techSkill"] += equip[i]["techSkill"];
-			}
-		}
+
 	}
 	for(var i=1; i<=13; i++)
 	{
@@ -511,66 +521,24 @@ function generateHeroInc(hero, equip)
 		}
 	}
 	//alert("lifep=="+lifep);
-	heroInc["lifeInc"]=Math.round(hero["life"]*lifep/100)+lifes+jt["life"];
-	heroInc["attackInc"]=Math.ceil(hero["attack"]*attackp/100)+attacks+jt["attack"];
-	heroInc["intelInc"]=Math.ceil(hero["intel"]*intelp/100)+intels+jt["intel"];
-	heroInc["physicInc"]=Math.ceil(hero["physic"]*physicp/100)+physics+jt["physic"];
-	heroInc["magicInc"]=Math.ceil(hero["magic"]*magicp/100)+magics+jt["magic"];
-	heroInc["techInc"]=Math.ceil(hero["tech"]*techp/100)+techs+jt["tech"];
+	heroInc["lifeInc"]=Math.round(hero["life"]*lifep/100)+lifes+(jt?jt["life"]:0);
+	heroInc["attackInc"]=Math.ceil(hero["attack"]*attackp/100)+attacks+(jt?jt["attack"]:0);
+	heroInc["intelInc"]=Math.ceil(hero["intel"]*intelp/100)+intels+(jt?jt["intel"]:0);
+	heroInc["physicInc"]=Math.ceil(hero["physic"]*physicp/100)+physics+(jt?jt["physic"]:0);
+	heroInc["magicInc"]=Math.ceil(hero["magic"]*magicp/100)+magics+(jt?jt["magic"]:0);
+	heroInc["techInc"]=Math.ceil(hero["tech"]*techp/100)+techs+(jt?jt["tech"]:0);
 	
-	heroInc["lifeJJC"] = jjc["life"];
-	heroInc["attackJJC"] = jjc["attack"];
-	heroInc["intelJJC"] = jjc["intel"];
-	heroInc["physicJJC"] = jjc["physic"];
-	heroInc["magicJJC"] = jjc["magic"];
-	heroInc["techJJC"] = jjc["tech"];
+	heroInc["lifeJJC"] = (jjc ? jjc["life"] : 0);
+	heroInc["attackJJC"] = (jjc ? jjc["attack"]:0);
+	heroInc["intelJJC"] = (jjc ? jjc["intel"] : 0 );
+	heroInc["physicJJC"] = (jjc ? jjc["physic"] : 0);
+	heroInc["magicJJC"] = (jjc? jjc["magic"] : 0 );
+	heroInc["techJJC"] = (jjc ? jjc["tech"] : 0);
 	
-	heroInc["criticalProbIncSkill"] += jjc["criticalProbInc"];
-	heroInc["criticalDamageIncSkill"] += jjc["criticalDamageInc"];
-	heroInc["criticalProbDecSkill"] += jjc["criticalProbDec"];
-	heroInc["criticalDamageDecSkill"] += jjc["criticalDamageDec"];
-
-	return heroInc;
-}
-
-function defaultHeroInc(hero)
-{
-	var heroInc = {};
-	heroInc["lifeInc"]=Math.round(hero["life"]*0.25)+700+2000;
-	if(hero["attackType"])
-	{
-		heroInc["attackInc"]=Math.ceil(hero["attack"]*0.38)+80+182;
-		heroInc["attackJJC"] = 60;
-		heroInc["intelInc"] = 0;
-		heroInc["intelJJC"] = 0;
-	    heroInc["attackSkill"] = 18;
-	}else
-	{
-		heroInc["intelInc"]=Math.ceil(hero["intel"]*0.38)+80+182;
-		heroInc["intelJJC"] = 60;
-		heroInc["attackInc"] = 0;
-		heroInc["attackJJC"] = 0;
-		heroInc["intelSkill"] = 18;
-	}
-	
-	heroInc["lifeSkill"] = 10;
-	heroInc["physicSkill"] = 10;
-	heroInc["magicSkill"] = 0;
-	heroInc["techSkill"] = 0;
-	
-	heroInc["physicInc"]=Math.ceil(hero["physic"]*0.15)+55+60;
-	heroInc["magicInc"]=60;
-	heroInc["techInc"]=0;
-	
-	heroInc["lifeJJC"] = 480;
-	heroInc["physicJJC"] = 45;
-	heroInc["magicJJC"] = 0;
-	heroInc["techJJC"] = 0;
-	
-	heroInc["criticalProbIncSkill"] = 0;
-	heroInc["criticalDamageIncSkill"] = 0;
-	heroInc["criticalProbDecSkill"] = 20;
-	heroInc["criticalDamageDecSkill"] = 30;
+	heroInc["criticalProbIncSkill"] += (jjc ? jjc["criticalProbInc"] : 0);
+	heroInc["criticalDamageIncSkill"] += (jjc ? jjc["criticalDamageInc"] : 0);
+	heroInc["criticalProbDecSkill"] += (jjc ? jjc["criticalProbDec"] : 0 );
+	heroInc["criticalDamageDecSkill"] += (jjc ? jjc["criticalDamageDec"] : 0 );
 
 	return heroInc;
 }
@@ -584,39 +552,35 @@ function showFmEditor()
 	{
 		$("#fm-edit-critical").show();
 	}
+
+	//$("#equip-editor").find(":text").attr("value", "");
+	$("#equip-editor").find(":text").val("");
+	$("#fm-edit-desc").html("");
+	$("#fm-edit-type").text("选择附魔类型");
+	$("#fm-edit-type").attr("value", 0);
+	
 	var heroId = fightInfo[editingRole]["hero"]["id"];
+	if(!userData["fm"][heroId])
+	{
+		//alert(heroId+" not exist!");
+		return;
+	}
+	
 	var fmInfo = userData["fm"][heroId][editingEquipPart];
 	//alert(JSON.stringify(fmInfo));
 	if(fmInfo)
-	{
-		$("#equip-editor").find(":text").attr("value", "");
+	{	
 		for(var i in fmInfo["fm_info"])
 		{
 			//alert("i=="+i+", fminfo=="+fmInfo["fm_info"][i]);
-			$("#fm-edit-"+i).attr("value", fmInfo["fm_info"][i]);
+			//$("#fm-edit-"+i).attr("value", fmInfo["fm_info"][i]);
+			$("#fm-edit-"+i).val(fmInfo["fm_info"][i]);
 		}
-	}
-	$("#fm-edit-desc").html(displayFM(fmInfo));
-	$("#fm-edit-type").attr("value", fmInfo["fm_type"]);
-	$("#fm-edit-type").text(fm_type[fmInfo["fm_type"]]);
-	
-}
-
-function showJtEditor()
-{
-	var heroId = fightInfo[editingRole]["hero"]["id"];
-	var jt = userData["jt"][heroId];
-	var jjc = userData["jjc"][heroId];
-	
-	for(var i in jt)
-	{
-		$("#jt-edit-"+i).attr("value", jt[i]);
-	}
-	
-	for(var i in jjc)
-	{
-		$("#jjc-edit-"+i).attr("value", jjc[i]);
-	}
+		$("#fm-edit-desc").html(displayFM(fmInfo));
+		$("#fm-edit-type").attr("value", fmInfo["fm_type"]);
+		//$("#fm-edit-type").val(fmInfo["fm_type"]);
+		$("#fm-edit-type").text(fm_type[fmInfo["fm_type"]]);
+	}	
 }
 
 function fmEditorSave()
@@ -640,13 +604,67 @@ function fmEditorSave()
 		}
 	}
 	var heroId = fightInfo[editingRole]["hero"]["id"];
+	
+	if(!userData["fm"][heroId])
+	{
+		userData["fm"][heroId] = {};
+	} 
+	if(!userData["equip"][heroId])
+	{
+		userData["equip"][heroId] = {};
+	}
+	
+	userData["fm"][heroId]["id"] = heroId;
+	userData["fm"][heroId]["name"] = fightInfo[editingRole]["hero"]["name"];
+
+	if(!userData["fm"][heroId][editingEquipPart])
+	{
+		userData["fm"][heroId][editingEquipPart] = {};
+	}
 	userData["fm"][heroId][editingEquipPart]["fm_info"] = fm;
-	userData["fm"][heroId][editingEquipPart]["fm_type"] = $("#fm-edit-type").attr("value");
+	userData["fm"][heroId][editingEquipPart]["fm_type"] = parseInt($("#fm-edit-type").attr("value"));
 	$("#fm-edit-desc").html(displayFM(userData["fm"][heroId][editingEquipPart]));
+	
+	if(fightInfo[editingRole]["equip"][editingEquipPart])
+	{
+		userData["equip"][heroId]["id"] = heroId;
+		userData["equip"][heroId][editingEquipPart] = fightInfo[editingRole]["equip"][editingEquipPart]["id"];
+	}
 	loadComplete(editingRole);
 	refreshTable();
 }
 
+
+function showJtEditor()
+{
+	var heroId = fightInfo[editingRole]["hero"]["id"];
+	var jt = userData["jt"][heroId];
+	var jjc = userData["jjc"][heroId];
+	$("#hero-editor").find(":text").val("");
+	if(jt)
+	{
+		for(var i in jt)
+		{
+			//$("#jt-edit-"+i).attr("value", jt[i]);
+			if(jt[i])
+			{
+				$("#jt-edit-"+i).val(jt[i]);
+			}
+		}
+	}
+	
+	if(jjc)
+	{
+		for(var i in jjc)
+		{
+			//$("#jjc-edit-"+i).attr("value", jjc[i]);
+			if(jjc[i])
+			{
+				$("#jjc-edit-"+i).val(jjc[i]);
+			}
+		}
+	}
+}
 
 function jtEditorSave()
 {
@@ -654,13 +672,29 @@ function jtEditorSave()
 	var jjcKey = ["life", "attack", "intel","physic","magic","tech","criticalProbInc","criticalDamageInc","criticalProbDec","criticalDamageDec"];
 
 	var heroId = fightInfo[editingRole]["hero"]["id"];
+	if(!userData["jt"][heroId])
+	{
+		userData["jt"][heroId] = {};
+	}
+	if(!userData["jjc"][heroId])
+	{
+		userData["jjc"][heroId] = {};
+	}
+	userData["jt"][heroId]["id"] = heroId;
+	userData["jt"][heroId]["name"] = fightInfo[editingRole]["hero"]["name"];
+	
+	userData["jjc"][heroId]["id"] = heroId;
+	userData["jjc"][heroId]["name"] = fightInfo[editingRole]["hero"]["name"];
 	for(var i in jtKey)
 	{
 		var value = $("#jt-edit-"+jtKey[i]).val();
 		if(value)
 		{
 			userData["jt"][heroId][jtKey[i]] = parseInt(value);
-		} 
+		} else
+		{
+			userData["jt"][heroId][jtKey[i]] = 0 ;
+		}
 	}
 	for(var i in jjcKey)
 	{
@@ -668,7 +702,10 @@ function jtEditorSave()
 		if(value)
 		{
 			userData["jjc"][heroId][jjcKey[i]] = parseInt(value);
-		} 
+		} else
+		{
+			userData["jjc"][heroId][jjcKey[i]] = 0 ;
+		}
 	}
 	loadComplete(editingRole);
 	refreshTable();

@@ -526,9 +526,19 @@ public class FightService {
 
 		panelInfo
 				.setAttack(Double.valueOf(Math.round(attack * (1 + ai / 100.0) + panelInfo.getAttackJJC())).intValue());
-		panelInfo.setIntel(Double.valueOf(Math.floor(intel * (1 + ii / 100.0) + panelInfo.getIntelJJC())).intValue());
-		panelInfo
-				.setPhysic(Double.valueOf(Math.floor(physic * (1 + pi / 100.0) + panelInfo.getPhysicJJC())).intValue());
+		
+		if(panelInfo.getFeatures().containsKey(Feature.MagicToIntel))
+		{
+			double mti = (Double)panelInfo.getFeatures().get(Feature.MagicToIntel);
+			double mmm = Double.valueOf(Math.floor(magic * (1 + mi / 100.0) + panelInfo.getMagicJJC())).intValue();
+			panelInfo.setIntel(Double.valueOf(mmm*mti).intValue());
+		} else
+		{
+			panelInfo.setIntel(Double.valueOf(Math.floor(intel * (1 + ii / 100.0) + panelInfo.getIntelJJC())).intValue());
+		}
+			
+		
+		panelInfo.setPhysic(Double.valueOf(Math.floor(physic * (1 + pi / 100.0) + panelInfo.getPhysicJJC())).intValue());
 		panelInfo.setMagic(Double.valueOf(Math.floor(magic * (1 + mi / 100.0) + panelInfo.getMagicJJC())).intValue());
 		panelInfo.setTech(Double.valueOf(Math.floor(tech * (1 + ti / 100.0) + panelInfo.getTechJJC())).intValue());
 		panelInfo.setLife(
@@ -547,6 +557,7 @@ public class FightService {
 		panelInfo.setRange(range);
 
 		panelInfo.setSkillDamage(si);
+		log.info("hero ignore def:"+igd);
 		panelInfo.setIgnoreDef(igd);
 
 		for (int i = 0; i < counters.size(); i++) {
@@ -881,6 +892,7 @@ public class FightService {
 		panelInfo.setCriticalDamageInc(cdi);
 		panelInfo.setCriticalDamageDec(cdd);
 		panelInfo.setRange(range);
+		log.info("soldier ignore def:"+igd);
 		panelInfo.setIgnoreDef(igd);
 
 		for (int i = 0; i < counters.size(); i++) {

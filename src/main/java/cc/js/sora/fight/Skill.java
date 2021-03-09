@@ -201,14 +201,17 @@ public abstract class Skill {
 	public static final long ListellTalent = 61;
 	public static final long ZalrahdaTalent = 62;
 	public static final long ZillagodTalent = 63;
+	public static final long BozelTalent = 72;
 	public static final long BernhardtTalent = 74;
 	public static final long ElwinTalent = 76;
 	public static final long LedynTalent = 78;
-
+	public static final long JiayouluoTalent = 93;
+	
 	/**
 	 * 300-900 passive skill
 	 */
 	public static final long BloodBattle = 301;
+	public static final long Xinyang = 302;
 
 	/**
 	 * 900-1000 enhance
@@ -234,6 +237,7 @@ public abstract class Skill {
 	public static final long Tier = 1018;
 	public static final long Shijieshu = 1059;
 	public static final long Shuijingfengci = 1049;
+	public static final long Zhenshizijia = 1062;
 	
 	/**
 	 * 1600-2000 action
@@ -247,7 +251,8 @@ public abstract class Skill {
 	public static final long Huoqiu = 1608;
 	public static final long Leiji = 1610;
 	public static final long Anlian = 1611;
-
+	public static final long Lanxingzhan = 1614;
+	
 	public static final long Qinzhen = 1805;
 	public static final long Juebi = 1806;
 	public static final long Qinzhen2 = 1807;

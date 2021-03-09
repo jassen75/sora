@@ -1,6 +1,5 @@
 package cc.js.sora.fight.serivce;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,17 +21,80 @@ import cc.js.sora.fight.Soldier;
 import cc.js.sora.fight.db.ActionRepository;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
-import cc.js.sora.fight.skill.*;
-import cc.js.sora.fight.skill.action.*;
-import cc.js.sora.fight.skill.equip.*;
-import cc.js.sora.fight.skill.passivity.*;
-import cc.js.sora.fight.skill.soldier.*;
+import cc.js.sora.fight.skill.SuperBuff;
+import cc.js.sora.fight.skill.action.Anlian;
+import cc.js.sora.fight.skill.action.DreamAction;
+import cc.js.sora.fight.skill.action.Huoqiu;
+import cc.js.sora.fight.skill.action.Juemingyiji;
+import cc.js.sora.fight.skill.action.Lanxingzhan;
+import cc.js.sora.fight.skill.action.Leiji;
+import cc.js.sora.fight.skill.action.Weifengchongzhen;
+import cc.js.sora.fight.skill.equip.Erzhui;
+import cc.js.sora.fight.skill.equip.FuriousEnhance;
+import cc.js.sora.fight.skill.equip.Jixianmogong;
+import cc.js.sora.fight.skill.equip.Lage;
+import cc.js.sora.fight.skill.equip.LastSuit;
+import cc.js.sora.fight.skill.equip.ManyueEnhance;
+import cc.js.sora.fight.skill.equip.MoshuEnhance;
+import cc.js.sora.fight.skill.equip.Shenpan;
+import cc.js.sora.fight.skill.equip.Shenyi;
+import cc.js.sora.fight.skill.equip.Shijieshu;
+import cc.js.sora.fight.skill.equip.Shuijingfengci;
+import cc.js.sora.fight.skill.equip.Tier;
+import cc.js.sora.fight.skill.equip.Tulong;
+import cc.js.sora.fight.skill.equip.WindEnhance;
+import cc.js.sora.fight.skill.equip.Xunzhang;
+import cc.js.sora.fight.skill.equip.Yicai;
+import cc.js.sora.fight.skill.equip.Yuguan;
+import cc.js.sora.fight.skill.equip.Zhenshizijia;
+import cc.js.sora.fight.skill.passivity.BloodBattle;
+import cc.js.sora.fight.skill.soldier.Anjingling;
+import cc.js.sora.fight.skill.soldier.Dujiaoshou;
+import cc.js.sora.fight.skill.soldier.Fangzhenliebing;
+import cc.js.sora.fight.skill.soldier.Feiwunvshi;
+import cc.js.sora.fight.skill.soldier.Gangyiyongshi;
+import cc.js.sora.fight.skill.soldier.Gangzonglangren;
+import cc.js.sora.fight.skill.soldier.Gaodiyongshi;
+import cc.js.sora.fight.skill.soldier.GriffinSkill;
+import cc.js.sora.fight.skill.soldier.Huangjiaqibing;
+import cc.js.sora.fight.skill.soldier.Jiamiannvpu;
+import cc.js.sora.fight.skill.soldier.Jixieqishi;
+import cc.js.sora.fight.skill.soldier.Kuangrezhe;
+import cc.js.sora.fight.skill.soldier.LobsterSkill;
+import cc.js.sora.fight.skill.soldier.Longqi;
+import cc.js.sora.fight.skill.soldier.Senlinjisi;
+import cc.js.sora.fight.skill.soldier.Shixianggui;
+import cc.js.sora.fight.skill.soldier.Shurenshouwei;
+import cc.js.sora.fight.skill.soldier.Tiankongsheshou;
+import cc.js.sora.fight.skill.soldier.Tianshi;
+import cc.js.sora.fight.skill.soldier.WizardSkill;
+import cc.js.sora.fight.skill.soldier.Wumianzhe;
+import cc.js.sora.fight.skill.soldier.Wunv;
+import cc.js.sora.fight.skill.soldier.Xiyidaoke;
+import cc.js.sora.fight.skill.soldier.Xizuizhe;
+import cc.js.sora.fight.skill.soldier.Xuanfengyouqibing;
+import cc.js.sora.fight.skill.soldier.Yanshi;
 import cc.js.sora.fight.skill.support.BernhardtSuper;
 import cc.js.sora.fight.skill.support.ElwinSuper;
 import cc.js.sora.fight.skill.support.Shenji;
 import cc.js.sora.fight.skill.support.ZillagodSuper;
-import cc.js.sora.fight.skill.talent.*;
-
+import cc.js.sora.fight.skill.talent.AresTalent;
+import cc.js.sora.fight.skill.talent.BernhardtTalent;
+import cc.js.sora.fight.skill.talent.BozelTalent;
+import cc.js.sora.fight.skill.talent.ElwinTalent;
+import cc.js.sora.fight.skill.talent.HimikoTalent;
+import cc.js.sora.fight.skill.talent.JiayouluoTalent;
+import cc.js.sora.fight.skill.talent.LandiusTalent;
+import cc.js.sora.fight.skill.talent.LedynTalent;
+import cc.js.sora.fight.skill.talent.ListellTalent;
+import cc.js.sora.fight.skill.talent.MagusOfTheTreeTalent;
+import cc.js.sora.fight.skill.talent.MarielTalent;
+import cc.js.sora.fight.skill.talent.PatyleTalent;
+import cc.js.sora.fight.skill.talent.ReanTalent;
+import cc.js.sora.fight.skill.talent.RozaliaTalent;
+import cc.js.sora.fight.skill.talent.TowaTalent;
+import cc.js.sora.fight.skill.talent.ZalrahdaTalent;
+import cc.js.sora.fight.skill.talent.ZillagodTalent;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -78,6 +140,7 @@ public class SkillService {
 		registerSkill(Skill.Tier, new Tier());
 		registerSkill(Skill.Shijieshu, new Shijieshu());
 		registerSkill(Skill.Shuijingfengci, new Shuijingfengci());
+		registerSkill(Skill.Zhenshizijia, new Zhenshizijia());
 
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
@@ -101,7 +164,9 @@ public class SkillService {
 		registerSkill(Skill.ZillagodTalent, new ZillagodTalent());
 		registerSkill(Skill.BernhardtTalent, new BernhardtTalent());
 		registerSkill(Skill.ListellTalent, new ListellTalent());
-
+		registerSkill(Skill.JiayouluoTalent, new JiayouluoTalent());
+		registerSkill(Skill.BozelTalent, new BozelTalent());
+		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
 		registerSkill(Skill.LongxiajushouSkill, new LobsterSkill());
@@ -135,6 +200,7 @@ public class SkillService {
 		registerSkill(Skill.Huoqiu, new Huoqiu());
 		registerSkill(Skill.Anlian, new Anlian());
 		registerSkill(Skill.Leiji, new Leiji());
+		registerSkill(Skill.Lanxingzhan, new Lanxingzhan());
 		
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());

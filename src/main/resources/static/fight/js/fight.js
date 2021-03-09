@@ -463,27 +463,34 @@ function displayHero(role) {
 
 	$("#" + role + "-soldier-information").html("");
 
-	if (fightInfo[role]["equip"]) {
-		for ( var i in equipPart) {
-			var part = equipPart[i];
-			$("#" + role + "-" + equipPart[i]).children("div").remove();
-			if (fightInfo[role]["equip"][part]) {
-				var pic = $("<div data-toggle=\"modal\" data-target=\"#equip-editor\" data-equip=\""+part+"\" data-role=\""+role+"\"><img src=\"/fight/image/equip_"
-						+ fightInfo[role]["equip"][equipPart[i]]["id"]
-						+ ".png\" alt=\"\" width=\"60\" height=\"60\"></img><p>"
-						+ fightInfo[role]["equip"][equipPart[i]]["name"]
-						+ "</p></div>");
-				pic.insertBefore($("#" + role + "-" + equipPart[i]
-						+ " > button"));
-			}
+	
+	for ( var i in equipPart) {
+		var part = equipPart[i];
+		$("#" + role + "-" + equipPart[i]).children("div").remove();
+		
+		if (fightInfo[role]["equip"] && fightInfo[role]["equip"][part]) {
+			var name = fightInfo[role]["equip"][equipPart[i]]["name"];
+			var equipId = fightInfo[role]["equip"][equipPart[i]]["id"];
+		} else
+		{
+			var name = "未选定";
+			var equipId = 0;
 		}
+
+		var pic = $("<div data-toggle=\"modal\" data-target=\"#equip-editor\" data-equip=\""+part+"\" data-role=\""+role+"\"><img src=\"/fight/image/equip_"
+				+ equipId
+				+ ".png\" alt=\"\" width=\"60\" height=\"60\"></img><p>"
+				+ name
+				+ "</p></div>");
+		pic.insertBefore($("#" + role + "-" + equipPart[i]
+				+ " > button"));
+		
 	}
 
 	if (!fightInfo[role]["land"]) {
 		fightInfo[role]["land"] = "Flat";
 	}
 	
-
 	displayAttackerAction();
 
 	sync(true);
@@ -589,8 +596,9 @@ function syncComplete(role) {
 }
 
 function buildHeroPanel(role) {
-	$("#" + role + "Attack").attr("value",
-			fightInfo[role]["heroPanel"]["attack"]);
+//	$("#" + role + "Attack").attr("value",
+//			fightInfo[role]["heroPanel"]["attack"]);
+	$("#" + role + "Attack").val(fightInfo[role]["heroPanel"]["attack"]);
 	$("#" + role + "Intel")
 			.attr("value", fightInfo[role]["heroPanel"]["intel"]);
 	$("#" + role + "PhysicDef").attr("value",
@@ -617,7 +625,9 @@ function buildHeroPanel(role) {
 			+ "&nbsp;&nbsp;&nbsp;物理减伤："
 			+ fightInfo[role]["heroPanel"]["physicDamageDec"]
 			+ "&nbsp;&nbsp;&nbsp;魔法减伤："
-			+ fightInfo[role]["heroPanel"]["magicDamageDec"] + "</b></p>"
+			+ fightInfo[role]["heroPanel"]["magicDamageDec"]
+			+ "&nbsp;&nbsp;&nbsp;无视防御："
+			+ fightInfo[role]["heroPanel"]["ignoreDef"] + "</b></p>"
 			+ "<p>技巧：" + fightInfo[role]["heroPanel"]["tech"]
 			+ "&nbsp;&nbsp;&nbsp;暴击："
 			+ fightInfo[role]["heroPanel"]["criticalProbInc"]
@@ -649,6 +659,8 @@ function buildSoldierPanel(role) {
 					+ fightInfo[role]["soldierPanel"]["physicDamageDec"]
 					+ "&nbsp;&nbsp;&nbsp;魔法减伤:"
 					+ fightInfo[role]["soldierPanel"]["magicDamageDec"]
+					+ "&nbsp;&nbsp;&nbsp;无视防御："
+					+ fightInfo[role]["soldierPanel"]["ignoreDef"]
 					+ "</b></p><p>" + "暴击："
 					+ fightInfo[role]["soldierPanel"]["criticalProbInc"]
 					+ "&nbsp;&nbsp;&nbsp;暴伤："
