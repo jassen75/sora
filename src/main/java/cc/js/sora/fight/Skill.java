@@ -192,6 +192,11 @@ public abstract class Skill {
 	public static final long PatyleTalent = 1;
 	public static final long TowaTalent = 2;
 	public static final long HimikoTalent = 5;
+	
+	public static final long HildaTalent = 7;
+	public static final long WernerTalent = 8;
+	public static final long LightOfGenesisTalent = 9;
+ 
 	public static final long MarielTalent = 10;
 	public static final long MagusOfTheTreeTalent = 18;
 	public static final long RozaliaTalent = 21;
@@ -239,7 +244,7 @@ public abstract class Skill {
 	public static final long Shijieshu = 1059;
 	public static final long Shuijingfengci = 1049;
 	public static final long Zhenshizijia = 1062;
-	
+	public static final long Cangbaizhizhang = 1063;
 	/**
 	 * 1600-2000 action
 	 */

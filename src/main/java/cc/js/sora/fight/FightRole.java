@@ -35,8 +35,8 @@ public class FightRole {
 	
 	PanelInfo heroPanel;
 	PanelInfo soldierPanel;
-	List<Buff> buffs;
-	List<Debuff> debuffs;
+	List<Buff> buffs = Lists.newArrayList();
+	List<Debuff> debuffs = Lists.newArrayList();
 //	Map<String, UserCondition> userConditions;
 //	List<CheckedSkill> checkedSkills = Lists.newArrayList();
 	

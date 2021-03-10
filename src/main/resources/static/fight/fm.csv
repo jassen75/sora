@@ -31,4 +31,4 @@
 75,利亚娜,11,intelInc=14;lifeInc=5;physic=4,11,intelInc=3;lifeInc=14;physicInc=10,11,intelInc=3;lifeInc=14;physic=8,11,intelInc=6;lifeInc=7;magicInc=6,687|0|79|51|0|14,411|0|57|45|0|69,0|0|0|29,54,21,22,55
 76,埃尔文,2,attackInc=15;physicInc=2;life=127,2,attackInc=5;physicInc=10;magic=13,2,attackInc=4;attack=7;physicInc=7,2,attackInc=10;attack=17;physicInc=3,673|77|0|52|0|0,461|59|0|36|0|0,0|16|0|25,56,46,18,12
 81,爱丽丝,9,intelInc=11;intel=13;lifeInc=6,9,physicInc=11;lifeInc=10;magicInc=11,9,intelInc=2;intel=7;lifeInc=15,9,intelInc=10;magicInc=3;magic=3,691|0|77|42|0|38,414|0|56|36|0|70,0|0|0|26,54,21,22,10
-93,迦游罗,1,intelInc=15;intel=5,1,intelInc=5;lifeInc=10,1,intelInc=5;lifeInc=10,1,intelInc=9;lifeInc=6,705|0|79|59|0|0,452|0|60|39|0|0,10|20|0|0,20,21,22,4
+93,迦游罗,1,intelInc=15;intel=8;attack=9,1,intelInc=5;physicInc=10;magicInc=4,1,intelInc=4;lifeInc=13;physicInc=7,1,intelInc=7;intel=5;criticalInc=14,705|0|79|59|0|0,452|0|60|39|0|0,10|20|0|0,63,1,8,4
