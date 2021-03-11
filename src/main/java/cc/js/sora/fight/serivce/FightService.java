@@ -1,6 +1,5 @@
 package cc.js.sora.fight.serivce;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -305,12 +304,6 @@ public class FightService {
 							case SkillDamage:
 								si += number;
 								break;
-							case AttackCounter:
-								counters.add(number);
-								break;
-							case PhysicDefCounter:
-								pd_counters.add(number);
-								break;
 							case Life:
 								li += number;
 								break;
@@ -403,12 +396,6 @@ public class FightService {
 					case SkillDamage:
 						si += number;
 						break;
-					case AttackCounter:
-						counters.add(number);
-						break;
-					case PhysicDefCounter:
-						pd_counters.add(number);
-						break;
 					case Life:
 						li += number;
 						break;
@@ -471,12 +458,6 @@ public class FightService {
 					case MagicDamageDec:
 						mdd += number;
 						break;
-					case AttackCounter:
-						counters.add(number);
-						break;
-					case PhysicDefCounter:
-						pd_counters.add(number);
-						break;
 					case Life:
 						li += number;
 						break;
@@ -524,8 +505,7 @@ public class FightService {
 			md_counters.add(30.0);
 		}
 
-		panelInfo
-				.setAttack(Double.valueOf(Math.round(attack * (1 + ai / 100.0) + panelInfo.getAttackJJC())).intValue());
+		panelInfo.setAttack(Double.valueOf(Math.round(attack * (1 + ai / 100.0) + panelInfo.getAttackJJC())).intValue());
 		
 		if(panelInfo.getFeatures().containsKey(Feature.MagicToIntel))
 		{
@@ -566,6 +546,8 @@ public class FightService {
 		panelInfo.setSkillDamage(si);
 		log.info("hero ignore def:"+igd);
 		panelInfo.setIgnoreDef(igd);
+		panelInfo.setPreFixDamage(this.calculatePreFixDamage(panelInfo));
+		panelInfo.setPreFixDamageToSelf(this.calculatePreFixDamageToSelf(panelInfo));
 
 		for (int i = 0; i < counters.size(); i++) {
 			if (hero.getPhysic() == 1) {
@@ -678,12 +660,6 @@ public class FightService {
 							case MagicDamageDec:
 								mdd += number;
 								break;
-							case AttackCounter:
-								counters.add(number);
-								break;
-							case PhysicDefCounter:
-								pd_counters.add(number);
-								break;
 							case Life:
 								li += number;
 								break;
@@ -763,12 +739,6 @@ public class FightService {
 					case MagicDamageDec:
 						mdd += number;
 						break;
-					case AttackCounter:
-						counters.add(number);
-						break;
-					case PhysicDefCounter:
-						pd_counters.add(number);
-						break;
 					case Life:
 						li += number;
 						break;
@@ -826,12 +796,6 @@ public class FightService {
 						break;
 					case MagicDamageDec:
 						mdd += number;
-						break;
-					case AttackCounter:
-						counters.add(number);
-						break;
-					case PhysicDefCounter:
-						pd_counters.add(number);
 						break;
 					case Life:
 						li += number;
@@ -915,10 +879,46 @@ public class FightService {
 			panelInfo.setMagic(
 					Double.valueOf(Math.floor(panelInfo.getMagic() * (1 + md_counters.get(i) / 100))).intValue());
 		}
+		
+		panelInfo.setPreFixDamage(this.calculatePreFixDamage(panelInfo));
+		panelInfo.setPreFixDamageToSelf(this.calculatePreFixDamageToSelf(panelInfo));
 
 		return panelInfo;
 	}
 
+	public int calculatePreFixDamage(PanelInfo panelInfo)
+	{
+		int result = 0;
+		if(panelInfo.getFeatures().containsKey(Feature.PreFixDamageAttack))
+		{
+			List<Number> list = (List<Number>)panelInfo.getFeatures().get(Feature.PreFixDamageAttack);
+			for(int i=0; i<list.size(); i++)
+			{
+				result += list.get(i).doubleValue() * panelInfo.getAttack();
+			}
+		}
+		
+		if(panelInfo.getFeatures().containsKey(Feature.PreFixDamageChenhun))
+		{
+			result += Math.min(panelInfo.getAttack(), panelInfo.getIntel());
+		}
+		return result;
+	}
+	
+	public int calculatePreFixDamageToSelf(PanelInfo panelInfo)
+	{
+		int result = 0;
+		if(panelInfo.getFeatures().containsKey(Feature.FixDamageToSelf))
+		{
+			List<Number> list = (List<Number>)panelInfo.getFeatures().get(Feature.FixDamageToSelf);
+			for(int i=0; i<list.size(); i++)
+			{
+				result += list.get(i).doubleValue();
+			}
+		}
+		return Double.valueOf(result/100.0*panelInfo.getLife()).intValue();
+	}
+	
 	private CheckedSkill checkSkill(FightInfo fightInfo, Skill skill, boolean isAttack) {
 
 		CheckedSkill result = new CheckedSkill();

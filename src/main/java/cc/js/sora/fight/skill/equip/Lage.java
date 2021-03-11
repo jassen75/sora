@@ -61,7 +61,7 @@ public class Lage extends Skill {
 	@Override
 	public List<Effect> getEffects()  {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Feature(Feature.PreFixDamageAttack, 1, "战前1倍攻击伤害", Scope.Hero, true));
+		return Lists.newArrayList(new Feature(Feature.PreFixDamageAttack, 1.0, "战前1倍攻击伤害", Scope.Hero, true));
 	}
 
 	

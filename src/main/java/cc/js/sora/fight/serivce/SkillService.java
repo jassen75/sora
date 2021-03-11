@@ -38,6 +38,7 @@ import cc.js.sora.fight.skill.equip.Jixianmogong;
 import cc.js.sora.fight.skill.equip.Lage;
 import cc.js.sora.fight.skill.equip.LastSuit;
 import cc.js.sora.fight.skill.equip.ManyueEnhance;
+import cc.js.sora.fight.skill.equip.Mingxiang;
 import cc.js.sora.fight.skill.equip.MoshuEnhance;
 import cc.js.sora.fight.skill.equip.Shenpan;
 import cc.js.sora.fight.skill.equip.Shenyi;
@@ -150,6 +151,7 @@ public class SkillService {
 		registerSkill(Skill.Zhenshizijia, new Zhenshizijia());
 		registerSkill(Skill.Chenhun, new Chenhun());
 		registerSkill(Skill.Cangbaizhizhang, new Cangbaizhizhang());
+		registerSkill(Skill.Mingxiang, new Mingxiang());
 		
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
