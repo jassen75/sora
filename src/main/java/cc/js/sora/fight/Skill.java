@@ -201,6 +201,8 @@ public abstract class Skill {
 	public static final long MagusOfTheTreeTalent = 18;
 	public static final long RozaliaTalent = 21;
 	public static final long ReanTalent = 22;
+	public static final long LicoriceTalent = 24;
+	
 	public static final long AresTalent = 28;
 	public static final long LandiusTalent = 58;
 	public static final long ListellTalent = 61;
@@ -306,6 +308,8 @@ public abstract class Skill {
 	public static final long Tiankongsheshou = 2031;
 	public static final long Anjingling = 2032;
 	public static final long Feiwunvshi = 2033;
+	public static final long Wushi = 2077;
+	
 	/**
 	 * 4000-5000 support skill
 	 */

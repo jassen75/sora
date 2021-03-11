@@ -35,5 +35,7 @@ public class Wunv extends Skill{
 		// TODO Auto-generated method stub
 		return Lists.newArrayList(new Enhance(BuffType.PhysicDamageDec, 75, Scope.Hero));
 	}
+	
+
 
 }

@@ -77,6 +77,7 @@ import cc.js.sora.fight.skill.soldier.Tianshi;
 import cc.js.sora.fight.skill.soldier.WizardSkill;
 import cc.js.sora.fight.skill.soldier.Wumianzhe;
 import cc.js.sora.fight.skill.soldier.Wunv;
+import cc.js.sora.fight.skill.soldier.Wushi;
 import cc.js.sora.fight.skill.soldier.Xiyidaoke;
 import cc.js.sora.fight.skill.soldier.Xizuizhe;
 import cc.js.sora.fight.skill.soldier.Xuanfengyouqibing;
@@ -94,6 +95,7 @@ import cc.js.sora.fight.skill.talent.HimikoTalent;
 import cc.js.sora.fight.skill.talent.KayuraTalent;
 import cc.js.sora.fight.skill.talent.LandiusTalent;
 import cc.js.sora.fight.skill.talent.LedynTalent;
+import cc.js.sora.fight.skill.talent.LicoriceTalent;
 import cc.js.sora.fight.skill.talent.LightOfGenesisTalent;
 import cc.js.sora.fight.skill.talent.ListellTalent;
 import cc.js.sora.fight.skill.talent.MagusOfTheTreeTalent;
@@ -186,6 +188,8 @@ public class SkillService {
 		registerSkill(Skill.KayuraTalent, new KayuraTalent());
 		registerSkill(Skill.BozelTalent, new BozelTalent());
 		registerSkill(Skill.SissiWhiteTalent, new SissiWhiteTalent());
+		registerSkill(Skill.LicoriceTalent, new LicoriceTalent());
+		
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
@@ -213,6 +217,8 @@ public class SkillService {
 		registerSkill(Skill.Tiankongsheshou, new Tiankongsheshou());
 		registerSkill(Skill.Anjingling, new Anjingling());
 		registerSkill(Skill.Feiwunvshi, new Feiwunvshi());
+		registerSkill(Skill.Wushi, new Wushi());
+		
 		
 		registerSkill(Skill.Shimeng, new DreamAction());
 		registerSkill(Skill.Weifengchongzhen, new Weifengchongzhen());

@@ -11,6 +11,7 @@
 18,树之贤者,4,intelInc=15;attackInc=10;attack=21,4,intelInc=5;life=116;magicInc=11,4,intelInc=4;lifeInc=9;magicInc=14,4,intelInc=10;lifeInc=7;physicInc=4,659|0|77|52|0|0,406|0|56|36|0|0,0|0|20|25,27,28,29,30
 21,罗莎莉娅,1,attackInc=14;attack=12;intel=19,1,attackInc=5;physicInc=8;life=104,1,attackInc=4;attack=7;lifeInc=10,1,attackInc=10;life=87;magic=5,732|80|0|60|0|0,0|60|0|42|0|72,0|0|19|27,31,26,18,6
 22,黎恩,4,attackInc=13;lifeInc=7,4,attackInc=4;physicInc=9;physic=7,4,attackInc=2;attack=9;physicInc=10,4,attackInc=10;physicInc=5;magic=8,671|80|0|53|0|14,474|58|0|44|0|0,0|20|0|31,32,17,18,10
+24,丽可丽丝,4,intelInc=14;intel=2,4,intelInc=2;physicInc=15,4,intelInc=4;lifeInc=10;life=98,4,intelInc=7;criticalInc=6,633|0|72|50|0|15,357|0|50|39|0|54,0|0|0|20,39,21,29,62
 28,阿雷斯,3,attackInc=13;attack=17,3,attackInc=5;lifeInc=5;intelInc=2,3,attackInc=4;lifeInc=11;magicInc=10,3,attackInc=7;lifeInc=7;criticalInc=9,566|80|0|54|0|39,0|60|0|44|0|0,10|19|0|0,33,1,34,9
 30,蒂德莉特,1,intelInc=13;intel=19;physicInc=2,1,intelInc=4;intel=4;physicInc=11,1,intelInc=5;physicInc=10;life=59,1,intelInc=7;lifeInc=6;physicInc=7,687|0|80|59|0|0,378|0|59|43|0|0,0|18|0|31,27,26,18,4
 32,布琳达,1,attackInc=13;attack=15;intel=17,1,attackInc=5;lifeInc=9;intel=4,1,attackInc=3;attack=10;physicInc=10,1,attackInc=9;physicInc=6;physic=5,539|80|0|55|0|12,0|60|0|43|0|0,9|17|0|28,5,36,18,35
