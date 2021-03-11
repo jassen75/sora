@@ -22,7 +22,7 @@ public abstract class Skill {
 	// 2 battle/aoe defender 3 battle all
 	// 4 battle attack 5 battle defender
 	// 6 aoe attacker 7 aoe defender
-	// 8 aoe all
+	// 8 aoe/rangeed
 	// 9 all
 	public int getSkillType() {
 		return 9;
@@ -210,7 +210,7 @@ public abstract class Skill {
 	public static final long BernhardtTalent = 74;
 	public static final long ElwinTalent = 76;
 	public static final long LedynTalent = 78;
-	public static final long JiayouluoTalent = 93;
+	public static final long KayuraTalent = 93;
 	
 	/**
 	 * 300-900 passive skill
@@ -258,6 +258,7 @@ public abstract class Skill {
 	public static final long Leiji = 1610;
 	public static final long Anlian = 1611;
 	public static final long Lanxingzhan = 1614;
+	public static final long Shengguangzhiyong = 1616;
 	
 	public static final long Qinzhen = 1805;
 	public static final long Juebi = 1806;

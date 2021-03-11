@@ -34,6 +34,10 @@ public class Enhance implements Effect{
 		{
 			return printBufferType() + number;
 		}
+		else if(buffType == BuffType.Random)
+		{
+			return printBufferType();
+		}
 		else
 		{
 			return printBufferType()+printValue();		
@@ -101,6 +105,8 @@ public class Enhance implements Effect{
 			return "射程增加";
 		case IgnoreDef:
 			return "无视防御";
+		case Random:
+			return "随机效果";
 		}
 		return "";
 	}

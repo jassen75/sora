@@ -28,6 +28,8 @@ public class Feature implements Effect{
 	public final static String PreUnImuFixDamageAttackIntel = "PreUnImuFixDamageAttackIntel";
 	public final static String PostFixDamagePercent = "PostFixDamagePercent";
 	public final static String ImmuenToCounter = "ImmuenToCounter";
+	public final static String AddAttackToDef = "AddAttackToDef";
+	public final static String RangeAttackBack = "RangeAttackBack";
 	
 	public final static String MagicToIntel = "MagicToIntel";
 	

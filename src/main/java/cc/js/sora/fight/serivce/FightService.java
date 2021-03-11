@@ -537,9 +537,16 @@ public class FightService {
 			panelInfo.setIntel(Double.valueOf(Math.floor(intel * (1 + ii / 100.0) + panelInfo.getIntelJJC())).intValue());
 		}
 			
+		double atd = 0;
+		if(panelInfo.getFeatures().containsKey(Feature.AddAttackToDef))
+		{
+			atd = panelInfo.getAttack()* ((Integer)panelInfo.getFeatures().get(Feature.AddAttackToDef)) / 100.0;
+			log.info("atd==="+atd);
+		}
+		panelInfo.setPhysic(Double.valueOf(Math.floor(physic * (1 + pi / 100.0) + panelInfo.getPhysicJJC())+atd).intValue());
+		panelInfo.setMagic(Double.valueOf(Math.floor(magic * (1 + mi / 100.0) + panelInfo.getMagicJJC())+atd).intValue());
 		
-		panelInfo.setPhysic(Double.valueOf(Math.floor(physic * (1 + pi / 100.0) + panelInfo.getPhysicJJC())).intValue());
-		panelInfo.setMagic(Double.valueOf(Math.floor(magic * (1 + mi / 100.0) + panelInfo.getMagicJJC())).intValue());
+
 		panelInfo.setTech(Double.valueOf(Math.floor(tech * (1 + ti / 100.0) + panelInfo.getTechJJC())).intValue());
 		panelInfo.setLife(
 				Double.valueOf(Math.floor(life * (1 + (li + 40) / 100.0) + panelInfo.getLifeJJC())).intValue());

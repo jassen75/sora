@@ -1,28 +1,29 @@
-package cc.js.sora.fight.skill.equip;
+package cc.js.sora.fight.skill.action;
 
 import java.util.List;
 
 import com.google.common.collect.Lists;
 
 import cc.js.sora.fight.BuffType;
-import cc.js.sora.fight.Debuff;
+import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
+import cc.js.sora.fight.condition.DistanceGreaterThanCondition;
 
-public class Cangbaizhizhang extends Skill{
+public class Zhishui extends Skill {
 
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "苍白之杖";
+		return "止水光环";
 	}
 
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.SkillDamage, 15, Scope.Hero));
+		return Lists.newArrayList(new Enhance(BuffType.CriticalProbDec, 30, Scope.All));
 	}
 	
 	public List<Skill> childSkill() {
@@ -31,25 +32,25 @@ public class Cangbaizhizhang extends Skill{
 			@Override
 			public String getName() {
 				// TODO Auto-generated method stub
-				return "苍白之杖 随机弱化效果";
+				return "止水光环";
+			}
+
+			public Condition getCondition() {
+				return new DistanceGreaterThanCondition(1);
+			}
+			
+			public int getSkillType() {
+				return 2;
 			}
 
 			@Override
 			public List<Effect> getEffects() {
 				// TODO Auto-generated method stub
-				return Lists.newArrayList(new Debuff(BuffType.Random, 0));
-			}
-			
-			public int getSkillType() {
-				return 4;
+				return Lists.newArrayList(new Enhance(BuffType.DamageDec, 15, Scope.All));
 			}
 
-			// 0 effect 1 pre battle 2 battle 3 post battle 4
-			public int getBattleType() {
-				return 1;
-			}
-			
 		});
 	}
+	
 
 }

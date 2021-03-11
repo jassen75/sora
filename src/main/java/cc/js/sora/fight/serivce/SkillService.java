@@ -28,6 +28,7 @@ import cc.js.sora.fight.skill.action.Huoqiu;
 import cc.js.sora.fight.skill.action.Juemingyiji;
 import cc.js.sora.fight.skill.action.Lanxingzhan;
 import cc.js.sora.fight.skill.action.Leiji;
+import cc.js.sora.fight.skill.action.Shengguangzhiyong;
 import cc.js.sora.fight.skill.action.Weifengchongzhen;
 import cc.js.sora.fight.skill.equip.Cangbaizhizhang;
 import cc.js.sora.fight.skill.equip.Chenhun;
@@ -85,10 +86,12 @@ import cc.js.sora.fight.skill.talent.AresTalent;
 import cc.js.sora.fight.skill.talent.BernhardtTalent;
 import cc.js.sora.fight.skill.talent.BozelTalent;
 import cc.js.sora.fight.skill.talent.ElwinTalent;
+import cc.js.sora.fight.skill.talent.HildaTalent;
 import cc.js.sora.fight.skill.talent.HimikoTalent;
-import cc.js.sora.fight.skill.talent.JiayouluoTalent;
+import cc.js.sora.fight.skill.talent.KayuraTalent;
 import cc.js.sora.fight.skill.talent.LandiusTalent;
 import cc.js.sora.fight.skill.talent.LedynTalent;
+import cc.js.sora.fight.skill.talent.LightOfGenesisTalent;
 import cc.js.sora.fight.skill.talent.ListellTalent;
 import cc.js.sora.fight.skill.talent.MagusOfTheTreeTalent;
 import cc.js.sora.fight.skill.talent.MarielTalent;
@@ -96,6 +99,7 @@ import cc.js.sora.fight.skill.talent.PatyleTalent;
 import cc.js.sora.fight.skill.talent.ReanTalent;
 import cc.js.sora.fight.skill.talent.RozaliaTalent;
 import cc.js.sora.fight.skill.talent.TowaTalent;
+import cc.js.sora.fight.skill.talent.WernerTalent;
 import cc.js.sora.fight.skill.talent.ZalrahdaTalent;
 import cc.js.sora.fight.skill.talent.ZillagodTalent;
 import lombok.extern.slf4j.Slf4j;
@@ -157,8 +161,11 @@ public class SkillService {
 
 		registerSkill(Skill.PatyleTalent, new PatyleTalent());
 		registerSkill(Skill.TowaTalent, new TowaTalent());
-		registerSkill(Skill.ZalrahdaTalent, new ZalrahdaTalent());
+
 		registerSkill(Skill.MarielTalent, new MarielTalent());
+		registerSkill(Skill.HildaTalent, new HildaTalent());
+		registerSkill(Skill.WernerTalent, new WernerTalent());
+		registerSkill(Skill.LightOfGenesisTalent, new LightOfGenesisTalent());
 		registerSkill(Skill.LandiusTalent, new LandiusTalent());
 		registerSkill(Skill.LedynTalent, new LedynTalent());
 		registerSkill(Skill.HimikoTalent, new HimikoTalent());
@@ -167,10 +174,11 @@ public class SkillService {
 		registerSkill(Skill.AresTalent, new AresTalent());
 		registerSkill(Skill.RozaliaTalent, new RozaliaTalent());
 		registerSkill(Skill.ElwinTalent, new ElwinTalent());
+		registerSkill(Skill.ZalrahdaTalent, new ZalrahdaTalent());
 		registerSkill(Skill.ZillagodTalent, new ZillagodTalent());
 		registerSkill(Skill.BernhardtTalent, new BernhardtTalent());
 		registerSkill(Skill.ListellTalent, new ListellTalent());
-		registerSkill(Skill.JiayouluoTalent, new JiayouluoTalent());
+		registerSkill(Skill.KayuraTalent, new KayuraTalent());
 		registerSkill(Skill.BozelTalent, new BozelTalent());
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
@@ -207,6 +215,7 @@ public class SkillService {
 		registerSkill(Skill.Anlian, new Anlian());
 		registerSkill(Skill.Leiji, new Leiji());
 		registerSkill(Skill.Lanxingzhan, new Lanxingzhan());
+		registerSkill(Skill.Shengguangzhiyong, new Shengguangzhiyong());
 		
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());
