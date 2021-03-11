@@ -18,14 +18,12 @@ public class WernerTalent extends Skill {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return null;
+		return "沃尔纳天赋";
 	}
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Enhance(BuffType.IgnoreDef, 20, Scope.All),
-				new Enhance(BuffType.CriticalProbInc, 20, Scope.All),
-				new Enhance(BuffType.CriticalDamageInc, 20, Scope.All));
+		return Lists.newArrayList();
 	}
 
 	
@@ -84,11 +82,6 @@ public class WernerTalent extends Skill {
 			}
 		},new Skill() {
 			
-			@Override
-			public String getDesc() {
-				return "沃尔纳变身";
-			}
-
 			@Override
 			public String getName() {
 				return "沃尔纳变身";

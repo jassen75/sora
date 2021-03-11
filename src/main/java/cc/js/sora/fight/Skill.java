@@ -210,6 +210,8 @@ public abstract class Skill {
 	public static final long BernhardtTalent = 74;
 	public static final long ElwinTalent = 76;
 	public static final long LedynTalent = 78;
+	public static final long SissiWhiteTalent = 91;
+	
 	public static final long KayuraTalent = 93;
 	
 	/**
@@ -261,6 +263,9 @@ public abstract class Skill {
 	public static final long Anlian = 1611;
 	public static final long Lanxingzhan = 1614;
 	public static final long Shengguangzhiyong = 1616;
+	
+	public static final long Shengyan = 1617;
+	public static final long Bingdong = 1618;
 	
 	public static final long Qinzhen = 1805;
 	public static final long Juebi = 1806;

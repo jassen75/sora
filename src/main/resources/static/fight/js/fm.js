@@ -177,6 +177,12 @@ function parseCSV(data)
         	userData["equip"][id]["armor"]  = temp[14];
         	userData["equip"][id]["helmet"]  = temp[15];
         	userData["equip"][id]["jewelry"]  = temp[16];
+        } else
+        {
+        	if(csvarry[i])
+        	{
+        		alert("can't parse:"+csvarry[i]);
+        	}
         }
     }
 

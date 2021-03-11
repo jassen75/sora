@@ -23,12 +23,14 @@ import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
 import cc.js.sora.fight.skill.SuperBuff;
 import cc.js.sora.fight.skill.action.Anlian;
+import cc.js.sora.fight.skill.action.Bingqiang;
 import cc.js.sora.fight.skill.action.DreamAction;
 import cc.js.sora.fight.skill.action.Huoqiu;
 import cc.js.sora.fight.skill.action.Juemingyiji;
 import cc.js.sora.fight.skill.action.Lanxingzhan;
 import cc.js.sora.fight.skill.action.Leiji;
 import cc.js.sora.fight.skill.action.Shengguangzhiyong;
+import cc.js.sora.fight.skill.action.Shengyan;
 import cc.js.sora.fight.skill.action.Weifengchongzhen;
 import cc.js.sora.fight.skill.equip.Cangbaizhizhang;
 import cc.js.sora.fight.skill.equip.Chenhun;
@@ -99,6 +101,7 @@ import cc.js.sora.fight.skill.talent.MarielTalent;
 import cc.js.sora.fight.skill.talent.PatyleTalent;
 import cc.js.sora.fight.skill.talent.ReanTalent;
 import cc.js.sora.fight.skill.talent.RozaliaTalent;
+import cc.js.sora.fight.skill.talent.SissiWhiteTalent;
 import cc.js.sora.fight.skill.talent.TowaTalent;
 import cc.js.sora.fight.skill.talent.WernerTalent;
 import cc.js.sora.fight.skill.talent.ZalrahdaTalent;
@@ -182,6 +185,7 @@ public class SkillService {
 		registerSkill(Skill.ListellTalent, new ListellTalent());
 		registerSkill(Skill.KayuraTalent, new KayuraTalent());
 		registerSkill(Skill.BozelTalent, new BozelTalent());
+		registerSkill(Skill.SissiWhiteTalent, new SissiWhiteTalent());
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
@@ -218,6 +222,8 @@ public class SkillService {
 		registerSkill(Skill.Leiji, new Leiji());
 		registerSkill(Skill.Lanxingzhan, new Lanxingzhan());
 		registerSkill(Skill.Shengguangzhiyong, new Shengguangzhiyong());
+		registerSkill(Skill.Shengyan, new Shengyan());
+		registerSkill(Skill.Bingdong, new Bingqiang());
 		
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());

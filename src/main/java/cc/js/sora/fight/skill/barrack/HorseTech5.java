@@ -27,7 +27,7 @@ public class HorseTech5  extends Skill {
 			@Override
 			public boolean defaultValid() {
 				// TODO Auto-generated method stub
-				return true;
+				return false;
 			}
 
 			@Override
