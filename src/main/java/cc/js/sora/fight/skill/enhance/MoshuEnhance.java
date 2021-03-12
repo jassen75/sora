@@ -1,4 +1,4 @@
-package cc.js.sora.fight.skill.equip;
+package cc.js.sora.fight.skill.enhance;
 
 import java.util.List;
 

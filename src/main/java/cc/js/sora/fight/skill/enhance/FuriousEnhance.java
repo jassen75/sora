@@ -1,4 +1,4 @@
-package cc.js.sora.fight.skill.equip;
+package cc.js.sora.fight.skill.enhance;
 
 import java.util.List;
 
@@ -14,17 +14,18 @@ import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.NoCondition;
 import cc.js.sora.fight.condition.UserCondition;
 
-public class WindEnhance extends Skill{
+public class FuriousEnhance extends Skill {
+
 
 	@Override
 	public long getId() {
 		// TODO Auto-generated method stub
-		return Skill.WindEnhance;
+		return Skill.FuriousEnhance;
 	}
 
 	@Override
 	public String getName() {
-		return "轻风附魔";
+		return "怒涛附魔";
 	}
 
 	@Override
@@ -35,7 +36,12 @@ public class WindEnhance extends Skill{
 	@Override
 	public List<Effect> getEffects()  {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.DamageInc, 10, Scope.Hero));
+		return Lists.newArrayList(new Enhance(BuffType.Attack, 10, Scope.Hero), new Enhance(BuffType.DamageDec, 10, Scope.Hero));
 	}
-
+	
+	@Override
+	public int getSkillType()
+	{
+		return 1;
+	}
 }

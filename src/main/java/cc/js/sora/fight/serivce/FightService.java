@@ -236,6 +236,7 @@ public class FightService {
 		int mdd = 0;
 		int si = 0;
 		int igd = 0;
+		int med = 0;
 		double preBattleDamage = 0;
 
 		List<Double> counters = Lists.newArrayList();
@@ -331,6 +332,8 @@ public class FightService {
 								break;
 							case IgnoreDef:
 								igd += number;
+							case Medical:
+								med += number;
 								break;
 							default:
 							}
@@ -420,6 +423,8 @@ public class FightService {
 					case IgnoreDef:
 						igd += number;
 						break;
+					case Medical:
+						med += number;
 					default:
 					}
 				}
@@ -479,6 +484,8 @@ public class FightService {
 					case IgnoreDef:
 						igd += number;
 						break;
+					case Medical:
+						med += number;
 					default:
 					}
 				}
@@ -506,17 +513,7 @@ public class FightService {
 		}
 
 		panelInfo.setAttack(Double.valueOf(Math.round(attack * (1 + ai / 100.0) + panelInfo.getAttackJJC())).intValue());
-		
-		if(panelInfo.getFeatures().containsKey(Feature.MagicToIntel))
-		{
-			double mti = (Double)panelInfo.getFeatures().get(Feature.MagicToIntel);
-			double mmm = Double.valueOf(Math.floor(magic * (1 + mi / 100.0) + panelInfo.getMagicJJC())).intValue();
-			panelInfo.setIntel(Double.valueOf(mmm*mti).intValue());
-		} else
-		{
-			panelInfo.setIntel(Double.valueOf(Math.floor(intel * (1 + ii / 100.0) + panelInfo.getIntelJJC())).intValue());
-		}
-			
+		panelInfo.setIntel(Double.valueOf(Math.floor(intel * (1 + ii / 100.0) + panelInfo.getIntelJJC())).intValue());
 		double atd = 0;
 		if(panelInfo.getFeatures().containsKey(Feature.AddAttackToDef))
 		{
@@ -527,11 +524,67 @@ public class FightService {
 		panelInfo.setMagic(Double.valueOf(Math.floor(magic * (1 + mi / 100.0) + panelInfo.getMagicJJC())+atd).intValue());
 		
 
-		panelInfo.setTech(Double.valueOf(Math.floor(tech * (1 + ti / 100.0) + panelInfo.getTechJJC())).intValue());
-		panelInfo.setLife(
-				Double.valueOf(Math.floor(life * (1 + (li + 40) / 100.0) + panelInfo.getLifeJJC())).intValue());
+		for (int i = 0; i < counters.size(); i++) {
+			if (hero.getPhysic() == 1) {
+				panelInfo.setAttack(Double.valueOf(Math.floor(panelInfo.getAttack() * (1 + counters.get(i) / 100))).intValue());
+			} else {
+				panelInfo.setIntel(Double.valueOf(Math.floor(panelInfo.getIntel() * (1 + counters.get(i) / 100))).intValue());
+			}
+		}
+		for (int i = 0; i < pd_counters.size(); i++) {
+			panelInfo.setPhysic(Double.valueOf(Math.floor(panelInfo.getPhysic() * (1 + pd_counters.get(i) / 100))).intValue());
+		}
+		for (int i = 0; i < md_counters.size(); i++) {
+			panelInfo.setMagic(Double.valueOf(Math.floor(panelInfo.getMagic() * (1 + md_counters.get(i) / 100))).intValue());
+		}
+		
+		if(panelInfo.getFeatures().containsKey(Feature.MagicToIntel))
+		{
+			double mti = (Double)panelInfo.getFeatures().get(Feature.MagicToIntel);
+			double mmm = panelInfo.getMagic();
+			panelInfo.setIntel(Double.valueOf(mmm*mti).intValue());
+		} 
+		
+		int changedAttack = 0;
+		if(panelInfo.getFeatures().containsKey(Feature.PhysicToAttack))
+		{
+			double pta = (Double)panelInfo.getFeatures().get(Feature.PhysicToAttack);
+			changedAttack += Double.valueOf(Math.floor(panelInfo.getPhysic() * pta)).intValue();
+		}
 
-		panelInfo.setDamageInc(di);
+		if(panelInfo.getFeatures().containsKey(Feature.MagicToAttack))
+		{
+			double mta = (Double)panelInfo.getFeatures().get(Feature.MagicToAttack);
+			changedAttack += Double.valueOf(Math.floor(panelInfo.getMagic() * mta)).intValue();
+		}
+		
+		if(changedAttack != 0)
+		{
+			panelInfo.setAttack(changedAttack);
+		}
+		log.info("current attack=="+panelInfo.getAttack());
+		if(panelInfo.getFeatures().containsKey(Feature.AddMagicToAttack))
+		{
+			double amta = (Double)panelInfo.getFeatures().get(Feature.AddMagicToAttack); 
+			panelInfo.setAttack(panelInfo.getAttack() + Double.valueOf(Math.floor(panelInfo.getMagic() * amta)).intValue());
+		}
+		log.info("current attack=="+panelInfo.getAttack());
+		if(panelInfo.getFeatures().containsKey(Feature.AddPhysicToAttack))
+		{
+			double apta = (Double)panelInfo.getFeatures().get(Feature.AddPhysicToAttack); 
+			panelInfo.setAttack(panelInfo.getAttack() + Double.valueOf(Math.floor(panelInfo.getPhysic() * apta)).intValue());
+		}
+		log.info("current attack=="+panelInfo.getAttack());
+		panelInfo.setTech(Double.valueOf(Math.floor(tech * (1 + ti / 100.0) + panelInfo.getTechJJC())).intValue());
+		panelInfo.setLife(Double.valueOf(Math.floor(life * (1 + (li + 40) / 100.0) + panelInfo.getLifeJJC())).intValue());
+
+		if(panelInfo.getFeatures().containsKey(Feature.MedicalToDamageInc))
+		{
+			panelInfo.setDamageInc(med);
+		} else
+		{
+			panelInfo.setDamageInc(di);
+		}
 		panelInfo.setPhysicDamageDec(pdd);
 		panelInfo.setMagicDamageDec(mdd);
 
@@ -548,25 +601,7 @@ public class FightService {
 		panelInfo.setIgnoreDef(igd);
 		panelInfo.setPreFixDamage(this.calculatePreFixDamage(panelInfo));
 		panelInfo.setPreFixDamageToSelf(this.calculatePreFixDamageToSelf(panelInfo));
-
-		for (int i = 0; i < counters.size(); i++) {
-			if (hero.getPhysic() == 1) {
-
-				panelInfo.setAttack(
-						Double.valueOf(Math.floor(panelInfo.getAttack() * (1 + counters.get(i) / 100))).intValue());
-			} else {
-				panelInfo.setIntel(
-						Double.valueOf(Math.floor(panelInfo.getIntel() * (1 + counters.get(i) / 100))).intValue());
-			}
-		}
-		for (int i = 0; i < pd_counters.size(); i++) {
-			panelInfo.setPhysic(
-					Double.valueOf(Math.floor(panelInfo.getPhysic() * (1 + pd_counters.get(i) / 100))).intValue());
-		}
-		for (int i = 0; i < md_counters.size(); i++) {
-			panelInfo.setMagic(
-					Double.valueOf(Math.floor(panelInfo.getMagic() * (1 + md_counters.get(i) / 100))).intValue());
-		}
+		panelInfo.setMedical(med);
 
 		return panelInfo;
 	}
@@ -863,6 +898,7 @@ public class FightService {
 		panelInfo.setCriticalDamageInc(cdi);
 		panelInfo.setCriticalDamageDec(cdd);
 		panelInfo.setRange(range);
+		panelInfo.setMedical(0);
 		log.info("soldier ignore def:"+igd);
 		panelInfo.setIgnoreDef(igd);
 

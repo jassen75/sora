@@ -110,7 +110,7 @@ public abstract class Skill {
 //    	return Lists.newArrayList();
 //    }
 
-	public void process(FightInfo fight, boolean isAttack) {
+	public void process(FightInfo fightInfo, boolean isAttack) {
 		// do nothing
 	}
 
@@ -229,6 +229,8 @@ public abstract class Skill {
 	public static final long FuriousEnhance = 905;
 	public static final long ManyueEnhance = 902;
 	public static final long MoshuEnhance = 903;
+	public static final long ShuijingEnhance = 909;
+	
 	
 	/**
 	 * 1000-1600 equip
@@ -265,6 +267,10 @@ public abstract class Skill {
 	public static final long Anlian = 1611;
 	public static final long Lanxingzhan = 1614;
 	public static final long Shengguangzhiyong = 1616;
+	public static final long Anlong = 1619;
+	public static final long Shengwangzhiji = 1620;
+	public static final long Yeshouzhenshe = 1622;
+	
 	
 	public static final long Shengyan = 1617;
 	public static final long Bingdong = 1618;

@@ -25,9 +25,10 @@ public class ListellTalent extends Skill {
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Feature(Feature.ImmuenToCounter, true, "无视克制", Scope.All, false));
+		return Lists.newArrayList(new Feature(Feature.ImmuenToCounter, true, "无视克制", Scope.All, false),
+				new Feature(Feature.MagicToIntel, 1.5, "魔防的1.5倍转换为智力", Scope.Hero, false));
 	}
-	
+
 	public List<Skill> childSkill() {
 		return Lists.newArrayList(new Skill() {
 
@@ -36,10 +37,12 @@ public class ListellTalent extends Skill {
 				// TODO Auto-generated method stub
 				return "妮丝蒂尔*魔神大心";
 			}
+
 			@Override
 			public List<Effect> getEffects() {
 				// TODO Auto-generated method stub
-				return Lists.newArrayList(new Enhance(BuffType.DamageDec, 10, Scope.All), new Enhance(BuffType.DamageInc, 10, Scope.All));
+				return Lists.newArrayList(new Enhance(BuffType.DamageDec, 10, Scope.All),
+						new Enhance(BuffType.DamageInc, 10, Scope.All));
 			}
 
 			@Override

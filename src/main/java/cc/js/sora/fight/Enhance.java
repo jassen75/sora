@@ -107,6 +107,8 @@ public class Enhance implements Effect{
 			return "无视防御";
 		case Random:
 			return "随机效果";
+		case Medical:
+			return "治疗效果";
 		}
 		return "";
 	}

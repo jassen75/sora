@@ -9,5 +9,5 @@ public enum BuffType {
 	Life, Tech,
 	CriticalProbInc, CriticalDamageInc, CriticalProbDec, CriticalDamageDec,
 	PreBattleDamage, PostBattleDamage,
-	Range, IgnoreDef, Random
+	Range, IgnoreDef, Medical, Random
 }

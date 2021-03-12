@@ -8,13 +8,16 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
+import cc.js.sora.fight.Feature;
 import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.FightRole;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.CounterCondition;
 import cc.js.sora.fight.condition.DistanceCondition;
+import cc.js.sora.fight.condition.UserCondition;
 import cc.js.sora.fight.condition.health.GreaterHealthCondition;
+import cc.js.sora.fight.skill.action.Haiwei;
 
 public class ZillagodTalent extends Skill {
 
@@ -112,6 +115,38 @@ public class ZillagodTalent extends Skill {
 			public List<Effect> getEffects() {
 				return Lists.newArrayList(new Enhance(BuffType.DamageInc, 10, Scope.All));
 			}
+		}, new Haiwei(), new Skill() {
+
+			@Override
+			public String getName() {
+				// TODO Auto-generated method stub
+				return "巨龙屏障";
+			}
+			
+			public Condition getCondition() {
+				return new UserCondition() {
+
+					@Override
+					public boolean defaultValid() {
+						// TODO Auto-generated method stub
+						return false;
+					}
+
+					@Override
+					public String getDesc() {
+						// TODO Auto-generated method stub
+						return "使用巨龙屏障";
+					}
+					
+				};
+			}
+
+			@Override
+			public List<Effect> getEffects() {
+				// TODO Auto-generated method stub
+				return Lists.newArrayList(new Feature(Feature.MagicToAttack,1.4, "魔防的1.4倍视为攻击", Scope.Hero, false));
+			}
+			
 		});
 
 	}

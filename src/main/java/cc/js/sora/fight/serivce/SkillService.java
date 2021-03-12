@@ -23,6 +23,7 @@ import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
 import cc.js.sora.fight.skill.SuperBuff;
 import cc.js.sora.fight.skill.action.Anlian;
+import cc.js.sora.fight.skill.action.Anlong;
 import cc.js.sora.fight.skill.action.Bingqiang;
 import cc.js.sora.fight.skill.action.DreamAction;
 import cc.js.sora.fight.skill.action.Huoqiu;
@@ -30,25 +31,28 @@ import cc.js.sora.fight.skill.action.Juemingyiji;
 import cc.js.sora.fight.skill.action.Lanxingzhan;
 import cc.js.sora.fight.skill.action.Leiji;
 import cc.js.sora.fight.skill.action.Shengguangzhiyong;
+import cc.js.sora.fight.skill.action.Shengwangzhiji;
 import cc.js.sora.fight.skill.action.Shengyan;
 import cc.js.sora.fight.skill.action.Weifengchongzhen;
+import cc.js.sora.fight.skill.action.Yeshouzhenshe;
+import cc.js.sora.fight.skill.enhance.FuriousEnhance;
+import cc.js.sora.fight.skill.enhance.ManyueEnhance;
+import cc.js.sora.fight.skill.enhance.MoshuEnhance;
+import cc.js.sora.fight.skill.enhance.ShuijingEnhance;
+import cc.js.sora.fight.skill.enhance.WindEnhance;
 import cc.js.sora.fight.skill.equip.Cangbaizhizhang;
 import cc.js.sora.fight.skill.equip.Chenhun;
 import cc.js.sora.fight.skill.equip.Erzhui;
-import cc.js.sora.fight.skill.equip.FuriousEnhance;
 import cc.js.sora.fight.skill.equip.Jixianmogong;
 import cc.js.sora.fight.skill.equip.Lage;
 import cc.js.sora.fight.skill.equip.LastSuit;
-import cc.js.sora.fight.skill.equip.ManyueEnhance;
 import cc.js.sora.fight.skill.equip.Mingxiang;
-import cc.js.sora.fight.skill.equip.MoshuEnhance;
 import cc.js.sora.fight.skill.equip.Shenpan;
 import cc.js.sora.fight.skill.equip.Shenyi;
 import cc.js.sora.fight.skill.equip.Shijieshu;
 import cc.js.sora.fight.skill.equip.Shuijingfengci;
 import cc.js.sora.fight.skill.equip.Tier;
 import cc.js.sora.fight.skill.equip.Tulong;
-import cc.js.sora.fight.skill.equip.WindEnhance;
 import cc.js.sora.fight.skill.equip.Xunzhang;
 import cc.js.sora.fight.skill.equip.Yicai;
 import cc.js.sora.fight.skill.equip.Yuguan;
@@ -128,7 +132,7 @@ public class SkillService {
 	List<Long> globalSkills = Lists.newArrayList(Skill.SuperBuff, Skill.Shenji);
 
 	List<Long> ehanceSkills = Lists.newArrayList(0L, Skill.WindEnhance, Skill.ManyueEnhance, Skill.MoshuEnhance, 0L,
-			Skill.FuriousEnhance, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+			Skill.FuriousEnhance, 0L, 0L, 0L, Skill.ShuijingEnhance, 0L, 0L, 0L, 0L);
 
 	public Map<Long, Skill> skills = Maps.newHashMap();
 
@@ -162,6 +166,7 @@ public class SkillService {
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
 		registerSkill(Skill.ManyueEnhance, new ManyueEnhance());
 		registerSkill(Skill.MoshuEnhance, new MoshuEnhance());
+		registerSkill(Skill.ShuijingEnhance, new ShuijingEnhance());
 
 		registerSkill(Skill.BloodBattle, new BloodBattle());
 		registerSkill(Skill.Xinyang, new Xinyang());
@@ -230,6 +235,9 @@ public class SkillService {
 		registerSkill(Skill.Shengguangzhiyong, new Shengguangzhiyong());
 		registerSkill(Skill.Shengyan, new Shengyan());
 		registerSkill(Skill.Bingdong, new Bingqiang());
+		registerSkill(Skill.Anlong, new Anlong());
+		registerSkill(Skill.Shengwangzhiji, new Shengwangzhiji());
+		registerSkill(Skill.Yeshouzhenshe, new Yeshouzhenshe());
 		
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());

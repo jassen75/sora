@@ -54,7 +54,14 @@ $(document).ready(function() {
 			refreshLife("attacker");
 			refreshLife("defender");
 			sync(false);
+		} else
+		{
+			alert("current stage == "+stage);
 		}
+	});
+	
+	$("#save_status").click(function(event){
+		saveStatus();
 	});
 
 	$("#import_fm").click(function() {
@@ -154,6 +161,7 @@ $(document).ready(function() {
 		jtEditorSave();
 	});
 
+
 });
 function smooth(c)
 {
@@ -245,7 +253,8 @@ function buildHero(hero) {
 		$("#attackerSoldierBar").attr("style", "width:100%");
 		$("#attackerHeroBar").text("100%");
 		$("#attackerSoldierBar").text("100%");
-	
+		$("#attacker-sel-action > button").html("选择技能&nbsp;<span class=\"caret\"></span>");
+		$("#attacker-sel-soldier > button").html("选择兵种&nbsp;<span class=\"caret\"></span>");
 	} else {
 		var role = "defender";
 		var roleType = 2;
@@ -255,6 +264,7 @@ function buildHero(hero) {
 		$("#defenderHeroBar").text("100%");
 		$("#defenderSoldierBar").attr("style", "width:100%");
 		$("#defenderSoldierBar").text("100%");
+		$("#defender-sel-soldier > button").html("选择技能&nbsp;<span class=\"caret\"></span>");
 	}
 
 	fightInfo[role] = {};
@@ -267,7 +277,6 @@ function buildHero(hero) {
 	fightInfo[role]["userConditionChecked"] = {};
 	fightInfo[role]["buffCounts"] = {};
 	fightInfo[role]["roleType"] = roleType;
-	
 	stage = 1;
 	
 	loadWeapon(hero["id"], role);
@@ -423,6 +432,7 @@ function displayHero(role) {
 
 		if (fightInfo[role]["hero"]["defaultSoldierId"] == soldiers[i]["id"]) {
 			fightInfo[role]["soldier"] = soldiers[i];
+			$("#"+role+"-sel-soldier > button").html(soldiers[i]["name"]+"&nbsp;<span class=\"caret\"></span>");
 		}
 		soldier.click(function(event) {
 			var find = $(this).attr("soldierid");
@@ -430,6 +440,7 @@ function displayHero(role) {
 				if (e["id"] == find) {
 					fightInfo[role]["soldier"] = e;
 					stage = 1;
+					$("#"+role+"-sel-soldier > button").html(e["name"]+"&nbsp;<span class=\"caret\"></span>");
 					sync(false);
 				}
 			})
@@ -512,6 +523,7 @@ function displayAttackerAction() {
 		{
 			if (actions[i]["id"] == 10001 || actions[i]["id"] == 10002) {
 				fightInfo["attacker"]["action"] = actions[i];
+				$("#attacker-sel-action > button").html(actions[i]["name"]+"&nbsp;<span class=\"caret\"></span>");
 			}
 		}
 		action.click(function(event) {
@@ -528,6 +540,7 @@ function displayAttackerAction() {
 						fightInfo["attacker"]["roleType"] = 3;
 						fightInfo["defender"]["roleType"] = 4;
 					}
+					$("#attacker-sel-action > button").html(e["name"]+"&nbsp;<span class=\"caret\"></span>");
 					sync(false);
 				}
 			})
@@ -559,12 +572,10 @@ function sync(refresh) {
 
 						if (refresh) {
 							sync(false);
-							
-							
-							if(stage==1)
-							{
-								stage=2;
-							}
+						}
+						if(stage==1)
+						{
+							stage=2;
 						}
 					},
 					error : function(jqXHR) {
@@ -622,7 +633,10 @@ function buildHeroPanel(role) {
 		detail += ("-----距离：" + fightInfo["distance"] + "-----</p>");
 	}
 
-	detail += "<p><b>增伤：" + fightInfo[role]["heroPanel"]["damageInc"]
+	detail +=  "<p><b>英雄面板</b></p>"
+		    + "<p><b>防御：" + fightInfo[role]["heroPanel"]["physic"]
+	        + "&nbsp;&nbsp;&nbsp;魔防:" + fightInfo[role]["heroPanel"]["magic"] + "</b></p>"
+		    + "<p><b>增伤：" + fightInfo[role]["heroPanel"]["damageInc"]
 			+ "&nbsp;&nbsp;&nbsp;物理减伤："
 			+ fightInfo[role]["heroPanel"]["physicDamageDec"]
 			+ "&nbsp;&nbsp;&nbsp;魔法减伤："
@@ -637,7 +651,9 @@ function buildHeroPanel(role) {
 			+ "&nbsp;&nbsp;&nbsp;防爆:"
 			+ fightInfo[role]["heroPanel"]["criticalProbDec"]
 			+ "&nbsp;&nbsp;&nbsp;减爆伤："
-			+ fightInfo[role]["heroPanel"]["criticalDamageDec"] + "</p>";
+			+ fightInfo[role]["heroPanel"]["criticalDamageDec"] 
+			+ "&nbsp;&nbsp;&nbsp;治疗效果："
+			+ fightInfo[role]["heroPanel"]["medical"] + "</p>";
 	$("#" + role + "Detail").html(detail);
 	
 	$("#" + role + "-land-information").html(

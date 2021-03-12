@@ -11,6 +11,56 @@ function calculatefastAttack(time)
 	return 0;
 }
 
+var attackerResult = {};
+var defenderResult = {}; 
+
+function getHeroCount(role)
+{
+	if(fightInfo[role]["hero"]["id"]==63)
+	{
+		if(fightInfo[role]["action"])
+		{
+			if(fightInfo[role]["action"]["simpleAttack"])
+			{
+				return 6;
+			}
+		} else
+		{
+			return 6;
+		}
+	}
+	return 20;
+}
+
+function saveStatus()
+{
+	if(stage==2)
+	{
+		if(attackerResult["dl"] != undefined)
+		{
+			fightInfo["attacker"]["heroLeftLife"] = attackerResult["dl"];
+		}
+		if(attackerResult["dsl"] != undefined)
+		{
+			fightInfo["attacker"]["soldierLeftLife"] = attackerResult["dsl"];
+		}
+		if(defenderResult["dl"] != undefined)
+		{
+			fightInfo["defender"]["heroLeftLife"] = defenderResult["dl"];
+		}
+		if(defenderResult["dsl"] != undefined)
+		{
+			fightInfo["defender"]["soldierLeftLife"] = defenderResult["dsl"];
+		}
+		refreshLife("attacker");
+		refreshLife("defender");
+		sync(false);
+	} else
+	{
+		alert("current stage == "+stage);
+	}
+}
+
 function calculate()
 {
 	var coefficient = 1;
@@ -22,6 +72,8 @@ function calculate()
 	var defenderHeroCriticalChecked = fightInfo["defender"]["heroCriticalChecked"];
 	var action = fightInfo["attacker"]["action"];
 	var fastAttack = 0;
+	attackerResult = {};
+	defenderResult = {}; 
 	if(action)
 	{
 		coefficient = action["coefficient"];
@@ -42,25 +94,25 @@ function calculate()
 		if(fightInfo["attacker"]["heroPanel"]["features"]["FirstAttack"] && !fightInfo["defender"]["heroPanel"]["features"]["FirstAttack"])
 		{
 			// a first
-			var defenderResult = battle("attacker", "defender", coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked,
+			defenderResult = battle("attacker", "defender", coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked,
 				fightInfo["attacker"]["heroLeftLife"],  fightInfo["attacker"]["soldierLeftLife"]);
-			var attackerResult = battle("defender", "attacker", 1, defenderHeroCriticalChecked, defenderSoldierCriticalChecked, 
+			attackerResult = battle("defender", "attacker", 1, defenderHeroCriticalChecked, defenderSoldierCriticalChecked, 
 				defenderResult["dl"], defenderResult["dsl"]);
 			defenderResult["fightDetails"] = defenderResult["fightDetails"] + "<p>"+fightInfo["attacker"]["hero"]["name"]+"先于敌人攻击</p>";
 		}
 		else if(!fightInfo["attacker"]["heroPanel"]["features"]["FirstAttack"] && fightInfo["defender"]["heroPanel"]["features"]["FirstAttack"]) 
 		{
 			// d first
-			var attackerResult = battle("defender", "attacker", 1, defenderHeroCriticalChecked, defenderSoldierCriticalChecked, 
+			attackerResult = battle("defender", "attacker", 1, defenderHeroCriticalChecked, defenderSoldierCriticalChecked, 
 			    fightInfo["defender"]["heroLeftLife"], fightInfo["defender"]["soldierLeftLife"]);
-			var defenderResult= battle("attacker", "defender", coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked,
+			defenderResult= battle("attacker", "defender", coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked,
 				attackerResult["attackerResult"], attackerResult["dsl"]);			
 			attackerResult["fightDetails"] = attackerResult["fightDetails"] + "<p>"+fightInfo["attacker"]["hero"]["name"]+"先于敌人攻击</p>";
 		} else
 		{
-			var defenderResult = battle("attacker", "defender", coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, 
+			defenderResult = battle("attacker", "defender", coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, 
 				fightInfo["attacker"]["heroLeftLife"],fightInfo["attacker"]["soldierLeftLife"], fastAttack);
-			var attackerResult = battle("defender", "attacker", 1, defenderHeroCriticalChecked, defenderSoldierCriticalChecked, 
+			attackerResult = battle("defender", "attacker", 1, defenderHeroCriticalChecked, defenderSoldierCriticalChecked, 
 				defenderResult["fl"], defenderResult["fsl"]);
 		}
 		
@@ -68,7 +120,7 @@ function calculate()
 	
 	if(battleType == 2)
 	{
-		var defenderResult = aoe(coefficient, attackerHeroCriticalChecked);
+		defenderResult = aoe(coefficient, attackerHeroCriticalChecked);
 	}
 	
 	
@@ -234,7 +286,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	
 	var soldierCount = 2*Math.ceil(asl*10 / fightInfo[attackerRole]["soldierPanel"]["life"]);
 	//alert("asl===="+asl+",soldierCount=="+soldierCount+",life=="+fightInfo[attackerRole]["soldierPanel"]["life"]);
-	var heroCount = al > 0  ? 20 : 0;
+	var heroCount = al > 0  ? getHeroCount(attackerRole) : 0;
 	
 	if(getRange(attackerRole, "soldier")< distance)
 	{

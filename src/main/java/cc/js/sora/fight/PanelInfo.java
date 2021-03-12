@@ -73,4 +73,5 @@ public class PanelInfo {
 	int attackType;  // 1 physic,  2 magic
 	int preFixDamage ;
 	int preFixDamageToSelf;
+	int medical;
 }
