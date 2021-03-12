@@ -29,5 +29,23 @@ public class Shenguan extends Skill {
 		// TODO Auto-generated method stub
 		return Lists.newArrayList(new Enhance(BuffType.Physic, 30, Scope.Soldier));
 	}
+	
+	public List<Skill> childSkill() {
+		return Lists.newArrayList(new Skill() {
+
+			@Override
+			public String getName() {
+				// TODO Auto-generated method stub
+				return "神官技能";
+			}
+
+			@Override
+			public List<Effect> getEffects() {
+				// TODO Auto-generated method stub
+				return Lists.newArrayList(new Enhance(BuffType.Medical, 30, Scope.Soldier));
+			}
+			
+		});
+	}
 
 }

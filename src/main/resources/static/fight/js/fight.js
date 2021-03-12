@@ -432,7 +432,7 @@ function displayHero(role) {
 
 		if (fightInfo[role]["hero"]["defaultSoldierId"] == soldiers[i]["id"]) {
 			fightInfo[role]["soldier"] = soldiers[i];
-			$("#"+role+"-sel-soldier > button").html(soldiers[i]["name"]+"&nbsp;<span class=\"caret\"></span>");
+			$("#"+role+"-sel-soldier > button").html(soldiers[i]["name"]+"&nbsp;&nbsp;&nbsp;<span class=\"caret\"></span>");
 		}
 		soldier.click(function(event) {
 			var find = $(this).attr("soldierid");
@@ -440,7 +440,7 @@ function displayHero(role) {
 				if (e["id"] == find) {
 					fightInfo[role]["soldier"] = e;
 					stage = 1;
-					$("#"+role+"-sel-soldier > button").html(e["name"]+"&nbsp;<span class=\"caret\"></span>");
+					$("#"+role+"-sel-soldier > button").html(e["name"]+"&nbsp;&nbsp;&nbsp;<span class=\"caret\"></span>");
 					sync(false);
 				}
 			})
