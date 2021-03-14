@@ -57,6 +57,7 @@ import cc.js.sora.fight.skill.equip.Xunzhang;
 import cc.js.sora.fight.skill.equip.Yicai;
 import cc.js.sora.fight.skill.equip.Yuguan;
 import cc.js.sora.fight.skill.equip.Zhenshizijia;
+import cc.js.sora.fight.skill.heart.YuliaShengjian;
 import cc.js.sora.fight.skill.passivity.BloodBattle;
 import cc.js.sora.fight.skill.passivity.Xinyang;
 import cc.js.sora.fight.skill.soldier.Anjingling;
@@ -194,7 +195,8 @@ public class SkillService {
 		registerSkill(Skill.BozelTalent, new BozelTalent());
 		registerSkill(Skill.SissiWhiteTalent, new SissiWhiteTalent());
 		registerSkill(Skill.LicoriceTalent, new LicoriceTalent());
-		
+		registerSkill(44L, new YuliaShengjian());
+
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
