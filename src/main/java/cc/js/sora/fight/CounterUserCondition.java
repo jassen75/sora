@@ -11,8 +11,9 @@ public abstract class CounterUserCondition extends UserCondition implements Coun
 	
 	public abstract int getDefaultCount();
 	
-	public int getCount(FightRole fightRole)
+	public int getCount(FightInfo fightInfo, boolean isAttack)
 	{
+		FightRole fightRole = fightInfo.getRole(isAttack);
 		Map<String, Integer> buffCounts = fightRole.getBuffCounts();
 		if(buffCounts.containsKey(this.getName()))
 		{

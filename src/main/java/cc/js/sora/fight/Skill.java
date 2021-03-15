@@ -53,13 +53,13 @@ public abstract class Skill {
 		return getEffects();
 	}
 	
-	public List<Effect> getEffects(FightRole role)
+	public List<Effect> getEffects(FightInfo fightInfo, boolean isAttack)
 	{
 		if(this.getCondition() instanceof CounterCondition)
 		{
 			CounterCondition cc = (CounterCondition)this.getCondition();
 
-			return this.getEffects(cc.getCount(role));
+			return this.getEffects(cc.getCount(fightInfo, isAttack));
 		}
 		return getEffects();
 	}

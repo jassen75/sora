@@ -66,8 +66,8 @@ public class ZillagodTalent extends Skill {
 			}
 
 			@Override
-			public int getCount(FightRole fightRole) {
-				// TODO Auto-generated method stub
+			public int getCount(FightInfo fightInfo, boolean isAttack) {
+				FightRole fightRole = fightInfo.getRole(isAttack);
 				return Double.valueOf(Math.floor((fightRole.getSoldierPanel().getLife() - fightRole.getSoldierLeftLife())
 								* 10.0 / fightRole.getSoldierPanel().getLife()))
 						.intValue();

@@ -96,13 +96,13 @@ public class FightService {
 		log.info("attacker skill list size:" + attackerCheckedSkills.size());
 		log.info("defender skill list size:" + defenderCheckedSkills.size());
 		fightInfo.getAttacker().setHeroPanel(
-				calculateHero(fightInfo.getAttacker(), attackerCheckedSkills, fightInfo.getDefender().getDebuffs()));
+				calculateHero(fightInfo, true, attackerCheckedSkills, fightInfo.getDefender().getDebuffs()));
 		fightInfo.getAttacker().setSoldierPanel(
-				calculateSoldier(fightInfo.getAttacker(), attackerCheckedSkills, fightInfo.getDefender().getDebuffs()));
+				calculateSoldier(fightInfo, true, attackerCheckedSkills, fightInfo.getDefender().getDebuffs()));
 		fightInfo.getDefender().setHeroPanel(
-				calculateHero(fightInfo.getDefender(), defenderCheckedSkills, fightInfo.getAttacker().getDebuffs()));
+				calculateHero(fightInfo, false, defenderCheckedSkills, fightInfo.getAttacker().getDebuffs()));
 		fightInfo.getDefender().setSoldierPanel(
-				calculateSoldier(fightInfo.getDefender(), defenderCheckedSkills, fightInfo.getAttacker().getDebuffs()));
+				calculateSoldier(fightInfo, false, defenderCheckedSkills, fightInfo.getAttacker().getDebuffs()));
 
 //		fightInfo.getAttacker().setUserConditions(getUserConditionsFromSkill(attackerSkills));
 //		fightInfo.getDefender().setUserConditions(getUserConditionsFromSkill(defenderSkills));
@@ -196,7 +196,8 @@ public class FightService {
 		return soldier.getRange();
 	}
 
-	public PanelInfo calculateHero(FightRole role, List<CheckedSkill> skillList, List<Debuff> debuffList) {
+	public PanelInfo calculateHero(FightInfo fightInfo, boolean isAttack, List<CheckedSkill> skillList, List<Debuff> debuffList) {
+		FightRole role = fightInfo.getRole(isAttack);
 		Hero hero = role.getHero();
 		PanelInfo panelInfo = role.getHeroPanel();
 		Land land = role.getLand();
@@ -250,7 +251,7 @@ public class FightService {
 				CheckedSkill cs = skillList.get(i);
 				if (cs.isValid()) {
 					Skill skill = cs.getSkill();
-					List<Effect> effects = skill.getEffects(role);
+					List<Effect> effects = skill.getEffects(fightInfo, isAttack);
 					for (int j = 0; j < effects.size(); j++) {
 						Effect e = effects.get(j);
 						if (e instanceof Buff) {
@@ -606,7 +607,9 @@ public class FightService {
 		return panelInfo;
 	}
 
-	public PanelInfo calculateSoldier(FightRole role, List<CheckedSkill> skillList, List<Debuff> debuffList) {
+	public PanelInfo calculateSoldier(FightInfo fightInfo, boolean isAttack, List<CheckedSkill> skillList, List<Debuff> debuffList) {
+		
+		FightRole role = fightInfo.getRole(isAttack);
 		Soldier soldier = role.getSoldier();
 		Hero hero = role.getHero();
 		PanelInfo panelInfo = role.getSoldierPanel();
@@ -646,7 +649,7 @@ public class FightService {
 				CheckedSkill cs = skillList.get(i);
 				if (cs.isValid()) {
 					Skill skill = cs.getSkill();
-					List<Effect> effects = skill.getEffects(role);
+					List<Effect> effects = skill.getEffects(fightInfo, isAttack);
 					for (int j = 0; j < effects.size(); j++) {
 						Effect e = effects.get(j);
 						if (e instanceof Buff) {

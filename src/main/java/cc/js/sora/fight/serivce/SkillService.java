@@ -30,10 +30,14 @@ import cc.js.sora.fight.skill.action.Huoqiu;
 import cc.js.sora.fight.skill.action.Juemingyiji;
 import cc.js.sora.fight.skill.action.Lanxingzhan;
 import cc.js.sora.fight.skill.action.Leiji;
+import cc.js.sora.fight.skill.action.Liefengzhiji;
+import cc.js.sora.fight.skill.action.Qiangfengjuji;
 import cc.js.sora.fight.skill.action.Shengguangzhiyong;
 import cc.js.sora.fight.skill.action.Shengwangzhiji;
 import cc.js.sora.fight.skill.action.Shengyan;
+import cc.js.sora.fight.skill.action.Shiying;
 import cc.js.sora.fight.skill.action.Weifengchongzhen;
+import cc.js.sora.fight.skill.action.Yazhisheji;
 import cc.js.sora.fight.skill.action.Yeshouzhenshe;
 import cc.js.sora.fight.skill.enhance.FuriousEnhance;
 import cc.js.sora.fight.skill.enhance.ManyueEnhance;
@@ -108,6 +112,7 @@ import cc.js.sora.fight.skill.talent.MarielTalent;
 import cc.js.sora.fight.skill.talent.PatyleTalent;
 import cc.js.sora.fight.skill.talent.ReanTalent;
 import cc.js.sora.fight.skill.talent.RozaliaTalent;
+import cc.js.sora.fight.skill.talent.SigmaTalent;
 import cc.js.sora.fight.skill.talent.SissiWhiteTalent;
 import cc.js.sora.fight.skill.talent.TowaTalent;
 import cc.js.sora.fight.skill.talent.WernerTalent;
@@ -196,7 +201,7 @@ public class SkillService {
 		registerSkill(Skill.SissiWhiteTalent, new SissiWhiteTalent());
 		registerSkill(Skill.LicoriceTalent, new LicoriceTalent());
 		registerSkill(44L, new YuliaShengjian());
-
+		registerSkill(52L, new SigmaTalent());
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
@@ -240,6 +245,11 @@ public class SkillService {
 		registerSkill(Skill.Anlong, new Anlong());
 		registerSkill(Skill.Shengwangzhiji, new Shengwangzhiji());
 		registerSkill(Skill.Yeshouzhenshe, new Yeshouzhenshe());
+		
+		registerSkill(1625L, new Shiying());
+		registerSkill(1626L, new Liefengzhiji());
+		registerSkill(1627L, new Yazhisheji());
+		registerSkill(1628L, new Qiangfengjuji());
 		
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());
