@@ -35,3 +35,4 @@
 81,爱丽丝,9,intelInc=11;intel=13;lifeInc=6,9,physicInc=11;lifeInc=10;magicInc=11,9,intelInc=2;intel=7;lifeInc=15,9,intelInc=10;magicInc=3;magic=3,691|0|77|42|0|38,414|0|56|36|0|70,0|0|0|26,54,21,22,10
 91,怀特茜茜,9,intelInc=11;intel=13;lifeInc=6,9,physicInc=11;lifeInc=10;magicInc=11,9,intelInc=2;intel=7;lifeInc=15,9,intelInc=10;magicInc=3;magic=3,691|0|77|42|0|38,414|0|56|36|0|70,0|0|0|26,54,21,22,10
 93,迦游罗,1,intelInc=15;intel=20;physicInc=2,1,intelInc=4;lifeInc=6;life=130,1,intelInc=5;physicInc=10;intel=3,1,intelInc=7;intel=5;criticalInc=14,690|0|80|41|0|39,480|0|60|0|0|74,10|20|0|0,20,1,8,4
+94,真田辽,1,attackInc=15;attack=19,1,attackInc=5;lifeInc=8;physicInc=12,1,attackInc=4;lifeInc=12;physicInc=12,1,attackInc=10;attack=10;lifeInc=10,690|80|0|45|0|0,480|60|0|45|0|0,0|0|20|30,49,17,18,35

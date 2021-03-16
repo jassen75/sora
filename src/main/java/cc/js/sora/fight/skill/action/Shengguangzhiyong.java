@@ -21,11 +21,11 @@ public class Shengguangzhiyong extends Skill {
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Counter(BuffType.Intel, 30, 1, Scope.All),
-				new Counter(BuffType.Intel, 30, 2, Scope.All), new Counter(BuffType.Intel, 30, 3, Scope.All),
-				new Counter(BuffType.Intel, 30, 4, Scope.All), new Counter(BuffType.Intel, 30, 5, Scope.All),
-				new Counter(BuffType.Intel, 30, 6, Scope.All), new Counter(BuffType.Intel, 30, 7, Scope.All),
-				new Counter(BuffType.Intel, 30, 8, Scope.All), new Counter(BuffType.Intel, 30, 9, Scope.All));
+		return Lists.newArrayList(new Counter(BuffType.Intel, 20, 1, Scope.All),
+				new Counter(BuffType.Intel, 20, 2, Scope.All), new Counter(BuffType.Intel, 20, 3, Scope.All),
+				new Counter(BuffType.Intel, 20, 4, Scope.All), new Counter(BuffType.Intel, 20, 5, Scope.All),
+				new Counter(BuffType.Intel, 20, 6, Scope.All), new Counter(BuffType.Intel, 20, 7, Scope.All),
+				new Counter(BuffType.Intel, 20, 8, Scope.All), new Counter(BuffType.Intel, 20, 9, Scope.All));
 	}
 
 }
