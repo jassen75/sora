@@ -36,8 +36,35 @@
 	padding: 10px;
 }
 
+#attackerPic .pic_info{
+	position:absolute;
+  	left:118px;
+  	top:20px;
+  	width:200px;
+}
+
+#attackerPic .pic_info button{
+	position:absolute;
+  	left:2px;
+  	top:35px;
+}
+
 #defenderPic {
 	padding: 10px;
+}
+
+
+#defenderPic .pic_info{
+	position:absolute;
+  	left:118px;
+  	top:20px;
+  	width:200px;
+}
+
+#defenderPic .pic_info button{
+	position:absolute;
+  	left:2px;
+  	top:35px;
 }
 
 .dropdown {

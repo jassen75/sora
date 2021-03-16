@@ -60,42 +60,6 @@ public class LandiusTalent extends Skill {
 			@Override
 			public String getName() {
 				// TODO Auto-generated method stub
-				return "兰迪乌斯*皇家骑士大心";
-			}
-
-			@Override
-			public List<Effect> getEffects() {
-				// TODO Auto-generated method stub
-				return Lists.newArrayList(new Enhance(BuffType.DamageInc, 10, Scope.All));
-			}
-
-			public int getSkillType() {
-				return 4;
-			}
-
-		}, new Skill() {
-
-			@Override
-			public String getName() {
-				// TODO Auto-generated method stub
-				return "兰迪乌斯*皇家骑士大心";
-			}
-
-			@Override
-			public List<Effect> getEffects() {
-				// TODO Auto-generated method stub
-				return Lists.newArrayList(new Enhance(BuffType.PhysicDamageDec, 10, Scope.All));
-			}
-
-			public int getSkillType() {
-				return 5;
-			}
-
-		}, new Skill() {
-
-			@Override
-			public String getName() {
-				// TODO Auto-generated method stub
 				return "兰迪天赋";
 			}
 

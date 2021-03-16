@@ -62,6 +62,8 @@ import cc.js.sora.fight.skill.equip.Yicai;
 import cc.js.sora.fight.skill.equip.Yuguan;
 import cc.js.sora.fight.skill.equip.Zhenshizijia;
 import cc.js.sora.fight.skill.heart.Huoyanshen;
+import cc.js.sora.fight.skill.heart.LandiusDayuanshuai;
+import cc.js.sora.fight.skill.heart.LandiusHuangqi;
 import cc.js.sora.fight.skill.heart.YuliaShengjian;
 import cc.js.sora.fight.skill.passivity.BloodBattle;
 import cc.js.sora.fight.skill.passivity.Xinyang;
@@ -187,7 +189,8 @@ public class SkillService {
 		registerSkill(Skill.HildaTalent, new HildaTalent());
 		registerSkill(Skill.WernerTalent, new WernerTalent());
 		registerSkill(Skill.LightOfGenesisTalent, new LightOfGenesisTalent());
-		registerSkill(Skill.LandiusTalent, new LandiusTalent());
+		registerSkill(58L, new LandiusHuangqi());
+		registerSkill(10058L, new LandiusDayuanshuai());
 		registerSkill(Skill.LedynTalent, new LedynTalent());
 		registerSkill(Skill.HimikoTalent, new HimikoTalent());
 		registerSkill(Skill.MagusOfTheTreeTalent, new MagusOfTheTreeTalent());

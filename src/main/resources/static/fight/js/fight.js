@@ -200,6 +200,10 @@ function loadHeroData() {
 function buildHeroPics(data) {
 	$("#hero_pics").children("div").remove();
 	for (var j = 0; j < data.length; j++) {
+		if(data[j]["id"] > 10000)
+		{
+			continue;
+		}
 		var pic = $("<div onclick=\"chooseHero(" + data[j]["id"]
 				+ ")\" class=\"hero_pic\"><img src=\"/fight/image/"
 				+ data[j]["id"]
@@ -264,7 +268,7 @@ function buildHero(hero) {
 		$("#defenderHeroBar").text("100%");
 		$("#defenderSoldierBar").attr("style", "width:100%");
 		$("#defenderSoldierBar").text("100%");
-		$("#defender-sel-soldier > button").html("选择技能&nbsp;<span class=\"caret\"></span>");
+		$("#defender-sel-soldier > button").html("选择兵种&nbsp;<span class=\"caret\"></span>");
 	}
 
 	fightInfo[role] = {};
@@ -415,10 +419,33 @@ function displayHero(role) {
 	}
 	var rolePic = $("#" + role + "Pic");
 	rolePic.children("div").remove();
-	var pic = $("<div data-toggle=\"modal\" data-target=\"#hero-editor\" data-role=\""+role+"\"><img src=\"/fight/image/" + fightInfo[role]["hero"]["id"]
-			+ ".png\" alt=\"\" width=\"60\" height=\"86\"></img>"
-			+ fightInfo[role]["hero"]["name"] + "</div>");
+	var picId = fightInfo[role]["hero"]["id"];
+	while(picId > 10000 )
+	{
+		picId -= 10000;
+	}
+	var pic = $("<div data-toggle=\"modal\" data-target=\"#hero-editor\" data-role=\""+role+"\"><img src=\"/fight/image/" + picId
+			+ ".png\" alt=\"\" width=\"60\" height=\"86\"></img></div>");
+			
+	var picInfo = $("<div class=\"pic_info\"><img class=\"hero_type_image\" src=\"/fight/image/job_" + fightInfo[role]["hero"]["type"]
+			+ ".png\" alt=\"\" width=\"22\" height=\"24\"></img>&nbsp;&nbsp;<b>"
+			+ fightInfo[role]["hero"]["name"]+ "</b></div>");
+	
+	var changeJobButton = $("<button></button");
+	changeJobButton.text(fightInfo[role]["hero"]["job"]);
+	changeJobButton.click(function(){
+		var next = fightInfo[role]["hero"]["nextJob"];
+		if(next != 0)
+		{
+			isAttacker = (role=="attacker" ? 1 : 0);
+			//alert("isAttacker:"+isAttacker);
+			chooseHero(next);
+		}
+		
+	});
+	changeJobButton.appendTo(picInfo);
 	pic.appendTo(rolePic);
+	picInfo.appendTo(rolePic);
 
 	$("#" + role + "-soldier-list").children("li").remove();
 	var soldiers = fightInfo[role]["hero"]["soldiers"];

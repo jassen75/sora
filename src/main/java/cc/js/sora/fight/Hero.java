@@ -103,5 +103,10 @@ public class Hero {
 	@Column(name="rang")
 	int range;
 
+	@Column(name="job")
+	String job;
+	
+	@Column(name="next_job")
+	long nextJob;
 	
 }
