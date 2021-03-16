@@ -38,7 +38,7 @@
 
 #attackerPic .pic_info{
 	position:absolute;
-  	left:118px;
+  	left:108px;
   	top:20px;
   	width:200px;
 }
@@ -56,7 +56,7 @@
 
 #defenderPic .pic_info{
 	position:absolute;
-  	left:118px;
+  	left:108px;
   	top:20px;
   	width:200px;
 }
@@ -70,6 +70,18 @@
 .dropdown {
 	padding: 10px;
 	
+}
+
+#attacker-sel-soldier button {
+	width:122px;
+}
+
+#defender-sel-soldier button {
+	width:122px;
+}
+
+#attacker-sel-action button {
+	width:122px;
 }
 
 #attacker-soldier-information {
