@@ -121,6 +121,8 @@ function calculate()
 	if(battleType == 2)
 	{
 		defenderResult = aoe(coefficient, attackerHeroCriticalChecked);
+		attackerResult =  {"dsl":fightInfo["attacker"]["soldierLeftLife"], "dl":fightInfo["attacker"]["heroLeftLife"], 
+				"fl":fightInfo["attacker"]["heroLeftLife"], "fsl":fightInfo["attacker"]["soldierLeftLife"], "fightDetails":"" };
 	}
 	
 	

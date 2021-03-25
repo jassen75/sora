@@ -941,6 +941,15 @@ public class FightService {
 		{
 			result += Math.min(panelInfo.getAttack(), panelInfo.getIntel());
 		}
+		
+		if(panelInfo.getFeatures().containsKey(Feature.PreFixDamagePhysic))
+		{
+			List<Number> list = (List<Number>)panelInfo.getFeatures().get(Feature.PreFixDamagePhysic);
+			for(int i=0; i<list.size(); i++)
+			{
+				result += list.get(i).doubleValue() * panelInfo.getPhysic();
+			}
+		}
 		return result;
 	}
 	

@@ -46,7 +46,9 @@ import cc.js.sora.fight.skill.enhance.ShuijingEnhance;
 import cc.js.sora.fight.skill.enhance.WindEnhance;
 import cc.js.sora.fight.skill.equip.Cangbaizhizhang;
 import cc.js.sora.fight.skill.equip.Chenhun;
+import cc.js.sora.fight.skill.equip.Daditou;
 import cc.js.sora.fight.skill.equip.Erzhui;
+import cc.js.sora.fight.skill.equip.Jingmian;
 import cc.js.sora.fight.skill.equip.Jixianmogong;
 import cc.js.sora.fight.skill.equip.Lage;
 import cc.js.sora.fight.skill.equip.LastSuit;
@@ -62,6 +64,7 @@ import cc.js.sora.fight.skill.equip.Yicai;
 import cc.js.sora.fight.skill.equip.Yuguan;
 import cc.js.sora.fight.skill.equip.Zhenshizijia;
 import cc.js.sora.fight.skill.heart.Huoyanshen;
+import cc.js.sora.fight.skill.heart.KreugerTheWickedFashi;
 import cc.js.sora.fight.skill.heart.LandiusDayuanshuai;
 import cc.js.sora.fight.skill.heart.LandiusHuangqi;
 import cc.js.sora.fight.skill.heart.YuliaShengjian;
@@ -172,6 +175,8 @@ public class SkillService {
 		registerSkill(Skill.Chenhun, new Chenhun());
 		registerSkill(Skill.Cangbaizhizhang, new Cangbaizhizhang());
 		registerSkill(Skill.Mingxiang, new Mingxiang());
+		registerSkill(1053L, new Daditou());
+		registerSkill(1013L, new Jingmian());
 		
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
@@ -189,6 +194,8 @@ public class SkillService {
 		registerSkill(Skill.HildaTalent, new HildaTalent());
 		registerSkill(Skill.WernerTalent, new WernerTalent());
 		registerSkill(Skill.LightOfGenesisTalent, new LightOfGenesisTalent());
+		
+		
 		registerSkill(58L, new LandiusHuangqi());
 		registerSkill(10058L, new LandiusDayuanshuai());
 		registerSkill(Skill.LedynTalent, new LedynTalent());
@@ -209,6 +216,7 @@ public class SkillService {
 		registerSkill(44L, new YuliaShengjian());
 		registerSkill(52L, new SigmaTalent());
 		registerSkill(94L, new Huoyanshen());
+		registerSkill(3L, new KreugerTheWickedFashi());
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
