@@ -25,6 +25,15 @@ public class Enhance implements Effect{
 	
 	public String getTitle()
 	{
+		String printScope = "";
+		if(scope==Scope.Soldier)
+		{
+			printScope = "士兵";
+		}
+		if(scope==Scope.Hero)
+		{
+			printScope = "英雄";
+		}
 		if(buffType == BuffType.PreBattleDamage || buffType == BuffType.PostBattleDamage)
 		{
 			return printBufferType() + number+ "倍伤害";
@@ -32,7 +41,7 @@ public class Enhance implements Effect{
 		
 		else if(buffType == BuffType.Range)
 		{
-			return printBufferType() + number;
+			return printScope+printBufferType() + number;
 		}
 		else if(buffType == BuffType.Random)
 		{
@@ -40,7 +49,7 @@ public class Enhance implements Effect{
 		}
 		else
 		{
-			return printBufferType()+printValue();		
+			return printScope+printBufferType()+printValue();		
 		}
 		
 	}

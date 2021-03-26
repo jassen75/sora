@@ -63,6 +63,8 @@ import cc.js.sora.fight.skill.equip.Xunzhang;
 import cc.js.sora.fight.skill.equip.Yicai;
 import cc.js.sora.fight.skill.equip.Yuguan;
 import cc.js.sora.fight.skill.equip.Zhenshizijia;
+import cc.js.sora.fight.skill.heart.FlorentiaJunshi;
+import cc.js.sora.fight.skill.heart.FlorentiaZaixiang;
 import cc.js.sora.fight.skill.heart.Huoyanshen;
 import cc.js.sora.fight.skill.heart.KreugerTheWickedFashi;
 import cc.js.sora.fight.skill.heart.LandiusDayuanshuai;
@@ -217,6 +219,8 @@ public class SkillService {
 		registerSkill(52L, new SigmaTalent());
 		registerSkill(94L, new Huoyanshen());
 		registerSkill(3L, new KreugerTheWickedFashi());
+		registerSkill(16L, new FlorentiaZaixiang());
+		registerSkill(10016L, new FlorentiaJunshi());
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
