@@ -103,6 +103,7 @@ import cc.js.sora.fight.skill.soldier.Xuanfengyouqibing;
 import cc.js.sora.fight.skill.soldier.Yanshi;
 import cc.js.sora.fight.skill.support.BernhardtSuper;
 import cc.js.sora.fight.skill.support.ElwinSuper;
+import cc.js.sora.fight.skill.support.HildaSuper;
 import cc.js.sora.fight.skill.support.Shenji;
 import cc.js.sora.fight.skill.support.ZillagodSuper;
 import cc.js.sora.fight.skill.talent.AresTalent;
@@ -275,6 +276,7 @@ public class SkillService {
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());
 		registerSkill(Skill.BernhardtSuper, new BernhardtSuper());
+		registerSkill(Skill.HildaSuper, new HildaSuper());
 
 		registerSkill(Skill.SuperBuff, new SuperBuff());
 		registerSkill(Skill.Shenji, new Shenji());

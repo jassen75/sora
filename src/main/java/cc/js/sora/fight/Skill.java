@@ -324,7 +324,7 @@ public abstract class Skill {
 	public static final long ElwinSuper = 4003;
 	public static final long BernhardtSuper = 4004;
 	public static final long Shenji = 4005;
-	
+	public static final long HildaSuper = 4006;
 
 
 }
