@@ -20,7 +20,7 @@ public abstract class CounterUserCondition extends UserCondition implements Coun
 			return buffCounts.get(this.getName());
 		} 
 		
-		return 0;
+		return this.getDefaultCount();
 	}
 	
 	

@@ -56,6 +56,7 @@ import cc.js.sora.fight.skill.equip.Jixianmogong;
 import cc.js.sora.fight.skill.equip.Lage;
 import cc.js.sora.fight.skill.equip.LastSuit;
 import cc.js.sora.fight.skill.equip.Mingxiang;
+import cc.js.sora.fight.skill.equip.Rongyao;
 import cc.js.sora.fight.skill.equip.Shenpan;
 import cc.js.sora.fight.skill.equip.Shenyi;
 import cc.js.sora.fight.skill.equip.Shijieshu;
@@ -66,6 +67,8 @@ import cc.js.sora.fight.skill.equip.Xunzhang;
 import cc.js.sora.fight.skill.equip.Yicai;
 import cc.js.sora.fight.skill.equip.Yuguan;
 import cc.js.sora.fight.skill.equip.Zhenshizijia;
+import cc.js.sora.fight.skill.heart.EmiliaShengqi;
+import cc.js.sora.fight.skill.heart.EmiliaShengqiang;
 import cc.js.sora.fight.skill.heart.FlorentiaJunshi;
 import cc.js.sora.fight.skill.heart.FlorentiaZaixiang;
 import cc.js.sora.fight.skill.heart.Huoyanshen;
@@ -188,6 +191,7 @@ public class SkillService {
 		registerSkill(1053L, new Daditou());
 		registerSkill(1013L, new Jingmian());
 		registerSkill(1064L, new Feiyingxingdou());
+		registerSkill(1065L, new Rongyao());
 		
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
@@ -234,6 +238,8 @@ public class SkillService {
 		registerSkill(10011L, new RozencielShuijing());
 		registerSkill(17L, new TsubameYing());
 		registerSkill(10017L, new TsubameYouxia());
+		registerSkill(37L, new EmiliaShengqi());
+		registerSkill(10037L, new EmiliaShengqiang());
 		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());

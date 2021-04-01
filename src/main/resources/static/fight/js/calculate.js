@@ -106,8 +106,8 @@ function calculate()
 			attackerResult = battle("defender", "attacker", 1, defenderHeroCriticalChecked, defenderSoldierCriticalChecked, 
 			    fightInfo["defender"]["heroLeftLife"], fightInfo["defender"]["soldierLeftLife"]);
 			defenderResult= battle("attacker", "defender", coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked,
-				attackerResult["attackerResult"], attackerResult["dsl"]);			
-			attackerResult["fightDetails"] = attackerResult["fightDetails"] + "<p>"+fightInfo["attacker"]["hero"]["name"]+"先于敌人攻击</p>";
+				attackerResult["dl"], attackerResult["dsl"]);			
+			attackerResult["fightDetails"] = attackerResult["fightDetails"] + "<p>"+fightInfo["defender"]["hero"]["name"]+"先于敌人攻击</p>";
 		} else
 		{
 			defenderResult = battle("attacker", "defender", coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, 
@@ -292,13 +292,21 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	
 	if(getRange(attackerRole, "soldier")< distance)
 	{
-		soldierCount = 0;
-		fightDetails+="<p>"+fightInfo[attackerRole]["soldier"]["name"]+"射程不够，无法出手</p>";
+		var yf = fightInfo[attackerRole]["soldierPanel"]["features"]["RangeAttackBack"];
+		if(!yf || yf<distance)
+		{
+			soldierCount = 0;
+			fightDetails+="<p>"+fightInfo[attackerRole]["soldier"]["name"]+"射程不够，无法出手</p>";
+		}
 	}
 	if(getRange(attackerRole, "hero")< distance)
 	{
-		heroCount = 0;
-		fightDetails+="<p>"+fightInfo[attackerRole]["hero"]["name"]+"射程不够，无法出手</p>";
+		var yf = fightInfo[attackerRole]["heroPanel"]["features"]["RangeAttackBack"];
+		if(!yf  || yf<distance)
+		{
+			heroCount = 0;
+			fightDetails+="<p>"+fightInfo[attackerRole]["hero"]["name"]+"射程不够，无法出手</p>";
+		}
 	}
 	
 	var soldierDirect = fightInfo[attackerRole]["soldierPanel"]["features"]["DirectToHero"];

@@ -52,7 +52,7 @@ public class Wumianzhe extends Skill{
 			@Override
 			public List<Effect> getEffects() {
 				// TODO Auto-generated method stub
-				return Lists.newArrayList(new Debuff(BuffType.CriticalProbDec, -30));
+				return Lists.newArrayList(new Debuff(BuffType.CriticalProbDec, -15));
 			}
 			
 		});
