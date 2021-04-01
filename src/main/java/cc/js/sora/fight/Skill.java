@@ -18,6 +18,25 @@ public abstract class Skill {
 		return 0;
 	}
 
+	// 1 battle/aoe attack
+	// 2 battle/aoe defender 3 battle all
+	// 4 battle attack 5 battle defender
+	// 6 aoe attacker 7 aoe defender
+	// 8 aoe/rangeed
+	// 9 all
+	public int getSkillType() {
+		return 9;
+	}
+
+	// 0 effect 1 pre battle 2 battle 3 post battle 4
+	public int getBattleType() {
+		return 2;
+	}
+
+	public List<Skill> childSkill() {
+		return Lists.newArrayList();
+	}
+
 	public abstract String getName();
 
 	public Condition getCondition() {
@@ -34,13 +53,13 @@ public abstract class Skill {
 		return getEffects();
 	}
 	
-	public List<Effect> getEffects(FightRole role)
+	public List<Effect> getEffects(FightInfo fightInfo, boolean isAttack)
 	{
 		if(this.getCondition() instanceof CounterCondition)
 		{
 			CounterCondition cc = (CounterCondition)this.getCondition();
 
-			return this.getEffects(cc.getCount(role));
+			return this.getEffects(cc.getCount(fightInfo, isAttack));
 		}
 		return getEffects();
 	}
@@ -91,7 +110,7 @@ public abstract class Skill {
 //    	return Lists.newArrayList();
 //    }
 
-	public void process(FightInfo fight, boolean isAttack) {
+	public void process(FightInfo fightInfo, boolean isAttack) {
 		// do nothing
 	}
 
@@ -125,7 +144,10 @@ public abstract class Skill {
 		}
 	}
 
-	@JsonProperty("desc")
+	public String getDesc() {
+		return this.toString();
+	}
+	
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("[");
@@ -169,24 +191,36 @@ public abstract class Skill {
 	 */
 	public static final long PatyleTalent = 1;
 	public static final long TowaTalent = 2;
-	public static final long ZalrahdaTalent1 = 3;
 	public static final long HimikoTalent = 5;
+	
+	public static final long HildaTalent = 7;
+	public static final long WernerTalent = 8;
+	public static final long LightOfGenesisTalent = 9;
+ 
 	public static final long MarielTalent = 10;
 	public static final long MagusOfTheTreeTalent = 18;
 	public static final long RozaliaTalent = 21;
 	public static final long ReanTalent = 22;
+	public static final long LicoriceTalent = 24;
+	
 	public static final long AresTalent = 28;
-	public static final long ZalrahdaTalent2 = 203;
 	public static final long LandiusTalent = 58;
+	public static final long ListellTalent = 61;
+	public static final long ZalrahdaTalent = 62;
 	public static final long ZillagodTalent = 63;
+	public static final long BozelTalent = 72;
 	public static final long BernhardtTalent = 74;
 	public static final long ElwinTalent = 76;
 	public static final long LedynTalent = 78;
-
+	public static final long SissiWhiteTalent = 91;
+	
+	public static final long KayuraTalent = 93;
+	
 	/**
 	 * 300-900 passive skill
 	 */
 	public static final long BloodBattle = 301;
+	public static final long Xinyang = 302;
 
 	/**
 	 * 900-1000 enhance
@@ -194,6 +228,9 @@ public abstract class Skill {
 	public static final long WindEnhance = 901;
 	public static final long FuriousEnhance = 905;
 	public static final long ManyueEnhance = 902;
+	public static final long MoshuEnhance = 903;
+	public static final long ShuijingEnhance = 909;
+	
 	
 	/**
 	 * 1000-1600 equip
@@ -205,21 +242,39 @@ public abstract class Skill {
 	public static final long Lage = 1005;
 	public static final long Shenyi = 1006;
 	public static final long Jixianmogong = 1007;
-
 	public static final long Shenpan = 1009;
 	public static final long Xunzhang = 1010;
 	public static final long Tulong = 1012;
+	public static final long Tier = 1018;
+	public static final long Chenhun = 1019;
+	public static final long Mingxiang = 1025;	
+	public static final long Shijieshu = 1059;
+	public static final long Shuijingfengci = 1049;
+	public static final long Zhenshizijia = 1062;
+	public static final long Cangbaizhizhang = 1063;
 
 	/**
 	 * 1600-2000 action
 	 */
 	public static final long Shimeng = 1601;
-	public static final long Shixuemojian = 1602;
+	//public static final long Shixuemojian = 1602;
 	public static final long Youshidaji = 1603;
 	public static final long Ziyouzhiren = 1604;
 	public static final long Weifengchongzhen = 1606;
+	public static final long Juemingyiji = 1602;
+	public static final long Huoqiu = 1608;
+	public static final long Leiji = 1610;
+	public static final long Anlian = 1611;
+	public static final long Lanxingzhan = 1614;
+	public static final long Shengguangzhiyong = 1616;
+	public static final long Anlong = 1619;
+	public static final long Shengwangzhiji = 1620;
+	public static final long Yeshouzhenshe = 1622;
 	
-
+	
+	public static final long Shengyan = 1617;
+	public static final long Bingdong = 1618;
+	
 	public static final long Qinzhen = 1805;
 	public static final long Juebi = 1806;
 	public static final long Qinzhen2 = 1807;
@@ -255,8 +310,12 @@ public abstract class Skill {
 	public static final long Shurenshouwei = 2027;
 	public static final long Jiamiannvpu = 2026;
 	public static final long Longqi = 2028;
+	public static final long Yanshi = 2030;
+	public static final long Tiankongsheshou = 2031;
+	public static final long Anjingling = 2032;
+	public static final long Feiwunvshi = 2033;
+	public static final long Wushi = 2077;
 	
-
 	/**
 	 * 4000-5000 support skill
 	 */
@@ -264,25 +323,8 @@ public abstract class Skill {
 	public static final long ZillagodSuper = 4002;
 	public static final long ElwinSuper = 4003;
 	public static final long BernhardtSuper = 4004;
-	
+	public static final long Shenji = 4005;
+	public static final long HildaSuper = 4006;
 
-	// 1 battle/aoe attack
-	// 2 battle/aoe defender 3 battle all
-	// 4 battle attack 5 battle defender
-	// 6 aoe attacker 7 aoe defender
-	// 8 aoe all
-	// 9 all
-	public int getSkillType() {
-		return 9;
-	}
-
-	// 0 effect 1 pre battle 2 battle 3 post battle 4
-	public int getBattleType() {
-		return 2;
-	}
-
-	public List<Skill> childSkill() {
-		return Lists.newArrayList();
-	}
 
 }

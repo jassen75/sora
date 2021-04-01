@@ -35,12 +35,12 @@ public class FightRole {
 	
 	PanelInfo heroPanel;
 	PanelInfo soldierPanel;
-	List<Buff> buffs;
-	List<Debuff> debuffs;
+	List<Buff> buffs = Lists.newArrayList();
+	List<Debuff> debuffs = Lists.newArrayList();
 //	Map<String, UserCondition> userConditions;
 //	List<CheckedSkill> checkedSkills = Lists.newArrayList();
 	
-	int range;
+	//int range;
 	
 	// 1 battle attacker 2 battle defender 3 aoe attacker 4 aoe defender
 	int roleType;
@@ -61,5 +61,10 @@ public class FightRole {
 	public double getHeroLifePercent()
 	{
 		return Double.valueOf(heroLeftLife)/Double.valueOf(heroPanel.getLife());
+	}
+	@JsonIgnore
+	public boolean isMix()
+	{
+		return this.hero.getType() != this.soldier.getType();
 	}
 }

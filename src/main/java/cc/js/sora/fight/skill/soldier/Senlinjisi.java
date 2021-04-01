@@ -27,7 +27,7 @@ public class Senlinjisi extends Skill{
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList();
+		return Lists.newArrayList(new Enhance(BuffType.Medical, 30, Scope.Soldier));
 	}
 
 }

@@ -23,7 +23,7 @@ public class TowaHeart1 extends Skill {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "托娃大心";
+		return "托娃*圣天马星骑大心";
 	}
 
 	@Override

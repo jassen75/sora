@@ -30,9 +30,16 @@ public class Buff implements Effect {
 		this.enhanceList = Lists.newArrayList(new Enhance(bufftType, number, Scope.All));
 		
 	}
+	
+	public Buff(String name, Feature feature)
+	{
+		this.name = name;
+		this.feature = feature;
+		this.enhanceList = Lists.newArrayList();
+	}
 	List<Enhance> enhanceList;
-	Map<String, Object> features;
 	String name;
+	Feature feature;
 	@Override
 	public EffectType getEffectType() {
 		// TODO Auto-generated method stub
@@ -40,7 +47,13 @@ public class Buff implements Effect {
 	}
 	@Override
 	public Map<String, Object> getFeatures() {
-		return features;
+		if(feature != null)
+		{
+			return feature.getFeatures();
+		} else
+		{
+			return Maps.newHashMap();
+		}
 	}
 	
 	public String toString()

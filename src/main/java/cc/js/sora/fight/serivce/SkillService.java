@@ -1,6 +1,5 @@
 package cc.js.sora.fight.serivce;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -22,16 +21,124 @@ import cc.js.sora.fight.Soldier;
 import cc.js.sora.fight.db.ActionRepository;
 import cc.js.sora.fight.db.HeroRepository;
 import cc.js.sora.fight.db.SoldierRepository;
-import cc.js.sora.fight.skill.*;
-import cc.js.sora.fight.skill.action.*;
-import cc.js.sora.fight.skill.equip.*;
-import cc.js.sora.fight.skill.passivity.*;
-import cc.js.sora.fight.skill.soldier.*;
+import cc.js.sora.fight.skill.SuperBuff;
+import cc.js.sora.fight.skill.action.Anlian;
+import cc.js.sora.fight.skill.action.Anlong;
+import cc.js.sora.fight.skill.action.Binglong;
+import cc.js.sora.fight.skill.action.Bingqiang;
+import cc.js.sora.fight.skill.action.DreamAction;
+import cc.js.sora.fight.skill.action.Huoqiu;
+import cc.js.sora.fight.skill.action.Juemingyiji;
+import cc.js.sora.fight.skill.action.Lanxingzhan;
+import cc.js.sora.fight.skill.action.Leiji;
+import cc.js.sora.fight.skill.action.Liefengzhiji;
+import cc.js.sora.fight.skill.action.Qiangfengjuji;
+import cc.js.sora.fight.skill.action.Shengguangzhiyong;
+import cc.js.sora.fight.skill.action.Shengwangzhiji;
+import cc.js.sora.fight.skill.action.Shengyan;
+import cc.js.sora.fight.skill.action.Shiying;
+import cc.js.sora.fight.skill.action.Weifengchongzhen;
+import cc.js.sora.fight.skill.action.XunyingShaji;
+import cc.js.sora.fight.skill.action.Yazhisheji;
+import cc.js.sora.fight.skill.action.Yeshouzhenshe;
+import cc.js.sora.fight.skill.enhance.FuriousEnhance;
+import cc.js.sora.fight.skill.enhance.ManyueEnhance;
+import cc.js.sora.fight.skill.enhance.MoshuEnhance;
+import cc.js.sora.fight.skill.enhance.ShuijingEnhance;
+import cc.js.sora.fight.skill.enhance.WindEnhance;
+import cc.js.sora.fight.skill.equip.Cangbaizhizhang;
+import cc.js.sora.fight.skill.equip.Chenhun;
+import cc.js.sora.fight.skill.equip.Daditou;
+import cc.js.sora.fight.skill.equip.Erzhui;
+import cc.js.sora.fight.skill.equip.Feiyingxingdou;
+import cc.js.sora.fight.skill.equip.Jingmian;
+import cc.js.sora.fight.skill.equip.Jixianmogong;
+import cc.js.sora.fight.skill.equip.Lage;
+import cc.js.sora.fight.skill.equip.LastSuit;
+import cc.js.sora.fight.skill.equip.Mingxiang;
+import cc.js.sora.fight.skill.equip.Rongyao;
+import cc.js.sora.fight.skill.equip.Shenpan;
+import cc.js.sora.fight.skill.equip.Shenyi;
+import cc.js.sora.fight.skill.equip.Shijieshu;
+import cc.js.sora.fight.skill.equip.Shuijingfengci;
+import cc.js.sora.fight.skill.equip.Tier;
+import cc.js.sora.fight.skill.equip.Tulong;
+import cc.js.sora.fight.skill.equip.Xunzhang;
+import cc.js.sora.fight.skill.equip.Yicai;
+import cc.js.sora.fight.skill.equip.Yuguan;
+import cc.js.sora.fight.skill.equip.Zhenshizijia;
+import cc.js.sora.fight.skill.heart.EmiliaShengqi;
+import cc.js.sora.fight.skill.heart.EmiliaShengqiang;
+import cc.js.sora.fight.skill.heart.FlorentiaJunshi;
+import cc.js.sora.fight.skill.heart.FlorentiaZaixiang;
+import cc.js.sora.fight.skill.heart.Huoyanshen;
+import cc.js.sora.fight.skill.heart.KreugerTheWickedFashi;
+import cc.js.sora.fight.skill.heart.LandiusDayuanshuai;
+import cc.js.sora.fight.skill.heart.LandiusHuangqi;
+import cc.js.sora.fight.skill.heart.RozencielLingguang;
+import cc.js.sora.fight.skill.heart.RozencielShuijing;
+import cc.js.sora.fight.skill.heart.TsubameYing;
+import cc.js.sora.fight.skill.heart.TsubameYouxia;
+import cc.js.sora.fight.skill.heart.YuliaShengjian;
+import cc.js.sora.fight.skill.passivity.BloodBattle;
+import cc.js.sora.fight.skill.passivity.Xinyang;
+import cc.js.sora.fight.skill.soldier.Anjingling;
+import cc.js.sora.fight.skill.soldier.Dujiaoshou;
+import cc.js.sora.fight.skill.soldier.Fangzhenliebing;
+import cc.js.sora.fight.skill.soldier.Feiwunvshi;
+import cc.js.sora.fight.skill.soldier.Gangyiyongshi;
+import cc.js.sora.fight.skill.soldier.Gangzonglangren;
+import cc.js.sora.fight.skill.soldier.Gaodiyongshi;
+import cc.js.sora.fight.skill.soldier.GriffinSkill;
+import cc.js.sora.fight.skill.soldier.Huangjiaqibing;
+import cc.js.sora.fight.skill.soldier.Jiamiannvpu;
+import cc.js.sora.fight.skill.soldier.Jixieqishi;
+import cc.js.sora.fight.skill.soldier.Kuangrezhe;
+import cc.js.sora.fight.skill.soldier.LobsterSkill;
+import cc.js.sora.fight.skill.soldier.Longqi;
+import cc.js.sora.fight.skill.soldier.Senlinjisi;
+import cc.js.sora.fight.skill.soldier.Shengdianqishi;
+import cc.js.sora.fight.skill.soldier.Shixianggui;
+import cc.js.sora.fight.skill.soldier.Shurenshouwei;
+import cc.js.sora.fight.skill.soldier.Tiankongsheshou;
+import cc.js.sora.fight.skill.soldier.Tianshi;
+import cc.js.sora.fight.skill.soldier.Wangnvqinwei;
+import cc.js.sora.fight.skill.soldier.WizardSkill;
+import cc.js.sora.fight.skill.soldier.Wumianzhe;
+import cc.js.sora.fight.skill.soldier.Wunv;
+import cc.js.sora.fight.skill.soldier.Wushi;
+import cc.js.sora.fight.skill.soldier.Xiyidaoke;
+import cc.js.sora.fight.skill.soldier.Xizuizhe;
+import cc.js.sora.fight.skill.soldier.Xuanfengyouqibing;
+import cc.js.sora.fight.skill.soldier.Yanshi;
 import cc.js.sora.fight.skill.support.BernhardtSuper;
 import cc.js.sora.fight.skill.support.ElwinSuper;
+import cc.js.sora.fight.skill.support.HildaSuper;
+import cc.js.sora.fight.skill.support.Shenji;
 import cc.js.sora.fight.skill.support.ZillagodSuper;
-import cc.js.sora.fight.skill.talent.*;
-
+import cc.js.sora.fight.skill.talent.AresTalent;
+import cc.js.sora.fight.skill.talent.BernhardtTalent;
+import cc.js.sora.fight.skill.talent.BozelTalent;
+import cc.js.sora.fight.skill.talent.ElwinTalent;
+import cc.js.sora.fight.skill.talent.HildaTalent;
+import cc.js.sora.fight.skill.talent.HimikoTalent;
+import cc.js.sora.fight.skill.talent.KayuraTalent;
+import cc.js.sora.fight.skill.talent.LandiusTalent;
+import cc.js.sora.fight.skill.talent.LedynTalent;
+import cc.js.sora.fight.skill.talent.LicoriceTalent;
+import cc.js.sora.fight.skill.talent.LightOfGenesisTalent;
+import cc.js.sora.fight.skill.talent.ListellTalent;
+import cc.js.sora.fight.skill.talent.MagusOfTheTreeTalent;
+import cc.js.sora.fight.skill.talent.MarielTalent;
+import cc.js.sora.fight.skill.talent.PatyleTalent;
+import cc.js.sora.fight.skill.talent.ReanTalent;
+import cc.js.sora.fight.skill.talent.RozaliaTalent;
+import cc.js.sora.fight.skill.talent.SigmaTalent;
+import cc.js.sora.fight.skill.talent.SissiWhiteTalent;
+import cc.js.sora.fight.skill.talent.TowaTalent;
+import cc.js.sora.fight.skill.talent.WernerTalent;
+import cc.js.sora.fight.skill.talent.ZalrahdaTalent;
+import cc.js.sora.fight.skill.talent.ZillagodTalent;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -49,10 +156,10 @@ public class SkillService {
 
 	BarrackSkills barrackSkills = new BarrackSkills();
 
-	List<Long> globalSkills = Lists.newArrayList(Skill.SuperBuff);
+	List<Long> globalSkills = Lists.newArrayList(Skill.SuperBuff, Skill.Shenji);
 
-	List<Long> ehanceSkills = Lists.newArrayList(0L, Skill.WindEnhance, Skill.ManyueEnhance, 0L, 0L,
-			Skill.FuriousEnhance, 0L, 0L, 0L, 0L, 0L, 0L, 0L, 0L);
+	List<Long> ehanceSkills = Lists.newArrayList(0L, Skill.WindEnhance, Skill.ManyueEnhance, Skill.MoshuEnhance, 0L,
+			Skill.FuriousEnhance, 0L, 0L, 0L, Skill.ShuijingEnhance, 0L, 0L, 0L, 0L);
 
 	public Map<Long, Skill> skills = Maps.newHashMap();
 
@@ -74,19 +181,38 @@ public class SkillService {
 		registerSkill(Skill.Shenyi, new Shenyi());
 		registerSkill(Skill.Yicai, new Yicai());
 		registerSkill(Skill.Jixianmogong, new Jixianmogong());
-
+		registerSkill(Skill.Tier, new Tier());
+		registerSkill(Skill.Shijieshu, new Shijieshu());
+		registerSkill(Skill.Shuijingfengci, new Shuijingfengci());
+		registerSkill(Skill.Zhenshizijia, new Zhenshizijia());
+		registerSkill(Skill.Chenhun, new Chenhun());
+		registerSkill(Skill.Cangbaizhizhang, new Cangbaizhizhang());
+		registerSkill(Skill.Mingxiang, new Mingxiang());
+		registerSkill(1053L, new Daditou());
+		registerSkill(1013L, new Jingmian());
+		registerSkill(1064L, new Feiyingxingdou());
+		registerSkill(1065L, new Rongyao());
+		
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
 		registerSkill(Skill.ManyueEnhance, new ManyueEnhance());
+		registerSkill(Skill.MoshuEnhance, new MoshuEnhance());
+		registerSkill(Skill.ShuijingEnhance, new ShuijingEnhance());
 
 		registerSkill(Skill.BloodBattle, new BloodBattle());
+		registerSkill(Skill.Xinyang, new Xinyang());
 
 		registerSkill(Skill.PatyleTalent, new PatyleTalent());
 		registerSkill(Skill.TowaTalent, new TowaTalent());
-		registerSkill(Skill.ZalrahdaTalent1, new ZalrahdaTalent1());
-		registerSkill(Skill.ZalrahdaTalent2, new ZalrahdaTalent2());
+
 		registerSkill(Skill.MarielTalent, new MarielTalent());
-		registerSkill(Skill.LandiusTalent, new LandiusTalent());
+		registerSkill(Skill.HildaTalent, new HildaTalent());
+		registerSkill(Skill.WernerTalent, new WernerTalent());
+		registerSkill(Skill.LightOfGenesisTalent, new LightOfGenesisTalent());
+		
+		
+		registerSkill(58L, new LandiusHuangqi());
+		registerSkill(10058L, new LandiusDayuanshuai());
 		registerSkill(Skill.LedynTalent, new LedynTalent());
 		registerSkill(Skill.HimikoTalent, new HimikoTalent());
 		registerSkill(Skill.MagusOfTheTreeTalent, new MagusOfTheTreeTalent());
@@ -94,45 +220,86 @@ public class SkillService {
 		registerSkill(Skill.AresTalent, new AresTalent());
 		registerSkill(Skill.RozaliaTalent, new RozaliaTalent());
 		registerSkill(Skill.ElwinTalent, new ElwinTalent());
+		registerSkill(Skill.ZalrahdaTalent, new ZalrahdaTalent());
 		registerSkill(Skill.ZillagodTalent, new ZillagodTalent());
 		registerSkill(Skill.BernhardtTalent, new BernhardtTalent());
-
+		registerSkill(Skill.ListellTalent, new ListellTalent());
+		registerSkill(Skill.KayuraTalent, new KayuraTalent());
+		registerSkill(Skill.BozelTalent, new BozelTalent());
+		registerSkill(Skill.SissiWhiteTalent, new SissiWhiteTalent());
+		registerSkill(Skill.LicoriceTalent, new LicoriceTalent());
+		registerSkill(44L, new YuliaShengjian());
+		registerSkill(52L, new SigmaTalent());
+		registerSkill(94L, new Huoyanshen());
+		registerSkill(3L, new KreugerTheWickedFashi());
+		registerSkill(16L, new FlorentiaZaixiang());
+		registerSkill(10016L, new FlorentiaJunshi());
+		registerSkill(11L, new RozencielLingguang());
+		registerSkill(10011L, new RozencielShuijing());
+		registerSkill(17L, new TsubameYing());
+		registerSkill(10017L, new TsubameYouxia());
+		registerSkill(37L, new EmiliaShengqi());
+		registerSkill(10037L, new EmiliaShengqiang());
+		
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
 		registerSkill(Skill.LongxiajushouSkill, new LobsterSkill());
-
 		registerSkill(Skill.Gangyiyongshi, new Gangyiyongshi());
+		registerSkill(Skill.Gangzonglangren, new Gangzonglangren());
+		registerSkill(Skill.Gaodiyongshi, new Gaodiyongshi());
 		registerSkill(Skill.Dujiaoshou, new Dujiaoshou());
-		registerSkill(Skill.Fangzhenliebing, new Gangyiyongshi());
-		registerSkill(Skill.Gaodiyongshi, new Gangyiyongshi());
-
+		registerSkill(Skill.Fangzhenliebing, new Fangzhenliebing());
 		registerSkill(Skill.Huangjiaqibing, new Huangjiaqibing());
+		registerSkill(Skill.Jiamiannvpu, new Jiamiannvpu());
 		registerSkill(Skill.Jixieqishi, new Jixieqishi());
 		registerSkill(Skill.Kuangrezhe, new Kuangrezhe());
+		registerSkill(Skill.Longqi, new Longqi());
 		registerSkill(Skill.Senlinjisi, new Senlinjisi());
 		registerSkill(Skill.Shixianggui, new Shixianggui());
+		registerSkill(Skill.Shurenshouwei, new Shurenshouwei());	
 		registerSkill(Skill.Tianshi, new Tianshi());
 		registerSkill(Skill.Wumianzhe, new Wumianzhe());
 		registerSkill(Skill.Xiyidaoke, new Xiyidaoke());
 		registerSkill(Skill.Xizuizhe, new Xizuizhe());
 		registerSkill(Skill.Xuanfengyouqibing, new Xuanfengyouqibing());
-		registerSkill(Skill.Shurenshouwei, new Shurenshouwei());
-		registerSkill(Skill.Jiamiannvpu, new Jiamiannvpu());
-		registerSkill(Skill.Fangzhenliebing, new Fangzhenliebing());
-		registerSkill(Skill.Longqi, new Longqi());
-
+		registerSkill(Skill.Wunv, new Wunv());
+		registerSkill(Skill.Yanshi, new Yanshi());
+		registerSkill(Skill.Tiankongsheshou, new Tiankongsheshou());
+		registerSkill(Skill.Anjingling, new Anjingling());
+		registerSkill(Skill.Feiwunvshi, new Feiwunvshi());
+		registerSkill(Skill.Wushi, new Wushi());
+		registerSkill(2071L, new Shengdianqishi());
+		registerSkill(2054L, new Wangnvqinwei());
+		
+		
 		registerSkill(Skill.Shimeng, new DreamAction());
-		registerSkill(Skill.Shixuemojian, new BloodSwordAction());
 		registerSkill(Skill.Weifengchongzhen, new Weifengchongzhen());
-
-		registerSkill(Skill.Qinzhen, new QinZhenSKill());
-		registerSkill(Skill.Juebi, new JuebiSkill());
-
+		registerSkill(Skill.Juemingyiji, new Juemingyiji());
+		registerSkill(Skill.Huoqiu, new Huoqiu());
+		registerSkill(Skill.Anlian, new Anlian());
+		registerSkill(Skill.Leiji, new Leiji());
+		registerSkill(Skill.Lanxingzhan, new Lanxingzhan());
+		registerSkill(Skill.Shengguangzhiyong, new Shengguangzhiyong());
+		registerSkill(Skill.Shengyan, new Shengyan());
+		registerSkill(Skill.Bingdong, new Bingqiang());
+		registerSkill(Skill.Anlong, new Anlong());
+		registerSkill(Skill.Shengwangzhiji, new Shengwangzhiji());
+		registerSkill(Skill.Yeshouzhenshe, new Yeshouzhenshe());
+		registerSkill(1629L, new Binglong());
+		
+		registerSkill(1625L, new Shiying());
+		registerSkill(1626L, new Liefengzhiji());
+		registerSkill(1627L, new Yazhisheji());
+		registerSkill(1628L, new Qiangfengjuji());
+		registerSkill(1630L, new XunyingShaji());
+		
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());
 		registerSkill(Skill.BernhardtSuper, new BernhardtSuper());
+		registerSkill(Skill.HildaSuper, new HildaSuper());
 
 		registerSkill(Skill.SuperBuff, new SuperBuff());
+		registerSkill(Skill.Shenji, new Shenji());
 		skills.putAll(barrackSkills.getAllBarrackSkills());
 	}
 
@@ -177,10 +344,8 @@ public class SkillService {
 			for (int i = 0; i < d.length; i++) {
 				long skillId = Longs.tryParse(d[i].trim());
 				if (this.skills.containsKey(skillId)) {
-					if (checkSkillType(this.getSkill(skillId).getSkillType(), roleType)) {
-						if (this.getSkill(skillId) != null) {
-							result.add(this.getSkill(skillId));
-						}
+					if (this.getSkill(skillId) != null) {
+						result.add(this.getSkill(skillId));
 					}
 				}
 			}
@@ -189,6 +354,7 @@ public class SkillService {
 
 	public List<Skill> getSkills(Hero hero, Soldier soldier, long actionId, int enhance, Map<String, Equip> equips,
 			int roleType) {
+		log.info("get skills for roleType:"+roleType);
 		//List<Skill> result = new ArrayList<Skill>();
 		List<Skill> result = Lists.newCopyOnWriteArrayList();
 		if (hero != null) {
@@ -217,8 +383,7 @@ public class SkillService {
 
 			int soldierType = soldier.getType();
 			if (barrackSkills.getSkills(soldierType) != null) {
-				result.addAll(barrackSkills.getSkills(soldierType).stream()
-						.filter(s -> checkSkillType(s.getSkillType(), roleType)).collect(Collectors.toList()));
+				result.addAll(barrackSkills.getSkills(soldierType));
 			}
 
 		}
@@ -231,33 +396,25 @@ public class SkillService {
 
 		globalSkills.forEach(i -> {
 			if (this.skills.containsKey(i)) {
-				if (checkSkillType(this.getSkill(i).getSkillType(), roleType)) {
-					result.add(this.getSkill(i));
-				}
+				result.add(this.getSkill(i));
 			}
 		});
 
 		result.forEach(s -> {
-			checkChild(s, result, roleType);
+			checkChild(s, result);
 		});
 
-		return result;
+		return result.stream().filter(s->checkSkillType(s.getSkillType(), roleType)).collect(Collectors.toList());
 	}
 	
-	private void checkChild(Skill skill, List<Skill> result, int roleType)
+	private void checkChild(Skill skill, List<Skill> result)
 	{
-		List<Skill> childSkills = Lists.newArrayList();
+		//log.info("check child for skill:"+skill.getName());
 		skill.childSkill().forEach(cs -> {
-			if (checkSkillType(cs.getSkillType(), roleType)) {
-				childSkills.add(cs);
-			}
-
+			result.add(cs);
+			checkChild(cs, result);
 		});
-		if (childSkills.size() > 0) {
-			result.addAll(childSkills);
-			childSkills.stream().forEach(s->checkChild(s, result, roleType));
-		}
-		
+
 		
 	}
 

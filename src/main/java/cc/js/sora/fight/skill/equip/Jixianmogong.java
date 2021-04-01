@@ -20,7 +20,7 @@ public class Jixianmogong extends Skill{
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Feature(Feature.ImmuneToMeleeDamageReduce, true, "无视近战伤害减免", Scope.All));
+		return Lists.newArrayList(new Feature(Feature.ImmuneToMeleeDamageReduce, true, "无视近战伤害减免", Scope.All, false));
 	}
 
 }

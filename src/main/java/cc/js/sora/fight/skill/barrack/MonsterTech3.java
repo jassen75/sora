@@ -33,7 +33,7 @@ public class MonsterTech3 extends Skill {
 			@Override
 			public boolean valid(FightInfo fightInfo, boolean isAttack) {
 				// TODO Auto-generated method stub
-				return fightInfo.getEnemyRole(isAttack).getSoldier().getType()!=2 & fightInfo.getEnemyRole(isAttack).getSoldier().getType()!=2;
+				return fightInfo.getEnemyRole(isAttack).getSoldier().getType()!=10 & fightInfo.getEnemyRole(isAttack).getSoldier().getType()!=9;
 			}};
 	}
 

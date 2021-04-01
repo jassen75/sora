@@ -36,13 +36,52 @@
 	padding: 10px;
 }
 
+#attackerPic .pic_info{
+	position:absolute;
+  	left:108px;
+  	top:20px;
+  	width:200px;
+}
+
+#attackerPic .pic_info button{
+	position:absolute;
+  	left:2px;
+  	top:35px;
+}
+
 #defenderPic {
 	padding: 10px;
+}
+
+
+#defenderPic .pic_info{
+	position:absolute;
+  	left:108px;
+  	top:20px;
+  	width:200px;
+}
+
+#defenderPic .pic_info button{
+	position:absolute;
+  	left:2px;
+  	top:35px;
 }
 
 .dropdown {
 	padding: 10px;
 	
+}
+
+#attacker-sel-soldier button {
+	width:122px;
+}
+
+#defender-sel-soldier button {
+	width:122px;
+}
+
+#attacker-sel-action button {
+	width:122px;
 }
 
 #attacker-soldier-information {
@@ -133,6 +172,11 @@
 }
 
 #import_fm {
+	margin-top:50px;
+	margin-bottom:20px;
+}
+
+#export_fm {
 	margin-top:50px;
 	margin-bottom:20px;
 }

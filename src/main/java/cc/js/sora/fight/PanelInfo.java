@@ -67,4 +67,11 @@ public class PanelInfo {
 	double preBattleDamage;
 	int isSoldier;
 	int range;
+	
+	int skillDamage;
+	int ignoreDef;
+	int attackType;  // 1 physic,  2 magic
+	int preFixDamage ;
+	int preFixDamageToSelf;
+	int medical;
 }

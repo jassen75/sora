@@ -62,7 +62,7 @@ public class JuebiSkill  extends Skill{
 	public List<Effect> getEffects() {
 		return Lists.newArrayList(new Enhance(BuffType.PhysicDamageDec, 35, Scope.Soldier),
 				new Enhance(BuffType.Physic, 15, Scope.All), new Enhance(BuffType.Magic, 15, Scope.All), 
-				new Feature(Features.ImmuneToFixedDamage, true, "免疫固伤", Scope.All));
+				new Feature(Features.ImmuneToFixedDamage, true, "免疫固伤", Scope.All, false));
 	}
 	
 	@Override

@@ -169,7 +169,12 @@ public class FightController {
 				}
 			}
 			
-			List<Equip> ow = equipRepository.findByOwner(heroId);
+			long ownerId = heroId ;
+			while(ownerId > 10000)
+			{
+				ownerId-=10000;
+			}
+			List<Equip> ow = equipRepository.findByOwner(ownerId);
 			if(ow != null && ow.size()>0)
 			{
 				if(ow.get(0).getEquipType().getPart()==part)

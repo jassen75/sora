@@ -1,4 +1,4 @@
-package cc.js.sora.fight.skill.equip;
+package cc.js.sora.fight.skill.action;
 
 import java.util.List;
 
@@ -10,27 +10,30 @@ import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.health.GreaterHealthCondition;
+import cc.js.sora.fight.condition.usercondition.AttackBeGuarded;
 
-public class ManyueEnhance extends Skill {
+public class Shengwangzhiji extends Skill {
 
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "满月附魔";
+		return "圣王直击";
 	}
 	
+	@Override
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
-		return new GreaterHealthCondition(80);
+		return new AttackBeGuarded();
 	}
 
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.Attack, 10, Scope.Hero),
-				new Enhance(BuffType.Physic, 10, Scope.Hero), new Enhance(BuffType.Intel, 10, Scope.Hero),
-				new Enhance(BuffType.Magic, 10, Scope.Hero));
+		return Lists.newArrayList(new Enhance(BuffType.DamageInc, 15, Scope.All));
+	}
+	
+	public int getSkillType() {
+		return 4;
 	}
 
 }

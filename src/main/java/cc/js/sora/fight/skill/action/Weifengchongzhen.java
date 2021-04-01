@@ -57,6 +57,10 @@ public class Weifengchongzhen extends Skill{
 		return getEffects(1);
 	}
 	
+	public int getSkillType() {
+		return 4;
+	}
+	
 	@Override
 	public List<Effect> getEffects(int count) {
 		return Lists.newArrayList(new Enhance(BuffType.CriticalDamageInc, count*8, Scope.All));

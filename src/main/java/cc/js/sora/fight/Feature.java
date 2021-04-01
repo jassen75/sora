@@ -19,11 +19,33 @@ public class Feature implements Effect{
 
 	public final static String ImmuneToFixedDamage = "ImmuneToFixedDamage";
 	public final static String ImmuneToMeleeDamageReduce = "ImmuneToMeleeDamageReduce";
+	public final static String FirstAttack = "FirstAttack";
+	public final static String DirectToHero = "DirectToHero";
+	public final static String FixDamageToSelf = "FixDamageToSelf";
+	public final static String UnImuFixDamageToSelf = "UnImuFixDamageToSelf";
+	public final static String PreFixDamageAttack = "PreFixDamageAttack";
+	public final static String PreFixDamagePhysic = "PreFixDamagePhysic";
+	public final static String PreFixDamageChenhun = "PreFixDamageChenhun";
+	public final static String PreUnImuFixDamageAttackIntel = "PreUnImuFixDamageAttackIntel";
+	public final static String PostFixDamagePercent = "PostFixDamagePercent";
+	public final static String ImmuenToCounter = "ImmuenToCounter";
+	public final static String AddAttackToDef = "AddAttackToDef";
+	public final static String RangeAttackBack = "RangeAttackBack";
+	
+	public final static String MagicToIntel = "MagicToIntel";
+	public final static String MedicalToDamageInc = "MedicalToDamageInc";
+	public final static String PhysicToAttack= "PhysicToAttack";
+	public final static String MagicToAttack= "MagicToAttack";
+	public final static String AddPhysicToAttack= "AddPhysicToAttack";
+	public final static String AddMagicToAttack= "AddMagicToAttack";
+	public final static String LandAsWater= "LandAsWater";
+	
 	String featureName;
 	Object value;
 	String desc;
 	Scope scope;
-
+	boolean aggregate;
+	
 	@Override
 	public EffectType getEffectType() {
 		return EffectType.Feature;

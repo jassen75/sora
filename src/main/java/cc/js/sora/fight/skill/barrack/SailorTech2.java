@@ -12,6 +12,7 @@ import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.UserCondition;
+import cc.js.sora.fight.condition.health.EnemyFullHealthCondition;
 
 public class SailorTech2  extends Skill {
 
@@ -22,22 +23,7 @@ public class SailorTech2  extends Skill {
 
 	@Override
 	public Condition getCondition() {
-		return new UserCondition() {
-
-			@Override
-			public String getDesc() {
-				return "被攻击方不满血";
-			}
-
-			@Override
-			public String getName() {
-				return "enemyNotFull";
-			}
-
-			@Override
-			public boolean defaultValid() {
-				return false;
-			}};
+		return new EnemyFullHealthCondition();
 	}
 
 	@Override

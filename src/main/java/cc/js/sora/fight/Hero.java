@@ -87,9 +87,8 @@ public class Hero {
 	@Column(name="skills")
 	String skills;
 
-	@JsonProperty("isPhysic")
 	@Column(name="is_physic")
-	boolean isPhysic;
+	int attackType;
 	
 	@Column(name="default_soldier")
 	long defaultSoldierId; 
@@ -104,5 +103,10 @@ public class Hero {
 	@Column(name="rang")
 	int range;
 
+	@Column(name="job")
+	String job;
+	
+	@Column(name="next_job")
+	long nextJob;
 	
 }

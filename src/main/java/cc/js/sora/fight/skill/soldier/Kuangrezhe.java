@@ -36,5 +36,12 @@ public class Kuangrezhe extends Skill {
 		return Lists.newArrayList(new Enhance(BuffType.Attack, 15, Scope.Soldier),
 				new Enhance(BuffType.Physic, 15, Scope.Soldier), new Enhance(BuffType.Magic, 15, Scope.Soldier));
 	}
+	
+	@Override
+	public List<Effect> getEffects(int count) {
+		// TODO Auto-generated method stub
+		return Lists.newArrayList(new Enhance(BuffType.Attack, 15*count, Scope.Soldier),
+				new Enhance(BuffType.Physic, 15*count, Scope.Soldier), new Enhance(BuffType.Magic, 15*count, Scope.Soldier));
+	}
 
 }

@@ -8,6 +8,12 @@ var soldierLife = 1;
 // game data
 var userData = {};
 
+var stage = 0;
+
+var editingRole;
+var editingEquipPart;
+
+
 var lands = {
 	"Flat" : "平地",
 	"Water" : "水",
@@ -37,17 +43,146 @@ $(document).ready(function() {
 	$("#calculate").click(function() {
 		calculate();
 	});
+	
+	$("#reset").click(function() {
+		if(stage==2)
+		{
+			fightInfo["attacker"]["heroLeftLife"] = fightInfo["attacker"]["heroPanel"]["life"];
+			fightInfo["attacker"]["soldierLeftLife"] = fightInfo["attacker"]["soldierPanel"]["life"];
+			fightInfo["defender"]["heroLeftLife"] = fightInfo["defender"]["heroPanel"]["life"];
+			fightInfo["defender"]["soldierLeftLife"] = fightInfo["defender"]["soldierPanel"]["life"];
+			refreshLife("attacker");
+			refreshLife("defender");
+			sync(false);
+		} else
+		{
+			alert("current stage == "+stage);
+		}
+	});
+	
+	$("#save_status").click(function(event){
+		saveStatus();
+	});
 
 	$("#import_fm").click(function() {
 		importFm();
 
 	});
+	
+	$("#export_fm").click(function() {
+		exportFm();
 
+	});
+	
+	$("#attackerHeroBar_c").click(function(e) {
+		if(stage==2)
+		{
+			if(event.offsetX && event.offsetX < $(this).width())
+			{
+				fightInfo["attacker"]["heroLeftLife"] = Math.floor(fightInfo["attacker"]["heroPanel"]["life"] * smooth(event.offsetX / $(this).width()));
+			}
+			refreshLife("attacker");
+			refreshLife("defender");
+			sync(false);
+		}
+	});
+
+	$("#attackerSoldierBar_c").click(function(e) {
+		if(stage==2)
+		{
+			if(event.offsetX && event.offsetX < $(this).width())
+			{
+				fightInfo["attacker"]["soldierLeftLife"] = Math.floor(fightInfo["attacker"]["soldierPanel"]["life"] * smooth(event.offsetX / $(this).width()));
+			}
+			refreshLife("attacker");
+			refreshLife("defender");
+			sync(false);
+		}
+	});
+	
+	$("#defenderHeroBar_c").click(function(e) {
+		if(stage==2)
+		{
+			
+			if(event.offsetX && event.offsetX < $(this).width())
+			{
+				fightInfo["defender"]["heroLeftLife"] = Math.floor(fightInfo["defender"]["heroPanel"]["life"] * smooth(event.offsetX / $(this).width()));
+			}
+			refreshLife("attacker");
+			refreshLife("defender");
+			sync(false);
+		}
+	});
+	
+	$("#defenderSoldierBar_c").click(function(e) {
+		if(stage==2)
+		{
+			if(event.offsetX && event.offsetX < $(this).width())
+			{
+				fightInfo["defender"]["soldierLeftLife"] = Math.floor(fightInfo["defender"]["soldierPanel"]["life"] * smooth(event.offsetX / $(this).width()));
+			}
+			refreshLife("attacker");
+			refreshLife("defender");
+			sync(false);
+		}
+	});
 	$.get("/fight/fm.csv", function(data) {
 		parseCSV(data);
 	});
 
+	$('#equip-editor').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget) // Button that triggered the modal
+  		editingEquipPart = button.data('equip');
+  		editingRole = button.data('role');
+		showFmEditor();
+  		
+	});
+	
+	$("#saveFm").click(function(event) {
+		fmEditorSave();
+	});
+	
+	$("#fm-edit-type-list > li").click(function (e) {
+ 		//alert("show"+$(this).attr("data-fm-type"));
+		var t = $(this).attr("data-fm-type");
+		$("#fm-edit-type").attr("value", t);
+  		$("#fm-edit-type").text(fm_type[t]);
+		
+	});
+	
+	$('#hero-editor').on('show.bs.modal', function (event) {
+		var button = $(event.relatedTarget) // Button that triggered the modal
+  		editingRole = button.data('role');
+		showJtEditor();
+  		
+	});
+	
+	$("#saveJt").click(function(event) {
+		jtEditorSave();
+	});
+
+
 });
+function smooth(c)
+{
+	if(c>0.98)
+	{
+		return 1;
+	}
+	if(c<0.02)
+	{
+		return 0;
+	}
+	return c;
+}
+
+function refreshLife(role)
+{
+	$("#"+role+"SoldierBar").text(fightInfo[role]["soldierLeftLife"]+"/"+fightInfo[role]["soldierPanel"]["life"]);
+	$("#"+role+"SoldierBar").attr("style", "width:"+Math.ceil(fightInfo[role]["soldierLeftLife"]/fightInfo[role]["soldierPanel"]["life"]*100)+"%");
+	$("#"+role+"HeroBar").text(fightInfo[role]["heroLeftLife"]+"/"+fightInfo[role]["heroPanel"]["life"]);
+	$("#"+role+"HeroBar").attr("style", "width:"+Math.ceil(fightInfo[role]["heroLeftLife"]/fightInfo[role]["heroPanel"]["life"]*100)+"%");							
+}
 
 function loadHeroData() {
 	$.ajax({
@@ -65,6 +200,10 @@ function loadHeroData() {
 function buildHeroPics(data) {
 	$("#hero_pics").children("div").remove();
 	for (var j = 0; j < data.length; j++) {
+		if(data[j]["id"] > 10000)
+		{
+			continue;
+		}
 		var pic = $("<div onclick=\"chooseHero(" + data[j]["id"]
 				+ ")\" class=\"hero_pic\"><img src=\"/fight/image/"
 				+ data[j]["id"]
@@ -92,14 +231,14 @@ function buildHero(hero) {
 		var roleType = 1;
 		isAttacker = 0;
 		fightInfo["distance"]=hero["range"];
-		if (hero["isPhysic"]) {
+		if (hero["attackType"]) {
 
 			hero["actions"].push({
 				"id" : 10001,
 				"name" : "物理普攻",
 				"coefficient" : 1,
 				"range" : hero["range"],
-				"isPhysic" : 1,
+				"attackType" : 1,
 				"battleType" : 1
 			});
 		} else {
@@ -108,7 +247,7 @@ function buildHero(hero) {
 				"name" : "魔法普攻",
 				"coefficient" : 1,
 				"range" : hero["range"],
-				"isPhysic" : 0,
+				"attackType" : 0,
 				"battleType" : 1
 			});
 		}
@@ -118,7 +257,8 @@ function buildHero(hero) {
 		$("#attackerSoldierBar").attr("style", "width:100%");
 		$("#attackerHeroBar").text("100%");
 		$("#attackerSoldierBar").text("100%");
-	
+		$("#attacker-sel-action > button").html("选择技能&nbsp;<span class=\"caret\"></span>");
+		$("#attacker-sel-soldier > button").html("选择兵种&nbsp;<span class=\"caret\"></span>");
 	} else {
 		var role = "defender";
 		var roleType = 2;
@@ -128,6 +268,7 @@ function buildHero(hero) {
 		$("#defenderHeroBar").text("100%");
 		$("#defenderSoldierBar").attr("style", "width:100%");
 		$("#defenderSoldierBar").text("100%");
+		$("#defender-sel-soldier > button").html("选择兵种&nbsp;<span class=\"caret\"></span>");
 	}
 
 	fightInfo[role] = {};
@@ -140,6 +281,7 @@ function buildHero(hero) {
 	fightInfo[role]["userConditionChecked"] = {};
 	fightInfo[role]["buffCounts"] = {};
 	fightInfo[role]["roleType"] = roleType;
+	stage = 1;
 	
 	loadWeapon(hero["id"], role);
 }
@@ -235,6 +377,7 @@ function displayEquip(id, type, equips, role) {
 }
 
 function loadComplete(role) {
+	stage = 1;
 	var heroInc = generateHeroInc(fightInfo[role]["hero"],
 			fightInfo[role]["equip"]);
 	for ( var i in heroInc) {
@@ -246,7 +389,7 @@ function loadComplete(role) {
 
 function displayHero(role) {
 	if (role == "attacker") {
-		if (fightInfo["attacker"]["hero"]["isPhysic"]) {
+		if (fightInfo["attacker"]["hero"]["attackType"]) {
 			$("#aa").show();
 			$("#ai").hide();
 
@@ -260,7 +403,7 @@ function displayHero(role) {
 			$("#dp").hide();
 		}
 	} else if (role == "defender") {
-		if (fightInfo["defender"]["hero"]["isPhysic"]) {
+		if (fightInfo["defender"]["hero"]["attackType"]) {
 			$("#da").show();
 			$("#di").hide();
 
@@ -276,10 +419,33 @@ function displayHero(role) {
 	}
 	var rolePic = $("#" + role + "Pic");
 	rolePic.children("div").remove();
-	var pic = $("<div><img src=\"/fight/image/" + fightInfo[role]["hero"]["id"]
-			+ ".png\" alt=\"\" width=\"60\" height=\"86\"></img>"
-			+ fightInfo[role]["hero"]["name"] + "</div>");
+	var picId = fightInfo[role]["hero"]["id"];
+	while(picId > 10000 )
+	{
+		picId -= 10000;
+	}
+	var pic = $("<div data-toggle=\"modal\" data-target=\"#hero-editor\" data-role=\""+role+"\"><img src=\"/fight/image/" + picId
+			+ ".png\" alt=\"\" width=\"60\" height=\"86\"></img></div>");
+			
+	var picInfo = $("<div class=\"pic_info\"><img class=\"hero_type_image\" src=\"/fight/image/job_" + fightInfo[role]["hero"]["type"]
+			+ ".png\" alt=\"\" width=\"22\" height=\"24\"></img>&nbsp;&nbsp;<b>"
+			+ fightInfo[role]["hero"]["name"]+ "</b></div>");
+	
+	var changeJobButton = $("<button></button");
+	changeJobButton.text(fightInfo[role]["hero"]["job"]);
+	changeJobButton.click(function(){
+		var next = fightInfo[role]["hero"]["nextJob"];
+		if(next != 0)
+		{
+			isAttacker = (role=="attacker" ? 1 : 0);
+			//alert("isAttacker:"+isAttacker);
+			chooseHero(next);
+		}
+		
+	});
+	changeJobButton.appendTo(picInfo);
 	pic.appendTo(rolePic);
+	picInfo.appendTo(rolePic);
 
 	$("#" + role + "-soldier-list").children("li").remove();
 	var soldiers = fightInfo[role]["hero"]["soldiers"];
@@ -293,12 +459,15 @@ function displayHero(role) {
 
 		if (fightInfo[role]["hero"]["defaultSoldierId"] == soldiers[i]["id"]) {
 			fightInfo[role]["soldier"] = soldiers[i];
+			$("#"+role+"-sel-soldier > button").html(soldiers[i]["name"]+"&nbsp;&nbsp;&nbsp;<span class=\"caret\"></span>");
 		}
 		soldier.click(function(event) {
 			var find = $(this).attr("soldierid");
 			fightInfo[role]["hero"]["soldiers"].forEach(function(e) {
 				if (e["id"] == find) {
 					fightInfo[role]["soldier"] = e;
+					stage = 1;
+					$("#"+role+"-sel-soldier > button").html(e["name"]+"&nbsp;&nbsp;&nbsp;<span class=\"caret\"></span>");
 					sync(false);
 				}
 			})
@@ -333,27 +502,34 @@ function displayHero(role) {
 
 	$("#" + role + "-soldier-information").html("");
 
-	if (fightInfo[role]["equip"]) {
-		for ( var i in equipPart) {
-			var part = equipPart[i];
-			$("#" + role + "-" + equipPart[i]).children("div").remove();
-			if (fightInfo[role]["equip"][part]) {
-				var pic = $("<div><img src=\"/fight/image/equip_"
-						+ fightInfo[role]["equip"][equipPart[i]]["id"]
-						+ ".png\" alt=\"\" width=\"60\" height=\"60\"></img><p>"
-						+ fightInfo[role]["equip"][equipPart[i]]["name"]
-						+ "</p></div>");
-				pic.insertBefore($("#" + role + "-" + equipPart[i]
-						+ " > button"));
-			}
+	
+	for ( var i in equipPart) {
+		var part = equipPart[i];
+		$("#" + role + "-" + equipPart[i]).children("div").remove();
+		
+		if (fightInfo[role]["equip"] && fightInfo[role]["equip"][part]) {
+			var name = fightInfo[role]["equip"][equipPart[i]]["name"];
+			var equipId = fightInfo[role]["equip"][equipPart[i]]["id"];
+		} else
+		{
+			var name = "未选定";
+			var equipId = 0;
 		}
+
+		var pic = $("<div data-toggle=\"modal\" data-target=\"#equip-editor\" data-equip=\""+part+"\" data-role=\""+role+"\"><img src=\"/fight/image/equip_"
+				+ equipId
+				+ ".png\" alt=\"\" width=\"60\" height=\"60\"></img><p>"
+				+ name
+				+ "</p></div>");
+		pic.insertBefore($("#" + role + "-" + equipPart[i]
+				+ " > button"));
+		
 	}
 
 	if (!fightInfo[role]["land"]) {
 		fightInfo[role]["land"] = "Flat";
 	}
 	
-
 	displayAttackerAction();
 
 	sync(true);
@@ -370,8 +546,12 @@ function displayAttackerAction() {
 		action.attr("actionid", actions[i]["id"]);
 		action.appendTo($("#attacker-action-list"));
 
-		if (actions[i]["id"] == 10001 || actions[i]["id"] == 10002) {
-			fightInfo["attacker"]["action"] = actions[i];
+		if(!fightInfo["attacker"]["action"])
+		{
+			if (actions[i]["id"] == 10001 || actions[i]["id"] == 10002) {
+				fightInfo["attacker"]["action"] = actions[i];
+				$("#attacker-sel-action > button").html(actions[i]["name"]+"&nbsp;<span class=\"caret\"></span>");
+			}
 		}
 		action.click(function(event) {
 			var find = $(this).attr("actionid");
@@ -387,6 +567,7 @@ function displayAttackerAction() {
 						fightInfo["attacker"]["roleType"] = 3;
 						fightInfo["defender"]["roleType"] = 4;
 					}
+					$("#attacker-sel-action > button").html(e["name"]+"&nbsp;<span class=\"caret\"></span>");
 					sync(false);
 				}
 			})
@@ -397,8 +578,7 @@ function displayAttackerAction() {
 
 function sync(refresh) {
 	if (fightInfo["attacker"] && fightInfo["defender"]) {
-		$
-				.ajax({
+		$.ajax({
 					type : "POST",
 					url : "/fight/sync",
 					data : JSON.stringify(fightInfo),
@@ -420,6 +600,10 @@ function sync(refresh) {
 						if (refresh) {
 							sync(false);
 						}
+						if(stage==1)
+						{
+							stage=2;
+						}
 					},
 					error : function(jqXHR) {
 					}
@@ -428,10 +612,10 @@ function sync(refresh) {
 }
 
 function syncComplete(role) {
-	fightInfo[role]["heroLeftLife"] = Math
-			.ceil(fightInfo[role]["heroPanel"]["life"] * heroLife);
-	fightInfo[role]["soldierLeftLife"] = Math
-			.ceil(fightInfo[role]["soldierPanel"]["life"] * soldierLife);
+//	fightInfo[role]["heroLeftLife"] = Math
+//			.ceil(fightInfo[role]["heroPanel"]["life"] * heroLife);
+//	fightInfo[role]["soldierLeftLife"] = Math
+//			.ceil(fightInfo[role]["soldierPanel"]["life"] * soldierLife);
 	buildSkill(role);
 	buildUserCondition(role); 
 	buildHeroPanel(role);
@@ -439,11 +623,21 @@ function syncComplete(role) {
 	buildCriticalPanel(role);
 	buildDistanceList();
 	buildSupportSkills(role);
+
+	
+	if(stage==1)
+	{
+		fightInfo[role]["heroLeftLife"] = fightInfo[role]["heroPanel"]["life"];
+		fightInfo[role]["soldierLeftLife"] = fightInfo[role]["soldierPanel"]["life"];
+		refreshLife(role);
+	}
+
 }
 
 function buildHeroPanel(role) {
-	$("#" + role + "Attack").attr("value",
-			fightInfo[role]["heroPanel"]["attack"]);
+//	$("#" + role + "Attack").attr("value",
+//			fightInfo[role]["heroPanel"]["attack"]);
+	$("#" + role + "Attack").val(fightInfo[role]["heroPanel"]["attack"]);
 	$("#" + role + "Intel")
 			.attr("value", fightInfo[role]["heroPanel"]["intel"]);
 	$("#" + role + "PhysicDef").attr("value",
@@ -453,18 +647,29 @@ function buildHeroPanel(role) {
 	$("#" + role + "Life").attr("value", fightInfo[role]["heroPanel"]["life"]);
 	var detail = "<p>";
 	if (fightInfo[role]["action"]) {
+		var co =  fightInfo[role]["action"]["coefficient"];
+		if(!fightInfo[role]["action"]["simpleAttack"])
+		{
+			co =  fightInfo[role]["action"]["coefficient"]*(1+fightInfo["attacker"]["heroPanel"]["skillDamage"]/100.0);
+			co = co.toFixed(2);
+		}
 		detail += "<b>" + fightInfo[role]["action"]["name"]
 				+ "</b>&nbsp;&nbsp;&nbsp;<b>"
-				+ fightInfo[role]["action"]["coefficient"] + "倍</b></p>";
+				+co + "倍</b></p>";
 	} else {
 		detail += ("-----距离：" + fightInfo["distance"] + "-----</p>");
 	}
 
-	detail += "<p><b>增伤：" + fightInfo[role]["heroPanel"]["damageInc"]
+	detail +=  "<p><b>英雄面板</b></p>"
+		    + "<p><b>防御：" + fightInfo[role]["heroPanel"]["physic"]
+	        + "&nbsp;&nbsp;&nbsp;魔防:" + fightInfo[role]["heroPanel"]["magic"] + "</b></p>"
+		    + "<p><b>增伤：" + fightInfo[role]["heroPanel"]["damageInc"]
 			+ "&nbsp;&nbsp;&nbsp;物理减伤："
 			+ fightInfo[role]["heroPanel"]["physicDamageDec"]
 			+ "&nbsp;&nbsp;&nbsp;魔法减伤："
-			+ fightInfo[role]["heroPanel"]["magicDamageDec"] + "</b></p>"
+			+ fightInfo[role]["heroPanel"]["magicDamageDec"]
+			+ "&nbsp;&nbsp;&nbsp;无视防御："
+			+ fightInfo[role]["heroPanel"]["ignoreDef"] + "</b></p>"
 			+ "<p>技巧：" + fightInfo[role]["heroPanel"]["tech"]
 			+ "&nbsp;&nbsp;&nbsp;暴击："
 			+ fightInfo[role]["heroPanel"]["criticalProbInc"]
@@ -473,7 +678,9 @@ function buildHeroPanel(role) {
 			+ "&nbsp;&nbsp;&nbsp;防爆:"
 			+ fightInfo[role]["heroPanel"]["criticalProbDec"]
 			+ "&nbsp;&nbsp;&nbsp;减爆伤："
-			+ fightInfo[role]["heroPanel"]["criticalDamageDec"] + "</p>";
+			+ fightInfo[role]["heroPanel"]["criticalDamageDec"] 
+			+ "&nbsp;&nbsp;&nbsp;治疗效果："
+			+ fightInfo[role]["heroPanel"]["medical"] + "</p>";
 	$("#" + role + "Detail").html(detail);
 	
 	$("#" + role + "-land-information").html(
@@ -496,6 +703,8 @@ function buildSoldierPanel(role) {
 					+ fightInfo[role]["soldierPanel"]["physicDamageDec"]
 					+ "&nbsp;&nbsp;&nbsp;魔法减伤:"
 					+ fightInfo[role]["soldierPanel"]["magicDamageDec"]
+					+ "&nbsp;&nbsp;&nbsp;无视防御："
+					+ fightInfo[role]["soldierPanel"]["ignoreDef"]
 					+ "</b></p><p>" + "暴击："
 					+ fightInfo[role]["soldierPanel"]["criticalProbInc"]
 					+ "&nbsp;&nbsp;&nbsp;暴伤："

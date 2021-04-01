@@ -8,6 +8,7 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
+import cc.js.sora.fight.Feature;
 import cc.js.sora.fight.Features;
 import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Scope;
@@ -31,14 +32,36 @@ public class QinzhenSkill2 extends Skill {
 
 	@Override
 	public Condition getCondition() {
+		return new Condition() {
+
+			@Override
+			public String getDesc() {
+				// TODO Auto-generated method stub
+				return QinZhenSKill.QinZhenCondition.getDesc();
+			}
+
+			@Override
+			public boolean valid(FightInfo fightInfo, boolean isAttack) {
+				if(!isAttack)
+				{
+					return false;
+				}
+				if(QinZhenSKill.QinZhenCondition.valid(fightInfo, isAttack))
+				{
+					return !fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures().containsKey("ImmuneToFixedDamage");
+				}
+				return false;
+			}
+			
+		};
 		// TODO Auto-generated method stub
-		return QinZhenSKill.QinZhenCondition;
+		
 	}
 
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.PreBattleDamage, 0.5, Scope.Hero));
+		return Lists.newArrayList(new Feature(Feature.PreFixDamageAttack, 0.5, "战前0.5倍攻击伤害", Scope.Hero, true));
 	}
 
 	public int getSkillType() {
@@ -48,18 +71,14 @@ public class QinzhenSkill2 extends Skill {
 	@Override
     public void process(FightInfo fightInfo, boolean isAttack)
     {
-		if(isAttack)
+		if(this.getCondition().valid(fightInfo, isAttack))
 		{
-			if(!fightInfo.getDefender().getHeroPanel().getFeatures().containsKey(Features.ImmuneToFixedDamage))
-			{
-				
+			log.info("qinzhen is true");
+			log.info(fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures().toString());
 				fightInfo.getDefender().setHeroLeftLife(Double.valueOf(Math.floor(fightInfo.getDefender().getHeroLeftLife() -
 						0.5*fightInfo.getAttacker().getHeroPanel().getAttack())).intValue());
 				fightInfo.getDefender().setSoldierLeftLife(Double.valueOf(Math.floor(fightInfo.getDefender().getSoldierLeftLife() - 
 						0.5*fightInfo.getAttacker().getHeroPanel().getAttack())).intValue());		
-			}
-			
-			log.info("after qinzhen:"+fightInfo.getDefender().getSoldierLeftLife());
 		}
     }
 

@@ -21,12 +21,6 @@ public class HorseTech3 extends Skill  {
 	}
 
 	@Override
-	public Condition getCondition() {
-		// TODO Auto-generated method stub
-		return new NoCondition();
-	}
-
-	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
 		return Lists.newArrayList(new Enhance(BuffType.DamageDec, 20, Scope.Soldier));

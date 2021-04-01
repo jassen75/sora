@@ -10,7 +10,7 @@ import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.UserCondition;
+import cc.js.sora.fight.condition.usercondition.AttackBeGuarded;
 
 public class HorseTech5  extends Skill {
 
@@ -22,19 +22,7 @@ public class HorseTech5  extends Skill {
 	@Override
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
-		return new UserCondition() {
-
-			@Override
-			public boolean defaultValid() {
-				// TODO Auto-generated method stub
-				return true;
-			}
-
-			@Override
-			public String getDesc() {
-				// TODO Auto-generated method stub
-				return "攻击被护卫";
-			}};
+		return new AttackBeGuarded();
 	}
 
 	@Override

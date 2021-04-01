@@ -9,6 +9,7 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
+import cc.js.sora.fight.Feature;
 import cc.js.sora.fight.Features;
 import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Scope;
@@ -33,13 +34,34 @@ public class Lage extends Skill {
 	@Override
 	public Condition getCondition() {
 		
-		return new EnemyFullHealthCondition();
+		//return new EnemyFullHealthCondition();
+		return new Condition() {
+
+			@Override
+			public String getDesc() {
+				// TODO Auto-generated method stub
+				return "敌人满血且不免疫固伤";
+			}
+
+			@Override
+			public boolean valid(FightInfo fightInfo, boolean isAttack) {
+				if(!isAttack)
+				{
+					return false;
+				}
+				if(fightInfo.getEnemyRole(isAttack).getLifePercent() == 1) 
+				{
+					return !fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures().containsKey("ImmuneToFixedDamage");
+				}
+				return false;
+			}
+		};
 	}
 
 	@Override
 	public List<Effect> getEffects()  {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.PreBattleDamage, 1, Scope.Hero));
+		return Lists.newArrayList(new Feature(Feature.PreFixDamageAttack, 1.0, "战前1倍攻击伤害", Scope.Hero, true));
 	}
 
 	
@@ -51,20 +73,17 @@ public class Lage extends Skill {
 	@Override
 	public int getSkillType()
 	{
-		return 1;
+		return 4;
 	}
 	
 	@Override
     public void process(FightInfo fightInfo, boolean isAttack)
     {
-		if(isAttack)
+		if(this.getCondition().valid(fightInfo, isAttack))
 		{
-			if(!fightInfo.getDefender().getHeroPanel().getFeatures().containsKey(Features.ImmuneToFixedDamage))
-			{
-				fightInfo.getDefender().setHeroLeftLife(fightInfo.getDefender().getHeroLeftLife() - fightInfo.getAttacker().getHeroPanel().getAttack());
-				fightInfo.getDefender().setSoldierLeftLife(fightInfo.getDefender().getSoldierLeftLife() - fightInfo.getAttacker().getHeroPanel().getAttack());		
-			}
-			log.info("after lage:"+fightInfo.getDefender().getSoldierLeftLife()+", here attack:");
+			log.info("lage is true");
+			fightInfo.getDefender().setHeroLeftLife(fightInfo.getDefender().getHeroLeftLife() - fightInfo.getAttacker().getHeroPanel().getAttack());
+			fightInfo.getDefender().setSoldierLeftLife(fightInfo.getDefender().getSoldierLeftLife() - fightInfo.getAttacker().getHeroPanel().getAttack());		
 		}
     }
 }
