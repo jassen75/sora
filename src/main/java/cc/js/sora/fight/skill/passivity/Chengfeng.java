@@ -20,6 +20,10 @@ public class Chengfeng extends Skill {
 		// TODO Auto-generated method stub
 		return "乘风";
 	}
+	
+	public int getSkillType() {
+		return 1;
+	}
 
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
