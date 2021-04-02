@@ -72,6 +72,8 @@ import cc.js.sora.fight.skill.heart.EmiliaShengqiang;
 import cc.js.sora.fight.skill.heart.FlorentiaJunshi;
 import cc.js.sora.fight.skill.heart.FlorentiaZaixiang;
 import cc.js.sora.fight.skill.heart.Huoyanshen;
+import cc.js.sora.fight.skill.heart.KayuraJingdi;
+import cc.js.sora.fight.skill.heart.KayuraXingli;
 import cc.js.sora.fight.skill.heart.KreugerTheWickedFashi;
 import cc.js.sora.fight.skill.heart.LandiusDayuanshuai;
 import cc.js.sora.fight.skill.heart.LandiusHuangqi;
@@ -224,7 +226,8 @@ public class SkillService {
 		registerSkill(Skill.ZillagodTalent, new ZillagodTalent());
 		registerSkill(Skill.BernhardtTalent, new BernhardtTalent());
 		registerSkill(Skill.ListellTalent, new ListellTalent());
-		registerSkill(Skill.KayuraTalent, new KayuraTalent());
+		registerSkill(93L, new KayuraXingli());
+		registerSkill(10093L, new KayuraJingdi());
 		registerSkill(Skill.BozelTalent, new BozelTalent());
 		registerSkill(Skill.SissiWhiteTalent, new SissiWhiteTalent());
 		registerSkill(Skill.LicoriceTalent, new LicoriceTalent());
