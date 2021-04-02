@@ -2,6 +2,8 @@
 
 # in local
 
+service mysql stop
+
 mysql -h 127.0.0.1 -uroot -psora -e 'source /home/jassen/workspace/sora/src/main/resources/database/create_tables.sql'
 
 git push

@@ -36,41 +36,7 @@ public class KayuraTalent extends Skill {
 	}
 
 	public List<Skill> childSkill() {
-		return Lists.newArrayList(new Skill() {
-
-			@Override
-			public String getName() {
-				// TODO Auto-generated method stub
-				return "迦游罗*星丽剑姬大心";
-			}
-
-			public Condition getCondition() {
-				return new GreaterHealthCondition(80);
-			}
-
-			@Override
-			public List<Effect> getEffects() {
-				// TODO Auto-generated method stub
-				return Lists.newArrayList(new Enhance(BuffType.CriticalProbDec, 10, Scope.All));
-			}
-		}, new Skill() {
-
-			@Override
-			public String getName() {
-				// TODO Auto-generated method stub
-				return "迦游罗*星丽剑姬大心";
-			}
-
-			public int getSkillType() {
-				return 5;
-			}
-			
-			@Override
-			public List<Effect> getEffects() {
-				// TODO Auto-generated method stub
-				return Lists.newArrayList(new Enhance(BuffType.DamageInc, 10, Scope.All));
-			}
-		}, new Xinyang(), new Skill() {
+		return Lists.newArrayList(new Xinyang(), new Skill() {
 			public Condition getCondition() {
 				return new UserCondition() {
 
