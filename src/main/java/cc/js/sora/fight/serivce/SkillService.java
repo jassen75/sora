@@ -26,6 +26,7 @@ import cc.js.sora.fight.skill.action.Anlian;
 import cc.js.sora.fight.skill.action.Anlong;
 import cc.js.sora.fight.skill.action.Binglong;
 import cc.js.sora.fight.skill.action.Bingqiang;
+import cc.js.sora.fight.skill.action.Bujiechongji;
 import cc.js.sora.fight.skill.action.DreamAction;
 import cc.js.sora.fight.skill.action.Huoqiu;
 import cc.js.sora.fight.skill.action.Juemingyiji;
@@ -79,6 +80,8 @@ import cc.js.sora.fight.skill.heart.KayuraXingli;
 import cc.js.sora.fight.skill.heart.KreugerTheWickedFashi;
 import cc.js.sora.fight.skill.heart.LandiusDayuanshuai;
 import cc.js.sora.fight.skill.heart.LandiusHuangqi;
+import cc.js.sora.fight.skill.heart.LukeDazhujiao;
+import cc.js.sora.fight.skill.heart.LukeYinshi;
 import cc.js.sora.fight.skill.heart.RozencielLingguang;
 import cc.js.sora.fight.skill.heart.RozencielShuijing;
 import cc.js.sora.fight.skill.heart.TsubameYing;
@@ -249,7 +252,8 @@ public class SkillService {
 		registerSkill(37L, new EmiliaShengqi());
 		registerSkill(10037L, new EmiliaShengqiang());
 		registerSkill(95L, new FreyaSP());
-		
+		registerSkill(96L, new LukeYinshi());
+		registerSkill(10096L, new LukeDazhujiao());
 		// soldier
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
@@ -296,12 +300,12 @@ public class SkillService {
 		registerSkill(Skill.Shengwangzhiji, new Shengwangzhiji());
 		registerSkill(Skill.Yeshouzhenshe, new Yeshouzhenshe());
 		registerSkill(1629L, new Binglong());
-		
 		registerSkill(1625L, new Shiying());
 		registerSkill(1626L, new Liefengzhiji());
 		registerSkill(1627L, new Yazhisheji());
 		registerSkill(1628L, new Qiangfengjuji());
 		registerSkill(1630L, new XunyingShaji());
+		registerSkill(1632L, new Bujiechongji());
 		
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());

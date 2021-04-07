@@ -266,9 +266,9 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	
 	}
 	
-	if(fightInfo[attackerRole]["heroPanel"]["preFixDamage"])
+	if(fightInfo[defenderRole]["heroPanel"]["preFixDamage"])
 	{
-		var damage = fightInfo[attackerRole]["heroPanel"]["attack"];
+		var damage = fightInfo[defenderRole]["heroPanel"]["preFixDamage"];
 		asl  -= damage;
 		al -= damage;
 	}
