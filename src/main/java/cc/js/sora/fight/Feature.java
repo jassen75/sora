@@ -25,6 +25,8 @@ public class Feature implements Effect{
 	public final static String UnImuFixDamageToSelf = "UnImuFixDamageToSelf";
 	public final static String PreFixDamageAttack = "PreFixDamageAttack";
 	public final static String PreFixDamagePhysic = "PreFixDamagePhysic";
+	public final static String PreFixDamageMagic = "PreFixDamageMagic";
+	public final static String PreFixDamage2Def = "PreFixDamage2Def";
 	public final static String PreFixDamageChenhun = "PreFixDamageChenhun";
 	public final static String PreUnImuFixDamageAttackIntel = "PreUnImuFixDamageAttackIntel";
 	public final static String PostFixDamagePercent = "PostFixDamagePercent";
@@ -33,6 +35,7 @@ public class Feature implements Effect{
 	public final static String RangeAttackBack = "RangeAttackBack";
 	
 	public final static String MagicToIntel = "MagicToIntel";
+	public final static String MagicToPhysic = "MagicToPhysic";
 	public final static String MedicalToDamageInc = "MedicalToDamageInc";
 	public final static String PhysicToAttack= "PhysicToAttack";
 	public final static String MagicToAttack= "MagicToAttack";

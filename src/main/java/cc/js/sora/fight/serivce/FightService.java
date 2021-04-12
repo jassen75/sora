@@ -546,6 +546,13 @@ public class FightService {
 			panelInfo.setIntel(Double.valueOf(mmm*mti).intValue());
 		} 
 		
+		if(panelInfo.getFeatures().containsKey(Feature.MagicToPhysic))
+		{
+			double mtp = (Double)panelInfo.getFeatures().get(Feature.MagicToPhysic);
+			double mmm = panelInfo.getMagic();
+			panelInfo.setPhysic(Double.valueOf(mmm*mtp).intValue());
+		} 
+		
 		int changedAttack = 0;
 		if(panelInfo.getFeatures().containsKey(Feature.PhysicToAttack))
 		{
@@ -949,6 +956,20 @@ public class FightService {
 			{
 				result += list.get(i).doubleValue() * panelInfo.getPhysic();
 			}
+		}
+		
+		if(panelInfo.getFeatures().containsKey(Feature.PreFixDamageMagic))
+		{
+			List<Number> list = (List<Number>)panelInfo.getFeatures().get(Feature.PreFixDamageMagic);
+			for(int i=0; i<list.size(); i++)
+			{
+				result += list.get(i).doubleValue() * panelInfo.getMagic();
+			}
+		}
+		
+		if(panelInfo.getFeatures().containsKey(Feature.PreFixDamage2Def))
+		{
+			result += panelInfo.getPhysic() + panelInfo.getMagic();
 		}
 		return result;
 	}
