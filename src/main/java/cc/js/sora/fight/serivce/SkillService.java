@@ -42,7 +42,11 @@ import cc.js.sora.fight.skill.action.Weifengchongzhen;
 import cc.js.sora.fight.skill.action.XunyingShaji;
 import cc.js.sora.fight.skill.action.Yazhisheji;
 import cc.js.sora.fight.skill.action.Yeshouzhenshe;
+import cc.js.sora.fight.skill.enhance.DashuEnhance;
 import cc.js.sora.fight.skill.enhance.FuriousEnhance;
+import cc.js.sora.fight.skill.enhance.GangtieEnhance;
+import cc.js.sora.fight.skill.enhance.LieriEnhance;
+import cc.js.sora.fight.skill.enhance.LiuxingEnhance;
 import cc.js.sora.fight.skill.enhance.ManyueEnhance;
 import cc.js.sora.fight.skill.enhance.MoshuEnhance;
 import cc.js.sora.fight.skill.enhance.ShuijingEnhance;
@@ -74,6 +78,8 @@ import cc.js.sora.fight.skill.heart.EmiliaShengqiang;
 import cc.js.sora.fight.skill.heart.FlorentiaJunshi;
 import cc.js.sora.fight.skill.heart.FlorentiaZaixiang;
 import cc.js.sora.fight.skill.heart.FreyaSP;
+import cc.js.sora.fight.skill.heart.HelenaHuangjia;
+import cc.js.sora.fight.skill.heart.HelenaTuji;
 import cc.js.sora.fight.skill.heart.Huoyanshen;
 import cc.js.sora.fight.skill.heart.KayuraJingdi;
 import cc.js.sora.fight.skill.heart.KayuraXingli;
@@ -167,7 +173,7 @@ public class SkillService {
 	List<Long> globalSkills = Lists.newArrayList(Skill.SuperBuff, Skill.Shenji, Skill.XieshenShield);
 
 	List<Long> ehanceSkills = Lists.newArrayList(0L, Skill.WindEnhance, Skill.ManyueEnhance, Skill.MoshuEnhance, 0L,
-			Skill.FuriousEnhance, 0L, 0L, 0L, Skill.ShuijingEnhance, 0L, 0L, 0L, 0L);
+			Skill.FuriousEnhance, Skill.LieriEnhance, Skill.LiuxingEnhance, 0L, Skill.ShuijingEnhance, 0L, Skill.DashuEnhance, 0L, Skill.GangtieEnhance);
 
 	public Map<Long, Skill> skills = Maps.newHashMap();
 
@@ -210,6 +216,11 @@ public class SkillService {
 		registerSkill(Skill.MoshuEnhance, new MoshuEnhance());
 		registerSkill(Skill.ShuijingEnhance, new ShuijingEnhance());
 
+		registerSkill(Skill.GangtieEnhance, new GangtieEnhance());
+		registerSkill(Skill.LiuxingEnhance, new LiuxingEnhance());
+		registerSkill(Skill.LieriEnhance, new LieriEnhance());
+		registerSkill(Skill.DashuEnhance, new DashuEnhance());
+		
 		registerSkill(Skill.BloodBattle, new BloodBattle());
 		registerSkill(Skill.Xinyang, new Xinyang());
 
@@ -255,6 +266,8 @@ public class SkillService {
 		registerSkill(95L, new FreyaSP());
 		registerSkill(96L, new LukeYinshi());
 		registerSkill(10096L, new LukeDazhujiao());
+		registerSkill(19L, new HelenaTuji());
+		registerSkill(10019L, new HelenaHuangjia());
 		// soldier
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());

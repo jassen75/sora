@@ -412,7 +412,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 			{
 				var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
 				fightDetails+="<p"+c+">"+fightInfo[attackerRole]["hero"]["name"]+"出手较快， <b>"+
-				resolveFastHit+"</b> hit 对"+fightInfo[defenderRole]["soldier"]["name"]+"造成<b>"+resolveFastHit*heroToHero+"</b>伤害被盾牌吸收 </p>";
+				resolveFastHit+"</b> hit 对"+fightInfo[defenderRole]["soldier"]["name"]+"造成<b>"+resolveFastHit*heroToSoldier+"</b>伤害被盾牌吸收 </p>";
 			}
 			
 			var resolveSoldierHit=0;
