@@ -275,13 +275,13 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 				absorb = damage*2;
 			} else
 			{
-				damage-= ds/2;
-				ds = 0;
+				dl  -= (damage - ds/2);
+				dsl -= (damage - ds/2);
 				absorb = ds;
+				ds = 0;
 			}
 		} 
-		dl  -= damage;
-		dsl -= damage;
+
 		fightDetails+="<p>"+fightInfo[attackerRole]["hero"]["name"]+"战前对"+fightInfo[defenderRole]["hero"]["name"]+"及士兵各造成<b>"+damage+"</b>伤害</p>";
 		if(absorb > 0)
 		{
@@ -310,6 +310,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	if(fightInfo[attackerRole]["soldierPanel"]["preFixDamageToSelf"])
 	{
 		var damage = fightInfo[attackerRole]["soldierPanel"]["preFixDamageToSelf"];
+		var absorb = 0;
 		if(as > 0)
 		{
 			if(as >= damage)
@@ -317,12 +318,16 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 				as -= damage;
 			} else
 			{
-				damage-= as;
+				asl = asl - (damage- as);
 				as = 0;
 			}
 		}
 		fightDetails+="<p>"+fightInfo[attackerRole]["soldier"]["name"]+"自损"+damage+"</p>";
-		asl = asl - damage;
+		if(absorb > 0)
+		{
+			fightDetails+="<p>"+fightInfo[defenderRole]["hero"]["name"]+"盾牌吸收掉<b>"+absorb+"</b>伤害</p>";
+		}
+		
 	}
 	
 	if(fightInfo[defenderRole]["soldierPanel"]["preFixDamageToSelf"])
@@ -395,12 +400,12 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 			while(fastCount > 0 && ds > 0  && !heroDirect)
 			{			
 				fastCount--;
+				fastAttack--;
 				ds  -= heroToSoldier;
 				resolveFastHit++;
 				heroLeftCount--;
-				fl = ds;
+				heroCount--;
 				heroDamage+=heroToSoldier;
-
 			}
 			
 			if(resolveFastHit > 0)
@@ -430,6 +435,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 			{
 				resolveHeroHit++;
 				heroLeftCount--;
+				heroCount--;
 				ds-=heroToSoldier;
 				heroDamage+=heroToSoldier;
 			}
@@ -579,7 +585,6 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 				ds  -= heroToHero;
 				resolveFastHit++;
 				heroLeftCount--;
-				fl = ds;
 				heroDamage+=heroToHero;
 			}
 			if(resolveFastHit > 0)
