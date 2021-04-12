@@ -22,18 +22,18 @@ public class Shiying extends Skill {
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Feature("DirectToHero", true, "直击本体", Scope.Hero, false));
+		return Lists.newArrayList(new Feature("DirectToHero", true, "直击本体", Scope.Hero, false),
+				new Feature("DirectToHero", true, "直击本体", Scope.EnemyHero, false));
 	}
-	
+
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
 		return new UserCondition() {
 
-			public String getName()
-			{
+			public String getName() {
 				return "AttackYouxiayinji";
 			}
-			
+
 			@Override
 			public boolean defaultValid() {
 				// TODO Auto-generated method stub

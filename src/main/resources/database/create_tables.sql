@@ -373,7 +373,7 @@ INSERT INTO action(id, name, coefficient, rang,  hit_time, frequency, is_physic 
 (30,'迅隐杀机', 1.4,2,500,30, 1,1,'1630'),
 (31,'正义', 1.5,1,2500,30, 1,1,'1631'),
 (32,'不洁冲击',1.6,2,2000,40,0,1,'1632'),
-(33,'最终审判',1.6,2,1500,60,1,1,'1633'),
+(33,'最终审判',1.6,2,1500,60,1,1,'1633')
 ;
 
 INSERT INTO hero_actions(hero_id, actions_id) VALUES

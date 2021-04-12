@@ -103,6 +103,11 @@ public class FightService {
 				calculateHero(fightInfo, false, defenderCheckedSkills, fightInfo.getAttacker().getDebuffs()));
 		fightInfo.getDefender().setSoldierPanel(
 				calculateSoldier(fightInfo, false, defenderCheckedSkills, fightInfo.getAttacker().getDebuffs()));
+		
+		fightInfo.getAttacker().getHeroPanel().getFeatures().putAll(fightInfo.getDefender().getHeroPanel().getEnemyFeatures());
+		fightInfo.getAttacker().getSoldierPanel().getFeatures().putAll(fightInfo.getDefender().getSoldierPanel().getEnemyFeatures());
+		fightInfo.getDefender().getHeroPanel().getFeatures().putAll(fightInfo.getAttacker().getHeroPanel().getEnemyFeatures());
+		fightInfo.getDefender().getSoldierPanel().getFeatures().putAll(fightInfo.getAttacker().getSoldierPanel().getEnemyFeatures());
 
 //		fightInfo.getAttacker().setUserConditions(getUserConditionsFromSkill(attackerSkills));
 //		fightInfo.getDefender().setUserConditions(getUserConditionsFromSkill(defenderSkills));
@@ -351,6 +356,18 @@ public class FightService {
 									panelInfo.getFeatures().putAll(f.getFeatures());
 								}
 							}
+							
+							if(f.getScope() == Scope.EnemyAll || f.getScope() == Scope.EnemyHero)
+							{
+								if (f.isAggregate()) {
+									if (!panelInfo.getEnemyFeatures().containsKey(f.getFeatureName())) {
+										panelInfo.getEnemyFeatures().put(f.getFeatureName(), Lists.newArrayList());
+									}
+									((List) panelInfo.getEnemyFeatures().get(f.getFeatureName())).add(f.getValue());
+								} else {
+									panelInfo.getEnemyFeatures().putAll(f.getFeatures());
+								}
+							}
 						} else if (e instanceof Counter) {
 
 							Counter c = (Counter) e;
@@ -593,6 +610,12 @@ public class FightService {
 		{
 			panelInfo.setDamageInc(di);
 		}
+		
+		if(panelInfo.getFeatures().containsKey(Feature.XieshenShield))
+		{
+			int shield = Double.valueOf(0.2*panelInfo.getLife()).intValue();
+			panelInfo.setShield(shield);
+		}
 		panelInfo.setPhysicDamageDec(pdd);
 		panelInfo.setMagicDamageDec(mdd);
 
@@ -738,6 +761,18 @@ public class FightService {
 									((List) panelInfo.getFeatures().get(f.getFeatureName())).add(f.getValue());
 								} else {
 									panelInfo.getFeatures().putAll(f.getFeatures());
+								}
+							}
+							
+							if(f.getScope() == Scope.EnemyAll || f.getScope() == Scope.EnemySoldier)
+							{
+								if (f.isAggregate()) {
+									if (!panelInfo.getEnemyFeatures().containsKey(f.getFeatureName())) {
+										panelInfo.getEnemyFeatures().put(f.getFeatureName(), Lists.newArrayList());
+									}
+									((List) panelInfo.getEnemyFeatures().get(f.getFeatureName())).add(f.getValue());
+								} else {
+									panelInfo.getEnemyFeatures().putAll(f.getFeatures());
 								}
 							}
 						} else if (e instanceof Counter) {
@@ -898,6 +933,12 @@ public class FightService {
 		panelInfo.setLife(
 				Double.valueOf(Math.floor(life * (1 + (li + 40) / 100.0) * (1 + hero.getSoldierLifeInc() / 100.0)))
 						.intValue() * 10);
+		
+		if(panelInfo.getFeatures().containsKey(Feature.XieshenShield))
+		{
+			int shield = Double.valueOf(0.2*panelInfo.getLife()).intValue();
+			panelInfo.setShield(shield);
+		}
 
 		panelInfo.setDamageInc(di);
 		panelInfo.setPhysicDamageDec(pdd);

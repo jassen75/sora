@@ -36,6 +36,7 @@ public class PanelInfo {
 	int magicDamageDec;
 	
 	Map<String, Object> features = Maps.newHashMap();
+	Map<String, Object> enemyFeatures = Maps.newHashMap();
 	List<Counter> counters = Lists.newArrayList();
 	
 	int lifeInc;
@@ -74,4 +75,5 @@ public class PanelInfo {
 	int preFixDamage ;
 	int preFixDamageToSelf;
 	int medical;
+	int shield;
 }

@@ -122,6 +122,7 @@ import cc.js.sora.fight.skill.support.BernhardtSuper;
 import cc.js.sora.fight.skill.support.ElwinSuper;
 import cc.js.sora.fight.skill.support.HildaSuper;
 import cc.js.sora.fight.skill.support.Shenji;
+import cc.js.sora.fight.skill.support.XieshenShield;
 import cc.js.sora.fight.skill.support.ZillagodSuper;
 import cc.js.sora.fight.skill.talent.AresTalent;
 import cc.js.sora.fight.skill.talent.BernhardtTalent;
@@ -163,7 +164,7 @@ public class SkillService {
 
 	BarrackSkills barrackSkills = new BarrackSkills();
 
-	List<Long> globalSkills = Lists.newArrayList(Skill.SuperBuff, Skill.Shenji);
+	List<Long> globalSkills = Lists.newArrayList(Skill.SuperBuff, Skill.Shenji, Skill.XieshenShield);
 
 	List<Long> ehanceSkills = Lists.newArrayList(0L, Skill.WindEnhance, Skill.ManyueEnhance, Skill.MoshuEnhance, 0L,
 			Skill.FuriousEnhance, 0L, 0L, 0L, Skill.ShuijingEnhance, 0L, 0L, 0L, 0L);
@@ -314,6 +315,7 @@ public class SkillService {
 
 		registerSkill(Skill.SuperBuff, new SuperBuff());
 		registerSkill(Skill.Shenji, new Shenji());
+		registerSkill(Skill.XieshenShield, new XieshenShield());
 		skills.putAll(barrackSkills.getAllBarrackSkills());
 	}
 
