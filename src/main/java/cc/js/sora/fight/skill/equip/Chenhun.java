@@ -23,8 +23,7 @@ public class Chenhun extends Skill {
 		if(this.getCondition().valid(fightInfo, isAttack))
 		{
 			int damage = Math.min(fightInfo.getRole(isAttack).getHeroPanel().getAttack(), fightInfo.getRole(isAttack).getHeroPanel().getIntel());
-			fightInfo.getEnemyRole(isAttack).setHeroLeftLife(fightInfo.getEnemyRole(isAttack).getHeroLeftLife() - damage);
-			fightInfo.getEnemyRole(isAttack).setSoldierLeftLife(fightInfo.getEnemyRole(isAttack).getSoldierLeftLife() - damage);
+			this.dealFixDamage(fightInfo, !isAttack, damage, Scope.All);	
 		}
 	}
 
@@ -62,7 +61,7 @@ public class Chenhun extends Skill {
 	}
 	
 	public int getBattleType() {
-		return 1;
+		return 1000;
 	}
 
 }

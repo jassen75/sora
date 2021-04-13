@@ -42,7 +42,7 @@ public class FreyaTalent extends Skill {
 			}
 			
 			public int getBattleType() {
-				return 1;
+				return 1000;
 			}
 			
 			public Condition getCondition() {
@@ -76,12 +76,10 @@ public class FreyaTalent extends Skill {
 			@Override
 		    public void process(FightInfo fightInfo, boolean isAttack)
 		    {
+				int damage = fightInfo.getDefender().getHeroPanel().getPhysic()+fightInfo.getDefender().getHeroPanel().getMagic();
 				if(this.getCondition().valid(fightInfo, isAttack))
 				{
-					fightInfo.getAttacker().setHeroLeftLife(fightInfo.getAttacker().getHeroLeftLife() -
-							(fightInfo.getDefender().getHeroPanel().getPhysic()+fightInfo.getDefender().getHeroPanel().getMagic()));
-					fightInfo.getAttacker().setSoldierLeftLife(fightInfo.getAttacker().getSoldierLeftLife() - 
-							(fightInfo.getDefender().getHeroPanel().getPhysic()+fightInfo.getDefender().getHeroPanel().getMagic()));		
+					this.dealFixDamage(fightInfo, !isAttack, damage, Scope.All);		
 				}
 		    }
 

@@ -5,11 +5,15 @@ import java.util.List;
 import com.google.common.collect.Lists;
 
 import cc.js.sora.fight.BuffType;
+import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Debuff;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
+import cc.js.sora.fight.Feature;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
+import cc.js.sora.fight.condition.NoCondition;
+import cc.js.sora.fight.condition.NoFeatureCondition;
 
 public class Cangbaizhizhang extends Skill{
 
@@ -43,10 +47,15 @@ public class Cangbaizhizhang extends Skill{
 			public int getSkillType() {
 				return 4;
 			}
+			
+			public Condition getCondition() {
+				// TODO Auto-generated method stub
+				return new NoFeatureCondition(Feature.ImmuneToDebuff, "对面不免疫弱化");
+			}
 
 			// 0 effect 1 pre battle 2 battle 3 post battle 4
 			public int getBattleType() {
-				return 1;
+				return 1000;
 			}
 			
 		});

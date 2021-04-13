@@ -14,6 +14,7 @@ import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.DistanceCondition;
 import cc.js.sora.fight.condition.health.GreaterHealthCondition;
+import cc.js.sora.fight.skill.action.Qishijingshen;
 
 public class RozaliaTalent extends Skill {
 
@@ -87,7 +88,7 @@ public class RozaliaTalent extends Skill {
 	
 					public String getName()
 					{
-						return "AresTalent";
+						return "RozaliaTalent";
 					}
 
 					@Override
@@ -131,7 +132,7 @@ public class RozaliaTalent extends Skill {
 			public List<Effect> getEffects() {
 				// TODO Auto-generated method stub
 				return getEffects(3);
-			}});
+			}}, new Qishijingshen());
 	}
 
 }

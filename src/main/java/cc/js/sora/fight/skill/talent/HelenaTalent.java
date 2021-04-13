@@ -12,6 +12,7 @@ import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.MoveDistanceCondition;
 import cc.js.sora.fight.condition.UserCondition;
+import cc.js.sora.fight.skill.action.Qishijingshen;
 
 public class HelenaTalent extends Skill {
 
@@ -24,6 +25,10 @@ public class HelenaTalent extends Skill {
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
 		return new MoveDistanceCondition(3,5);
+	}
+	
+	public int getSkillType() {
+		return 4;
 	}
 
 	@Override
@@ -72,6 +77,6 @@ public class HelenaTalent extends Skill {
 				return Lists.newArrayList(new Enhance(BuffType.Physic, 25, Scope.All));
 			}
 			
-		});
+		}, new Qishijingshen());
 	}
 }

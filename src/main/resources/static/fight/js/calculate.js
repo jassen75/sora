@@ -267,20 +267,17 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	{
 		var damage = fightInfo[attackerRole]["heroPanel"]["preFixDamage"];
 		var absorb = 0;
-		if(ds>0)
+		if(ds >= damage*2)
 		{
-			if(ds >= damage*2)
-			{
-				ds -= damage*2;
-				absorb = damage*2;
-			} else
-			{
-				dl  -= (damage - ds/2);
-				dsl -= (damage - ds/2);
-				absorb = ds;
-				ds = 0;
-			}
-		} 
+			ds -= damage*2;
+			absorb = damage*2;
+		} else
+		{
+			dl  -= (damage - ds/2);
+			dsl -= (damage - ds/2);
+			absorb = ds;
+			ds = 0;
+		}
 
 		fightDetails+="<p>"+fightInfo[attackerRole]["hero"]["name"]+"战前对"+fightInfo[defenderRole]["hero"]["name"]+"及士兵各造成<b>"+damage+"</b>伤害</p>";
 		if(absorb > 0)
@@ -292,36 +289,29 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	if(fightInfo[defenderRole]["heroPanel"]["preFixDamage"])
 	{
 		var damage = fightInfo[defenderRole]["heroPanel"]["preFixDamage"];
-		if(as>0)
+		if(as >= damage*2)
 		{
-			if(as >= damage*2)
-			{
-				as -= damage*2;
-			} else
-			{
-				damage-= as/2;
-				as = 0;
-			}
+			as -= damage*2;
+		} else
+		{
+			damage-= as/2;
+			as = 0;
 		}
-		asl  -= damage;
-		al -= damage;
 	}
 	
 	if(fightInfo[attackerRole]["soldierPanel"]["preFixDamageToSelf"])
 	{
 		var damage = fightInfo[attackerRole]["soldierPanel"]["preFixDamageToSelf"];
 		var absorb = 0;
-		if(as > 0)
+		if(as >= damage)
 		{
-			if(as >= damage)
-			{
-				as -= damage;
-			} else
-			{
-				asl = asl - (damage- as);
-				as = 0;
-			}
+			as -= damage;
+		} else
+		{
+			asl = asl - (damage- as);
+			as = 0;
 		}
+		
 		fightDetails+="<p>"+fightInfo[attackerRole]["soldier"]["name"]+"自损"+damage+"</p>";
 		if(absorb > 0)
 		{
@@ -332,23 +322,62 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	
 	if(fightInfo[defenderRole]["soldierPanel"]["preFixDamageToSelf"])
 	{
-		if(ds > 0)
+		if(ds >= damage)
 		{
-			if(ds >= damage)
-			{
-				ds -= damage;
-			} else
-			{
-				damage-= ds;
-				ds = 0;
-			}
+			ds -= damage;
+		} else
+		{
+			damage-= ds;
+			ds = 0;
 		}
 		var damage = fightInfo[defenderRole]["soldierPanel"]["preFixDamageToSelf"];
 		dsl = dsl - damage;
 	}
 	
+	if(fightInfo[defenderRole]["heroPanel"]["preHeal"])
+	{
+		var heal = fightInfo[defenderRole]["heroPanel"]["preHeal"];
+		dl += heal;
+		if(dl > fightInfo[defenderRole]["heroPanel"]["life"])
+		{
+			dl = fightInfo[defenderRole]["heroPanel"]["life"];
+		}
+		fightDetails+="<p>"+fightInfo[defenderRole]["hero"]["name"]+"回血<b>"+heal+"</b>，当前生命为："+dl+"</p>";
+	}
+	
+	if(fightInfo[defenderRole]["soldierPanel"]["preHeal"])
+	{
+		var heal = fightInfo[defenderRole]["soldierPanel"]["preHeal"];
+		dsl += heal;
+		if(dsl > fightInfo[defenderRole]["soldierPanel"]["life"])
+		{
+			dsl = fightInfo[defenderRole]["soldierPanel"]["life"];
+		}
+		fightDetails+="<p>"+fightInfo[defenderRole]["soldier"]["name"]+"回血<b>"+heal+"</b>，当前生命为："+dsl+"</p>";
+	}
+	
+	if(fightInfo[attackerRole]["heroPanel"]["preHeal"])
+	{
+		var heal = fightInfo[attackerRole]["heroPanel"]["preHeal"];
+		al += heal;
+		if(al > fightInfo[attackerRole]["heroPanel"]["life"])
+		{
+			al = fightInfo[attackerRole]["heroPanel"]["life"];
+		}
+	}
+	
+	if(fightInfo[attackerRole]["soldierPanel"]["preHeal"])
+	{
+		var heal = fightInfo[attackerRole]["soldierPanel"]["preHeal"];
+		asl += heal;
+		if(asl > fightInfo[attackerRole]["soldierPanel"]["life"])
+		{
+			asl = fightInfo[attackerRole]["soldierPanel"]["life"];
+		}
+	}
+	
 	var soldierCount = 2*Math.ceil(asl*10 / fightInfo[attackerRole]["soldierPanel"]["life"]);
-	//alert("asl===="+asl+",soldierCount=="+soldierCount+",life=="+fightInfo[attackerRole]["soldierPanel"]["life"]);
+	//fightDetails+="<p>asl===="+asl+",soldierCount=="+soldierCount+",life=="+fightInfo[attackerRole]["soldierPanel"]["life"]+"</p>";
 	var heroCount = al > 0  ? getHeroCount(attackerRole) : 0;
 	
 	if(getRange(attackerRole, "soldier")< distance)

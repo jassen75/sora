@@ -76,4 +76,7 @@ public class PanelInfo {
 	int preFixDamageToSelf;
 	int medical;
 	int shield;
+	int preHeal;
+	
+
 }

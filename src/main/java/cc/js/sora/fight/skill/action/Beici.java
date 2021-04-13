@@ -66,7 +66,7 @@ public class Beici extends Skill{
 
 	@Override
 	public int getBattleType() {
-		return 1;
+		return 1000;
 	}
 	
 	@Override
@@ -80,8 +80,7 @@ public class Beici extends Skill{
     {
 		if(this.getCondition().valid(fightInfo, isAttack))
 		{
-			fightInfo.getDefender().setHeroLeftLife(fightInfo.getDefender().getHeroLeftLife() - 2*fightInfo.getAttacker().getHeroPanel().getAttack());
-			fightInfo.getDefender().setSoldierLeftLife(fightInfo.getDefender().getSoldierLeftLife() - 2*fightInfo.getAttacker().getHeroPanel().getAttack());		
+			this.dealFixDamage(fightInfo, !isAttack, 2*fightInfo.getAttacker().getHeroPanel().getAttack(), Scope.All);		
 		}
     }
 }

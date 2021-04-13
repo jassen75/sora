@@ -46,7 +46,7 @@ public class Jiamiannvpu extends Skill {
 	}
 	
 	public int getBattleType() {
-		return 1;
+		return 1000;
 	}
 
 	public void process(FightInfo fight, boolean isAttack) {

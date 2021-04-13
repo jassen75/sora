@@ -24,6 +24,7 @@ public class Debuff implements Effect{
 	{
 		this.name = name;
 		this.enhanceList = enhanceList;
+		//this.isHono = false;
 		
 	}
 	
@@ -31,11 +32,13 @@ public class Debuff implements Effect{
 	{
 		this.name = bufftType.name();
 		this.enhanceList = Lists.newArrayList(new Enhance(bufftType, number, Scope.All));
+		//this.isHono = false;
 		
 	}
 	
 	List<Enhance> enhanceList;
 	String name;
+	//boolean isHono;
 
 	@Override
 	public EffectType getEffectType() {

@@ -7,6 +7,7 @@ import com.google.common.collect.Lists;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Feature;
+import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.UserCondition;
@@ -56,5 +57,18 @@ public class XieshenShield extends Skill  {
 	{
 		return 0;
 	}
+	
+	@Override
+    public void process(FightInfo fightInfo, boolean isAttack)
+    {
+		if(this.getCondition().valid(fightInfo, isAttack))
+		{
+			int hs = Double.valueOf(fightInfo.getRole(isAttack).getHeroPanel().getLife()*0.2).intValue();
+			fightInfo.getRole(isAttack).getHeroPanel().setShield(fightInfo.getRole(isAttack).getHeroPanel().getShield() + hs);
+			
+			int ss = Double.valueOf(fightInfo.getRole(isAttack).getSoldierPanel().getLife()*0.2).intValue();
+			fightInfo.getRole(isAttack).getSoldierPanel().setShield(fightInfo.getRole(isAttack).getSoldierPanel().getShield() + ss);
+		}
+    }
 
 }

@@ -1,5 +1,6 @@
 package cc.js.sora.fight.serivce;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -41,6 +42,7 @@ public class FightService {
 	public Map<String, Object> calculatePanel(FightInfo fightInfo) {
 		Map<String, Object> result = Maps.newHashMap();
 		log.info(fightInfo.toString());
+		fightInfo.clean();
 		log.info("****************** defender soldier left life:" + fightInfo.getDefender().getSoldierLeftLife());
 		List<Skill> attackerSkills = skillService.getSkills(fightInfo.getAttacker().getHero(),
 				fightInfo.getAttacker().getSoldier(),
@@ -58,18 +60,27 @@ public class FightService {
 		List<CheckedSkill> attackerCheckedSkills = Lists.newArrayList();
 		List<CheckedSkill> defenderCheckedSkills = Lists.newArrayList();
 
-		attackerSkills.stream().filter(s -> s.getBattleType() == 0)
-				.filter(s -> s.filterSupportSkill(fightInfo.getAttacker().getUserConditionChecked()))
+		Comparator<Skill> c = new Comparator<Skill>() {
+
+			@Override
+			public int compare(Skill o1, Skill o2) {
+				// TODO Auto-generated method stub
+				return Double.valueOf(o1.getBattleType() - o2.getBattleType()).intValue();
+			}
+			
+		};
+		attackerSkills.stream().filter(s -> s.getBattleType() >= 0 &&  s.getBattleType() < 800)
+				.filter(s -> s.filterSupportSkill(fightInfo.getAttacker().getUserConditionChecked())).sorted(c)
 				.forEach(s -> attackerCheckedSkills.add(checkSkill(fightInfo, s, true)));
-		defenderSkills.stream().filter(s -> s.getBattleType() == 0)
-				.filter(s -> s.filterSupportSkill(fightInfo.getDefender().getUserConditionChecked()))
+		defenderSkills.stream().filter(s -> s.getBattleType() >= 0 && s.getBattleType() < 800)
+				.filter(s -> s.filterSupportSkill(fightInfo.getDefender().getUserConditionChecked())).sorted(c)
 				.forEach(s -> defenderCheckedSkills.add(checkSkill(fightInfo, s, false)));
 
-		attackerSkills.stream().filter(s -> s.getBattleType() == 1)
-				.filter(s -> s.filterSupportSkill(fightInfo.getAttacker().getUserConditionChecked()))
+		attackerSkills.stream().filter(s -> s.getBattleType() >= 800 && s.getBattleType() < 1800)
+				.filter(s -> s.filterSupportSkill(fightInfo.getAttacker().getUserConditionChecked())).sorted(c)
 				.forEach(s -> attackerCheckedSkills.add(checkSkill(fightInfo, s, true)));
-		defenderSkills.stream().filter(s -> s.getBattleType() == 1)
-				.filter(s -> s.filterSupportSkill(fightInfo.getDefender().getUserConditionChecked()))
+		defenderSkills.stream().filter(s -> s.getBattleType() >= 800 && s.getBattleType() < 1800)
+				.filter(s -> s.filterSupportSkill(fightInfo.getDefender().getUserConditionChecked())).sorted(c)
 				.forEach(s -> defenderCheckedSkills.add(checkSkill(fightInfo, s, false)));
 
 		fightInfo.getAttacker().setBuffs(getBuffList(attackerCheckedSkills));
@@ -79,18 +90,18 @@ public class FightService {
 
 		log.info("attacker debuffs:" + fightInfo.getAttacker().getDebuffs());
 		log.info("defender debuffs:" + fightInfo.getDefender().getDebuffs());
-		attackerSkills.stream().filter(s -> s.getBattleType() == 2)
-				.filter(s -> s.filterSupportSkill(fightInfo.getAttacker().getUserConditionChecked()))
+		attackerSkills.stream().filter(s -> s.getBattleType() >= 1800 && s.getBattleType() < 2800)
+				.filter(s -> s.filterSupportSkill(fightInfo.getAttacker().getUserConditionChecked())).sorted(c)
 				.forEach(s -> attackerCheckedSkills.add(checkSkill(fightInfo, s, true)));
-		defenderSkills.stream().filter(s -> s.getBattleType() == 2)
-				.filter(s -> s.filterSupportSkill(fightInfo.getDefender().getUserConditionChecked()))
+		defenderSkills.stream().filter(s -> s.getBattleType() >= 1800 && s.getBattleType() < 2800)
+				.filter(s -> s.filterSupportSkill(fightInfo.getDefender().getUserConditionChecked())).sorted(c)
 				.forEach(s -> defenderCheckedSkills.add(checkSkill(fightInfo, s, false)));
 
-		attackerSkills.stream().filter(s -> s.getBattleType() == 3)
-				.filter(s -> s.filterSupportSkill(fightInfo.getAttacker().getUserConditionChecked()))
+		attackerSkills.stream().filter(s -> s.getBattleType() >= 2800 && s.getBattleType() < 3800)
+				.filter(s -> s.filterSupportSkill(fightInfo.getAttacker().getUserConditionChecked())).sorted(c)
 				.forEach(s -> attackerCheckedSkills.add(checkSkill(fightInfo, s, true)));
-		defenderSkills.stream().filter(s -> s.getBattleType() == 3)
-				.filter(s -> s.filterSupportSkill(fightInfo.getDefender().getUserConditionChecked()))
+		defenderSkills.stream().filter(s -> s.getBattleType() >= 2800 && s.getBattleType() < 3800)
+				.filter(s -> s.filterSupportSkill(fightInfo.getDefender().getUserConditionChecked())).sorted(c)
 				.forEach(s -> defenderCheckedSkills.add(checkSkill(fightInfo, s, false)));
 
 		log.info("attacker skill list size:" + attackerCheckedSkills.size());
@@ -615,7 +626,11 @@ public class FightService {
 		{
 			int shield = Double.valueOf(0.2*panelInfo.getLife()).intValue();
 			panelInfo.setShield(shield);
+		} else
+		{
+			panelInfo.setShield(0);
 		}
+		
 		panelInfo.setPhysicDamageDec(pdd);
 		panelInfo.setMagicDamageDec(mdd);
 
@@ -632,6 +647,7 @@ public class FightService {
 		panelInfo.setIgnoreDef(igd);
 		panelInfo.setPreFixDamage(this.calculatePreFixDamage(panelInfo));
 		panelInfo.setPreFixDamageToSelf(this.calculatePreFixDamageToSelf(panelInfo));
+		panelInfo.setPreHeal(this.calculatePreHeal(panelInfo));
 		panelInfo.setMedical(med);
 
 		return panelInfo;
@@ -938,6 +954,9 @@ public class FightService {
 		{
 			int shield = Double.valueOf(0.2*panelInfo.getLife()).intValue();
 			panelInfo.setShield(shield);
+		} else
+		{
+			panelInfo.setShield(0);
 		}
 
 		panelInfo.setDamageInc(di);
@@ -969,8 +988,24 @@ public class FightService {
 		
 		panelInfo.setPreFixDamage(this.calculatePreFixDamage(panelInfo));
 		panelInfo.setPreFixDamageToSelf(this.calculatePreFixDamageToSelf(panelInfo));
+		
+		panelInfo.setPreHeal(this.calculatePreHeal(panelInfo));
 
 		return panelInfo;
+	}
+	
+	public int calculatePreHeal(PanelInfo panelInfo)
+	{
+		int result = 0;
+		if(panelInfo.getFeatures().containsKey(Feature.preHealPercent))
+		{
+			List<Number> list = (List<Number>)panelInfo.getFeatures().get(Feature.preHealPercent);
+			for(int i=0; i<list.size(); i++)
+			{
+				result += list.get(i).doubleValue() / 100.0 * panelInfo.getLife();
+			}
+		}
+		return result;
 	}
 
 	public int calculatePreFixDamage(PanelInfo panelInfo)
