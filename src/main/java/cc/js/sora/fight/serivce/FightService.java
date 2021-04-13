@@ -42,6 +42,7 @@ public class FightService {
 	public Map<String, Object> calculatePanel(FightInfo fightInfo) {
 		Map<String, Object> result = Maps.newHashMap();
 		log.info(fightInfo.toString());
+		fightInfo.clean();
 		log.info("****************** defender soldier left life:" + fightInfo.getDefender().getSoldierLeftLife());
 		List<Skill> attackerSkills = skillService.getSkills(fightInfo.getAttacker().getHero(),
 				fightInfo.getAttacker().getSoldier(),
@@ -625,7 +626,11 @@ public class FightService {
 		{
 			int shield = Double.valueOf(0.2*panelInfo.getLife()).intValue();
 			panelInfo.setShield(shield);
+		} else
+		{
+			panelInfo.setShield(0);
 		}
+		
 		panelInfo.setPhysicDamageDec(pdd);
 		panelInfo.setMagicDamageDec(mdd);
 
@@ -949,6 +954,9 @@ public class FightService {
 		{
 			int shield = Double.valueOf(0.2*panelInfo.getLife()).intValue();
 			panelInfo.setShield(shield);
+		} else
+		{
+			panelInfo.setShield(0);
 		}
 
 		panelInfo.setDamageInc(di);

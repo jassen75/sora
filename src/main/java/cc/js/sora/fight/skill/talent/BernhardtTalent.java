@@ -9,6 +9,7 @@ import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Debuff;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
+import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.DistanceCondition;
@@ -141,7 +142,22 @@ public class BernhardtTalent extends Skill {
 
 			public Condition getCondition() {
 				// TODO Auto-generated method stub
-				return new DistanceCondition(1);
+				return new Condition() {
+
+					@Override
+					public String getDesc() {
+						// TODO Auto-generated method stub
+						return "近战且敌人不免疫弱化";
+					}
+
+					@Override
+					public boolean valid(FightInfo fightInfo, boolean isAttack) {
+						// TODO Auto-generated method stub
+						return new DistanceCondition(1).valid(fightInfo, isAttack) && 
+								!fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures().containsKey("ImmuneToDebuff");
+					}
+					
+				} ;
 			}
 
 			@Override

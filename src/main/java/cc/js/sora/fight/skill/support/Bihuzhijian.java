@@ -1,4 +1,4 @@
-package cc.js.sora.fight.skill.barrack;
+package cc.js.sora.fight.skill.support;
 
 import java.util.List;
 
@@ -12,39 +12,45 @@ import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.UserCondition;
 
-public class HorseTech2 extends Skill  {
+public class Bihuzhijian extends Skill {
+	
+	public long getId() {
+		return Skill.Bihuzhijian;
+	}
 
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "骑兵科技";
+		return "庇护之剑";
 	}
-
+	
 	@Override
 	public Condition getCondition() {
 		return new UserCondition() {
-			
-			public String getName()
+
+			@Override
+			public boolean getSupport()
 			{
-				return "HasMateIn2";
+				return true;
+			}
+			
+			@Override
+			public String getDesc() {
+				return "庇护之剑效果";
 			}
 
 			@Override
 			public boolean defaultValid() {
-				// TODO Auto-generated method stub
 				return false;
 			}
-
-			@Override
-			public String getDesc() {
-				// TODO Auto-generated method stub
-				return "周围2格有队友";
-			}};
+		};
 	}
 
 	@Override
 	public List<Effect> getEffects() {
-		return Lists.newArrayList(new Enhance(BuffType.Attack, 20, Scope.Soldier), new Enhance(BuffType.Physic, 20, Scope.Soldier));
+		// TODO Auto-generated method stub
+		return Lists.newArrayList(new Enhance(BuffType.Attack, 10, Scope.All), new Enhance(BuffType.Physic, 10, Scope.All),
+				new Enhance(BuffType.Magic, 10, Scope.All), new Enhance(BuffType.Tech, 10, Scope.All));
 	}
 
 }

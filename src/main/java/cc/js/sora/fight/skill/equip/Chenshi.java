@@ -4,11 +4,13 @@ import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Feature;
 import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
+import cc.js.sora.fight.condition.FixSoldierCondition;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -26,6 +28,12 @@ public class Chenshi extends Skill {
 		return Lists.newArrayList(new Feature(Feature.preHealPercent,  10, "战前回血10%", Scope.All, true));
 	}
 
+	public Condition getCondition() {
+		// TODO Auto-generated method stub
+		return new FixSoldierCondition();
+	}
+
+	
 	@Override
 	public int getBattleType() {
 		return 1005;

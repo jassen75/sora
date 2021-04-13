@@ -34,5 +34,21 @@ public class FightInfo {
 	{
 		return isAttack ? defender : attacker;
 	}
+	
+	public void clean()
+	{
+		this.attacker.getHeroPanel().getFeatures().clear();
+		this.attacker.getSoldierPanel().getFeatures().clear();
+		this.defender.getHeroPanel().getFeatures().clear();
+		this.defender.getSoldierPanel().getFeatures().clear();
+		
+		this.attacker.getHeroPanel().getEnemyFeatures().clear();
+		this.attacker.getSoldierPanel().getEnemyFeatures().clear();
+		this.defender.getHeroPanel().getEnemyFeatures().clear();
+		this.defender.getSoldierPanel().getEnemyFeatures().clear();
+		
+
+	}
+	
 
 }

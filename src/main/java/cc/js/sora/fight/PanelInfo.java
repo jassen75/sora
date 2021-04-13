@@ -77,4 +77,6 @@ public class PanelInfo {
 	int medical;
 	int shield;
 	int preHeal;
+	
+
 }

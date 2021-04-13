@@ -45,6 +45,7 @@ public class Feature implements Effect{
 	
 	public final static String XieshenShield= "XieshenShield";
 	public final static String preHealPercent= "preHealPercent";
+	public final static String ImmuneToDebuff= "ImmuneToDebuff";
 	
 	String featureName;
 	Object value;
