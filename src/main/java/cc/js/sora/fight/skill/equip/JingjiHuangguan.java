@@ -26,7 +26,7 @@ public class JingjiHuangguan extends Skill {
 	}
 	
 	public int getBattleType() {
-		return 1;
+		return 1000;
 	}
 	
 	public Condition getCondition() {
@@ -53,10 +53,8 @@ public class JingjiHuangguan extends Skill {
     {
 		if(this.getCondition().valid(fightInfo, isAttack))
 		{
-			fightInfo.getAttacker().setHeroLeftLife(fightInfo.getAttacker().getHeroLeftLife() -
-					2 * fightInfo.getDefender().getHeroPanel().getMagic());
-			fightInfo.getAttacker().setSoldierLeftLife(fightInfo.getAttacker().getSoldierLeftLife() - 
-					2* fightInfo.getDefender().getHeroPanel().getPhysic()+fightInfo.getDefender().getHeroPanel().getMagic());		
+			int damage = 2 * fightInfo.getDefender().getHeroPanel().getMagic();
+			this.dealFixDamage(fightInfo, !isAttack, damage, Scope.All);	
 		}
     }
 

@@ -53,7 +53,7 @@ public class Jingmian extends Skill {
 	
 	@Override
 	public int getBattleType() {
-		return 1;
+		return 1000;
 	}
 	
 	@Override
@@ -68,8 +68,7 @@ public class Jingmian extends Skill {
 		if(this.getCondition().valid(fightInfo, isAttack))
 		{
 			int damage = Double.valueOf(Math.floor(fightInfo.getDefender().getHeroPanel().getPhysic()*1.5)).intValue();
-			fightInfo.getAttacker().setHeroLeftLife(fightInfo.getAttacker().getHeroLeftLife() - damage);
-			fightInfo.getAttacker().setSoldierLeftLife(fightInfo.getAttacker().getSoldierLeftLife() - damage);		
+			this.dealFixDamage(fightInfo, !isAttack, damage, Scope.All);		
 		}
     }
 

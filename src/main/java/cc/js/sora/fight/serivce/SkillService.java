@@ -54,6 +54,7 @@ import cc.js.sora.fight.skill.enhance.WindEnhance;
 import cc.js.sora.fight.skill.equip.Cangbaizhizhang;
 import cc.js.sora.fight.skill.equip.Canyue;
 import cc.js.sora.fight.skill.equip.Chenhun;
+import cc.js.sora.fight.skill.equip.Chenshi;
 import cc.js.sora.fight.skill.equip.Daditou;
 import cc.js.sora.fight.skill.equip.Erzhui;
 import cc.js.sora.fight.skill.equip.Feiyingxingdou;
@@ -211,7 +212,7 @@ public class SkillService {
 		registerSkill(1065L, new Rongyao());
 		registerSkill(1066L, new JingjiHuangguan());
 		registerSkill(1067L, new Canyue());
-		
+		registerSkill(1057L, new Chenshi());
 		
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());

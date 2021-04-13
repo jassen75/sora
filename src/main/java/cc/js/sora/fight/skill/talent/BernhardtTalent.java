@@ -155,7 +155,7 @@ public class BernhardtTalent extends Skill {
 			}
 
 			public int getBattleType() {
-				return 1;
+				return 1000;
 			}
 
 		});

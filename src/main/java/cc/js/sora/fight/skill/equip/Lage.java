@@ -67,7 +67,7 @@ public class Lage extends Skill {
 	
 	@Override
 	public int getBattleType() {
-		return 1;
+		return 1000;
 	}
 	
 	@Override
@@ -82,8 +82,7 @@ public class Lage extends Skill {
 		if(this.getCondition().valid(fightInfo, isAttack))
 		{
 			log.info("lage is true");
-			fightInfo.getDefender().setHeroLeftLife(fightInfo.getDefender().getHeroLeftLife() - fightInfo.getAttacker().getHeroPanel().getAttack());
-			fightInfo.getDefender().setSoldierLeftLife(fightInfo.getDefender().getSoldierLeftLife() - fightInfo.getAttacker().getHeroPanel().getAttack());		
+			this.dealFixDamage(fightInfo, !isAttack, fightInfo.getAttacker().getHeroPanel().getAttack(), Scope.All);	
 		}
     }
 }

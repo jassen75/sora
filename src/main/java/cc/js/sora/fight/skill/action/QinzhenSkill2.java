@@ -73,12 +73,8 @@ public class QinzhenSkill2 extends Skill {
     {
 		if(this.getCondition().valid(fightInfo, isAttack))
 		{
-			log.info("qinzhen is true");
-			log.info(fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures().toString());
-				fightInfo.getDefender().setHeroLeftLife(Double.valueOf(Math.floor(fightInfo.getDefender().getHeroLeftLife() -
-						0.5*fightInfo.getAttacker().getHeroPanel().getAttack())).intValue());
-				fightInfo.getDefender().setSoldierLeftLife(Double.valueOf(Math.floor(fightInfo.getDefender().getSoldierLeftLife() - 
-						0.5*fightInfo.getAttacker().getHeroPanel().getAttack())).intValue());		
+			this.dealFixDamage(fightInfo, !isAttack, Double.valueOf(0.5*fightInfo.getAttacker().getHeroPanel().getAttack()).intValue(), Scope.All);	
+	
 		}
     }
 

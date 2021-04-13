@@ -46,7 +46,7 @@ public class Wumianzhe extends Skill{
 
 			// 0 effect 1 pre battle 2 battle 3 post battle 4
 			public int getBattleType() {
-				return 1;
+				return 1000;
 			}
 
 			@Override

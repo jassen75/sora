@@ -30,7 +30,7 @@ public abstract class Skill {
 
 	// 0 effect 1 pre battle 2 battle 3 post battle 4
 	public int getBattleType() {
-		return 2;
+		return 2000;
 	}
 
 	public List<Skill> childSkill() {
@@ -329,5 +329,36 @@ public abstract class Skill {
 	public static final long Shenji = 4005;
 	public static final long HildaSuper = 4006;
 	public static final long XieshenShield = 4007;
+	
+	 
+	protected void dealFixDamage(FightInfo fightInfo, boolean isAttack, int damage, Scope scope)
+    {
+		if(scope==Scope.All || scope==Scope.Hero)
+		{
+			int hs = fightInfo.getRole(isAttack).getHeroPanel().getShield();
+			if(hs > damage)
+			{
+				fightInfo.getRole(isAttack).getHeroPanel().setShield(hs);
+			} else
+			{
+				fightInfo.getRole(isAttack).setHeroLeftLife(fightInfo.getRole(isAttack).getHeroLeftLife() - (damage -hs));
+			}
+			
+		}
+		
+		if(scope==Scope.All || scope==Scope.Soldier)
+		{
+			int ss = fightInfo.getRole(isAttack).getSoldierPanel().getShield();
+			if(ss > damage)
+			{
+				fightInfo.getRole(isAttack).getSoldierPanel().setShield(ss);
+			} else
+			{
+				damage -= ss;
+				fightInfo.getRole(isAttack).setSoldierLeftLife(fightInfo.getRole(isAttack).getSoldierLeftLife() - damage);
+			}
+		}
+	
+    }
 
 }
