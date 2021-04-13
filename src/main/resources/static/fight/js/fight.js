@@ -239,7 +239,8 @@ function buildHero(hero) {
 				"coefficient" : 1,
 				"range" : hero["range"],
 				"attackType" : 1,
-				"battleType" : 1
+				"battleType" : 1,
+				"simpleAttack": true
 			});
 		} else {
 			hero["actions"].push({
@@ -248,7 +249,8 @@ function buildHero(hero) {
 				"coefficient" : 1,
 				"range" : hero["range"],
 				"attackType" : 0,
-				"battleType" : 1
+				"battleType" : 1,
+				"simpleAttack": true
 			});
 		}
 	
@@ -567,6 +569,7 @@ function displayAttackerAction() {
 						fightInfo["attacker"]["roleType"] = 3;
 						fightInfo["defender"]["roleType"] = 4;
 					}
+					fightInfo["distance"]=e["range"];
 					$("#attacker-sel-action > button").html(e["name"]+"&nbsp;<span class=\"caret\"></span>");
 					sync(false);
 				}

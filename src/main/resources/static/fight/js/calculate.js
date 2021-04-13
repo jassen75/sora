@@ -95,25 +95,28 @@ function calculate()
 		{
 			// a first
 			defenderResult = battle("attacker", "defender", coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked,
-				fightInfo["attacker"]["heroLeftLife"],  fightInfo["attacker"]["soldierLeftLife"]);
+				fightInfo["attacker"]["heroLeftLife"],  fightInfo["attacker"]["soldierLeftLife"],
+				fightInfo["attacker"]["heroPanel"]["shield"]+fightInfo["attacker"]["soldierPanel"]["shield"]);
 			attackerResult = battle("defender", "attacker", 1, defenderHeroCriticalChecked, defenderSoldierCriticalChecked, 
-				defenderResult["dl"], defenderResult["dsl"]);
+				defenderResult["dl"], defenderResult["dsl"], defenderResult["ds"]);
 			defenderResult["fightDetails"] = defenderResult["fightDetails"] + "<p>"+fightInfo["attacker"]["hero"]["name"]+"先于敌人攻击</p>";
 		}
 		else if(!fightInfo["attacker"]["heroPanel"]["features"]["FirstAttack"] && fightInfo["defender"]["heroPanel"]["features"]["FirstAttack"]) 
 		{
 			// d first
 			attackerResult = battle("defender", "attacker", 1, defenderHeroCriticalChecked, defenderSoldierCriticalChecked, 
-			    fightInfo["defender"]["heroLeftLife"], fightInfo["defender"]["soldierLeftLife"]);
+			    fightInfo["defender"]["heroLeftLife"], fightInfo["defender"]["soldierLeftLife"],
+			    fightInfo["defender"]["heroPanel"]["shield"]+fightInfo["defender"]["soldierPanel"]["shield"]);
 			defenderResult= battle("attacker", "defender", coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked,
-				attackerResult["dl"], attackerResult["dsl"]);			
+				attackerResult["dl"], attackerResult["dsl"],attackerResult["ds"]);			
 			attackerResult["fightDetails"] = attackerResult["fightDetails"] + "<p>"+fightInfo["defender"]["hero"]["name"]+"先于敌人攻击</p>";
 		} else
 		{
 			defenderResult = battle("attacker", "defender", coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, 
-				fightInfo["attacker"]["heroLeftLife"],fightInfo["attacker"]["soldierLeftLife"], fastAttack);
+				fightInfo["attacker"]["heroLeftLife"],fightInfo["attacker"]["soldierLeftLife"],
+				fightInfo["attacker"]["heroPanel"]["shield"]+fightInfo["attacker"]["soldierPanel"]["shield"], fastAttack);
 			attackerResult = battle("defender", "attacker", 1, defenderHeroCriticalChecked, defenderSoldierCriticalChecked, 
-				defenderResult["fl"], defenderResult["fsl"]);
+				defenderResult["fl"], defenderResult["fsl"], defenderResult["ds"]);
 		}
 		
 	} 
@@ -168,8 +171,8 @@ function getMeleeDamageReduce(role, kind)
 	return false;
 }
 
-function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, attackerHeroLife, 
-		attackerSoldierLife, fastAttack)
+function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChecked, attackerSoldierCriticalChecked, 
+		attackerHeroLife, attackerSoldierLife, attackerShield, fastAttack)
 {
 	//alert("attackerHeroLife=="+attackerHeroLife+", attackerSoldierLife==="+attackerSoldierLife);
 	var fightDetails= "";
@@ -257,18 +260,49 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	var dsl = fightInfo[defenderRole]["soldier"] ? fightInfo[defenderRole]["soldierLeftLife"] : 0;
 	var distance = fightInfo["distance"];
 	
+	var as = attackerShield;
+	var ds = fightInfo[defenderRole]["heroPanel"]["shield"] + fightInfo[defenderRole]["soldierPanel"]["shield"];
+	
 	if(fightInfo[attackerRole]["heroPanel"]["preFixDamage"])
 	{
 		var damage = fightInfo[attackerRole]["heroPanel"]["preFixDamage"];
-		dl  -= damage;
-		dsl -= damage;
+		var absorb = 0;
+		if(ds>0)
+		{
+			if(ds >= damage*2)
+			{
+				ds -= damage*2;
+				absorb = damage*2;
+			} else
+			{
+				dl  -= (damage - ds/2);
+				dsl -= (damage - ds/2);
+				absorb = ds;
+				ds = 0;
+			}
+		} 
+
 		fightDetails+="<p>"+fightInfo[attackerRole]["hero"]["name"]+"战前对"+fightInfo[defenderRole]["hero"]["name"]+"及士兵各造成<b>"+damage+"</b>伤害</p>";
-	
+		if(absorb > 0)
+		{
+			fightDetails+="<p>"+fightInfo[defenderRole]["hero"]["name"]+"盾牌吸收掉<b>"+absorb+"</b>伤害</p>";
+		}
 	}
 	
 	if(fightInfo[defenderRole]["heroPanel"]["preFixDamage"])
 	{
 		var damage = fightInfo[defenderRole]["heroPanel"]["preFixDamage"];
+		if(as>0)
+		{
+			if(as >= damage*2)
+			{
+				as -= damage*2;
+			} else
+			{
+				damage-= as/2;
+				as = 0;
+			}
+		}
 		asl  -= damage;
 		al -= damage;
 	}
@@ -276,12 +310,39 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	if(fightInfo[attackerRole]["soldierPanel"]["preFixDamageToSelf"])
 	{
 		var damage = fightInfo[attackerRole]["soldierPanel"]["preFixDamageToSelf"];
+		var absorb = 0;
+		if(as > 0)
+		{
+			if(as >= damage)
+			{
+				as -= damage;
+			} else
+			{
+				asl = asl - (damage- as);
+				as = 0;
+			}
+		}
 		fightDetails+="<p>"+fightInfo[attackerRole]["soldier"]["name"]+"自损"+damage+"</p>";
-		asl = asl - damage;
+		if(absorb > 0)
+		{
+			fightDetails+="<p>"+fightInfo[defenderRole]["hero"]["name"]+"盾牌吸收掉<b>"+absorb+"</b>伤害</p>";
+		}
+		
 	}
 	
 	if(fightInfo[defenderRole]["soldierPanel"]["preFixDamageToSelf"])
 	{
+		if(ds > 0)
+		{
+			if(ds >= damage)
+			{
+				ds -= damage;
+			} else
+			{
+				damage-= ds;
+				ds = 0;
+			}
+		}
 		var damage = fightInfo[defenderRole]["soldierPanel"]["preFixDamageToSelf"];
 		dsl = dsl - damage;
 	}
@@ -329,8 +390,63 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	
 	var soldierDamage = 0;
 	var heroDamage = 0;
+	
 	if(fightInfo[defenderRole]["soldier"]) 
 	{
+		
+		if(ds > 0 )
+		{
+			var resolveFastHit = 0;
+			while(fastCount > 0 && ds > 0  && !heroDirect)
+			{			
+				fastCount--;
+				fastAttack--;
+				ds  -= heroToSoldier;
+				resolveFastHit++;
+				heroLeftCount--;
+				heroCount--;
+				heroDamage+=heroToSoldier;
+			}
+			
+			if(resolveFastHit > 0)
+			{
+				var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
+				fightDetails+="<p"+c+">"+fightInfo[attackerRole]["hero"]["name"]+"出手较快， <b>"+
+				resolveFastHit+"</b> hit 对"+fightInfo[defenderRole]["soldier"]["name"]+"造成<b>"+resolveFastHit*heroToSoldier+"</b>伤害被盾牌吸收 </p>";
+			}
+			
+			var resolveSoldierHit=0;
+			while(soldierLeftCount >0 && ds > 0 && !soldierDirect)
+			{
+				soldierDamage+= soldierToSoldier;
+				soldierLeftCount--;
+				soldierCount--;
+				resolveSoldierHit++;
+				ds-= soldierToSoldier;
+			}
+			if(resolveSoldierHit > 0)
+			{
+				var c = attackerSoldierCriticalChecked?" class=\"critical\"":"";
+				fightDetails+="<p"+c+">"+fightInfo[attackerRole]["soldier"]["name"]+"的 <b>"+resolveSoldierHit+"</b> hit 对"+
+					fightInfo[defenderRole]["soldier"]["name"]+"造成<b>"+resolveSoldierHit*soldierToSoldier+"</b>伤害被盾牌吸收</p>";
+			}
+			var resolveHeroHit = 0;
+			if(heroLeftCount > 0 && ds > 0  && !heroDirect)
+			{
+				resolveHeroHit++;
+				heroLeftCount--;
+				heroCount--;
+				ds-=heroToSoldier;
+				heroDamage+=heroToSoldier;
+			}
+			if(resolveHeroHit > 0)
+			{
+				var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
+				fightDetails+="<p"+c+">"+fightInfo[attackerRole]["hero"]["name"]+"的 <b>"+resolveHeroHit+"</b> hit 对"+
+				fightInfo[defenderRole]["soldier"]["name"]+"造成<b>"+resolveHeroHit*heroToSoldier+"</b>伤害被盾牌吸收 </p>";
+			}
+		} 
+		
 		var oneSoldierLife = fightInfo[defenderRole]["soldierPanel"]["life"] / 10;
 
 		if(dsl > 0)
@@ -460,6 +576,53 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
    
 	if(dl > 0 )
 	{
+		if(ds > 0 )
+		{
+			var resolveFastHit = 0;
+			while(fastCount > 0 && ds > 0 )
+			{			
+				fastCount--;
+				ds  -= heroToHero;
+				resolveFastHit++;
+				heroLeftCount--;
+				heroDamage+=heroToHero;
+			}
+			if(resolveFastHit > 0)
+			{
+				var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
+				fightDetails+="<p"+c+">"+fightInfo[attackerRole]["hero"]["name"]+"出手较快， <b>"+
+				resolveHeroHit+"</b> hit 对"+fightInfo[defenderRole]["hero"]["name"]+"造成<b>"+resolveFastHit*heroToHero+"</b>伤害被盾牌吸收 </p>";
+			}
+			var resolveSoldierHit=0;
+			while(soldierLeftCount >0 && ds > 0 )
+			{
+				soldierLeftCount--;
+				resolveSoldierHit++;
+				ds-= soldierToHero;
+				soldierDamage+=soldierToHero;
+			}
+			if(resolveSoldierHit > 0)
+			{
+				var c = attackerSoldierCriticalChecked?" class=\"critical\"":"";
+				fightDetails+="<p"+c+">"+fightInfo[attackerRole]["soldier"]["name"]+"的 <b>"+resolveSoldierHit+"</b> hit 对"+
+					fightInfo[defenderRole]["hero"]["name"]+"造成<b>"+resolveSoldierHit*soldierToHero+"</b>伤害被盾牌吸收</p>";
+			}
+			var resolveHeroHit = 0;
+			while(heroLeftCount > 0 && ds > 0 )
+			{
+				resolveHeroHit++;
+				heroLeftCount--;
+				ds-=heroToHero;
+				heroDamage+=heroToHero;
+			}
+			if(resolveHeroHit > 0)
+			{
+				var c = attackerHeroCriticalChecked?" class=\"critical\"":"";
+				fightDetails+="<p"+c+">"+fightInfo[attackerRole]["hero"]["name"]+"的 <b>"+resolveHeroHit+"</b> hit 对"+
+				fightInfo[defenderRole]["hero"]["name"]+"造成<b>"+resolveHeroHit*heroToHero+"</b>伤害被盾牌吸收 </p>";
+			}
+		} 
+		
 		if(fastCount > 0 )
 		{
 			var htohDamage = heroToHero* fastCount;
@@ -516,7 +679,7 @@ function battle(attackerRole, defenderRole, coefficient, attackerHeroCriticalChe
 	fightDetails+="<p>-------------------------------------------------------------------------------------------</p>";
 	fightDetails+="<p>"+fightInfo[attackerRole]["hero"]["name"]+"造成伤害<b>"+heroDamage+"</b></p>";
 	fightDetails+="<p>"+fightInfo[attackerRole]["soldier"]["name"]+"造成伤害<b>"+soldierDamage+"</b></p>";
-	return {"dsl":dsl, "dl":dl, "fl":fl, "fsl":fsl, "fightDetails":fightDetails };
+	return {"dsl":dsl, "dl":dl, "fl":fl, "fsl":fsl, "ds": ds, "fightDetails":fightDetails };
 }
 
 

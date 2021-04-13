@@ -1,51 +1,48 @@
-package cc.js.sora.fight.skill.action;
+package cc.js.sora.fight.skill.equip;
 
 import java.util.List;
 
 import com.google.common.collect.Lists;
 
+import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
-import cc.js.sora.fight.Feature;
+import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.UserCondition;
 
-public class Shiying extends Skill {
+public class Canyue extends Skill {
 
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "弑影对决";
+		return "璨月晶铠";
 	}
-
-	@Override
-	public List<Effect> getEffects() {
-		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Feature("DirectToHero", true, "直击本体", Scope.Hero, false),
-				new Feature("DirectToHero", true, "直击本体", Scope.EnemyHero, false));
-	}
-
+	
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
 		return new UserCondition() {
 
-			public String getName() {
-				return "AttackYouxiayinji";
-			}
-
 			@Override
 			public boolean defaultValid() {
 				// TODO Auto-generated method stub
-				return false;
+				return true;
 			}
 
 			@Override
 			public String getDesc() {
 				// TODO Auto-generated method stub
-				return "攻击游侠印记的敌人";
+				return "处于璨晶地形上";
 			}
+			
 		};
+	}
+
+	@Override
+	public List<Effect> getEffects() {
+		// TODO Auto-generated method stub
+		return Lists.newArrayList(new Enhance(BuffType.DamageDec, 15, Scope.All));
 	}
 
 }

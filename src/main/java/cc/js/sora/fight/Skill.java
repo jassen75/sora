@@ -230,8 +230,11 @@ public abstract class Skill {
 	public static final long ManyueEnhance = 902;
 	public static final long MoshuEnhance = 903;
 	public static final long ShuijingEnhance = 909;
+	public static final long DashuEnhance = 911;
 	
-	
+	public static final long LieriEnhance = 906;
+	public static final long LiuxingEnhance = 907;
+	public static final long GangtieEnhance = 913;
 	/**
 	 * 1000-1600 equip
 	 */
@@ -325,6 +328,6 @@ public abstract class Skill {
 	public static final long BernhardtSuper = 4004;
 	public static final long Shenji = 4005;
 	public static final long HildaSuper = 4006;
-
+	public static final long XieshenShield = 4007;
 
 }
