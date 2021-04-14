@@ -12,25 +12,40 @@ import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.health.SoldierGreaterHealthCondition;
 
-public class Huangjiaqibing extends Skill{
+public class Shenguanqishi extends Skill {
 	
-
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "皇家骑兵技能";
+		return "神官骑士";
 	}
 
 	@Override
 	public Condition getCondition() {
-		// TODO Auto-generated method stub
 		return new SoldierGreaterHealthCondition(80);
 	}
-
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.PhysicDamageDec, 45, Scope.Soldier));
+		return Lists.newArrayList(new Enhance(BuffType.Physic, 30, Scope.Soldier));
+	}
+	
+	public List<Skill> childSkill() {
+		return Lists.newArrayList(new Skill() {
+
+			@Override
+			public String getName() {
+				// TODO Auto-generated method stub
+				return "神官骑士技能";
+			}
+
+			@Override
+			public List<Effect> getEffects() {
+				// TODO Auto-generated method stub
+				return Lists.newArrayList(new Enhance(BuffType.Medical, 30, Scope.Soldier));
+			}
+			
+		});
 	}
 
 }

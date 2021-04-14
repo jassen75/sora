@@ -10,27 +10,34 @@ import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.health.SoldierGreaterHealthCondition;
+import cc.js.sora.fight.condition.MoveDistanceCondition;
 
-public class Huangjiaqibing extends Skill{
-	
+public class Longyizhanshi extends Skill{
 
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "皇家骑兵技能";
+		return "龙弈战士";
 	}
 
-	@Override
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
-		return new SoldierGreaterHealthCondition(80);
+		return new MoveDistanceCondition(3, 5);
 	}
 
+	public int getSkillType() {
+		return 4;
+	}
+	
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.PhysicDamageDec, 45, Scope.Soldier));
+		return getEffects(3);
+	}
+	
+	@Override
+	public List<Effect> getEffects(int count) {
+		return Lists.newArrayList(new Enhance(BuffType.Attack, count*6, Scope.Soldier),new Enhance(BuffType.DamageDec, count*6, Scope.Soldier));
 	}
 
 }
