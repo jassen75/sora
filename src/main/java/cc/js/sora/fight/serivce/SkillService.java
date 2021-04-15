@@ -123,6 +123,7 @@ import cc.js.sora.fight.skill.soldier.Huangjiaqibing;
 import cc.js.sora.fight.skill.soldier.Huonujujishou;
 import cc.js.sora.fight.skill.soldier.Jiamiannvpu;
 import cc.js.sora.fight.skill.soldier.Jinjilianjinshi;
+import cc.js.sora.fight.skill.soldier.Jinweibubing;
 import cc.js.sora.fight.skill.soldier.Jinweiqiangbing;
 import cc.js.sora.fight.skill.soldier.Jinweiqibing;
 import cc.js.sora.fight.skill.soldier.Jiwushen;
@@ -349,7 +350,7 @@ public class SkillService {
 		registerSkill(Skill.Tiankongsheshou, new Tiankongsheshou());
 		registerSkill(Skill.Anjingling, new Anjingling());
 		registerSkill(Skill.Feiwunvshi, new Feiwunvshi());
-		
+		registerSkill(2034L, new Jinweibubing());
 		registerSkill(2035L, new Jiwushen());
 		registerSkill(2036L, new Jinweiqibing());
 		registerSkill(2037L, new Shengtianma());
