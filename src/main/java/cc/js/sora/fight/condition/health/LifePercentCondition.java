@@ -22,8 +22,8 @@ public class LifePercentCondition implements Condition {
 	@Override
 	public boolean valid(FightInfo fightInfo, boolean isAttack) {
 		// TODO Auto-generated method stub
-		return fightInfo.getRole(isAttack).getLifePercent() >= min / 100.0
-				&& fightInfo.getRole(isAttack).getLifePercent() < max / 100.0;
+		return fightInfo.getRole(isAttack).getLifePercent() > min / 100.0
+				&& fightInfo.getRole(isAttack).getLifePercent() <= max / 100.0;
 	}
 
 }
