@@ -21,7 +21,7 @@ public class LieriEnhance extends Skill {
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.CriticalDamageInc, 25, Scope.All));
+		return Lists.newArrayList(new Enhance(BuffType.CriticalDamageInc, 25, Scope.Hero));
 	}
 
 }
