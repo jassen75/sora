@@ -28,11 +28,13 @@ import cc.js.sora.fight.skill.action.Binglong;
 import cc.js.sora.fight.skill.action.Bingqiang;
 import cc.js.sora.fight.skill.action.Bujiechongji;
 import cc.js.sora.fight.skill.action.DreamAction;
+import cc.js.sora.fight.skill.action.Heilingwan;
 import cc.js.sora.fight.skill.action.Huoqiu;
 import cc.js.sora.fight.skill.action.Juemingyiji;
 import cc.js.sora.fight.skill.action.Lanxingzhan;
 import cc.js.sora.fight.skill.action.Leiji;
 import cc.js.sora.fight.skill.action.Liefengzhiji;
+import cc.js.sora.fight.skill.action.Lingwan;
 import cc.js.sora.fight.skill.action.Qiangfengjuji;
 import cc.js.sora.fight.skill.action.Shengguangzhiyong;
 import cc.js.sora.fight.skill.action.Shengwangzhiji;
@@ -64,6 +66,7 @@ import cc.js.sora.fight.skill.equip.Jingmian;
 import cc.js.sora.fight.skill.equip.Jixianmogong;
 import cc.js.sora.fight.skill.equip.Lage;
 import cc.js.sora.fight.skill.equip.LastSuit;
+import cc.js.sora.fight.skill.equip.Mimier;
 import cc.js.sora.fight.skill.equip.Mingxiang;
 import cc.js.sora.fight.skill.equip.Rongyao;
 import cc.js.sora.fight.skill.equip.Shenpan;
@@ -100,6 +103,7 @@ import cc.js.sora.fight.skill.heart.SherrySP;
 import cc.js.sora.fight.skill.heart.TsubameYing;
 import cc.js.sora.fight.skill.heart.TsubameYouxia;
 import cc.js.sora.fight.skill.heart.YuliaShengjian;
+import cc.js.sora.fight.skill.heart.YuusukeZhentan;
 import cc.js.sora.fight.skill.passivity.BloodBattle;
 import cc.js.sora.fight.skill.passivity.Xinyang;
 import cc.js.sora.fight.skill.soldier.Airenmaoxianzhe;
@@ -177,6 +181,7 @@ import cc.js.sora.fight.skill.support.ElwinSuper;
 import cc.js.sora.fight.skill.support.HildaSuper;
 import cc.js.sora.fight.skill.support.Shenji;
 import cc.js.sora.fight.skill.support.XieshenShield;
+import cc.js.sora.fight.skill.support.YuusukeSuper;
 import cc.js.sora.fight.skill.support.ZillagodSuper;
 import cc.js.sora.fight.skill.talent.AresTalent;
 import cc.js.sora.fight.skill.talent.BernhardtTalent;
@@ -260,6 +265,7 @@ public class SkillService {
 		registerSkill(1067L, new Canyue());
 		registerSkill(1057L, new Chenshi());
 		registerSkill(1071L, new Shouhuzhe());
+		registerSkill(1023L, new Mimier());
 		
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
@@ -322,6 +328,7 @@ public class SkillService {
 		registerSkill(97L, new AutokratoIVHuangdi());
 		registerSkill(10097L, new AutokratoIVHuangjia());
 		registerSkill(77L, new SherrySP());
+		registerSkill(40L, new YuusukeZhentan());
 		
 		// soldier
 		registerSkill(Skill.MonvSkill, new WizardSkill());
@@ -419,12 +426,14 @@ public class SkillService {
 		registerSkill(1630L, new XunyingShaji());
 		registerSkill(1632L, new Bujiechongji());
 		registerSkill(1633L, new Zuizhongshenpan());
-		
+		registerSkill(1637L, new Lingwan());
+		registerSkill(1638L, new Heilingwan());
 		
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());
 		registerSkill(Skill.BernhardtSuper, new BernhardtSuper());
 		registerSkill(Skill.HildaSuper, new HildaSuper());
+		registerSkill(Skill.YuusukeSuper, new YuusukeSuper());
 
 		registerSkill(Skill.SuperBuff, new SuperBuff());
 		registerSkill(Skill.Shenji, new Shenji());

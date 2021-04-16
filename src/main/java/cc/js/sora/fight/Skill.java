@@ -330,6 +330,7 @@ public abstract class Skill {
 	public static final long HildaSuper = 4006;
 	public static final long XieshenShield = 4007;
 	public static final long Bihuzhijian = 4008;
+	public static final long YuusukeSuper = 4009;
 	 
 	protected void dealFixDamage(FightInfo fightInfo, boolean isAttack, int damage, Scope scope)
     {
