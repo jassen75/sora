@@ -80,6 +80,7 @@ import cc.js.sora.fight.skill.equip.Xunzhang;
 import cc.js.sora.fight.skill.equip.Yicai;
 import cc.js.sora.fight.skill.equip.Yuguan;
 import cc.js.sora.fight.skill.equip.Zhenshizijia;
+import cc.js.sora.fight.skill.heart.AlbedoHuzhu;
 import cc.js.sora.fight.skill.heart.AutokratoIVHuangdi;
 import cc.js.sora.fight.skill.heart.AutokratoIVHuangjia;
 import cc.js.sora.fight.skill.heart.EmiliaShengqi;
@@ -329,6 +330,7 @@ public class SkillService {
 		registerSkill(10097L, new AutokratoIVHuangjia());
 		registerSkill(77L, new SherrySP());
 		registerSkill(40L, new YuusukeZhentan());
+		registerSkill(13L, new AlbedoHuzhu());
 		
 		// soldier
 		registerSkill(Skill.MonvSkill, new WizardSkill());

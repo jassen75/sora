@@ -29,6 +29,14 @@ function getHeroCount(role)
 			return 6;
 		}
 	}
+	if(fightInfo[role]["action"])
+	{
+		if(fightInfo[role]["action"]["id"]==41)
+		{
+			return 40;
+		}
+	}
+	
 	return 20;
 }
 
