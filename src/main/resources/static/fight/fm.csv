@@ -8,6 +8,7 @@
 10,玛丽埃尔,1,attackInc=15;intelInc=4;lifeInc=5,1,attackInc=4;attack=7;lifeInc=7,1,attackInc=5;lifeInc=11;physicInc=9,1,attackInc=9;lifeInc=5;physic=8,696|77|0|56|0|0,479|60|0|36|0|0,0|19|0|26,58,21,24,19
 11,罗泽希尔,9,intelInc=9;intel=19;lifeInc=5,9,intelInc=4;physicInc=11;magicInc=8,9,intelInc=3;lifeInc=12;magic=1,9,intelInc=7;intel=13;life=82,703|0|79|55|0|0,490|0|57|45|0|0,0|0|21|31,20,21,22,25
 12,克洛泰尔,1,intelInc=15;attackInc=6,1,intelInc=5;intel=6;lifeInc=7,1,intelInc=4;intel=3;lifeInc=13,1,intelInc=7;attackInc=8;physicInc=7,716|51|76|40|0|0,477|54|60|0|0|65,0|0|19|0,20,26,18,4
+13,雅儿贝德,11,lifeInc=10;magicInc=1,12,lifeInc=11;physicInc=11;life=146,11,lifeInc=13;attackInc=3;life=73,12,lifeInc=8;life=73;physicInc=6,712|0|0|60|59|0,493|0|0|43|38|0,0|0|18|28,47,13,18,15
 16,弗洛朗蒂亚,1,intelInc=10;intel=20;lifeInc=6,1,intelInc=2;intel=3;lifeInc=15,1,intelInc=3;lifeInc=8;life=133,1,intelInc=6;lifeInc=6;physic=8,723|0|79|59|0|0,482|0|60|41|0|0,0|0|20|28,20,21,22,10
 17,燕,1,attackInc=15;attack=12;life=57,1,attackInc=4;lifeInc=10;life=67,1,attackInc=3;lifeInc=15;physic=6,1,attackInc=7;attack=11;lifeInc=5,700|78|0|58|0|0,449|60|0|45|0|0,0|19|0|28,7,1,64,9
 18,树之贤者,4,intelInc=15;attackInc=10;attack=21,4,intelInc=5;life=116;magicInc=11,4,intelInc=4;lifeInc=9;magicInc=14,4,intelInc=10;lifeInc=7;physicInc=4,659|0|77|52|0|0,406|0|56|36|0|0,0|0|20|25,27,28,29,30
@@ -36,12 +37,14 @@
 74,巴恩哈特,1,attackInc=15;lifeInc=6;life=57,1,physicInc=11;lifeInc=14;magicInc=6,1,attackInc=2;physicInc=14;lifeInc=10,1,attackInc=6;physicInc=10;magic=5,714|77|0|58|0|0,480|59|0|44|0|0,0|0|20|30,32,17,53,6
 75,利亚娜,11,intelInc=14;lifeInc=5;physic=4,11,intelInc=3;lifeInc=14;physicInc=10,11,intelInc=3;lifeInc=14;physic=8,11,intelInc=6;lifeInc=7;magicInc=6,687|0|79|51|0|14,411|0|57|45|0|69,0|0|0|29,54,21,22,55
 76,埃尔文,2,attackInc=15;physicInc=2;life=127,2,attackInc=5;physicInc=10;magic=13,2,attackInc=4;attack=7;physicInc=7,2,attackInc=10;attack=17;physicInc=3,673|77|0|52|0|0,461|59|0|36|0|0,0|16|0|25,56,46,18,12
+77,雪梨,1,attackInc=15;attack=20;lifeInc=3,1,attackInc=4;attack=8;physicInc=11,1,attackInc=4;attack=3;physicInc=10,1,attackInc=10;lifeInc=10;attack=10,675|78|0|53|0|15,412|58|0|45|0|0,0|0|20|30,5,1,57,9
 81,爱丽丝,9,intelInc=11;intel=13;lifeInc=6,9,physicInc=11;lifeInc=10;magicInc=11,9,intelInc=2;intel=7;lifeInc=15,9,intelInc=10;magicInc=3;magic=3,691|0|77|42|0|38,414|0|56|36|0|70,0|0|0|26,54,21,22,10
 91,怀特茜茜,9,intelInc=11;intel=13;lifeInc=6,9,physicInc=11;lifeInc=10;magicInc=11,9,intelInc=2;intel=7;lifeInc=15,9,intelInc=10;magicInc=3;magic=3,691|0|77|42|0|38,414|0|56|36|0|70,0|0|0|26,54,21,22,10
 93,迦游罗,1,intelInc=15;intel=20;physicInc=2,1,intelInc=4;lifeInc=6;life=130,1,intelInc=5;physicInc=10;intel=3,1,intelInc=7;intel=5;criticalInc=14,690|0|80|41|0|39,480|0|60|0|0|74,10|20|0|0,20,1,8,4
 94,真田辽,1,attackInc=15;attack=19,1,attackInc=5;lifeInc=8;physicInc=12,1,attackInc=4;lifeInc=12;physicInc=12,1,attackInc=10;attack=10;lifeInc=10,690|80|0|45|0|0,480|60|0|45|0|0,0|0|20|30,49,17,18,35
 95,芙蕾雅,12,attackInc=5;magicInc=4;lifeInc=4,12,lifeInc=10;magicInc=10,12,lifeInc=13;magicInc=9,12,magicInc=10;lifeInc=8,713|0|0|60|59|0,0|0|0|43|43|65,0|0|20|30,47,1,66,15
 96,卢克蕾蒂娅,1,intelInc=13;lifeInc=10;magic=4,1,intelInc=5;lifeInc=4;physicInc=11,1,intelInc=4;lifeInc=7;physicInc=8,1,intelInc=7;lifeInc=7;physicInc=7,721|0|79|52|0|14,476|0|60|44|0|0,0|0|21|27,63,21,22,4
+97,奥托克拉托四世,4,attackInc=13;lifeInc=7,4,attackInc=4;physicInc=9;physic=7,4,attackInc=2;attack=9;physicInc=10,4,attackInc=10;physicInc=5;magic=8,671|80|0|53|0|14,474|58|0|44|0|0,0|20|0|31,32,17,18,10
 10011,罗泽希尔,9,intelInc=9;intel=19;lifeInc=5,9,intelInc=4;physicInc=11;magicInc=8,9,intelInc=3;lifeInc=12;magic=1,9,intelInc=7;intel=13;life=82,703|0|79|55|0|0,490|0|57|45|0|0,0|0|21|31,20,21,22,25
 10016,弗洛朗蒂亚,1,intelInc=10;intel=20;lifeInc=6,1,intelInc=2;intel=3;lifeInc=15,1,intelInc=3;lifeInc=8;life=133,1,intelInc=6;lifeInc=6;physic=8,723|0|79|59|0|0,482|0|60|41|0|0,0|0|20|28,20,21,22,10
 10017,燕,1,attackInc=15;attack=12;life=57,1,attackInc=4;lifeInc=10;life=67,1,attackInc=3;lifeInc=15;physic=6,1,attackInc=7;attack=11;lifeInc=5,700|78|0|58|0|0,449|60|0|45|0|0,0|19|0|28,7,1,64,9
@@ -50,3 +53,4 @@
 10058,兰迪乌斯,2,attackInc=14;physicInc=3;intelInc=9,2,physicInc=12;physic=8;lifeInc=11,2,physicInc=14;lifeInc=10;intelInc=3,2,attackInc=5;physicInc=10;lifeInc=7,727|79|0|59|0|0,430|57|0|44|43|0,0|0|20|0,71,46,14,10
 10093,迦游罗,1,intelInc=15;intel=20;physicInc=2,1,intelInc=4;lifeInc=6;life=130,1,intelInc=5;physicInc=10;intel=3,1,intelInc=7;intel=5;criticalInc=14,690|0|80|41|0|39,480|0|60|0|0|74,10|20|0|0,20,21,57,4
 10096,卢克蕾蒂娅,1,intelInc=13;lifeInc=10;magic=4,1,intelInc=5;lifeInc=4;physicInc=11,1,intelInc=4;lifeInc=7;physicInc=8,1,intelInc=7;lifeInc=7;physicInc=7,721|0|79|52|0|14,476|0|60|44|0|0,0|0|21|27,63,21,22,4
+10097,奥托克拉托四世,4,attackInc=13;lifeInc=7,4,attackInc=4;physicInc=9;physic=7,4,attackInc=2;attack=9;physicInc=10,4,attackInc=10;physicInc=5;magic=8,671|80|0|53|0|14,474|58|0|44|0|0,0|20|0|31,32,17,18,10

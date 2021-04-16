@@ -20,7 +20,9 @@ var lands = {
 	"Wood" : "树林",
 	"Wall" : "城墙",
 	"Grass" : "草地",
-	"Mountain" : "山地"
+	"Mountain" : "山地",
+	"Sand" : "沙丘",
+	"Cave" : "洞穴"
 };
 
 var equipPart = [ "weapon", "armor", "helmet", "jewelry" ];

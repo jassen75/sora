@@ -15,6 +15,7 @@ import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.DistanceCondition;
 import cc.js.sora.fight.condition.DistanceLessEqualCondition;
 import cc.js.sora.fight.condition.UserCondition;
+import cc.js.sora.fight.skill.action.Zhaojia;
 
 public class BernhardtTalent extends Skill {
 
@@ -174,6 +175,71 @@ public class BernhardtTalent extends Skill {
 				return 1000;
 			}
 
-		});
+		}, new Skill() {
+
+			@Override
+			public String getName() {
+				// TODO Auto-generated method stub
+				return "铁血的野望*招架";
+			}
+
+			public Condition getCondition() {
+				// TODO Auto-generated method stub
+				return new UserCondition() {
+
+					public String getName() {
+						return "BernhardtSuper";
+					}
+
+					@Override
+					public boolean defaultValid() {
+						// TODO Auto-generated method stub
+						return true;
+					}
+					
+					public boolean needCheck()
+					{
+						return true;
+					}
+					
+					public boolean check(FightInfo fightInfo, boolean isAttack) {
+						return new UserCondition() {
+							
+							public String getName() {
+								return "Zhaojia";
+							}
+
+							@Override
+							public boolean defaultValid() {
+								// TODO Auto-generated method stub
+								return false;
+							}
+
+							@Override
+							public String getDesc() {
+								// TODO Auto-generated method stub
+								return "装备招架";
+							}
+							
+						}.valid(fightInfo, isAttack);
+					}
+					
+
+					@Override
+					public String getDesc() {
+						// TODO Auto-generated method stub
+						return "使用铁血的野望";
+					}
+
+				};
+			}
+			
+			@Override
+			public List<Effect> getEffects() {
+				// TODO Auto-generated method stub
+				return Lists.newArrayList(new Enhance(BuffType.PhysicDamageDec, 25, Scope.All));
+			}
+			
+		}, new Zhaojia());
 	}
 }

@@ -14,9 +14,6 @@ import cc.js.sora.fight.condition.health.SoldierGreaterHealthCondition;
 
 public class Huangjiaqibing extends Skill{
 	
-	public long getId() {
-		return 0;
-	}
 
 	@Override
 	public String getName() {
