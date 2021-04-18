@@ -64,7 +64,7 @@ public class KayuraTalent extends Skill {
 			@Override
 			public List<Effect> getEffects() {
 				// TODO Auto-generated method stub
-				return Lists.newArrayList(new Enhance(BuffType.DamageDec, 20, Scope.All),
+				return Lists.newArrayList(new Enhance(BuffType.DamageDec, 20, Scope.Hero),
 						new Enhance(BuffType.Intel, 10, Scope.All));
 			}
 		});
