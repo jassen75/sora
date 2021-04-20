@@ -44,6 +44,7 @@ public class Feature implements Effect{
 	public final static String AddMagicToAttack= "AddMagicToAttack";
 	public final static String LandAsWater= "LandAsWater";
 	public final static String LandAsWood= "LandAsWood";
+	public final static String EnemyLandAsWater= "EnemyLandAsWater";
 	
 	public final static String XieshenShield= "XieshenShield";
 	public final static String preHealPercent= "preHealPercent";

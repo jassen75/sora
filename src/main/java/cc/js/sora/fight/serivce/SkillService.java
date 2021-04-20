@@ -86,6 +86,8 @@ import cc.js.sora.fight.skill.heart.AlbedoHuzhu;
 import cc.js.sora.fight.skill.heart.AutokratoIVHuangdi;
 import cc.js.sora.fight.skill.heart.AutokratoIVHuangjia;
 import cc.js.sora.fight.skill.heart.DeedlitJingling;
+import cc.js.sora.fight.skill.heart.EluciaHaiqi;
+import cc.js.sora.fight.skill.heart.EluciaHuangjia;
 import cc.js.sora.fight.skill.heart.EmiliaShengqi;
 import cc.js.sora.fight.skill.heart.EmiliaShengqiang;
 import cc.js.sora.fight.skill.heart.FlorentiaJunshi;
@@ -99,6 +101,8 @@ import cc.js.sora.fight.skill.heart.KayuraXingli;
 import cc.js.sora.fight.skill.heart.KreugerTheWickedFashi;
 import cc.js.sora.fight.skill.heart.LandiusDayuanshuai;
 import cc.js.sora.fight.skill.heart.LandiusHuangqi;
+import cc.js.sora.fight.skill.heart.LordOfCrimsonXuejing;
+import cc.js.sora.fight.skill.heart.LordOfCrimsonYixing;
 import cc.js.sora.fight.skill.heart.LukeDazhujiao;
 import cc.js.sora.fight.skill.heart.LukeYinshi;
 import cc.js.sora.fight.skill.heart.RianaXianzhi;
@@ -340,6 +344,13 @@ public class SkillService {
 		
 		registerSkill(75L, new RianaYinshi());
 		registerSkill(10075L, new RianaXianzhi());
+		
+		registerSkill(92L, new LordOfCrimsonXuejing());
+		registerSkill(10092L, new LordOfCrimsonYixing());
+		
+		registerSkill(26L, new EluciaHaiqi());
+		registerSkill(10026L, new EluciaHuangjia());
+		
 		// soldier
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
