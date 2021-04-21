@@ -1,4 +1,4 @@
-package cc.js.sora.fight.skill.enhance;
+package cc.js.sora.fight.skill.action;
 
 import java.util.List;
 
@@ -10,29 +10,25 @@ import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
-import cc.js.sora.fight.condition.health.EnemyHealthGreaterCondition;
+import cc.js.sora.fight.condition.JinzhanSoldierCondition;
 
-public class LiuxingEnhance  extends Skill {
+public class Jinglingzhixi extends Skill {
 
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "流星附魔";
-	}
-
-	public int getSkillType() {
-		return 4;
+		return "精灵之息";
 	}
 	
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
-		return new EnemyHealthGreaterCondition(60);
+		return new JinzhanSoldierCondition();
 	}
 	
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.DamageInc, 20, Scope.Hero));
+		return Lists.newArrayList(new Enhance(BuffType.Range, 1, Scope.Soldier));
 	}
 
 }

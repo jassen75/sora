@@ -21,7 +21,7 @@ public class GangtieEnhance  extends Skill {
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.DamageDec, 10, Scope.All));
+		return Lists.newArrayList(new Enhance(BuffType.DamageDec, 10, Scope.Hero));
 	}
 
 }
