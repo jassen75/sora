@@ -34,6 +34,7 @@
 62,泽瑞达,5,attackInc=13;attack=15;lifeInc=8,5,attackInc=5;lifeInc=2;physicInc=6,5,attackInc=5;physicInc=9;magic=10,5,attackInc=10;lifeInc=5;intel=9,712|80|0|42|0|39,405|59|0|0|0|67,9|18|0|0,7,1,11,12
 63,古巨拉,10,physicInc=4;physic=4;lifeInc=7,10,physicInc=11;lifeInc=11;magicInc=9,10,physicInc=15;magicInc=13;lifeInc=8,10,physicInc=7;lifeInc=9;attack=11,713|0|0|60|59|0,0|0|0|43|43|65,0|0|20|30,47,1,50,10
 64,雪露法妮尔,1,intelInc=11;intel=21;lifeInc=6,1,intelInc=4;lifeInc=11;physic=10,1,intelInc=4;lifeInc=11;physicInc=5,1,intelInc=7;lifeInc=10;life=45,723|0|78|50|0|12,428|0|60|0|0|0,10|20|0|29,51,21,52,25
+66,亚鲁特缪拉,1,attackInc=15;attack=20;lifeInc=3,1,attackInc=4;attack=8;physicInc=11,1,attackInc=4;attack=3;physicInc=10,1,attackInc=10;lifeInc=10;attack=10,566|80|0|54|0|39,0|60|0|44|0|0,10|19|0|0,33,1,76,10
 68,露娜,9,magicInc=4;lifeInc=6;intel=9,8,magicInc=11;physicInc=5;lifeInc=5,8,magicInc=13;lifeInc=11;attackInc=2,9,physicInc=10;lifeInc=7,693|0|0|53|56|0,463|0|0|40|44|0,0|0|14|23,74,1,73,10
 72,波赞鲁,4,lifeInc=7;magicInc=5,4,lifeInc=11;magicInc=12,4,lifeInc=8;physicInc=7;magicInc=12,4,lifeInc=8;magicInc=9,700|0|0|45|45|0,450|0|0|45|45|0,0|0|20|30,51,61,29,10
 74,巴恩哈特,1,attackInc=15;lifeInc=6;life=57,1,physicInc=11;lifeInc=14;magicInc=6,1,attackInc=2;physicInc=14;lifeInc=10,1,attackInc=6;physicInc=10;magic=5,714|77|0|58|0|0,480|59|0|44|0|0,0|0|20|30,32,17,53,6

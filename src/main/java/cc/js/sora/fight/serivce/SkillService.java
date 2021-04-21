@@ -86,6 +86,7 @@ import cc.js.sora.fight.skill.equip.Yuguan;
 import cc.js.sora.fight.skill.equip.Zhenshizijia;
 import cc.js.sora.fight.skill.equip.Zuzhouzhiqiang;
 import cc.js.sora.fight.skill.heart.AlbedoHuzhu;
+import cc.js.sora.fight.skill.heart.AlutemuratSP;
 import cc.js.sora.fight.skill.heart.AutokratoIVHuangdi;
 import cc.js.sora.fight.skill.heart.AutokratoIVHuangjia;
 import cc.js.sora.fight.skill.heart.DeedlitJingling;
@@ -361,6 +362,7 @@ public class SkillService {
 		
 		registerSkill(68L, new LunaShengtianma());
 		registerSkill(10068L, new LunaGongqi());
+		registerSkill(66L, new AlutemuratSP());
 		
 		// soldier
 		registerSkill(Skill.MonvSkill, new WizardSkill());
@@ -464,6 +466,7 @@ public class SkillService {
 		registerSkill(1643L, new Fengren());
 		registerSkill(1646L, new Benlei());
 		
+	
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());
 		registerSkill(Skill.BernhardtSuper, new BernhardtSuper());
