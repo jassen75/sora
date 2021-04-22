@@ -54,6 +54,8 @@
 10017,燕,1,attackInc=15;attack=12;life=57,1,attackInc=4;lifeInc=10;life=67,1,attackInc=3;lifeInc=15;physic=6,1,attackInc=7;attack=11;lifeInc=5,700|78|0|58|0|0,449|60|0|45|0|0,0|19|0|28,7,1,64,9
 10019,海伦娜,1,attackInc=14;attack=14;magicInc=3,1,attackInc=4;lifeInc=10;physic=12,1,attackInc=5;physicInc=11;intel=4,1,attackInc=10;physicInc=5;magicInc=4,699|79|0|53|0|0,499|59|0|37|0|0,0|0|16|31,70,67,18,69
 10026,伊露希亚,9,magicInc=4;lifeInc=6;intel=9,8,magicInc=11;physicInc=5;lifeInc=5,8,magicInc=13;lifeInc=11;attackInc=2,9,physicInc=10;lifeInc=7,693|0|0|53|56|0,463|0|0|40|44|0,0|0|14|23,72,13,14,10
+10032,布琳达,1,attackInc=13;attack=15;intel=17,1,attackInc=5;lifeInc=9;intel=4,1,attackInc=3;attack=10;physicInc=10,1,attackInc=9;physicInc=6;physic=5,539|80|0|55|0|12,0|60|0|43|0|0,9|17|0|28,31,36,18,9
+10035,维拉玖,1,attackInc=15;intelInc=7;intel=16,1,attackInc=3;attack=10;physicInc=7,1,attackInc=4;attack=10;life=86,1,attackInc=10;attack=8;magicInc=5,536|76|0|50|0|35,0|58|0|0|0|61,9|19|0|0,23,41,18,35
 10037,艾米莉亚,9,magicInc=4;lifeInc=6;intel=9,8,magicInc=11;physicInc=5;lifeInc=5,8,magicInc=13;lifeInc=11;attackInc=2,9,physicInc=10;lifeInc=7,693|0|0|53|56|0,463|0|0|40|44|0,0|0|14|23,65,13,14,10
 10058,兰迪乌斯,2,attackInc=14;physicInc=3;intelInc=9,2,physicInc=12;physic=8;lifeInc=11,2,physicInc=14;lifeInc=10;intelInc=3,2,attackInc=5;physicInc=10;lifeInc=7,727|79|0|59|0|0,430|57|0|44|43|0,0|0|20|0,71,46,14,10
 10068,露娜,9,magicInc=4;lifeInc=6;intel=9,8,magicInc=11;physicInc=5;lifeInc=5,8,magicInc=13;lifeInc=11;attackInc=2,9,physicInc=10;lifeInc=7,693|0|0|53|56|0,463|0|0|40|44|0,0|0|14|23,75,1,73,10
