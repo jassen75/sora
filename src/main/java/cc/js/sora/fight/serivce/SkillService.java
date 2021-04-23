@@ -41,7 +41,9 @@ import cc.js.sora.fight.skill.action.Lanxingzhan;
 import cc.js.sora.fight.skill.action.Leiji;
 import cc.js.sora.fight.skill.action.Liefengzhiji;
 import cc.js.sora.fight.skill.action.Lingwan;
+import cc.js.sora.fight.skill.action.Molizhendang;
 import cc.js.sora.fight.skill.action.Qiangfengjuji;
+import cc.js.sora.fight.skill.action.Shenfa;
 import cc.js.sora.fight.skill.action.Shengguangzhiyong;
 import cc.js.sora.fight.skill.action.Shengwangzhiji;
 import cc.js.sora.fight.skill.action.Shengyan;
@@ -118,10 +120,14 @@ import cc.js.sora.fight.skill.heart.LukeDazhujiao;
 import cc.js.sora.fight.skill.heart.LukeYinshi;
 import cc.js.sora.fight.skill.heart.LunaGongqi;
 import cc.js.sora.fight.skill.heart.LunaShengtianma;
+import cc.js.sora.fight.skill.heart.RachelMoneng;
+import cc.js.sora.fight.skill.heart.RachelShenshi;
 import cc.js.sora.fight.skill.heart.RianaXianzhi;
 import cc.js.sora.fight.skill.heart.RianaYinshi;
 import cc.js.sora.fight.skill.heart.RozencielLingguang;
 import cc.js.sora.fight.skill.heart.RozencielShuijing;
+import cc.js.sora.fight.skill.heart.SchelfanielWangnv;
+import cc.js.sora.fight.skill.heart.SchelfanielWushi;
 import cc.js.sora.fight.skill.heart.SherrySP;
 import cc.js.sora.fight.skill.heart.TsubameYing;
 import cc.js.sora.fight.skill.heart.TsubameYouxia;
@@ -383,6 +389,12 @@ public class SkillService {
 		
 		registerSkill(46L, new AlustrielLangqi());
 		
+		registerSkill(64L, new SchelfanielWangnv());
+		registerSkill(10064L, new SchelfanielWushi());
+		
+		registerSkill(59L, new RachelMoneng());
+		registerSkill(10059L, new RachelShenshi());
+		
 		// soldier
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
@@ -490,6 +502,8 @@ public class SkillService {
 		
 		registerSkill(1653L, new Feicuimoshi());
 		registerSkill(1652L, new Feicuipofeng());
+		registerSkill(1655L, new Shenfa());
+		registerSkill(1658L, new Molizhendang());
 	
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());
