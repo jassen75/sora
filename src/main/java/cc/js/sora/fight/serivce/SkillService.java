@@ -29,6 +29,8 @@ import cc.js.sora.fight.skill.action.Binglong;
 import cc.js.sora.fight.skill.action.Bingqiang;
 import cc.js.sora.fight.skill.action.Bujiechongji;
 import cc.js.sora.fight.skill.action.DreamAction;
+import cc.js.sora.fight.skill.action.Feicuimoshi;
+import cc.js.sora.fight.skill.action.Feicuipofeng;
 import cc.js.sora.fight.skill.action.Fengren;
 import cc.js.sora.fight.skill.action.Heilingwan;
 import cc.js.sora.fight.skill.action.Heiyao;
@@ -88,6 +90,7 @@ import cc.js.sora.fight.skill.equip.Yuguan;
 import cc.js.sora.fight.skill.equip.Zhenshizijia;
 import cc.js.sora.fight.skill.equip.Zuzhouzhiqiang;
 import cc.js.sora.fight.skill.heart.AlbedoHuzhu;
+import cc.js.sora.fight.skill.heart.AlustrielLangqi;
 import cc.js.sora.fight.skill.heart.AlutemuratSP;
 import cc.js.sora.fight.skill.heart.AutokratoIVHuangdi;
 import cc.js.sora.fight.skill.heart.AutokratoIVHuangjia;
@@ -191,6 +194,7 @@ import cc.js.sora.fight.skill.soldier.Xiyidaoke;
 import cc.js.sora.fight.skill.soldier.Xizuizhe;
 import cc.js.sora.fight.skill.soldier.Xuanfengyouqibing;
 import cc.js.sora.fight.skill.soldier.Yanshi;
+import cc.js.sora.fight.skill.soldier.Yaojinggongqi;
 import cc.js.sora.fight.skill.soldier.Zhongjibaifuzhang;
 import cc.js.sora.fight.skill.soldier.Zhongzhuangbubing;
 import cc.js.sora.fight.skill.soldier.Zhongzhuangkulou;
@@ -377,6 +381,8 @@ public class SkillService {
 		registerSkill(35L, new VirashHaidou());
 		registerSkill(10035L, new VirashJianshi());
 		
+		registerSkill(46L, new AlustrielLangqi());
+		
 		// soldier
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
@@ -404,6 +410,8 @@ public class SkillService {
 		registerSkill(Skill.Tiankongsheshou, new Tiankongsheshou());
 		registerSkill(Skill.Anjingling, new Anjingling());
 		registerSkill(Skill.Feiwunvshi, new Feiwunvshi());
+		
+		registerSkill(2020L, new Yaojinggongqi());
 		registerSkill(2034L, new Jinweibubing());
 		registerSkill(2035L, new Jiwushen());
 		registerSkill(2036L, new Jinweiqibing());
@@ -479,6 +487,9 @@ public class SkillService {
 		registerSkill(1643L, new Fengren());
 		registerSkill(1646L, new Benlei());
 		registerSkill(1648L, new Heiyao());
+		
+		registerSkill(1653L, new Feicuimoshi());
+		registerSkill(1652L, new Feicuipofeng());
 	
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());
