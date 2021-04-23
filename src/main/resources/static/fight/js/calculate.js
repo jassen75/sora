@@ -16,7 +16,7 @@ var defenderResult = {};
 
 function getHeroCount(role)
 {
-	if(fightInfo[role]["hero"]["id"]==63)
+	if(fightInfo[role]["hero"]["id"]==63 || fightInfo[role]["hero"]["id"]==10063)
 	{
 		if(fightInfo[role]["action"])
 		{
@@ -37,6 +37,13 @@ function getHeroCount(role)
 		}
 	}
 	
+	if(fightInfo[role]["hero"]["id"]==78 || fightInfo[role]["hero"]["id"]==10078)
+	{
+		if(role=="defender")
+		{
+			return 40;
+		}
+	}
 	return 20;
 }
 

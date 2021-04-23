@@ -114,6 +114,8 @@ import cc.js.sora.fight.skill.heart.KayuraXingli;
 import cc.js.sora.fight.skill.heart.KreugerTheWickedFashi;
 import cc.js.sora.fight.skill.heart.LandiusDayuanshuai;
 import cc.js.sora.fight.skill.heart.LandiusHuangqi;
+import cc.js.sora.fight.skill.heart.LedynShengqi;
+import cc.js.sora.fight.skill.heart.LedynWangzhe;
 import cc.js.sora.fight.skill.heart.LordOfCrimsonXuejing;
 import cc.js.sora.fight.skill.heart.LordOfCrimsonYixing;
 import cc.js.sora.fight.skill.heart.LukeDazhujiao;
@@ -394,6 +396,9 @@ public class SkillService {
 		
 		registerSkill(59L, new RachelMoneng());
 		registerSkill(10059L, new RachelShenshi());
+		
+		registerSkill(78L, new LedynWangzhe());
+		registerSkill(10078L, new LedynShengqi());
 		
 		// soldier
 		registerSkill(Skill.MonvSkill, new WizardSkill());

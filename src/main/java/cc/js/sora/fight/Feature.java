@@ -40,6 +40,7 @@ public class Feature implements Effect{
 	public final static String MedicalToDamageInc = "MedicalToDamageInc";
 	public final static String PhysicToAttack= "PhysicToAttack";
 	public final static String MagicToAttack= "MagicToAttack";
+	public final static String TwoDefToAttack= "TwoDefToAttack";
 	public final static String AddPhysicToAttack= "AddPhysicToAttack";
 	public final static String AddMagicToAttack= "AddMagicToAttack";
 	public final static String LandAsWater= "LandAsWater";
