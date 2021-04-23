@@ -1,4 +1,4 @@
-package cc.js.sora.fight.skill.talent;
+package cc.js.sora.fight.skill.heart;
 
 import java.util.List;
 
@@ -8,38 +8,38 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
-import cc.js.sora.fight.Feature;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.NoCondition;
 import cc.js.sora.fight.condition.UserCondition;
+import cc.js.sora.fight.skill.talent.HelenaTalent;
+import cc.js.sora.fight.skill.talent.LedynTalent;
 
-public class LedynTalent extends Skill{
-
-	public long getId() {
-		return Skill.LedynTalent;
-	}
+public class LedynShengqi  extends Skill{
 	
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "雷丁天赋";
+		return "雷丁*圣骑统帅大心";
+	}
+	
+	public int getSkillType() {
+		return 5;
 	}
 
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.DamageDec, 15, Scope.All));
+		return Lists.newArrayList(new Enhance(BuffType.MagicDamageDec, 10, Scope.All));
 	}
 	
-	public List<Skill> childSkill()
-	{
+	public List<Skill> childSkill() {
 		return Lists.newArrayList(new Skill() {
 
 			@Override
 			public String getName() {
 				// TODO Auto-generated method stub
-				return "神卫";
+				return "雷丁*圣骑统帅大心";
 			}
 			
 			public Condition getCondition() {
@@ -55,19 +55,23 @@ public class LedynTalent extends Skill{
 					@Override
 					public String getDesc() {
 						// TODO Auto-generated method stub
-						return "拥有神卫效果";
+						return "敌人拥有强化效果";
 					}
 					
 				};
+			}
+			
+			public int getSkillType() {
+				return 5;
 			}
 
 			@Override
 			public List<Effect> getEffects() {
 				// TODO Auto-generated method stub
-				return Lists.newArrayList(new Feature(Feature.TwoDefToAttack, 1.0, "防御+魔防的1倍视为攻击", Scope.Hero, false));
+				return Lists.newArrayList(new Enhance(BuffType.DamageInc, 10, Scope.All));
 			}
-
-		});
+			
+		}, new LedynTalent());
 	}
 
 }

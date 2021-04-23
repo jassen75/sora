@@ -29,8 +29,11 @@ import cc.js.sora.fight.skill.action.Binglong;
 import cc.js.sora.fight.skill.action.Bingqiang;
 import cc.js.sora.fight.skill.action.Bujiechongji;
 import cc.js.sora.fight.skill.action.DreamAction;
+import cc.js.sora.fight.skill.action.Feicuimoshi;
+import cc.js.sora.fight.skill.action.Feicuipofeng;
 import cc.js.sora.fight.skill.action.Fengren;
 import cc.js.sora.fight.skill.action.Heilingwan;
+import cc.js.sora.fight.skill.action.Heiyao;
 import cc.js.sora.fight.skill.action.Huoqiu;
 import cc.js.sora.fight.skill.action.Jinglingzhixi;
 import cc.js.sora.fight.skill.action.Juemingyiji;
@@ -38,7 +41,10 @@ import cc.js.sora.fight.skill.action.Lanxingzhan;
 import cc.js.sora.fight.skill.action.Leiji;
 import cc.js.sora.fight.skill.action.Liefengzhiji;
 import cc.js.sora.fight.skill.action.Lingwan;
+import cc.js.sora.fight.skill.action.Molizhendang;
+import cc.js.sora.fight.skill.action.Pomiezhimao;
 import cc.js.sora.fight.skill.action.Qiangfengjuji;
+import cc.js.sora.fight.skill.action.Shenfa;
 import cc.js.sora.fight.skill.action.Shengguangzhiyong;
 import cc.js.sora.fight.skill.action.Shengwangzhiji;
 import cc.js.sora.fight.skill.action.Shengyan;
@@ -82,13 +88,17 @@ import cc.js.sora.fight.skill.equip.Tulong;
 import cc.js.sora.fight.skill.equip.Wuleer;
 import cc.js.sora.fight.skill.equip.Xunzhang;
 import cc.js.sora.fight.skill.equip.Yicai;
+import cc.js.sora.fight.skill.equip.Yuezhihuiyi;
 import cc.js.sora.fight.skill.equip.Yuguan;
 import cc.js.sora.fight.skill.equip.Zhenshizijia;
 import cc.js.sora.fight.skill.equip.Zuzhouzhiqiang;
 import cc.js.sora.fight.skill.heart.AlbedoHuzhu;
+import cc.js.sora.fight.skill.heart.AlustrielLangqi;
 import cc.js.sora.fight.skill.heart.AlutemuratSP;
 import cc.js.sora.fight.skill.heart.AutokratoIVHuangdi;
 import cc.js.sora.fight.skill.heart.AutokratoIVHuangjia;
+import cc.js.sora.fight.skill.heart.BrendaDoushen;
+import cc.js.sora.fight.skill.heart.BrendaHuangjia;
 import cc.js.sora.fight.skill.heart.DeedlitJingling;
 import cc.js.sora.fight.skill.heart.EluciaHaiqi;
 import cc.js.sora.fight.skill.heart.EluciaHuangjia;
@@ -105,19 +115,28 @@ import cc.js.sora.fight.skill.heart.KayuraXingli;
 import cc.js.sora.fight.skill.heart.KreugerTheWickedFashi;
 import cc.js.sora.fight.skill.heart.LandiusDayuanshuai;
 import cc.js.sora.fight.skill.heart.LandiusHuangqi;
+import cc.js.sora.fight.skill.heart.LedynShengqi;
+import cc.js.sora.fight.skill.heart.LedynWangzhe;
 import cc.js.sora.fight.skill.heart.LordOfCrimsonXuejing;
 import cc.js.sora.fight.skill.heart.LordOfCrimsonYixing;
 import cc.js.sora.fight.skill.heart.LukeDazhujiao;
 import cc.js.sora.fight.skill.heart.LukeYinshi;
 import cc.js.sora.fight.skill.heart.LunaGongqi;
 import cc.js.sora.fight.skill.heart.LunaShengtianma;
+import cc.js.sora.fight.skill.heart.MysteryKnightFaqi;
+import cc.js.sora.fight.skill.heart.RachelMoneng;
+import cc.js.sora.fight.skill.heart.RachelShenshi;
 import cc.js.sora.fight.skill.heart.RianaXianzhi;
 import cc.js.sora.fight.skill.heart.RianaYinshi;
 import cc.js.sora.fight.skill.heart.RozencielLingguang;
 import cc.js.sora.fight.skill.heart.RozencielShuijing;
+import cc.js.sora.fight.skill.heart.SchelfanielWangnv;
+import cc.js.sora.fight.skill.heart.SchelfanielWushi;
 import cc.js.sora.fight.skill.heart.SherrySP;
 import cc.js.sora.fight.skill.heart.TsubameYing;
 import cc.js.sora.fight.skill.heart.TsubameYouxia;
+import cc.js.sora.fight.skill.heart.VirashHaidou;
+import cc.js.sora.fight.skill.heart.VirashJianshi;
 import cc.js.sora.fight.skill.heart.YuliaShengjian;
 import cc.js.sora.fight.skill.heart.YuusukeZhentan;
 import cc.js.sora.fight.skill.passivity.BloodBattle;
@@ -185,6 +204,7 @@ import cc.js.sora.fight.skill.soldier.Xiyidaoke;
 import cc.js.sora.fight.skill.soldier.Xizuizhe;
 import cc.js.sora.fight.skill.soldier.Xuanfengyouqibing;
 import cc.js.sora.fight.skill.soldier.Yanshi;
+import cc.js.sora.fight.skill.soldier.Yaojinggongqi;
 import cc.js.sora.fight.skill.soldier.Zhongjibaifuzhang;
 import cc.js.sora.fight.skill.soldier.Zhongzhuangbubing;
 import cc.js.sora.fight.skill.soldier.Zhongzhuangkulou;
@@ -285,6 +305,7 @@ public class SkillService {
 		registerSkill(1023L, new Mimier());
 		registerSkill(1074L, new Zuzhouzhiqiang());
 		registerSkill(1075L, new Wuleer());
+		registerSkill(1036L, new Yuezhihuiyi());
 		
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
@@ -364,6 +385,25 @@ public class SkillService {
 		registerSkill(10068L, new LunaGongqi());
 		registerSkill(66L, new AlutemuratSP());
 		
+		registerSkill(32L, new BrendaDoushen());
+		registerSkill(10032L, new BrendaHuangjia());
+		
+		registerSkill(35L, new VirashHaidou());
+		registerSkill(10035L, new VirashJianshi());
+		
+		registerSkill(46L, new AlustrielLangqi());
+		
+		registerSkill(64L, new SchelfanielWangnv());
+		registerSkill(10064L, new SchelfanielWushi());
+		
+		registerSkill(59L, new RachelMoneng());
+		registerSkill(10059L, new RachelShenshi());
+		
+		registerSkill(78L, new LedynWangzhe());
+		registerSkill(10078L, new LedynShengqi());
+		
+		registerSkill(34L, new MysteryKnightFaqi());
+		
 		// soldier
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
@@ -391,6 +431,8 @@ public class SkillService {
 		registerSkill(Skill.Tiankongsheshou, new Tiankongsheshou());
 		registerSkill(Skill.Anjingling, new Anjingling());
 		registerSkill(Skill.Feiwunvshi, new Feiwunvshi());
+		
+		registerSkill(2020L, new Yaojinggongqi());
 		registerSkill(2034L, new Jinweibubing());
 		registerSkill(2035L, new Jiwushen());
 		registerSkill(2036L, new Jinweiqibing());
@@ -465,6 +507,13 @@ public class SkillService {
 		registerSkill(1642L, new Jinglingzhixi());
 		registerSkill(1643L, new Fengren());
 		registerSkill(1646L, new Benlei());
+		registerSkill(1648L, new Heiyao());
+		
+		registerSkill(1653L, new Feicuimoshi());
+		registerSkill(1652L, new Feicuipofeng());
+		registerSkill(1655L, new Shenfa());
+		registerSkill(1658L, new Molizhendang());
+		registerSkill(1660L, new Pomiezhimao());
 		
 	
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());

@@ -599,6 +599,12 @@ public class FightService {
 			changedAttack += Double.valueOf(Math.floor(panelInfo.getMagic() * mta)).intValue();
 		}
 		
+		if(panelInfo.getFeatures().containsKey(Feature.TwoDefToAttack))
+		{
+			double tdta = (Double)panelInfo.getFeatures().get(Feature.TwoDefToAttack);
+			changedAttack += Double.valueOf(Math.floor((panelInfo.getMagic()+panelInfo.getPhysic()) * tdta)).intValue();
+		}
+		
 		if(changedAttack != 0)
 		{
 			panelInfo.setAttack(changedAttack);
