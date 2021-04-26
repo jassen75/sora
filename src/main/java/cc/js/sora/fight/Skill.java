@@ -332,6 +332,8 @@ public abstract class Skill {
 	public static final long Bihuzhijian = 4008;
 	public static final long YuusukeSuper = 4009;
 	public static final long LunaHalo = 4010;
+	public static final long ZhishuiHalo = 4011;
+	public static final long LandiusSuper = 4012;
 	
 	protected void dealFixDamage(FightInfo fightInfo, boolean isAttack, int damage, Scope scope)
     {

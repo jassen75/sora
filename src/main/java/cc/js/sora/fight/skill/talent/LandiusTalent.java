@@ -14,7 +14,7 @@ import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.DistanceGreaterThanCondition;
 import cc.js.sora.fight.condition.UserCondition;
-import cc.js.sora.fight.skill.action.Zhishui;
+import cc.js.sora.fight.skill.support.Zhishui;
 
 public class LandiusTalent extends Skill {
 
@@ -117,7 +117,7 @@ public class LandiusTalent extends Skill {
 						new Feature(Feature.RangeAttackBack, 2, "2格远程反击", Scope.All, false));
 			}
 
-		}, new Zhishui());
+		});
 	}
 
 }
