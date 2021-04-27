@@ -38,6 +38,7 @@ import cc.js.sora.fight.skill.action.Huoqiu;
 import cc.js.sora.fight.skill.action.Jinglingzhixi;
 import cc.js.sora.fight.skill.action.Juemingyiji;
 import cc.js.sora.fight.skill.action.Lanxingzhan;
+import cc.js.sora.fight.skill.action.Leidongbenxi;
 import cc.js.sora.fight.skill.action.Leiji;
 import cc.js.sora.fight.skill.action.Liefengzhiji;
 import cc.js.sora.fight.skill.action.Lingwan;
@@ -67,9 +68,11 @@ import cc.js.sora.fight.skill.equip.Cangbaizhizhang;
 import cc.js.sora.fight.skill.equip.Canyue;
 import cc.js.sora.fight.skill.equip.Chenhun;
 import cc.js.sora.fight.skill.equip.Chenshi;
+import cc.js.sora.fight.skill.equip.ClarettZhuanshu;
 import cc.js.sora.fight.skill.equip.Daditou;
 import cc.js.sora.fight.skill.equip.Erzhui;
 import cc.js.sora.fight.skill.equip.Feiyingxingdou;
+import cc.js.sora.fight.skill.equip.Fengwang;
 import cc.js.sora.fight.skill.equip.JingjiHuangguan;
 import cc.js.sora.fight.skill.equip.Jingmian;
 import cc.js.sora.fight.skill.equip.Jixianmogong;
@@ -77,15 +80,18 @@ import cc.js.sora.fight.skill.equip.Lage;
 import cc.js.sora.fight.skill.equip.LastSuit;
 import cc.js.sora.fight.skill.equip.Mimier;
 import cc.js.sora.fight.skill.equip.Mingxiang;
+import cc.js.sora.fight.skill.equip.Qiutu;
 import cc.js.sora.fight.skill.equip.Rongyao;
 import cc.js.sora.fight.skill.equip.Shenpan;
 import cc.js.sora.fight.skill.equip.Shenyi;
 import cc.js.sora.fight.skill.equip.Shijieshu;
 import cc.js.sora.fight.skill.equip.Shouhuzhe;
+import cc.js.sora.fight.skill.equip.Shouweizhe;
 import cc.js.sora.fight.skill.equip.Shuijingfengci;
 import cc.js.sora.fight.skill.equip.Tier;
 import cc.js.sora.fight.skill.equip.Tulong;
 import cc.js.sora.fight.skill.equip.Wuleer;
+import cc.js.sora.fight.skill.equip.Xuewen;
 import cc.js.sora.fight.skill.equip.Xunzhang;
 import cc.js.sora.fight.skill.equip.Yicai;
 import cc.js.sora.fight.skill.equip.Yuezhihuiyi;
@@ -99,6 +105,8 @@ import cc.js.sora.fight.skill.heart.AutokratoIVHuangdi;
 import cc.js.sora.fight.skill.heart.AutokratoIVHuangjia;
 import cc.js.sora.fight.skill.heart.BrendaDoushen;
 import cc.js.sora.fight.skill.heart.BrendaHuangjia;
+import cc.js.sora.fight.skill.heart.ClarettJianji;
+import cc.js.sora.fight.skill.heart.ClarettLongqi;
 import cc.js.sora.fight.skill.heart.DeedlitJingling;
 import cc.js.sora.fight.skill.heart.EluciaHaiqi;
 import cc.js.sora.fight.skill.heart.EluciaHuangjia;
@@ -126,6 +134,8 @@ import cc.js.sora.fight.skill.heart.LunaShengtianma;
 import cc.js.sora.fight.skill.heart.MysteryKnightFaqi;
 import cc.js.sora.fight.skill.heart.RachelMoneng;
 import cc.js.sora.fight.skill.heart.RachelShenshi;
+import cc.js.sora.fight.skill.heart.RanfordJianshen;
+import cc.js.sora.fight.skill.heart.RanfordQishi;
 import cc.js.sora.fight.skill.heart.RianaXianzhi;
 import cc.js.sora.fight.skill.heart.RianaYinshi;
 import cc.js.sora.fight.skill.heart.RozencielLingguang;
@@ -215,10 +225,13 @@ import cc.js.sora.fight.skill.support.BernhardtSuper;
 import cc.js.sora.fight.skill.support.Bihuzhijian;
 import cc.js.sora.fight.skill.support.ElwinSuper;
 import cc.js.sora.fight.skill.support.HildaSuper;
+import cc.js.sora.fight.skill.support.LandiusSuper;
 import cc.js.sora.fight.skill.support.LunaHalo;
+import cc.js.sora.fight.skill.support.RanfordHalo;
 import cc.js.sora.fight.skill.support.Shenji;
 import cc.js.sora.fight.skill.support.XieshenShield;
 import cc.js.sora.fight.skill.support.YuusukeSuper;
+import cc.js.sora.fight.skill.support.Zhishui;
 import cc.js.sora.fight.skill.support.ZillagodSuper;
 import cc.js.sora.fight.skill.talent.AresTalent;
 import cc.js.sora.fight.skill.talent.BernhardtTalent;
@@ -260,10 +273,12 @@ public class SkillService {
 
 	BarrackSkills barrackSkills = new BarrackSkills();
 
-	List<Long> globalSkills = Lists.newArrayList(Skill.SuperBuff, Skill.Shenji, Skill.XieshenShield, Skill.Bihuzhijian, Skill.LunaHalo);
+	List<Long> globalSkills = Lists.newArrayList(Skill.SuperBuff, Skill.Shenji, Skill.XieshenShield, Skill.Bihuzhijian,
+			Skill.LunaHalo, Skill.ZhishuiHalo, Skill.RanfordHalo);
 
 	List<Long> ehanceSkills = Lists.newArrayList(0L, Skill.WindEnhance, Skill.ManyueEnhance, Skill.MoshuEnhance, 0L,
-			Skill.FuriousEnhance, Skill.LieriEnhance, Skill.LiuxingEnhance, 0L, Skill.ShuijingEnhance, 0L, Skill.DashuEnhance, 0L, Skill.GangtieEnhance);
+			Skill.FuriousEnhance, Skill.LieriEnhance, Skill.LiuxingEnhance, 0L, Skill.ShuijingEnhance, 0L,
+			Skill.DashuEnhance, 0L, Skill.GangtieEnhance);
 
 	public Map<Long, Skill> skills = Maps.newHashMap();
 
@@ -276,7 +291,7 @@ public class SkillService {
 		skills.clear();
 
 		// equip
-		
+
 		registerSkill(Skill.Zuihouzhifu, new LastSuit());
 		registerSkill(Skill.Lage, new Lage());
 		registerSkill(Skill.Xunzhang, new Xunzhang());
@@ -306,7 +321,13 @@ public class SkillService {
 		registerSkill(1074L, new Zuzhouzhiqiang());
 		registerSkill(1075L, new Wuleer());
 		registerSkill(1036L, new Yuezhihuiyi());
-		
+
+		registerSkill(1046L, new Xuewen());
+		registerSkill(1017L, new Fengwang());
+		registerSkill(1078L, new Shouweizhe());
+		registerSkill(1079L, new ClarettZhuanshu());
+		registerSkill(1081L, new Qiutu());
+
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
 		registerSkill(Skill.ManyueEnhance, new ManyueEnhance());
@@ -317,7 +338,7 @@ public class SkillService {
 		registerSkill(Skill.LiuxingEnhance, new LiuxingEnhance());
 		registerSkill(Skill.LieriEnhance, new LieriEnhance());
 		registerSkill(Skill.DashuEnhance, new DashuEnhance());
-		
+
 		registerSkill(Skill.BloodBattle, new BloodBattle());
 		registerSkill(Skill.Xinyang, new Xinyang());
 
@@ -329,7 +350,7 @@ public class SkillService {
 		registerSkill(Skill.HildaTalent, new HildaTalent());
 		registerSkill(Skill.WernerTalent, new WernerTalent());
 		registerSkill(Skill.LightOfGenesisTalent, new LightOfGenesisTalent());
-		
+
 		registerSkill(58L, new LandiusHuangqi());
 		registerSkill(10058L, new LandiusDayuanshuai());
 		registerSkill(Skill.LedynTalent, new LedynTalent());
@@ -371,39 +392,45 @@ public class SkillService {
 		registerSkill(40L, new YuusukeZhentan());
 		registerSkill(13L, new AlbedoHuzhu());
 		registerSkill(30L, new DeedlitJingling());
-		
+
 		registerSkill(75L, new RianaYinshi());
 		registerSkill(10075L, new RianaXianzhi());
-		
+
 		registerSkill(92L, new LordOfCrimsonXuejing());
 		registerSkill(10092L, new LordOfCrimsonYixing());
-		
+
 		registerSkill(26L, new EluciaHaiqi());
 		registerSkill(10026L, new EluciaHuangjia());
-		
+
 		registerSkill(68L, new LunaShengtianma());
 		registerSkill(10068L, new LunaGongqi());
 		registerSkill(66L, new AlutemuratSP());
-		
+
 		registerSkill(32L, new BrendaDoushen());
 		registerSkill(10032L, new BrendaHuangjia());
-		
+
 		registerSkill(35L, new VirashHaidou());
 		registerSkill(10035L, new VirashJianshi());
-		
+
 		registerSkill(46L, new AlustrielLangqi());
-		
+
 		registerSkill(64L, new SchelfanielWangnv());
 		registerSkill(10064L, new SchelfanielWushi());
-		
+
 		registerSkill(59L, new RachelMoneng());
 		registerSkill(10059L, new RachelShenshi());
-		
+
 		registerSkill(78L, new LedynWangzhe());
 		registerSkill(10078L, new LedynShengqi());
-		
+
 		registerSkill(34L, new MysteryKnightFaqi());
-		
+
+		registerSkill(47L, new ClarettLongqi());
+		registerSkill(10047L, new ClarettJianji());
+
+		registerSkill(60L, new RanfordJianshen());
+		registerSkill(10060L, new RanfordQishi());
+
 		// soldier
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
@@ -420,7 +447,7 @@ public class SkillService {
 		registerSkill(Skill.Longqi, new Longqi());
 		registerSkill(Skill.Senlinjisi, new Senlinjisi());
 		registerSkill(Skill.Shixianggui, new Shixianggui());
-		registerSkill(Skill.Shurenshouwei, new Shurenshouwei());	
+		registerSkill(Skill.Shurenshouwei, new Shurenshouwei());
 		registerSkill(Skill.Tianshi, new Tianshi());
 		registerSkill(Skill.Wumianzhe, new Wumianzhe());
 		registerSkill(Skill.Xiyidaoke, new Xiyidaoke());
@@ -431,7 +458,7 @@ public class SkillService {
 		registerSkill(Skill.Tiankongsheshou, new Tiankongsheshou());
 		registerSkill(Skill.Anjingling, new Anjingling());
 		registerSkill(Skill.Feiwunvshi, new Feiwunvshi());
-		
+
 		registerSkill(2020L, new Yaojinggongqi());
 		registerSkill(2034L, new Jinweibubing());
 		registerSkill(2035L, new Jiwushen());
@@ -442,9 +469,9 @@ public class SkillService {
 		registerSkill(2040L, new Shenguanqishi());
 		registerSkill(2041L, new Anshazhe());
 		registerSkill(2042L, new Tujinuqibing());
-		registerSkill(2043L, new Huonujujishou());		
+		registerSkill(2043L, new Huonujujishou());
 		registerSkill(2044L, new Dajingling());
-		
+
 		registerSkill(2045L, new Airenmaoxianzhe());
 		registerSkill(2046L, new Toushiche());
 		registerSkill(2047L, new Jinweiqiangbing());
@@ -462,7 +489,7 @@ public class SkillService {
 		registerSkill(2061L, new Renjutongling());
 		registerSkill(2062L, new Chaoxijingling());
 		registerSkill(2063L, new Jinjilianjinshi());
-		registerSkill(2064L, new Nanwu());	
+		registerSkill(2064L, new Nanwu());
 		registerSkill(2065L, new Xixuebianfu());
 		registerSkill(2066L, new Diyuquan());
 		registerSkill(2067L, new Guxi());
@@ -472,14 +499,14 @@ public class SkillService {
 		registerSkill(2074L, new Silingqishi());
 		registerSkill(2075L, new Zhumojingling());
 		registerSkill(2076L, new Shenguan());
-		
+
 		registerSkill(2051L, new Zhongzhuangbubing());
 		registerSkill(2054L, new Wangnvqinwei());
 		registerSkill(2071L, new Shengdianqishi());
 		registerSkill(2073L, new Zhongzhuangkulou());
-		
+
 		registerSkill(Skill.Wushi, new Wushi());
-		
+
 		// action
 		registerSkill(Skill.Shimeng, new DreamAction());
 		registerSkill(Skill.Weifengchongzhen, new Weifengchongzhen());
@@ -508,14 +535,14 @@ public class SkillService {
 		registerSkill(1643L, new Fengren());
 		registerSkill(1646L, new Benlei());
 		registerSkill(1648L, new Heiyao());
-		
+
 		registerSkill(1653L, new Feicuimoshi());
 		registerSkill(1652L, new Feicuipofeng());
 		registerSkill(1655L, new Shenfa());
 		registerSkill(1658L, new Molizhendang());
 		registerSkill(1660L, new Pomiezhimao());
-		
-	
+		registerSkill(1662L, new Leidongbenxi());
+
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());
 		registerSkill(Skill.BernhardtSuper, new BernhardtSuper());
@@ -527,7 +554,10 @@ public class SkillService {
 		registerSkill(Skill.XieshenShield, new XieshenShield());
 		registerSkill(Skill.Bihuzhijian, new Bihuzhijian());
 		registerSkill(Skill.LunaHalo, new LunaHalo());
-		
+		registerSkill(Skill.ZhishuiHalo, new Zhishui());
+		registerSkill(Skill.LandiusSuper, new LandiusSuper());
+		registerSkill(Skill.RanfordHalo, new RanfordHalo());
+
 		skills.putAll(barrackSkills.getAllBarrackSkills());
 	}
 
@@ -582,8 +612,8 @@ public class SkillService {
 
 	public List<Skill> getSkills(Hero hero, Soldier soldier, long actionId, int enhance, Map<String, Equip> equips,
 			int roleType) {
-		log.info("get skills for roleType:"+roleType);
-		//List<Skill> result = new ArrayList<Skill>();
+		log.info("get skills for roleType:" + roleType);
+		// List<Skill> result = new ArrayList<Skill>();
 		List<Skill> result = Lists.newCopyOnWriteArrayList();
 		if (hero != null) {
 			loadSkill(hero.getSkills(), result, roleType);
@@ -632,20 +662,16 @@ public class SkillService {
 			checkChild(s, result);
 		});
 
-		return result.stream().filter(s->checkSkillType(s.getSkillType(), roleType)).collect(Collectors.toList());
+		return result.stream().filter(s -> checkSkillType(s.getSkillType(), roleType)).collect(Collectors.toList());
 	}
-	
-	private void checkChild(Skill skill, List<Skill> result)
-	{
-		//log.info("check child for skill:"+skill.getName());
+
+	private void checkChild(Skill skill, List<Skill> result) {
+		// log.info("check child for skill:"+skill.getName());
 		skill.childSkill().forEach(cs -> {
 			result.add(cs);
 			checkChild(cs, result);
 		});
 
-		
 	}
 
 }
-
-

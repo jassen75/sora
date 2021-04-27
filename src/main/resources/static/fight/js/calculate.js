@@ -799,6 +799,7 @@ function oneHit(coefficient, panel1, panel2, critcal, attackType, counter)
 	var cp = counter["physic"];
 	var cm = counter["magic"];
 	var igd = panel1["ignoreDef"];
+	var result = 0;
 
 	if(attackType)
 	{
@@ -808,7 +809,7 @@ function oneHit(coefficient, panel1, panel2, critcal, attackType, counter)
 		{
 			return 1;
 		}
-		return Math.floor(coefficient * (realAttack - realDef) * (1+(panel1["damageInc"]-panel2["physicDamageDec"])/100.0)*c /2) ;
+		result = Math.floor(coefficient * (realAttack - realDef) * (1+(panel1["damageInc"]-panel2["physicDamageDec"])/100.0)*c /2) ;
 	} else	
 	{
 		var attack = panel1["isSoldier"] ? panel1["attack"]:panel1["intel"];
@@ -818,9 +819,14 @@ function oneHit(coefficient, panel1, panel2, critcal, attackType, counter)
 		{
 			return 1;
 		}
-		return Math.floor(coefficient * (realAttack- realDef)*
+		result = Math.floor(coefficient * (realAttack- realDef)*
 			(1+(panel1["damageInc"]-panel2["magicDamageDec"])/100.0)* c /2) ;
 	}
+	if(result<=0)
+	{
+		result=1;
+	}
+	return result;
 }
 
 function criticalProb(panel1, panel2)
