@@ -81,7 +81,7 @@ public class Lage extends Skill {
     {
 		if(this.getCondition().valid(fightInfo, isAttack))
 		{
-			log.info("lage is true");
+			//log.info("lage is true");
 			this.dealFixDamage(fightInfo, !isAttack, fightInfo.getAttacker().getHeroPanel().getAttack(), Scope.All);	
 		}
     }

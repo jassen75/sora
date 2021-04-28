@@ -24,7 +24,7 @@ public class Wuleer extends Skill {
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
-		return Lists.newArrayList(new Enhance(BuffType.DamageInc, -10, Scope.Hero));
+		return Lists.newArrayList(new Enhance(BuffType.DamageInc, -10, Scope.Hero),new Enhance(BuffType.Range, 1, Scope.Soldier));
 	}
 	
 	public List<Skill> childSkill() {
@@ -48,7 +48,7 @@ public class Wuleer extends Skill {
 			@Override
 			public List<Effect> getEffects() {
 				// TODO Auto-generated method stub
-				return Lists.newArrayList(new Enhance(BuffType.Range, 1, Scope.All));
+				return Lists.newArrayList(new Enhance(BuffType.Range, 1, Scope.Hero));
 			}
 			
 		});

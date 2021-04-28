@@ -43,7 +43,7 @@ public abstract class UserCondition implements Condition{
 		Map<String, Boolean> m = fightInfo.getRole(isAttack).getUserConditionChecked();
 		if(m!= null && m.containsKey(getName()))
 		{
-			log.info(getName()+":"+m.get(getName()));
+			//log.info(getName()+":"+m.get(getName()));
 			result =  m.get(getName());
 		} else
 		{

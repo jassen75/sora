@@ -24,8 +24,8 @@ public class NoFeatureCondition implements Condition {
 	@Override
 	public boolean valid(FightInfo fightInfo, boolean isAttack) {
 		if (fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures().containsKey(featureName)) {
-			log.info(fightInfo.getEnemyRole(isAttack).getHero().getName() + " feature[" + featureName + "]"
-					+ fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures().get(featureName));
+//			log.info(fightInfo.getEnemyRole(isAttack).getHero().getName() + " feature[" + featureName + "]"
+//					+ fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures().get(featureName));
 			return !(Boolean) fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures().get(featureName);
 		}
 		// TODO Auto-generated method stub

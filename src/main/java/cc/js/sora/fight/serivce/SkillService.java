@@ -287,7 +287,7 @@ public class SkillService {
 	}
 
 	private void init() {
-		log.info("init skills");
+		//log.info("init skills");
 		skills.clear();
 
 		// equip
@@ -612,7 +612,7 @@ public class SkillService {
 
 	public List<Skill> getSkills(Hero hero, Soldier soldier, long actionId, int enhance, Map<String, Equip> equips,
 			int roleType) {
-		log.info("get skills for roleType:" + roleType);
+		//log.info("get skills for roleType:" + roleType);
 		// List<Skill> result = new ArrayList<Skill>();
 		List<Skill> result = Lists.newCopyOnWriteArrayList();
 		if (hero != null) {

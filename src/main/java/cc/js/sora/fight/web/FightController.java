@@ -83,7 +83,7 @@ public class FightController {
 		lock.lock();
 		try {
 			Hero hero = heroRepository.findById(heroId).get();
-			log.info(hero.toString());
+			//log.info(hero.toString());
 			return hero;
 		} finally {
 			lock.unlock();
@@ -93,7 +93,13 @@ public class FightController {
 	
 	@RequestMapping(path = "/sync", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE, consumes = MediaType.APPLICATION_JSON_VALUE)
 	public Map<String, Object>  sync(@RequestBody FightInfo fight) {
-		
+		if(fight.getAttacker() == null || fight.getDefender()==null || fight.getAttacker().getHero()==null || fight.getDefender().getHero()==null)
+		{
+			log.warn("information lose!");
+		} else
+		{
+			log.info("calculating:["+fight.getAttacker().getHero().getName()+"] vs ["+fight.getDefender().getHero().getName()+"]");
+		}
 		 Map<String, Object> result =fightService.calculatePanel(fight);
 		return result;
 	}

@@ -50,7 +50,7 @@ public class Chenshi extends Skill {
     {
 		if(this.getCondition().valid(fightInfo, isAttack))
 		{
-			log.info("chenshi is true");
+			//log.info("chenshi is true");
 			int hlf = fightInfo.getDefender().getHeroLeftLife() + Double.valueOf(fightInfo.getDefender().getHeroPanel().getLife() * 0.1).intValue();
 			if(hlf > fightInfo.getDefender().getHeroPanel().getLife())
 			{

@@ -41,9 +41,9 @@ public class FightService {
 
 	public Map<String, Object> calculatePanel(FightInfo fightInfo) {
 		Map<String, Object> result = Maps.newHashMap();
-		log.info(fightInfo.toString());
+		//log.info(fightInfo.toString());
 		fightInfo.clean();
-		log.info("****************** defender soldier left life:" + fightInfo.getDefender().getSoldierLeftLife());
+		//log.info("****************** defender soldier left life:" + fightInfo.getDefender().getSoldierLeftLife());
 		List<Skill> attackerSkills = skillService.getSkills(fightInfo.getAttacker().getHero(),
 				fightInfo.getAttacker().getSoldier(),
 				fightInfo.getAttacker().getAction() == null ? 0 : fightInfo.getAttacker().getAction().getId(),
@@ -88,8 +88,8 @@ public class FightService {
 		fightInfo.getAttacker().setDebuffs(getDebuffList(attackerCheckedSkills));
 		fightInfo.getDefender().setDebuffs(getDebuffList(defenderCheckedSkills));
 
-		log.info("attacker debuffs:" + fightInfo.getAttacker().getDebuffs());
-		log.info("defender debuffs:" + fightInfo.getDefender().getDebuffs());
+		//log.info("attacker debuffs:" + fightInfo.getAttacker().getDebuffs());
+		//log.info("defender debuffs:" + fightInfo.getDefender().getDebuffs());
 		attackerSkills.stream().filter(s -> s.getBattleType() >= 1800 && s.getBattleType() < 2800)
 				.filter(s -> s.filterSupportSkill(fightInfo.getAttacker().getUserConditionChecked())).sorted(c)
 				.forEach(s -> attackerCheckedSkills.add(checkSkill(fightInfo, s, true)));
@@ -104,8 +104,8 @@ public class FightService {
 				.filter(s -> s.filterSupportSkill(fightInfo.getDefender().getUserConditionChecked())).sorted(c)
 				.forEach(s -> defenderCheckedSkills.add(checkSkill(fightInfo, s, false)));
 
-		log.info("attacker skill list size:" + attackerCheckedSkills.size());
-		log.info("defender skill list size:" + defenderCheckedSkills.size());
+		//log.info("attacker skill list size:" + attackerCheckedSkills.size());
+		//log.info("defender skill list size:" + defenderCheckedSkills.size());
 		fightInfo.getAttacker().setHeroPanel(
 				calculateHero(fightInfo, true, attackerCheckedSkills, fightInfo.getDefender().getDebuffs()));
 		fightInfo.getAttacker().setSoldierPanel(
@@ -342,7 +342,7 @@ public class FightService {
 								break;
 							case PreBattleDamage:
 								preBattleDamage += number;
-								log.info("preBattleDamage===" + preBattleDamage);
+								//log.info("preBattleDamage===" + preBattleDamage);
 								break;
 							case Range:
 								range += number;
@@ -462,7 +462,7 @@ public class FightService {
 		}
 
 		List<Debuff> dbs = Lists.newArrayList(debuffs.values());
-		log.info("debuffs:" + dbs);
+		//log.info("debuffs:" + dbs);
 		if (dbs != null && dbs.size() > 0) {
 			for (int k = 0; k < dbs.size(); k++) {
 				Debuff bu = dbs.get(k);
@@ -548,7 +548,7 @@ public class FightService {
 		if(panelInfo.getFeatures().containsKey(Feature.AddAttackToDef))
 		{
 			atd = panelInfo.getAttack()* ((Integer)panelInfo.getFeatures().get(Feature.AddAttackToDef)) / 100.0;
-			log.info("atd==="+atd);
+			//log.info("atd==="+atd);
 		}
 		if(panelInfo.getFeatures().containsKey(Feature.AddAttackToPhysic))
 		{
@@ -609,19 +609,19 @@ public class FightService {
 		{
 			panelInfo.setAttack(changedAttack);
 		}
-		log.info("current attack=="+panelInfo.getAttack());
+		//log.info("current attack=="+panelInfo.getAttack());
 		if(panelInfo.getFeatures().containsKey(Feature.AddMagicToAttack))
 		{
 			double amta = (Double)panelInfo.getFeatures().get(Feature.AddMagicToAttack); 
 			panelInfo.setAttack(panelInfo.getAttack() + Double.valueOf(Math.floor(panelInfo.getMagic() * amta)).intValue());
 		}
-		log.info("current attack=="+panelInfo.getAttack());
+		//log.info("current attack=="+panelInfo.getAttack());
 		if(panelInfo.getFeatures().containsKey(Feature.AddPhysicToAttack))
 		{
 			double apta = (Double)panelInfo.getFeatures().get(Feature.AddPhysicToAttack); 
 			panelInfo.setAttack(panelInfo.getAttack() + Double.valueOf(Math.floor(panelInfo.getPhysic() * apta)).intValue());
 		}
-		log.info("current attack=="+panelInfo.getAttack());
+		//log.info("current attack=="+panelInfo.getAttack());
 		panelInfo.setTech(Double.valueOf(Math.floor(tech * (1 + ti / 100.0) + panelInfo.getTechJJC())).intValue());
 		panelInfo.setLife(Double.valueOf(Math.floor(life * (1 + (li + 40) / 100.0) + panelInfo.getLifeJJC())).intValue());
 
@@ -654,7 +654,7 @@ public class FightService {
 		panelInfo.setRange(range);
 
 		panelInfo.setSkillDamage(si);
-		log.info("hero ignore def:"+igd);
+		//log.info("hero ignore def:"+igd);
 		panelInfo.setIgnoreDef(igd);
 		panelInfo.setPreFixDamage(this.calculatePreFixDamage(panelInfo));
 		panelInfo.setPreFixDamageToSelf(this.calculatePreFixDamageToSelf(panelInfo));
@@ -980,7 +980,7 @@ public class FightService {
 		panelInfo.setCriticalDamageDec(cdd);
 		panelInfo.setRange(range);
 		panelInfo.setMedical(0);
-		log.info("soldier ignore def:"+igd);
+		//log.info("soldier ignore def:"+igd);
 		panelInfo.setIgnoreDef(igd);
 
 		for (int i = 0; i < counters.size(); i++) {
