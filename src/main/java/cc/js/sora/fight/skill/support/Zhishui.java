@@ -8,6 +8,7 @@ import cc.js.sora.fight.BuffType;
 import cc.js.sora.fight.Condition;
 import cc.js.sora.fight.Effect;
 import cc.js.sora.fight.Enhance;
+import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.DistanceGreaterThanCondition;
@@ -29,6 +30,11 @@ public class Zhishui extends Skill {
 	public Condition getCondition() {
 		return new UserCondition() {
 
+			public String getName()
+			{
+				return "Zhishui";
+			}
+			
 			@Override
 			public boolean getSupport()
 			{
@@ -56,6 +62,9 @@ public class Zhishui extends Skill {
 	
 	public List<Skill> childSkill() {
 		return Lists.newArrayList(new Skill() {
+			public long getId() {
+				return Skill.ZhishuiHalo;
+			}
 
 			@Override
 			public String getName() {
@@ -64,7 +73,38 @@ public class Zhishui extends Skill {
 			}
 
 			public Condition getCondition() {
-				return new DistanceGreaterThanCondition(1);
+				return new UserCondition() {
+					
+					public String getName()
+					{
+						return "Zhishui";
+					}
+
+					@Override
+					public boolean getSupport()
+					{
+						return true;
+					}
+					
+					@Override
+					public String getDesc() {
+						return "止水光环效果";
+					}
+
+					@Override
+					public boolean defaultValid() {
+						return false;
+					}
+					
+					public boolean needCheck()
+					{
+						return true;
+					}
+					
+					public boolean check(FightInfo fightInfo, boolean isAttack) {
+						return new DistanceGreaterThanCondition(1).valid(fightInfo, isAttack);
+					}
+				};
 			}
 			
 			public int getSkillType() {
