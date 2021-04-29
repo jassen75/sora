@@ -879,7 +879,7 @@ function getCounter(attackerRole, attackerKind, defenderKind)
 		
 		if(counter["buffType"]=="Intel")
 		{
-			if(!attackerPanel["isPhyisc"])
+			if(!attackerPanel["attackType"])
 			{
 				if(counter[attackerKind] && counter["enemyType"] == defenderType || counter["enemyType"] == 0)
 				{
