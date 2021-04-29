@@ -28,7 +28,7 @@ bash stop.sh
 
 bash start.sh 1.05
 
-
+docker logs -f sora
 
 # cloud config
 
