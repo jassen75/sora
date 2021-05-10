@@ -864,22 +864,22 @@ function getCounter(attackerRole, attackerKind, defenderKind)
 		var counter = attackerCounters[i];
 		if(counter["buffType"]=="Attack")
 		{
-			if(attackerPanel["attackType"])
-			{
+//			if(attackerPanel["attackType"])
+//			{
 				if(counter[attackerKind] && counter["enemyType"] == defenderType || counter["enemyType"] == 0)
 				{
 					result["attack"]+=counter["number"];
 				}
-			}
-			else
-			{
-				//alert("it is not physic");
-			}
+//			}
+//			else
+//			{
+//				
+//			}
 		}
 		
 		if(counter["buffType"]=="Intel")
 		{
-			if(!attackerPanel["isPhyisc"])
+			if(!attackerPanel["attackType"])
 			{
 				if(counter[attackerKind] && counter["enemyType"] == defenderType || counter["enemyType"] == 0)
 				{

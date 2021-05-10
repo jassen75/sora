@@ -335,7 +335,7 @@ public abstract class Skill {
 	public static final long ZhishuiHalo = 4011;
 	public static final long LandiusSuper = 4012;
 	public static final long RanfordHalo = 4013;
-	
+	public static final long EpsilonSuper = 4014;
 	
 	protected void dealFixDamage(FightInfo fightInfo, boolean isAttack, int damage, Scope scope)
     {

@@ -13,10 +13,9 @@ import cc.js.sora.fight.Scope;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.GroupedUserCondition;
 
-public class HildaSuper extends Skill {
-
+public class EpsilonSuper extends Skill {
 	public long getId() {
-		return Skill.HildaSuper;
+		return Skill.EpsilonSuper;
 	}
 	
 	@Override
@@ -28,7 +27,8 @@ public class HildaSuper extends Skill {
 	@Override
 	public List<Effect> getEffects() {
 		return Lists.newArrayList(
-				new Buff("HildaSuper", Lists.newArrayList(new Enhance(BuffType.DamageInc, 12, Scope.All))));
+				new Buff("EpsilonSuper", Lists.newArrayList(new Enhance(BuffType.CriticalDamageInc, 12, Scope.All),
+						new Enhance(BuffType.CriticalProbInc, 12, Scope.All))));
 	}
 	
 	public int getSkillType() {
@@ -57,7 +57,7 @@ public class HildaSuper extends Skill {
 			
 			public String getName() 
 			{
-				return "HildaSuper";
+				return "EpsilonSuper";
 			}
 			@Override
 			public boolean defaultValid() {
@@ -68,7 +68,7 @@ public class HildaSuper extends Skill {
 			@Override
 			public String getDesc() {
 				// TODO Auto-generated method stub
-				return "转生之光队友";
+				return "流星直击队友";
 			}
 
 			@Override
@@ -79,4 +79,5 @@ public class HildaSuper extends Skill {
 
 		};
 	}
+
 }

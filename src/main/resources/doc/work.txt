@@ -1,0 +1,142 @@
+
+
+2002-2006
+2006-2009
+
+
+2009
+
+delphi(c++) 做team member分享工具
+
+IPTV
+参与EPG模块 3.04-4.0版本开发
+
+
+2010-2012 EPG架构调整 4.0版本开发
+
+spring
+设计模式
+领域驱动
+
+jmap
+jconsole
+
+H2/Xbase
+View mapping
+
+2013 
+
+tekelec
+
+PCRF
+
+wireline
+MPE模块（COPS协议 Diameter协议(GX, RX)）
+orphan session
+TPD comco
+
+2014
+
+wireline修bug
+memory leak 问题
+merge code from cmcc to wireline
+
+2014.7
+transfor to mediation(batch develop)
+OCUDR(soap)
+test using soap ui
+考虑OCUDR failover(load shedding)
+mediationmgr
+
+2014.8
+MDF performance TEST
+Batch performance 优化（10w ）
+
+2014 12.31 
+(he离职)
+transfer to sharp
+upgrade data migration
+
+2015.3
+ADC feature 
+
+2015.6
+mediation 优化（去掉本地comco）
+配置化
+Future
+
+2016
+CMCC merge
+SH SY(charles code)
+
+join oracle
+
+2016 4
+CMCC merge (mediation part)
+
+修cmcc bug
+
+2017 3
+
+join incubation team
+SDWAN（grafana） intellience edge
+
+metrics(influxdb)
+
+2017 6
+SMI （MCDA）  mobile connect
+user portal, openid, 
+springboot   opensource:mitreid-connect-server
+-filter
+oauth2
+基于JWT
+微服务 敏捷开发
+security
+code -> access token -> user token
+
+2018 7
+
+smi 上云-> GA（2019.1）
+use kafka
+pipeline
+
+2018.11
+UMS  ojet
+OCSG
+virtual box
+
+2019.2
+SDWAN
+
+tanuki
+jpa
+
+创建provision项目（new config editor）
+
+gitlabci
+docker
+
+Makefile
+
+2019.5
+talari SDWAN上云（SN100）
+remote db suport
+config editor(perl+apache)
+sureczar(c++)
+
+2020.12
+ECP
+iot gateway(kura) -> opcua server
+hono  minikube
+digital twin(ditto)
+
+match
+
+boostrap
+vue
+
+2021.5
+
+
+
+sora
