@@ -535,6 +535,11 @@ public class FightService {
 			pd_counters.add(10.0);
 			md_counters.add(10.0);
 		}
+		
+		if (land == Land.Stone) {
+			pd_counters.add(5.0);
+			md_counters.add(5.0);
+		}
 
 		if (land == Land.Wall) {
 			pd_counters.add(30.0);
@@ -944,6 +949,11 @@ public class FightService {
 		if (land == Land.Mountain) {
 			pd_counters.add(10.0);
 			md_counters.add(10.0);
+		}
+		
+		if (land == Land.Stone) {
+			pd_counters.add(5.0);
+			md_counters.add(5.0);
 		}
 
 		if (land == Land.Wall) {

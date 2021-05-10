@@ -45,12 +45,14 @@ import cc.js.sora.fight.skill.action.Lingwan;
 import cc.js.sora.fight.skill.action.Molizhendang;
 import cc.js.sora.fight.skill.action.Pomiezhimao;
 import cc.js.sora.fight.skill.action.Qiangfengjuji;
+import cc.js.sora.fight.skill.action.Senluo;
 import cc.js.sora.fight.skill.action.Shenfa;
 import cc.js.sora.fight.skill.action.Shengguangzhiyong;
 import cc.js.sora.fight.skill.action.Shengwangzhiji;
 import cc.js.sora.fight.skill.action.Shengyan;
 import cc.js.sora.fight.skill.action.Shiying;
 import cc.js.sora.fight.skill.action.Weifengchongzhen;
+import cc.js.sora.fight.skill.action.Xiongxingmoren;
 import cc.js.sora.fight.skill.action.XunyingShaji;
 import cc.js.sora.fight.skill.action.Yazhisheji;
 import cc.js.sora.fight.skill.action.Yeshouzhenshe;
@@ -112,6 +114,8 @@ import cc.js.sora.fight.skill.heart.EluciaHaiqi;
 import cc.js.sora.fight.skill.heart.EluciaHuangjia;
 import cc.js.sora.fight.skill.heart.EmiliaShengqi;
 import cc.js.sora.fight.skill.heart.EmiliaShengqiang;
+import cc.js.sora.fight.skill.heart.EpsilonJianshi;
+import cc.js.sora.fight.skill.heart.EpsilonSuti;
 import cc.js.sora.fight.skill.heart.FlorentiaJunshi;
 import cc.js.sora.fight.skill.heart.FlorentiaZaixiang;
 import cc.js.sora.fight.skill.heart.FreyaSP;
@@ -131,6 +135,8 @@ import cc.js.sora.fight.skill.heart.LukeDazhujiao;
 import cc.js.sora.fight.skill.heart.LukeYinshi;
 import cc.js.sora.fight.skill.heart.LunaGongqi;
 import cc.js.sora.fight.skill.heart.LunaShengtianma;
+import cc.js.sora.fight.skill.heart.MuMuxianzhe;
+import cc.js.sora.fight.skill.heart.MuWushi;
 import cc.js.sora.fight.skill.heart.MysteryKnightFaqi;
 import cc.js.sora.fight.skill.heart.RachelMoneng;
 import cc.js.sora.fight.skill.heart.RachelShenshi;
@@ -224,6 +230,7 @@ import cc.js.sora.fight.skill.soldier.Zhumojingling;
 import cc.js.sora.fight.skill.support.BernhardtSuper;
 import cc.js.sora.fight.skill.support.Bihuzhijian;
 import cc.js.sora.fight.skill.support.ElwinSuper;
+import cc.js.sora.fight.skill.support.EpsilonSuper;
 import cc.js.sora.fight.skill.support.HildaSuper;
 import cc.js.sora.fight.skill.support.LandiusSuper;
 import cc.js.sora.fight.skill.support.LunaHalo;
@@ -431,6 +438,12 @@ public class SkillService {
 		registerSkill(60L, new RanfordJianshen());
 		registerSkill(10060L, new RanfordQishi());
 
+		registerSkill(99L, new EpsilonJianshi());
+		registerSkill(10099L, new EpsilonSuti());
+		
+		registerSkill(98L, new MuWushi());
+		registerSkill(10098L, new MuMuxianzhe());
+		
 		// soldier
 		registerSkill(Skill.MonvSkill, new WizardSkill());
 		registerSkill(Skill.HuangjiashijiuSkill, new GriffinSkill());
@@ -542,12 +555,16 @@ public class SkillService {
 		registerSkill(1658L, new Molizhendang());
 		registerSkill(1660L, new Pomiezhimao());
 		registerSkill(1662L, new Leidongbenxi());
+		registerSkill(1666L, new Xiongxingmoren());
+		registerSkill(1667L, new Senluo());
+		
 
 		registerSkill(Skill.ZillagodSuper, new ZillagodSuper());
 		registerSkill(Skill.ElwinSuper, new ElwinSuper());
 		registerSkill(Skill.BernhardtSuper, new BernhardtSuper());
 		registerSkill(Skill.HildaSuper, new HildaSuper());
 		registerSkill(Skill.YuusukeSuper, new YuusukeSuper());
+		registerSkill(Skill.EpsilonSuper, new EpsilonSuper());
 
 		registerSkill(Skill.SuperBuff, new SuperBuff());
 		registerSkill(Skill.Shenji, new Shenji());
@@ -557,6 +574,8 @@ public class SkillService {
 		registerSkill(Skill.ZhishuiHalo, new Zhishui());
 		registerSkill(Skill.LandiusSuper, new LandiusSuper());
 		registerSkill(Skill.RanfordHalo, new RanfordHalo());
+		
+		
 
 		skills.putAll(barrackSkills.getAllBarrackSkills());
 	}

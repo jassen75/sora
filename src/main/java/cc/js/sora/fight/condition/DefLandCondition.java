@@ -15,7 +15,7 @@ public class DefLandCondition implements Condition {
 		return "处于防御地形";
 	}
 
-	private List<Land> defLand = Lists.newArrayList(Land.Mountain, Land.Wall, Land.Wood);
+	private List<Land> defLand = Lists.newArrayList(Land.Mountain, Land.Wall, Land.Wood, Land.Stone);
 	
 	@Override
 	public boolean valid(FightInfo fightInfo, boolean isAttack) {
