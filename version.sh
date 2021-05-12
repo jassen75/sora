@@ -1,3 +1,3 @@
 #!/bin/bash
 
-export SORA_VERSION=1.0584
+export SORA_VERSION=1.0585
