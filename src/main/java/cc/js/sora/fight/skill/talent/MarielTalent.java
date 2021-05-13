@@ -53,43 +53,6 @@ public class MarielTalent extends Skill {
 			@Override
 			public String getName() {
 				// TODO Auto-generated method stub
-				return "玛丽埃尔*异端裁决者大心";
-			}
-
-			public int getSkillType() {
-				return 4;
-			}
-
-			@Override
-			public List<Effect> getEffects() {
-				// TODO Auto-generated method stub
-				return Lists.newArrayList(new Enhance(BuffType.DamageDec, 10, Scope.All));
-			}
-		}, new Skill() {
-
-			@Override
-			public String getName() {
-				// TODO Auto-generated method stub
-				return "玛丽埃尔*异端裁决者大心";
-			}
-
-			@Override
-			public Condition getCondition() {
-				// TODO Auto-generated method stub
-				return new FullHealthCondition();
-			}
-
-			@Override
-			public List<Effect> getEffects() {
-				// TODO Auto-generated method stub
-				return Lists.newArrayList(new Enhance(BuffType.DamageInc, 10, Scope.All));
-			}
-
-		}, new Skill() {
-
-			@Override
-			public String getName() {
-				// TODO Auto-generated method stub
 				return "玛丽埃尔天赋";
 			}
 

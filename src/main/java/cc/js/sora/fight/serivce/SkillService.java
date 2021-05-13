@@ -66,6 +66,7 @@ import cc.js.sora.fight.skill.enhance.ManyueEnhance;
 import cc.js.sora.fight.skill.enhance.MoshuEnhance;
 import cc.js.sora.fight.skill.enhance.ShuijingEnhance;
 import cc.js.sora.fight.skill.enhance.WindEnhance;
+import cc.js.sora.fight.skill.equip.Bazhe;
 import cc.js.sora.fight.skill.equip.Cangbaizhizhang;
 import cc.js.sora.fight.skill.equip.Canyue;
 import cc.js.sora.fight.skill.equip.Chenhun;
@@ -136,6 +137,8 @@ import cc.js.sora.fight.skill.heart.LukeDazhujiao;
 import cc.js.sora.fight.skill.heart.LukeYinshi;
 import cc.js.sora.fight.skill.heart.LunaGongqi;
 import cc.js.sora.fight.skill.heart.LunaShengtianma;
+import cc.js.sora.fight.skill.heart.MarielCiSheng;
+import cc.js.sora.fight.skill.heart.MarielYiduan;
 import cc.js.sora.fight.skill.heart.MuMuxianzhe;
 import cc.js.sora.fight.skill.heart.MuWushi;
 import cc.js.sora.fight.skill.heart.MysteryKnightFaqi;
@@ -336,7 +339,7 @@ public class SkillService {
 		registerSkill(1079L, new ClarettZhuanshu());
 		registerSkill(1081L, new Qiutu());
 		registerSkill(1082L, new Guanghuitou());
-		
+		registerSkill(1069L, new Bazhe());
 
 		registerSkill(Skill.WindEnhance, new WindEnhance());
 		registerSkill(Skill.FuriousEnhance, new FuriousEnhance());
@@ -356,7 +359,9 @@ public class SkillService {
 		registerSkill(Skill.PatyleTalent, new PatyleTalent());
 		registerSkill(Skill.TowaTalent, new TowaTalent());
 
-		registerSkill(Skill.MarielTalent, new MarielTalent());
+		registerSkill(10L, new MarielYiduan());
+		registerSkill(10010L, new MarielCiSheng());
+		
 		registerSkill(Skill.HildaTalent, new HildaTalent());
 		registerSkill(Skill.WernerTalent, new WernerTalent());
 		registerSkill(Skill.LightOfGenesisTalent, new LightOfGenesisTalent());
