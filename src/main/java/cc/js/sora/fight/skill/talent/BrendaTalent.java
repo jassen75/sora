@@ -25,11 +25,11 @@ public class BrendaTalent extends Skill {
 		// TODO Auto-generated method stub
 		return "布琳达天赋";
 	}
-	
+
 	@Override
 	public Condition getCondition() {
 		// TODO Auto-generated method stub
-		return new Condition(){
+		return new Condition() {
 
 			@Override
 			public String getDesc() {
@@ -40,8 +40,10 @@ public class BrendaTalent extends Skill {
 			@Override
 			public boolean valid(FightInfo fightInfo, boolean isAttack) {
 				// TODO Auto-generated method stub
-				return fightInfo.getRole(isAttack).getLifePercent() >= fightInfo.getEnemyRole(isAttack).getLifePercent();
-			}};
+				return fightInfo.getRole(isAttack).getLifePercent() >= fightInfo.getEnemyRole(isAttack)
+						.getLifePercent();
+			}
+		};
 	}
 
 	@Override
@@ -49,7 +51,7 @@ public class BrendaTalent extends Skill {
 		// TODO Auto-generated method stub
 		return Lists.newArrayList(new Enhance(BuffType.DamageInc, 30, Scope.All));
 	}
-	
+
 	public List<Skill> childSkill() {
 		return Lists.newArrayList(new Zaiyidong(), new Skill() {
 
@@ -119,7 +121,8 @@ public class BrendaTalent extends Skill {
 					}
 					
 					public boolean check(FightInfo fightInfo, boolean isAttack) {
-						return new NoFeatureCondition(Feature.ImmuneToDebuff, "对面不免疫弱化").valid(fightInfo, isAttack);
+						return new NoFeatureCondition(Feature.ImmuneToDebuff, "对面不免疫弱化").valid(fightInfo, isAttack) && 
+								new NoFeatureCondition(Feature.ImmuneToADReduce, "对面不免疫攻防降低").valid(fightInfo, isAttack);
 					}
 					
 				};
@@ -159,7 +162,8 @@ public class BrendaTalent extends Skill {
 					}
 					
 					public boolean check(FightInfo fightInfo, boolean isAttack) {
-						return new NoFeatureCondition(Feature.ImmuneToDebuff, "对面不免疫弱化").valid(fightInfo, isAttack);
+						return new NoFeatureCondition(Feature.ImmuneToDebuff, "对面不免疫弱化").valid(fightInfo, isAttack) && 
+								new NoFeatureCondition(Feature.ImmuneToADReduce, "对面不免疫攻防降低").valid(fightInfo, isAttack);
 					}
 
 					@Override

@@ -16,7 +16,7 @@ import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.UserCondition;
 
 public class Jiwushen extends Skill {
-	
+
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
@@ -26,13 +26,13 @@ public class Jiwushen extends Skill {
 	public int getSkillType() {
 		return 4;
 	}
-	
+
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
 		return Lists.newArrayList(new Enhance(BuffType.Attack, 30, Scope.Soldier));
 	}
-	
+
 	public List<Skill> childSkill() {
 		return Lists.newArrayList(new Skill() {
 
@@ -41,20 +41,22 @@ public class Jiwushen extends Skill {
 				// TODO Auto-generated method stub
 				return "姬武神";
 			}
-			
+
 			public Condition getCondition() {
 				// TODO Auto-generated method stub
 				return new UserCondition() {
 
-					public boolean needCheck()
-					{
+					public boolean needCheck() {
 						return true;
 					}
-					
+
 					public boolean check(FightInfo fightInfo, boolean isAttack) {
-						return !fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures().containsKey(Feature.ImmuneToDebuff);
+						return !fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures()
+								.containsKey(Feature.ImmuneToDebuff)
+								&& !fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures()
+										.containsKey(Feature.ImmuneToADReduce);
 					}
-					
+
 					@Override
 					public boolean defaultValid() {
 						// TODO Auto-generated method stub
@@ -66,16 +68,16 @@ public class Jiwushen extends Skill {
 						// TODO Auto-generated method stub
 						return "75%概率触发姬武神特效";
 					}
-					
+
 				};
 			}
-			
+
 			@Override
 			public List<Effect> getEffects() {
 				// TODO Auto-generated method stub
 				return Lists.newArrayList(new Debuff(BuffType.Attack, -20), new Debuff(BuffType.Physic, -20));
 			}
-			
+
 		});
 	};
 

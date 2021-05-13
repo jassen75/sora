@@ -13,7 +13,7 @@ import cc.js.sora.fight.FightInfo;
 import cc.js.sora.fight.Skill;
 import cc.js.sora.fight.condition.UserCondition;
 
-public class Tujinuqibing extends Skill{
+public class Tujinuqibing extends Skill {
 
 	@Override
 	public String getName() {
@@ -30,14 +30,16 @@ public class Tujinuqibing extends Skill{
 				// TODO Auto-generated method stub
 				return true;
 			}
-			
-			public boolean needCheck()
-			{
+
+			public boolean needCheck() {
 				return true;
 			}
-			
+
 			public boolean check(FightInfo fightInfo, boolean isAttack) {
-				return !fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures().containsKey(Feature.ImmuneToDebuff);
+				return !fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures()
+						.containsKey(Feature.ImmuneToDebuff)
+						&& !fightInfo.getEnemyRole(isAttack).getHeroPanel().getFeatures()
+								.containsKey(Feature.ImmuneToADReduce);
 			}
 
 			@Override
@@ -45,10 +47,10 @@ public class Tujinuqibing extends Skill{
 				// TODO Auto-generated method stub
 				return "75%概率触发突击弩骑兵特效";
 			}
-			
+
 		};
 	}
-	
+
 	@Override
 	public List<Effect> getEffects() {
 		// TODO Auto-generated method stub
