@@ -142,6 +142,8 @@ import cc.js.sora.fight.skill.heart.MarielYiduan;
 import cc.js.sora.fight.skill.heart.MuMuxianzhe;
 import cc.js.sora.fight.skill.heart.MuWushi;
 import cc.js.sora.fight.skill.heart.MysteryKnightFaqi;
+import cc.js.sora.fight.skill.heart.PatyleXuement;
+import cc.js.sora.fight.skill.heart.PatyleXunmeng;
 import cc.js.sora.fight.skill.heart.RachelMoneng;
 import cc.js.sora.fight.skill.heart.RachelShenshi;
 import cc.js.sora.fight.skill.heart.RanfordJianshen;
@@ -356,7 +358,9 @@ public class SkillService {
 		registerSkill(Skill.Xinyang, new Xinyang());
 
 		// hero
-		registerSkill(Skill.PatyleTalent, new PatyleTalent());
+		registerSkill(1L, new PatyleXuement());
+		registerSkill(10001L, new PatyleXunmeng());
+		
 		registerSkill(Skill.TowaTalent, new TowaTalent());
 
 		registerSkill(10L, new MarielYiduan());

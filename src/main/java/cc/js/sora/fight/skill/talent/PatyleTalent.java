@@ -50,44 +50,17 @@ public class PatyleTalent extends Skill {
 		return Lists.newArrayList(new Counter(BuffType.Attack, 30, 0, Scope.All), new Enhance(BuffType.DamageDec, 30, Scope.All));
 	}
 	
-	public List<Skill> childSkill() {
-		return Lists.newArrayList(new Skill() {
-
-			@Override
-			public String getName() {
-				// TODO Auto-generated method stub
-				return "帕希尔*血梦之主大心";
-			}
-			
-			public int getSkillType() {
-				return 7;
-			}
-
-			@Override
-			public List<Effect> getEffects() {
-				// TODO Auto-generated method stub
-				return Lists.newArrayList(new Enhance(BuffType.DamageDec, 10, Scope.All));
-			}
-
-
-		}, new Skill() {
-
-			@Override
-			public String getName() {
-				// TODO Auto-generated method stub
-				return "帕希尔*血梦之主大心";
-			}
-
-			public int getSkillType() {
-				return 4;
-			}
-
-			@Override
-			public List<Effect> getEffects() {
-				return Lists.newArrayList(new Enhance(BuffType.DamageInc, 10, Scope.All));
-			}
-		});
-	}
+//	public List<Skill> childSkill() {
+//		return Lists.newArrayList(new Skill() {
+//
+//
+//
+//
+//		}, new Skill() {
+//
+//
+//		});
+//	}
 
 
 }
