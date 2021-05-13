@@ -22,22 +22,52 @@ public class HildaSuper extends Skill {
 	@Override
 	public String getName() {
 		// TODO Auto-generated method stub
-		return "伊普西龙超绝";
+		return "希尔达超绝";
 	}
 
 	@Override
 	public List<Effect> getEffects() {
 		return Lists.newArrayList(
-				new Buff("HildaSuper", Lists.newArrayList(new Enhance(BuffType.DamageInc, 12, Scope.All))));
+				new Buff("HildaSuper", Lists.newArrayList(new Enhance(BuffType.SkillDamage, 12, Scope.Hero))));
 	}
 	
 	public int getSkillType() {
-		return 3;
+		return 4;
 	}
 	
 	public boolean isSupportSkill()
 	{
 		return true;
+	}
+	
+	public List<Skill> childSkill() {
+		return Lists.newArrayList(new Skill() {
+			
+			public long getId() {
+				return Skill.HildaSuper;
+			}
+
+			@Override
+			public String getName() {
+				// TODO Auto-generated method stub
+				return "希尔达超绝";
+			}
+			
+			public int getSkillType() {
+				return 5;
+			}
+			
+			public int getBattleType() {
+				return 0;
+			}
+
+			@Override
+			public List<Effect> getEffects() {
+				// TODO Auto-generated method stub
+				return Lists.newArrayList(new Enhance(BuffType.DamageInc, 12, Scope.All));
+			}
+			
+		});
 	}
 
 	// 0 effect 1 pre battle 2 battle 3 post battle 4
