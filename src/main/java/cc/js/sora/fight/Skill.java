@@ -336,6 +336,10 @@ public abstract class Skill {
 	public static final long LandiusSuper = 4012;
 	public static final long RanfordHalo = 4013;
 	public static final long EpsilonSuper = 4014;
+	public static final long ImeldaWhip = 4015;
+	public static final long SissiWhiteXuanshang = 4016;
+	public static final long ImeldaTiewan = 4017;
+	
 	
 	protected void dealFixDamage(FightInfo fightInfo, boolean isAttack, int damage, Scope scope)
     {

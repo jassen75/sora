@@ -238,10 +238,13 @@ import cc.js.sora.fight.skill.support.Bihuzhijian;
 import cc.js.sora.fight.skill.support.ElwinSuper;
 import cc.js.sora.fight.skill.support.EpsilonSuper;
 import cc.js.sora.fight.skill.support.HildaSuper;
+import cc.js.sora.fight.skill.support.ImeldaTiewan;
+import cc.js.sora.fight.skill.support.ImeldaWhip;
 import cc.js.sora.fight.skill.support.LandiusSuper;
 import cc.js.sora.fight.skill.support.LunaHalo;
 import cc.js.sora.fight.skill.support.RanfordHalo;
 import cc.js.sora.fight.skill.support.Shenji;
+import cc.js.sora.fight.skill.support.SissiWhiteXuanshang;
 import cc.js.sora.fight.skill.support.XieshenShield;
 import cc.js.sora.fight.skill.support.YuusukeSuper;
 import cc.js.sora.fight.skill.support.Zhishui;
@@ -287,7 +290,7 @@ public class SkillService {
 	BarrackSkills barrackSkills = new BarrackSkills();
 
 	List<Long> globalSkills = Lists.newArrayList(Skill.SuperBuff, Skill.Shenji, Skill.XieshenShield, Skill.Bihuzhijian,
-			Skill.LunaHalo, Skill.ZhishuiHalo, Skill.RanfordHalo);
+			Skill.LunaHalo, Skill.ZhishuiHalo, Skill.RanfordHalo, Skill.ImeldaTiewan, Skill.ImeldaWhip, Skill.SissiWhiteXuanshang);
 
 	List<Long> ehanceSkills = Lists.newArrayList(0L, Skill.WindEnhance, Skill.ManyueEnhance, Skill.MoshuEnhance, 0L,
 			Skill.FuriousEnhance, Skill.LieriEnhance, Skill.LiuxingEnhance, 0L, Skill.ShuijingEnhance, 0L,
@@ -587,8 +590,10 @@ public class SkillService {
 		registerSkill(Skill.LandiusSuper, new LandiusSuper());
 		registerSkill(Skill.RanfordHalo, new RanfordHalo());
 		
+		registerSkill(Skill.SissiWhiteXuanshang, new SissiWhiteXuanshang());
+		registerSkill(Skill.ImeldaTiewan, new ImeldaTiewan());
+		registerSkill(Skill.ImeldaWhip, new ImeldaWhip());
 		
-
 		skills.putAll(barrackSkills.getAllBarrackSkills());
 	}
 
